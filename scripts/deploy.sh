@@ -51,6 +51,15 @@ HEALTH_TIMEOUT=240
 # Roll back automatically when the health gate fails.
 ROLLBACK_ON_FAILURE="${ROLLBACK_ON_FAILURE:-true}"
 
+# Install deploy/nginx/smartdeploy.conf onto the host and reload nginx.
+# Set to false to leave the host nginx alone.
+MANAGE_NGINX="${MANAGE_NGINX:-true}"
+
+NGINX_SITE_NAME="smartdeploy.conf"
+NGINX_AVAILABLE="/etc/nginx/sites-available/$NGINX_SITE_NAME"
+NGINX_ENABLED="/etc/nginx/sites-enabled/$NGINX_SITE_NAME"
+NGINX_BACKUP_DIR="$BASE_DIR/nginx-backups"
+
 # -----------------------------
 # COLORS
 # -----------------------------
@@ -249,6 +258,89 @@ wait_for_healthy() {
 
         sleep 5
     done
+}
+
+# ============================================================
+# HOST NGINX CONFIG
+# ============================================================
+
+install_nginx_config() {
+    local repo_conf="$APP_DIR/deploy/nginx/$NGINX_SITE_NAME"
+    local backup test_out
+
+    if [ "$MANAGE_NGINX" != "true" ]; then
+        info "MANAGE_NGINX is not 'true' - leaving the host nginx alone."
+        return 0
+    fi
+
+    if ! command -v nginx >/dev/null 2>&1; then
+        warning "nginx is not installed on this host - skipping."
+        return 0
+    fi
+
+    if [ ! -f "$repo_conf" ]; then
+        warning "No $repo_conf in the repo - skipping."
+        return 0
+    fi
+
+    if [ -f "$NGINX_AVAILABLE" ] && cmp -s "$repo_conf" "$NGINX_AVAILABLE"; then
+        info "Host nginx config already matches the repo."
+        return 0
+    fi
+
+    # Guard against the one-way failure this step can cause.
+    #
+    # `certbot --nginx` rewrites the LIVE config in place, adding the
+    # listen 443 / ssl_certificate lines. If that edit has not been committed
+    # back to the repo, copying the repo version over it deletes the TLS
+    # block. nginx -t would still pass - the result is a valid config that
+    # simply stops serving HTTPS - so nothing else would catch it.
+    if [ -f "$NGINX_AVAILABLE" ] \
+        && grep -q 'ssl_certificate' "$NGINX_AVAILABLE" \
+        && ! grep -q 'ssl_certificate' "$repo_conf"; then
+        warning "The live nginx config has TLS but the repo copy does not."
+        warning "Refusing to install it - HTTPS would silently stop working."
+        warning "Commit the certbot-modified config first:"
+        warning "  cp $NGINX_AVAILABLE $repo_conf   # then commit and push"
+        return 0
+    fi
+
+    mkdir -p "$NGINX_BACKUP_DIR"
+    backup="$NGINX_BACKUP_DIR/${NGINX_SITE_NAME}.$TIMESTAMP"
+
+    if [ -f "$NGINX_AVAILABLE" ]; then
+        cp -a "$NGINX_AVAILABLE" "$backup"
+        info "Previous nginx config saved to $backup"
+    else
+        backup=""
+    fi
+
+    info "Installing $repo_conf -> $NGINX_AVAILABLE"
+    install -m 644 "$repo_conf" "$NGINX_AVAILABLE"
+    ln -sfn "$NGINX_AVAILABLE" "$NGINX_ENABLED"
+
+    # Capture the output rather than piping it - piping would make the `if`
+    # test tail's exit status instead of nginx's.
+    if test_out=$(nginx -t 2>&1); then
+        systemctl reload nginx
+        success "Host nginx config installed and reloaded."
+        return 0
+    fi
+
+    error "nginx -t rejected the new config:"
+    echo "$test_out"
+
+    if [ -n "$backup" ]; then
+        warning "Restoring the previous config."
+        cp -a "$backup" "$NGINX_AVAILABLE"
+        nginx -t >/dev/null 2>&1 && systemctl reload nginx
+        warning "Previous config restored - the site is still up."
+    else
+        rm -f "$NGINX_ENABLED"
+        warning "Removed the broken site link."
+    fi
+
+    return 1
 }
 
 # ============================================================
@@ -592,7 +684,15 @@ else
 fi
 
 # ============================================================
-# 9. CLEAN UP
+# 9. HOST NGINX
+# ============================================================
+
+# Runs only after the health gate, so nginx is never reloaded to point at
+# containers that have not come up.
+install_nginx_config || warning "nginx step failed - containers are unaffected."
+
+# ============================================================
+# 10. CLEAN UP
 # ============================================================
 
 # Scoped to this project's dangling images. A bare `docker image prune -f`
@@ -605,7 +705,7 @@ docker image prune -f --filter "label=com.docker.compose.project=$PROJECT" || tr
 success "Cleanup done."
 
 # ============================================================
-# 10. RESULT
+# 11. RESULT
 # ============================================================
 
 echo ""
