@@ -222,7 +222,7 @@ def seed_data() -> None:
         return
 
     users = [
-        (str(uuid4()), "python.asmath1290@gmail.com", "Smart Sportz Admin", "super_admin", hash_password("admin123"), "", 1, 1, now()),
+        (str(uuid4()), "mathanatmachinelearning@gmail.com", "Smart Sportz Admin", "super_admin", hash_password("admin123"), "", 1, 1, now()),
         (str(uuid4()), "manager@smartsportz.in", "Tournament Manager", "management", hash_password("manager123"), "", 1, 1, now()),
         (str(uuid4()), "user@smartsportz.in", "Aryan Player", "user", hash_password("user123"), "+916374409006", 1, 1, now()),
     ]

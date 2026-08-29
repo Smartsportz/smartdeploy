@@ -511,3 +511,39 @@ class AnnouncementUpdatePayload(BaseModel):
     date_to: Optional[str] = None
     published: bool = True
     city: Optional[str] = None
+
+
+class UserProfileUpdatePayload(BaseModel):
+    name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
+    phone: str = Field(default="", max_length=10)
+
+    @field_validator("phone", mode="before")
+    @classmethod
+    def validate_phone(cls, value: str | None) -> str:
+        return _optional_phone(value)
+
+
+class AdminAccountCreatePayload(BaseModel):
+    name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
+    password: str = Field(min_length=3, max_length=80)
+    phone: str = Field(default="", max_length=10)
+
+    @field_validator("phone", mode="before")
+    @classmethod
+    def validate_phone(cls, value: str | None) -> str:
+        return _optional_phone(value)
+
+
+class AdminAccountUpdatePayload(BaseModel):
+    name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
+    phone: str = Field(default="", max_length=10)
+    password: str | None = Field(default=None, min_length=3, max_length=80)
+
+    @field_validator("phone", mode="before")
+    @classmethod
+    def validate_phone(cls, value: str | None) -> str:
+        return _optional_phone(value)
+

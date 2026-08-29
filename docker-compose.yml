@@ -10,6 +10,8 @@ x-app-secrets: &app-secrets
   env_file:
     - path: ../.env
       required: false
+    - path: .env
+      required: false
 
 services:
   redis:
@@ -28,7 +30,7 @@ services:
     <<: *app-secrets
     build:
       context: ./backend
-    command: ["python", "-m", "app.cli", "init-db", "--no-seed"]
+    command: ["python", "-m", "app.cli", "init-db"]
     restart: "no"
     environment:
       APP_ENV: docker
@@ -42,6 +44,7 @@ services:
       INIT_DB_ON_STARTUP: "false"
       SEED_DB_ON_STARTUP: "false"
       CLEANUP_MEDIA_ON_STARTUP: "false"
+      OTP_DELIVERY_MODE: ${OTP_DELIVERY_MODE:-local}
     depends_on:
       redis:
         condition: service_healthy
@@ -68,6 +71,18 @@ services:
       DASHBOARD_CACHE_TTL_SECONDS: "20"
       ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:8081,http://127.0.0.1:8081}
       WEB_CONCURRENCY: "4"
+      OTP_DELIVERY_MODE: ${OTP_DELIVERY_MODE:-local}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-465}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_USE_SSL: ${SMTP_USE_SSL:-true}
+      SMTP_USE_TLS: ${SMTP_USE_TLS:-false}
+      SMTP_SENDER_NAME: ${SMTP_SENDER_NAME:-Smart Sportz}
+      SMTP_SENDER_EMAIL: ${SMTP_SENDER_EMAIL:-}
+      EMAIL_PROVIDER: ${EMAIL_PROVIDER:-brevo}
+      BREVO_API_KEY: ${BREVO_API_KEY:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
     depends_on:
       backend-init:
         condition: service_completed_successfully

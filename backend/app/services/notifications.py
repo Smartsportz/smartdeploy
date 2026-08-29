@@ -215,6 +215,9 @@ def send_resend_sdk_test_email() -> dict[str, Any]:
 
 
 def send_email_otp(to_email: str, code: str) -> DeliveryResult:
+    if settings.otp_delivery_mode == "local":
+        print(f"[OTP LOCAL] Verification code for {to_email}: {code}", flush=True)
+        return DeliveryResult(True, "local", f"Local development code: {code}")
     html = f"""
     <div style="font-family:Arial,sans-serif;line-height:1.5;color:#0b1b33">
       <h2>Verify your Smart Sportz account</h2>
@@ -223,7 +226,11 @@ def send_email_otp(to_email: str, code: str) -> DeliveryResult:
       <p>This code expires soon. Do not share it with anyone.</p>
     </div>
     """
-    return send_email(to_email, "Smart Sportz verification code", html, f"Your Smart Sportz verification code is {code}.")
+    delivery = send_email(to_email, "Smart Sportz verification code", html, f"Your Smart Sportz verification code is {code}.")
+    if not delivery.ok and (settings.app_env in {"development", "docker"} or settings.otp_delivery_mode == "local"):
+        print(f"[OTP LOCAL FALLBACK] Code for {to_email}: {code} (Email delivery failed: {delivery.message})", flush=True)
+        return DeliveryResult(True, "local", f"Local development code: {code}")
+    return delivery
 
 
 def registration_completion_message(details: dict[str, Any]) -> str:

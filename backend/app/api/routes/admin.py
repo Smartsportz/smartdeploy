@@ -12,6 +12,8 @@ from app.core.responses import ok
 from app.core.security import hash_password
 from app.db.database import audit_rows, ensure_column, execute, execute_many, row, rows
 from app.schemas import (
+    AdminAccountCreatePayload,
+    AdminAccountUpdatePayload,
     AdminTeamUpdatePayload,
     AdminUserCreatePayload,
     AdminUserUpdatePayload,
@@ -1828,6 +1830,138 @@ def update_manager_cities(
         f"Manager cities: {', '.join(clean_cities)}"
     )
     return ok(manager_with_cities(manager), "Manager city access updated")
+
+
+@router.get("/admins")
+def admin_list_admins(
+    user: dict = Depends(require_roles("super_admin")),
+):
+    admins = rows(
+        """
+        SELECT id, email, name, role, phone, avatar_url, created_at
+        FROM users
+        WHERE role = 'super_admin'
+        ORDER BY created_at ASC
+        """
+    )
+    return ok(admins, meta={"total": len(admins)})
+
+
+@router.post("/admins")
+def admin_create_admin(
+    payload: AdminAccountCreatePayload,
+    user: dict = Depends(require_roles("super_admin")),
+):
+    new_email = str(payload.email).lower()
+    existing = row("SELECT id FROM users WHERE email = ?", (new_email,))
+    if existing:
+        raise HTTPException(status_code=409, detail="An account with this email already exists")
+    
+    admin_id = f"admin_{uuid4().hex[:12]}"
+    execute(
+        """
+        INSERT INTO users (
+            id, email, name, role, password_hash, phone,
+            email_verified, phone_verified, created_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        (
+            admin_id,
+            new_email,
+            payload.name,
+            "super_admin",
+            hash_password(payload.password),
+            payload.phone,
+            1,
+            1,
+            datetime.now(timezone.utc).isoformat(),
+        ),
+    )
+    log(
+        user["email"],
+        "super_admin_created",
+        "user",
+        admin_id,
+        f"Super Admin '{payload.name}' ({new_email}) created by {user['email']}",
+    )
+    created_admin = row(
+        "SELECT id, email, name, role, phone, avatar_url, created_at FROM users WHERE id = ?",
+        (admin_id,),
+    )
+    return ok(created_admin, "Super Admin created successfully")
+
+
+@router.patch("/admins/{admin_id}")
+def admin_update_admin(
+    admin_id: str,
+    payload: AdminAccountUpdatePayload,
+    user: dict = Depends(require_roles("super_admin")),
+):
+    target = row("SELECT * FROM users WHERE id = ? AND role = 'super_admin'", (admin_id,))
+    if not target:
+        raise HTTPException(status_code=404, detail="Super Admin account not found")
+    
+    new_email = str(payload.email).lower()
+    email_owner = row("SELECT id FROM users WHERE email = ? AND id <> ?", (new_email, admin_id))
+    if email_owner:
+        raise HTTPException(status_code=409, detail="This email is already registered to another account")
+    
+    if payload.password:
+        execute(
+            """
+            UPDATE users SET name = ?, email = ?, phone = ?, password_hash = ?
+            WHERE id = ? AND role = 'super_admin'
+            """,
+            (payload.name, new_email, payload.phone, hash_password(payload.password), admin_id),
+        )
+    else:
+        execute(
+            """
+            UPDATE users SET name = ?, email = ?, phone = ?
+            WHERE id = ? AND role = 'super_admin'
+            """,
+            (payload.name, new_email, payload.phone, admin_id),
+        )
+    
+    log(
+        user["email"],
+        "super_admin_updated",
+        "user",
+        admin_id,
+        f"Super Admin updated: '{payload.name}' ({new_email})",
+    )
+    updated_admin = row(
+        "SELECT id, email, name, role, phone, avatar_url, created_at FROM users WHERE id = ?",
+        (admin_id,),
+    )
+    return ok(updated_admin, "Super Admin updated successfully")
+
+
+@router.delete("/admins/{admin_id}")
+def admin_delete_admin(
+    admin_id: str,
+    user: dict = Depends(require_roles("super_admin")),
+):
+    target = row("SELECT * FROM users WHERE id = ? AND role = 'super_admin'", (admin_id,))
+    if not target:
+        raise HTTPException(status_code=404, detail="Super Admin account not found")
+    
+    if admin_id == user["id"]:
+        raise HTTPException(status_code=400, detail="You cannot delete your own Super Admin account")
+    
+    total_admins = int(row("SELECT COUNT(*) AS c FROM users WHERE role = 'super_admin'")["c"] or 0)
+    if total_admins <= 1:
+        raise HTTPException(status_code=400, detail="Cannot delete the only remaining Super Admin account")
+    
+    execute("DELETE FROM users WHERE id = ? AND role = 'super_admin'", (admin_id,))
+    log(
+        user["email"],
+        "super_admin_deleted",
+        "user",
+        admin_id,
+        f"Super Admin '{target['email']}' deleted by {user['email']}",
+    )
+    return ok({"id": admin_id}, "Super Admin deleted successfully")
 
 
 @router.post("/registrations/{registration_id}/approve")
