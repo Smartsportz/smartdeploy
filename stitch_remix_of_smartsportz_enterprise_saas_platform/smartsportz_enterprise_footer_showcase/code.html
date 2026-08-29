@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Footer Showcase | SmartSportz.in</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed": "#8ef8b7",
+                    "on-secondary-fixed-variant": "#39475f",
+                    "on-secondary": "#233148",
+                    "error-container": "#93000a",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed": "#d8e2ff",
+                    "on-error": "#690005",
+                    "outline": "#889489",
+                    "on-background": "#e0e3e5",
+                    "on-tertiary-container": "#000514",
+                    "on-primary-container": "#ffffff",
+                    "primary-container": "#0b8852",
+                    "background": "#101415",
+                    "surface-tint": "#72db9d",
+                    "surface": "#101415",
+                    "on-surface-variant": "#bdcabe",
+                    "outline-variant": "#3e4a41",
+                    "on-tertiary-fixed": "#091b39",
+                    "inverse-surface": "#e0e3e5",
+                    "primary": "#72db9d",
+                    "on-secondary-container": "#abb9d6",
+                    "surface-dim": "#101415",
+                    "primary-fixed-dim": "#72db9d",
+                    "surface-container-high": "#272a2c",
+                    "on-tertiary-fixed-variant": "#374767",
+                    "surface-container-highest": "#323537",
+                    "surface-container": "#1d2022",
+                    "surface-variant": "#323537",
+                    "on-tertiary": "#20304f",
+                    "on-surface": "#e0e3e5",
+                    "surface-container-low": "#191c1e",
+                    "tertiary-container": "#67779a",
+                    "on-primary": "#00391f",
+                    "inverse-on-surface": "#2d3133",
+                    "on-secondary-fixed": "#0d1c32",
+                    "secondary-fixed-dim": "#b9c7e4",
+                    "secondary": "#b9c7e4",
+                    "tertiary-fixed-dim": "#b6c6ed",
+                    "secondary-fixed": "#d6e3ff",
+                    "secondary-container": "#3c4962",
+                    "on-primary-fixed-variant": "#00522f",
+                    "on-primary-fixed": "#002110",
+                    "surface-bright": "#363a3b",
+                    "surface-container-lowest": "#0b0f10",
+                    "error": "#ffb4ab",
+                    "inverse-primary": "#006d40",
+                    "tertiary": "#b6c6ed"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "32px",
+                    "stack-sm": "8px",
+                    "container-max": "1440px",
+                    "margin-desktop": "40px",
+                    "gutter": "24px",
+                    "stack-md": "16px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "label-sm": ["JetBrains Mono"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "stats-xl": ["Be Vietnam Pro"],
+                    "title-md": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "display-lg": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "stats-xl": ["40px", {"lineHeight": "40px", "fontWeight": "800"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #101415;
+            color: #e0e3e5;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-panel {
+            background: rgba(17, 34, 64, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .emerald-glow:focus {
+            box-shadow: 0 0 15px rgba(11, 136, 82, 0.3);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden">
+<!-- Top Navigation Anchor (Shared Component Mapping) -->
+<nav class="fixed top-0 w-full bg-surface-container border-b border-outline-variant z-50">
+<div class="flex justify-between items-center w-full px-margin-desktop py-4 max-w-container-max mx-auto">
+<span class="font-headline-lg text-headline-lg font-bold text-primary">SmartSportz.in</span>
+<div class="hidden md:flex gap-gutter items-center">
+<a class="font-title-md text-title-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Dashboard</a>
+<a class="font-title-md text-title-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Athletes</a>
+<a class="font-title-md text-title-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Analytics</a>
+<a class="font-title-md text-title-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer" href="#">Training</a>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-bold hover:brightness-110 active:scale-95 transition-all">Add Entry</button>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer" data-icon="settings">settings</span>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-16 min-h-screen">
+<!-- Hero Context for Footer Showcase -->
+<section class="max-w-container-max mx-auto px-margin-desktop mb-24">
+<div class="relative rounded-[18px] overflow-hidden p-stack-lg min-h-[400px] flex items-center justify-center text-center">
+
+<div class="relative z-10 max-w-2xl">
+<h1 class="font-display-lg text-display-lg mb-stack-md text-primary-fixed">Enterprise Design Excellence</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-stack-lg">Showcasing the premium SmartSportz.in footer architecture. Engineered for high-performance sports management systems with a focus on hierarchy, accessibility, and elite aesthetics.</p>
+<button class="bg-primary-container text-white px-8 py-4 rounded-xl font-bold flex items-center gap-2 mx-auto hover:scale-105 transition-transform">
+                        Explore Platform <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Informational Section to push Footer down -->
+<section class="max-w-container-max mx-auto px-margin-desktop mb-24 grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="glass-panel p-stack-lg rounded-[18px]">
+<span class="material-symbols-outlined text-primary text-4xl mb-4" data-icon="speed">speed</span>
+<h3 class="font-title-md text-title-md mb-2">Performance First</h3>
+<p class="text-on-surface-variant">Real-time telemetry and athlete performance tracking systems used by elite global organizations.</p>
+</div>
+<div class="glass-panel p-stack-lg rounded-[18px]">
+<span class="material-symbols-outlined text-primary text-4xl mb-4" data-icon="security">security</span>
+<h3 class="font-title-md text-title-md mb-2">Enterprise Security</h3>
+<p class="text-on-surface-variant">Military-grade data protection and GDPR compliance for sensitive medical and tactical records.</p>
+</div>
+<div class="glass-panel p-stack-lg rounded-[18px]">
+<span class="material-symbols-outlined text-primary text-4xl mb-4" data-icon="insights">insights</span>
+<h3 class="font-title-md text-title-md mb-2">AI-Driven Insights</h3>
+<p class="text-on-surface-variant">Predictive modeling to optimize roster management and prevent overtraining injuries.</p>
+</div>
+</section>
+<!-- THE FOOTER SHOWCASE -->
+<footer class="w-full bg-surface-container-lowest border-t border-outline-variant relative overflow-hidden">
+<!-- Subtle gradient separation -->
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
+<div class="w-full px-margin-desktop py-16 max-w-container-max mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-y-12 gap-x-gutter mb-16">
+<!-- Brand & Newsletter Column -->
+<div class="lg:col-span-2 flex flex-col gap-8">
+<div>
+<span class="font-headline-lg text-headline-lg font-bold text-primary mb-4 block">SmartSportz.in</span>
+<p class="font-body-md text-on-surface-variant max-w-xs">
+                                The ultimate ecosystem for professional sports management. Empowering coaches and athletes with high-fidelity data.
+                            </p>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-title-md text-title-md text-on-surface">Stay ahead of the game</h4>
+<div class="flex flex-col sm:flex-row gap-2 max-w-sm">
+<input class="bg-surface-container-low border border-outline-variant rounded-lg px-4 py-3 text-on-surface focus:outline-none focus:border-primary emerald-glow flex-grow transition-all" placeholder="Enter your elite email" type="email"/>
+<button class="bg-primary-container text-on-primary-container px-6 py-3 rounded-lg font-bold hover:brightness-110 active:scale-95 transition-all">Subscribe</button>
+</div>
+<p class="text-[12px] text-outline italic">Join 10,000+ pro coordinators receiving elite sports news.</p>
+</div>
+</div>
+<!-- Sports Links -->
+<div class="flex flex-col gap-6">
+<h4 class="font-title-md text-title-md text-on-surface font-bold">Sports</h4>
+<ul class="flex flex-col gap-3">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Football</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Cricket</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Basketball</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Tennis</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Esports</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Athletics</a></li>
+</ul>
+</div>
+<!-- Support Links -->
+<div class="flex flex-col gap-6">
+<h4 class="font-title-md text-title-md text-on-surface font-bold">Support</h4>
+<ul class="flex flex-col gap-3">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Help Center</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Contact Us</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">FAQ</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Community</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Tournament Guidelines</a></li>
+</ul>
+</div>
+<!-- Policies Links -->
+<div class="flex flex-col gap-6">
+<h4 class="font-title-md text-title-md text-on-surface font-bold">Policies</h4>
+<ul class="flex flex-col gap-3">
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Cookie Policy</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Security</a></li>
+<li><a class="text-on-surface-variant hover:text-primary transition-colors" href="#">GDPR Compliance</a></li>
+</ul>
+</div>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-center pt-12 border-t border-outline-variant/30 gap-8">
+<!-- App Download Section -->
+<div class="flex flex-col gap-4 items-center md:items-start">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-widest">Download our app</span>
+<div class="flex gap-4">
+<a class="hover:opacity-80 transition-opacity" href="#">
+<img class="h-10" data-alt="A high-resolution product showcase of an Apple App Store download badge. The badge is set against a dark, futuristic UI background with emerald green glow effects. The composition is sleek and professional, highlighting a premium mobile app ecosystem for elite sports management." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBV_2-Q0TbnjjuKRBmJtFuB5Y7RaqAb3UjJ1KOd_VCMKaJhkcC4gqWdiMbJkM5aPIzzP58rs1aelcTZ6KX1qfUKRTdObwGARSRkvi0CxjVBmc6amZWBbgv4WN1G5bzBFXx22-2EgSfB3qwlzgMqK6RYTL3r8D-yJbWct8nqFoXXHnomeZxQgPhPDxvXMku8iUNy25xw1WmrY5PBbP8wphbau3K0aIDh2T839nd8tSKgzQZIpD5sP8Vl1bG6Cx5-qg-lLj3y3NHmImRX"/>
+</a>
+<a class="hover:opacity-80 transition-opacity" href="#">
+<img class="h-10" data-alt="A premium Google Play Store download badge presented on a sophisticated dark theme interface. The lighting is soft with subtle glassmorphism effects in the background. The aesthetic is clean, corporate, and modern, fitting for a top-tier sports performance analytics platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyM7-nyl0olqYqvmzpz4k3bQCPTPz4h7ZNYmIxpt4_yayi7EZnuo49cYpYhuwIERlpNXV-gce7EdO2Ibr5x0oKoGdqH6bOs4c3w-VJ9oQGu75ZbSXejg8GdMnNnNFldtac3Kgh1tu-_MZYYtI4CKH9_r34UZLl8ZNfP62zdVbIERE3ovmi8uTmr9gP652kf274_yUgCxvK2rN-MniAYBpnH6jlogbD1RNC_coPGW1aeHvSJlVMCYYKOW1f0brWMWWZb-FwbcwdeiH1"/>
+</a>
+</div>
+</div>
+<!-- Social Media Links -->
+<div class="flex flex-col gap-4 items-center md:items-end">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-widest">Connect with elite talent</span>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-all scale-100 hover:scale-125" href="#">
+<span class="material-symbols-outlined text-[28px]" data-icon="brand_awareness">brand_awareness</span>
+</a>
+<a class="text-on-surface-variant hover:text-primary transition-all scale-100 hover:scale-125" href="#">
+<span class="material-symbols-outlined text-[28px]" data-icon="alternate_email">alternate_email</span>
+</a>
+<a class="text-on-surface-variant hover:text-primary transition-all scale-100 hover:scale-125" href="#">
+<span class="material-symbols-outlined text-[28px]" data-icon="photo_camera">photo_camera</span>
+</a>
+<a class="text-on-surface-variant hover:text-primary transition-all scale-100 hover:scale-125" href="#">
+<span class="material-symbols-outlined text-[28px]" data-icon="video_library">video_library</span>
+</a>
+<a class="text-on-surface-variant hover:text-primary transition-all scale-100 hover:scale-125" href="#">
+<span class="material-symbols-outlined text-[28px]" data-icon="chat">chat</span>
+</a>
+</div>
+</div>
+</div>
+<div class="mt-16 pt-8 border-t border-outline-variant/10 text-center">
+<p class="text-on-surface-variant font-body-md">
+                        © 2024 SmartSportz.in. All rights reserved. <span class="text-primary font-bold">Built for elite performance.</span>
+</p>
+</div>
+</div>
+</footer>
+</main>
+<!-- Side Navigation (Suppressed based on Transactional/Showcase rule, but mapped for integrity if needed) -->
+<!-- Not rendered to prioritize the Footer Showcase Canvas -->
+<script>
+        // Micro-interactions for footer links
+        document.querySelectorAll('footer a').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                link.classList.add('translate-x-1');
+            });
+            link.addEventListener('mouseleave', () => {
+                link.classList.remove('translate-x-1');
+            });
+        });
+
+        // Subtle parallax or scroll effect for the showcase hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroText = document.querySelector('h1');
+            if(heroText) {
+                heroText.style.transform = `translateY(${scrolled * 0.15}px)`;
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mumbai Premier Bash | SmartSportz.in</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#d8dadc",
+                        "border-subtle": "#E2E8F0",
+                        "background-surface": "#FFFFFF",
+                        "secondary-fixed": "#dce2f7",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#00522e",
+                        "tertiary-fixed-dim": "#52df91",
+                        "secondary": "#575e70",
+                        "text-secondary": "#4B5563",
+                        "on-primary-container": "#ffffff",
+                        "secondary-fixed-dim": "#c0c6db",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "inverse-surface": "#2d3133",
+                        "error-container": "#ffdad6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed-variant": "#00522f",
+                        "deep-navy": "#081C3A",
+                        "on-tertiary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed": "#00210f",
+                        "secondary-container": "#d9dff5",
+                        "tertiary-fixed": "#72fcab",
+                        "primary-fixed-dim": "#72db9d",
+                        "accent-cyan": "#00D4FF",
+                        "surface-container": "#eceef0",
+                        "surface": "#f7f9fb",
+                        "on-tertiary-container": "#ffffff",
+                        "surface-tint": "#006d40",
+                        "on-secondary-container": "#5c6274",
+                        "primary": "#006c40",
+                        "text-primary": "#111827",
+                        "surface-container-high": "#e6e8ea",
+                        "tertiary": "#006c3e",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-bright": "#f7f9fb",
+                        "on-surface": "#191c1e",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-background": "#191c1e",
+                        "on-surface-variant": "#3e4a41",
+                        "on-secondary-fixed-variant": "#404758",
+                        "background": "#f7f9fb",
+                        "primary-fixed": "#8ef8b7",
+                        "primary-container": "#0b8852",
+                        "on-secondary-fixed": "#141b2b",
+                        "surface-container-low": "#f2f4f6",
+                        "outline-variant": "#bdcabe",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#72db9d",
+                        "on-primary-fixed": "#002110",
+                        "tertiary-container": "#00884f",
+                        "outline": "#6e7a70"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "18px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "8px",
+                        "container-max": "1440px",
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "section-gap": "80px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Poppins"],
+                        "display-lg": ["Poppins"],
+                        "title-lg": ["Poppins"],
+                        "label-md": ["Poppins"],
+                        "body-lg": ["Poppins"],
+                        "caption": ["Poppins"],
+                        "body-md": ["Poppins"],
+                        "headline-md": ["Poppins"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .scrolling-marquee {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            gap: 40px;
+        }
+        .marquee-content {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: space-around;
+            min-width: 100%;
+            gap: 40px;
+            animation: scroll 30s linear infinite;
+        }
+        @keyframes scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+        .bracket-connector {
+            border-right: 2px solid #E2E8F0;
+            border-top: 2px solid #E2E8F0;
+            border-bottom: 2px solid #E2E8F0;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-background-surface border-b border-border-subtle shadow-sm">
+<nav class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="font-display-lg text-headline-md font-bold text-deep-navy">SmartSportz.in</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary border-b-2 border-primary font-semibold font-body-lg" href="#">Tournaments</a>
+<a class="text-secondary hover:text-primary transition-colors font-body-lg" href="#">Sports</a>
+<a class="text-secondary hover:text-primary transition-colors font-body-lg" href="#">Live Score</a>
+<a class="text-secondary hover:text-primary transition-colors font-body-lg" href="#">Results</a>
+<a class="text-secondary hover:text-primary transition-colors font-body-lg" href="#">Gallery</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-secondary font-semibold hover:text-primary transition-colors">Login</button>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-bold hover:scale-105 transition-transform active:scale-95">Register</button>
+</div>
+</nav>
+</header>
+<!-- Hero Section -->
+<section class="relative h-[870px] flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-[10s] hover:scale-110" data-alt="A wide-angle professional photography of the iconic Wankhede Stadium in Mumbai during a bright sunset. The lush green cricket pitch is perfectly manicured under massive floodlights. The grandstands are filled with a blurred audience, creating a sense of scale and excitement. The atmosphere is vibrant with warm golden light reflecting off the architectural structures, embodying the spirit of elite Indian cricket." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAi0j4WzcmTu38KbsSdloZsDFwSgNMrP7SaqhuPypscxJs6CGiRKfehHG4OH5a9smTDpk9SzRO8eZ3oEwrx3qZcXYZsvP3sOilmrNnGd1rft6Ic2yv62xn8rbNatGI3B0dIv4cyO5mlgU6YRXbD2TSuz89LkAbJNGBSe6FVlPabnCi6g9R7psaSVVLaO4u4UC7CVdSjXq-oUUoV06IAGUxIQBIAhHFg_C99PfsI_32tE3bxllauydhHqA8LK97UgrFxxjP5o6-nkhe9')">
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-deep-navy via-deep-navy/40 to-transparent"></div>
+</div>
+<div class="relative z-10 text-center px-6 max-w-4xl">
+<span class="inline-block px-4 py-1 mb-6 bg-primary-container text-on-primary text-label-md rounded-full tracking-widest uppercase">Premier Edition 2024</span>
+<h1 class="font-display-lg text-white text-5xl md:text-7xl mb-6 drop-shadow-xl">Mumbai Premier Bash</h1>
+<div class="flex flex-wrap justify-center gap-6 text-white/90 mb-10 font-medium">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-accent-cyan">location_on</span>
+                    Wankhede Stadium, Mumbai
+                </div>
+<div class="flex items-center gap-2 border-l border-white/20 pl-6">
+<span class="material-symbols-outlined text-accent-cyan">verified</span>
+                    Mumbai Cricket Association
+                </div>
+</div>
+<button class="bg-primary-container hover:bg-tertiary-container text-white px-10 py-5 rounded-xl font-bold text-lg shadow-2xl hover:translate-y-[-4px] transition-all flex items-center gap-3 mx-auto">
+                Register Your Team Now
+                <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</section>
+<!-- Summary Metrics -->
+<div class="max-w-container-max mx-auto px-margin-desktop -mt-16 relative z-20">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="bg-white p-8 rounded-xl shadow-lg border border-border-subtle flex items-center gap-6 group hover:border-primary transition-colors">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-3xl">payments</span>
+</div>
+<div>
+<p class="text-secondary font-label-md uppercase tracking-wider">Grand Prize Pool</p>
+<p class="text-headline-md font-bold text-deep-navy">₹5,00,000</p>
+</div>
+</div>
+<div class="bg-white p-8 rounded-xl shadow-lg border border-border-subtle flex items-center gap-6 group hover:border-primary transition-colors">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-3xl">groups</span>
+</div>
+<div>
+<p class="text-secondary font-label-md uppercase tracking-wider">Entry Fee</p>
+<p class="text-headline-md font-bold text-deep-navy">₹5,000 / Team</p>
+</div>
+</div>
+<div class="bg-white p-8 rounded-xl shadow-lg border border-border-subtle flex items-center gap-6 group hover:border-primary transition-colors">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined text-3xl">event_available</span>
+</div>
+<div>
+<p class="text-secondary font-label-md uppercase tracking-wider">Registration Deadline</p>
+<p class="text-headline-md font-bold text-deep-navy">Oct 15, 2024</p>
+</div>
+</div>
+</div>
+</div>
+<main class="max-w-container-max mx-auto px-margin-desktop py-section-gap">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Main Content Area -->
+<div class="lg:col-span-8 space-y-20">
+<!-- Overview -->
+<section id="overview">
+<h2 class="font-headline-lg text-deep-navy mb-6">Tournament Overview</h2>
+<p class="text-body-lg text-text-secondary leading-relaxed mb-6">
+                        The Mumbai Premier Bash is the city's most prestigious corporate and amateur cricket league, bringing together 32 elite teams to compete at the hallowed grounds of Wankhede. This 10-day extravaganza celebrates the spirit of Mumbai's cricket culture with professional-grade officiating, high-definition streaming, and an atmosphere of pure competitive excellence.
+                    </p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+<div class="bg-surface-container-low p-4 rounded-lg text-center">
+<span class="material-symbols-outlined text-primary mb-2">sports_cricket</span>
+<p class="text-caption font-bold">Format</p>
+<p class="text-body-md">T20 Knockout</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg text-center">
+<span class="material-symbols-outlined text-primary mb-2">calendar_month</span>
+<p class="text-caption font-bold">Duration</p>
+<p class="text-body-md">10 Days</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg text-center">
+<span class="material-symbols-outlined text-primary mb-2">stadium</span>
+<p class="text-caption font-bold">Venue</p>
+<p class="text-body-md">Main Ground</p>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg text-center">
+<span class="material-symbols-outlined text-primary mb-2">videocam</span>
+<p class="text-caption font-bold">Coverage</p>
+<p class="text-body-md">Live HD Stream</p>
+</div>
+</div>
+</section>
+<!-- Schedule Timeline -->
+<section id="schedule">
+<h2 class="font-headline-lg text-deep-navy mb-10">Road to the Finals</h2>
+<div class="relative">
+<div class="absolute left-4 top-0 bottom-0 w-0.5 bg-border-subtle md:left-1/2 md:-translate-x-1/2"></div>
+<div class="space-y-12">
+<!-- Step 1 -->
+<div class="relative flex flex-col md:flex-row items-center">
+<div class="flex-1 md:text-right md:pr-12 mb-4 md:mb-0">
+<h4 class="font-bold text-lg text-primary">Registration Opens</h4>
+<p class="text-secondary">September 01, 2024</p>
+<p class="text-sm mt-1">Limited spots for 32 teams only.</p>
+</div>
+<div class="z-10 w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white ring-4 ring-white">
+<span class="material-symbols-outlined text-sm">edit</span>
+</div>
+<div class="flex-1 md:pl-12"></div>
+</div>
+<!-- Step 2 -->
+<div class="relative flex flex-col md:flex-row items-center">
+<div class="flex-1"></div>
+<div class="z-10 w-10 h-10 bg-deep-navy rounded-full flex items-center justify-center text-white ring-4 ring-white">
+<span class="material-symbols-outlined text-sm">groups</span>
+</div>
+<div class="flex-1 md:pl-12 mt-4 md:mt-0">
+<h4 class="font-bold text-lg text-deep-navy">Qualifiers Phase</h4>
+<p class="text-secondary">November 05 - 08, 2024</p>
+<p class="text-sm mt-1">Group stages at MCA Ground.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="relative flex flex-col md:flex-row items-center">
+<div class="flex-1 md:text-right md:pr-12 mb-4 md:mb-0">
+<h4 class="font-bold text-lg text-deep-navy">The Semi-Finals</h4>
+<p class="text-secondary">November 12, 2024</p>
+<p class="text-sm mt-1">Under the floodlights.</p>
+</div>
+<div class="z-10 w-10 h-10 bg-deep-navy rounded-full flex items-center justify-center text-white ring-4 ring-white">
+<span class="material-symbols-outlined text-sm">trophy</span>
+</div>
+<div class="flex-1 md:pl-12"></div>
+</div>
+<!-- Step 4 -->
+<div class="relative flex flex-col md:flex-row items-center">
+<div class="flex-1"></div>
+<div class="z-10 w-12 h-12 bg-accent-cyan rounded-full flex items-center justify-center text-deep-navy ring-4 ring-white animate-bounce">
+<span class="material-symbols-outlined font-bold">military_tech</span>
+</div>
+<div class="flex-1 md:pl-12 mt-4 md:mt-0">
+<h4 class="font-bold text-xl text-deep-navy">Grand Finale</h4>
+<p class="text-secondary">November 15, 2024</p>
+<p class="text-sm mt-1">Presentation ceremony follows.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Fixtures / Bracket -->
+<section class="bg-surface-container-low p-8 rounded-xl" id="fixtures">
+<div class="flex justify-between items-center mb-10">
+<h2 class="font-headline-lg text-deep-navy">Knockout Brackets</h2>
+<span class="bg-red-500 text-white px-3 py-1 rounded text-xs font-bold animate-pulse flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">sensors</span> LIVE MATCH
+                        </span>
+</div>
+<div class="overflow-x-auto pb-6">
+<div class="flex gap-12 min-w-[800px] justify-between">
+<!-- Quarter Finals -->
+<div class="flex flex-col justify-around gap-8">
+<p class="text-center font-bold text-secondary text-sm mb-4">Quarter Finals</p>
+<div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-primary w-56">
+<div class="flex justify-between items-center mb-2">
+<span class="text-sm font-medium">Mumbai Tigers</span>
+<span class="font-bold">142/4</span>
+</div>
+<div class="flex justify-between items-center opacity-60">
+<span class="text-sm">Pune Warriors</span>
+<span class="text-sm">138/9</span>
+</div>
+</div>
+<div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-slate-300 w-56">
+<div class="flex justify-between items-center mb-2">
+<span class="text-sm font-medium">Gujarat Giants</span>
+<span class="font-bold">TBD</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm font-medium">Delhi Dynamos</span>
+<span class="font-bold">TBD</span>
+</div>
+</div>
+</div>
+<!-- Semi Finals -->
+<div class="flex flex-col justify-around">
+<p class="text-center font-bold text-secondary text-sm mb-4">Semi Finals</p>
+<div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-slate-300 w-56 h-24 flex flex-col justify-center gap-3">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-sm font-bold text-primary">Mumbai Tigers</span>
+</div>
+<div class="flex items-center gap-2 italic text-slate-400">
+<span class="text-sm">Winner QF2</span>
+</div>
+</div>
+</div>
+<!-- Final -->
+<div class="flex flex-col justify-around">
+<p class="text-center font-bold text-secondary text-sm mb-4">Grand Final</p>
+<div class="bg-deep-navy p-6 rounded-xl shadow-xl w-64 text-white text-center ring-2 ring-accent-cyan ring-offset-4">
+<span class="material-symbols-outlined text-accent-cyan text-4xl mb-2">workspace_premium</span>
+<p class="font-bold">CHAMPIONSHIP MATCH</p>
+<p class="text-xs opacity-70 mt-2">Wankhede Stadium</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Rules -->
+<section id="rules">
+<h2 class="font-headline-lg text-deep-navy mb-6">Tournament Guidelines</h2>
+<div class="space-y-4">
+<details class="group bg-white border border-border-subtle rounded-xl overflow-hidden shadow-sm" open="">
+<summary class="flex justify-between items-center p-6 cursor-pointer hover:bg-surface-container-low transition-colors list-none">
+<span class="font-bold text-deep-navy">General Player Eligibility</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-6 border-t border-border-subtle text-text-secondary bg-surface-container-lowest">
+<ul class="list-disc ml-5 space-y-2">
+<li>Players must be aged 18 or above at the time of registration.</li>
+<li>No professional IPL/International players are allowed in the Amateur category.</li>
+<li>Valid ID proof (Aadhar/Passport) is mandatory for verification.</li>
+</ul>
+</div>
+</details>
+<details class="group bg-white border border-border-subtle rounded-xl overflow-hidden shadow-sm">
+<summary class="flex justify-between items-center p-6 cursor-pointer hover:bg-surface-container-low transition-colors list-none">
+<span class="font-bold text-deep-navy">Match Play &amp; Officiating</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="p-6 border-t border-border-subtle text-text-secondary">
+<p>All matches will be conducted as per ICC T20 International rules with certain tournament-specific modifications as decided by the MCC panel.</p>
+</div>
+</details>
+</div>
+</section>
+</div>
+<!-- Sidebar -->
+<aside class="lg:col-span-4 space-y-8">
+<!-- Registration Card -->
+<div class="sticky top-28 bg-deep-navy rounded-xl p-8 text-white shadow-2xl overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+<h3 class="text-headline-md mb-2">Secure Your Slot</h3>
+<p class="text-surface-container-highest opacity-80 mb-6">Only 8 team slots remaining for the Mumbai edition.</p>
+<ul class="space-y-4 mb-8">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary-fixed">check_circle</span>
+<span>Professional Jersey Kit included</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary-fixed">check_circle</span>
+<span>Refreshments &amp; Physiotherapy support</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary-fixed">check_circle</span>
+<span>Action photography for every player</span>
+</li>
+</ul>
+<button class="w-full bg-primary py-4 rounded-lg font-bold text-lg hover:bg-primary-container transition-colors shadow-lg mb-4">
+                        Register Team (₹5,000)
+                    </button>
+<p class="text-center text-xs opacity-60">Payment handled via Secure Gateway</p>
+</div>
+<!-- Venue Map -->
+<div class="bg-white p-6 rounded-xl border border-border-subtle shadow-sm">
+<h4 class="font-bold mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">pin_drop</span>
+                        Tournament Venue
+                    </h4>
+<div class="rounded-lg overflow-hidden h-48 mb-4 border border-border-subtle">
+<div class="w-full h-full bg-surface-container-high flex items-center justify-center">
+<div class="text-center">
+<span class="material-symbols-outlined text-4xl text-secondary mb-2">map</span>
+<p class="text-sm font-medium">Loading Interactive Map...</p>
+</div>
+</div>
+</div>
+<p class="font-bold text-deep-navy">Wankhede Stadium</p>
+<p class="text-sm text-secondary">Vinoo Mankad Rd, Churchgate, Mumbai, Maharashtra 400020</p>
+</div>
+<!-- Team Logos Grid -->
+<div class="bg-white p-6 rounded-xl border border-border-subtle shadow-sm">
+<h4 class="font-bold mb-4">Confirmed Teams</h4>
+<div class="grid grid-cols-4 gap-4">
+<div class="aspect-square bg-surface-container rounded-full flex items-center justify-center p-2 hover:bg-primary/10 transition-colors cursor-help" title="Mumbai Tigers">
+<span class="material-symbols-outlined text-secondary">stars</span>
+</div>
+<div class="aspect-square bg-surface-container rounded-full flex items-center justify-center p-2 hover:bg-primary/10 transition-colors cursor-help" title="Coastal Raiders">
+<span class="material-symbols-outlined text-secondary">waves</span>
+</div>
+<div class="aspect-square bg-surface-container rounded-full flex items-center justify-center p-2 hover:bg-primary/10 transition-colors cursor-help" title="Deccan Kings">
+<span class="material-symbols-outlined text-secondary">fort</span>
+</div>
+<div class="aspect-square bg-surface-container rounded-full flex items-center justify-center p-2 hover:bg-primary/10 transition-colors cursor-help" title="Rising Challengers">
+<span class="material-symbols-outlined text-secondary">rocket_launch</span>
+</div>
+</div>
+</div>
+</aside>
+</div>
+<!-- Gallery Section -->
+<section class="mt-section-gap">
+<h2 class="font-headline-lg text-deep-navy mb-10 text-center">Moments from Past Editions</h2>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4 h-[600px]">
+<div class="md:col-span-2 md:row-span-2 rounded-xl overflow-hidden group relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A high-speed action shot of a batsman playing a classic cover drive. Dust and grass particles are flying in the air, captured in sharp focus. The background shows the stadium's bright lights and a blurred crowd. The colors are vibrant with deep greens and clean white uniforms, conveying an intense competitive spirit." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAta2jrkL5d-NjzI1OJhAec-qKd4nxo35jEcVoovZ8rsmjcCuea8msb-GIbGHTZU42zXFp5yu_KVRtTViADui0NmRwKlRcYfUZn2eoBqYvimJHyXFhjo3aO5Rx9hiPiTuV9lo3dsKXZYH68ViqiAPV4QgqOiTX1y4EF87Yu7lZBuAC1YcDbFT2Lpd_HUV_pVFpTJOmTxgW9i-DmRkeJMIrttDrKp26PuNHD32ToOJb0NqevoDS3e_kLNhnTY_mctHlqRr14VfApt3yw')">
+</div>
+</div>
+<div class="rounded-xl overflow-hidden group relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A close-up of a group of cricket players in matching white uniforms celebrating a wicket. Their faces show pure joy and camaraderie under the warm stadium lights. The photograph captures the emotion and team bond in a high-stakes tournament setting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAlS6-yz-1Z35TsD3FXdkw90e3ivcjD1ZCIFiUcPgMEzs7tglSG2vXuvOgzRv9NBY6jQAW4Zu4M9SghcC6Tl3iP_R4UK6OzRHoYIL5YAf83FpoYk27qSqJG1Os3I8_43L1dq0QGxdq497xpiIEOtoFBPOaVU0PgdNYFjbwpnb6tCQoirMtwsFmkNILiTXCCHpbdjm3yNhM-q46m7lyuRY69Ic5Cy3unI21UPmDP8t4Gxjl-p4cvfprFrcRQA7a0PgRtdohHk9csu-nm')">
+</div>
+</div>
+<div class="rounded-xl overflow-hidden group relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A dramatic low-angle shot of a cricket ball hitting the stumps with the bails flying in the air. The scene is illuminated by intense stadium floodlights, creating long shadows and high contrast. Professional sports photography style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAu1gnq_c-ZQaucyRFMlMVhro95D83rrrFyrFDYvrwALg5w4F1Ndv_C5NgziGvrVOcvRuEhEOuhe3U0q_MiwiHUjMsTk39ir4p4Pxenb9o2Ce3Op0r3TCYNZv2A--NH2gOpOlZ_Ntow4XVmrgXPVDrKxTVPY7879H_D4Xv5yZBTur65aRwUJO-ujeL833zbMonUmhorOMce3VKKpAutQ4aARY1_0edAovyzaaW26GW4-VAoqWMGD7428lpUJ5xtQsD28qqh05GmCF7U')">
+</div>
+</div>
+<div class="md:col-span-2 rounded-xl overflow-hidden group relative">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A wide cinematic view of a cricket tournament trophy presentation at night. Confetti is raining down in the air, reflecting the brilliant stadium lighting. The winners are lifting a gold trophy amidst cheers and flashing camera lights. High-end enterprise event aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBhxGcBDTOY6pkBw5EGzi51siUX1zPxtBfFCQYbvBF6SuYD9K2r1OcP-SRfc8EYse8uDwANUKN_yGJqfS3awC2U26k02QTb3XCzlBBmKjapQijyeHLTeyUmAo2kvzwIMWFp4EAu-d4EiL0NLmX2pi_h225UFR9LNFVeqHPAZXCKtUVj3fV22qCbu1O0C2t2mejxjrOALKdKNjZNyJK1p-3XPa4OoHI80XQHYK6s_AoInNDrDSPcDa8sU9_saezxtixOwRp6CE51ZR78')">
+</div>
+</div>
+</div>
+</section>
+<!-- Sponsors Marquee -->
+<section class="mt-section-gap border-y border-border-subtle py-12 overflow-hidden">
+<p class="text-center font-bold text-secondary text-sm mb-10 uppercase tracking-widest">Our Strategic Partners</p>
+<div class="scrolling-marquee">
+<div class="marquee-content">
+<div class="flex items-center gap-3 px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-4xl">business</span>
+<span class="font-bold text-xl">Reliance Sports</span>
+</div>
+<div class="flex items-center gap-3 px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-4xl">diamond</span>
+<span class="font-bold text-xl">Global Bank</span>
+</div>
+<div class="flex items-center gap-3 px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-4xl">energy_savings_leaf</span>
+<span class="font-bold text-xl">BioFuel India</span>
+</div>
+<div class="flex items-center gap-3 px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-4xl">directions_run</span>
+<span class="font-bold text-xl">Swift Gear</span>
+</div>
+<div class="flex items-center gap-3 px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-4xl">monitoring</span>
+<span class="font-bold text-xl">DataMetrics</span>
+</div>
+</div>
+<!-- Repeat for seamless loop -->
+<div aria-hidden="true" class="marquee-content">
+<div class="flex items-center gap-3 px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-4xl">business</span>
+<span class="font-bold text-xl">Reliance Sports</span>
+</div>
+<div class="flex items-center gap-3 px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-4xl">diamond</span>
+<span class="font-bold text-xl">Global Bank</span>
+</div>
+<div class="flex items-center gap-3 px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-4xl">energy_savings_leaf</span>
+<span class="font-bold text-xl">BioFuel India</span>
+</div>
+<div class="flex items-center gap-3 px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-4xl">directions_run</span>
+<span class="font-bold text-xl">Swift Gear</span>
+</div>
+<div class="flex items-center gap-3 px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined text-4xl">monitoring</span>
+<span class="font-bold text-xl">DataMetrics</span>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQs -->
+<section class="mt-section-gap max-w-3xl mx-auto">
+<h2 class="font-headline-lg text-deep-navy mb-10 text-center">Frequently Asked Questions</h2>
+<div class="space-y-4">
+<details class="group bg-surface-container-low rounded-xl overflow-hidden">
+<summary class="flex justify-between items-center p-6 cursor-pointer hover:bg-surface-container-high transition-colors list-none">
+<span class="font-semibold">Can a player represent multiple teams?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">add</span>
+</summary>
+<div class="p-6 pt-0 text-text-secondary">
+                        No, per MCA guidelines, a player registered with one team cannot play for another team within the same edition of the Mumbai Premier Bash.
+                    </div>
+</details>
+<details class="group bg-surface-container-low rounded-xl overflow-hidden">
+<summary class="flex justify-between items-center p-6 cursor-pointer hover:bg-surface-container-high transition-colors list-none">
+<span class="font-semibold">What is the refund policy for entry fees?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">add</span>
+</summary>
+<div class="p-6 pt-0 text-text-secondary">
+                        Cancellations made 15 days prior to the tournament start are eligible for a 70% refund. No refunds are provided thereafter.
+                    </div>
+</details>
+<details class="group bg-surface-container-low rounded-xl overflow-hidden">
+<summary class="flex justify-between items-center p-6 cursor-pointer hover:bg-surface-container-high transition-colors list-none">
+<span class="font-semibold">Is the tournament broadcasted online?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">add</span>
+</summary>
+<div class="p-6 pt-0 text-text-secondary">
+                        Yes, all matches starting from the Qualifiers will be streamed live on the SmartSportz.in platform and our official YouTube channel in full HD.
+                    </div>
+</details>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-deep-navy text-surface-container-highest py-section-gap rounded-t-xl mt-20">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-20">
+<div class="col-span-1 md:col-span-1">
+<div class="font-headline-lg text-headline-lg font-black text-surface-container-lowest mb-6">SmartSportz.in</div>
+<p class="opacity-70 leading-relaxed mb-6">Elevating local sports to international standards with cutting-edge technology and management excellence.</p>
+</div>
+<div>
+<h5 class="text-white font-bold mb-6">Quick Links</h5>
+<ul class="space-y-3">
+<li><a class="opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">About Us</a></li>
+<li><a class="opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Tournament Guidelines</a></li>
+<li><a class="opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Blogs</a></li>
+<li><a class="opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Support</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-white font-bold mb-6">Legal</h5>
+<ul class="space-y-3">
+<li><a class="opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Terms of Service</a></li>
+<li><a class="opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Careers</a></li>
+</ul>
+</div>
+<div>
+<h5 class="text-white font-bold mb-6">Stay Updated</h5>
+<p class="text-sm mb-4 opacity-70">Get the latest tournament news in your inbox.</p>
+<div class="flex gap-2">
+<input class="bg-white/10 border-white/20 rounded-lg px-4 py-2 w-full text-white placeholder:text-white/40 focus:ring-2 focus:ring-primary-fixed focus:border-transparent outline-none" placeholder="Email Address" type="email"/>
+<button class="bg-primary text-white p-2 rounded-lg">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-sm">
+<p>© 2024 SmartSportz.in. All rights reserved. Premium Sports Management Excellence.</p>
+<div class="flex gap-6">
+<a class="opacity-60 hover:opacity-100 transition-opacity" href="#">Instagram</a>
+<a class="opacity-60 hover:opacity-100 transition-opacity" href="#">Twitter</a>
+<a class="opacity-60 hover:opacity-100 transition-opacity" href="#">LinkedIn</a>
+</div>
+</div>
+</div>
+</footer>
+<!-- Mobile Sticky Registration CTA -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 bg-white p-4 shadow-[0_-4px_20px_rgba(0,0,0,0.1)] z-50 flex items-center justify-between border-t border-border-subtle">
+<div>
+<p class="text-xs text-secondary font-bold uppercase">Mumbai Premier Bash</p>
+<p class="font-bold text-deep-navy">₹5,000 Entry Fee</p>
+</div>
+<button class="bg-primary-container text-white px-6 py-3 rounded-lg font-bold shadow-lg">
+            Register Now
+        </button>
+</div>
+<script>
+        // Smooth reveal on scroll logic (Simple)
+        window.addEventListener('scroll', () => {
+            const reveals = document.querySelectorAll('section');
+            reveals.forEach(reveal => {
+                const windowHeight = window.innerHeight;
+                const revealTop = reveal.getBoundingClientRect().top;
+                const revealPoint = 150;
+                if (revealTop < windowHeight - revealPoint) {
+                    reveal.classList.add('opacity-100');
+                    reveal.classList.remove('opacity-0');
+                }
+            });
+        });
+
+        // Initialize state
+        document.querySelectorAll('section').forEach(s => s.classList.add('transition-opacity', 'duration-700', 'ease-in-out'));
+    </script>
+</body></html>

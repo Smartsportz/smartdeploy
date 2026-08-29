@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartSportz | Professional Tournament Registration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Be+Vietnam+Pro:wght@500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-dim": "#101415",
+                        "inverse-surface": "#e0e3e5",
+                        "primary-container": "#0b8852",
+                        "on-background": "#e0e3e5",
+                        "tertiary": "#b6c6ed",
+                        "on-tertiary-fixed": "#091b39",
+                        "primary-fixed": "#8ef8b7",
+                        "on-primary-fixed": "#002110",
+                        "inverse-primary": "#006d40",
+                        "on-surface": "#e0e3e5",
+                        "on-tertiary-container": "#000514",
+                        "inverse-on-surface": "#2d3133",
+                        "surface-container-low": "#191c1e",
+                        "secondary": "#b9c7e4",
+                        "surface-tint": "#72db9d",
+                        "surface": "#101415",
+                        "on-primary-container": "#ffffff",
+                        "on-error": "#690005",
+                        "outline-variant": "#3e4a41",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#39475f",
+                        "surface-container": "#1d2022",
+                        "surface-container-lowest": "#0b0f10",
+                        "primary-fixed-dim": "#72db9d",
+                        "on-secondary": "#233148",
+                        "on-secondary-fixed": "#0d1c32",
+                        "secondary-fixed-dim": "#b9c7e4",
+                        "surface-bright": "#363a3b",
+                        "secondary-fixed": "#d6e3ff",
+                        "error": "#ffb4ab",
+                        "tertiary-fixed-dim": "#b6c6ed",
+                        "background": "#101415",
+                        "surface-container-highest": "#323537",
+                        "surface-container-high": "#272a2c",
+                        "surface-variant": "#323537",
+                        "secondary-container": "#3c4962",
+                        "on-primary-fixed-variant": "#00522f",
+                        "on-primary": "#00391f",
+                        "on-tertiary": "#20304f",
+                        "on-surface-variant": "#bdcabe",
+                        "primary": "#72db9d",
+                        "on-secondary-container": "#abb9d6",
+                        "tertiary-container": "#67779a",
+                        "outline": "#889489",
+                        "on-tertiary-fixed-variant": "#374767",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#d8e2ff",
+                        "deep-navy": "#0a192f",
+                        "tertiary-navy": "#112240"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "premium": "18px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "8px",
+                        "stack-lg": "32px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px",
+                        "stack-md": "16px",
+                        "margin-desktop": "40px",
+                        "container-max": "1440px"
+                    },
+                    "fontFamily": {
+                        "stats-xl": ["Be Vietnam Pro"],
+                        "display-lg": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "title-md": ["Be Vietnam Pro"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #101415;
+            color: #e0e3e5;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(17, 34, 64, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-glow {
+            box-shadow: 0 0 15px rgba(11, 136, 82, 0.3);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+<!-- SideNavBar (Authority: JSON & Context) -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] bg-deep-navy dark:bg-inverse-surface shadow-2xl flex flex-col py-8 z-50">
+<div class="px-8 mb-10">
+<h1 class="font-headline-md text-2xl font-bold text-primary-fixed">SmartSportz</h1>
+<p class="text-secondary-fixed-dim text-xs tracking-widest uppercase mt-1">Enterprise Admin</p>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Nav Items based on JSON -->
+<a class="text-secondary-fixed-dim hover:text-white mx-4 px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="bg-primary-container text-on-primary-container rounded-lg mx-4 px-4 py-3 flex items-center gap-3 active:scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="trophy">trophy</span>
+<span class="font-body-md font-semibold">Tournaments</span>
+</a>
+<a class="text-secondary-fixed-dim hover:text-white mx-4 px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-body-md">Teams &amp; Players</span>
+</a>
+<a class="text-secondary-fixed-dim hover:text-white mx-4 px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-body-md">Schedule</span>
+</a>
+<a class="text-secondary-fixed-dim hover:text-white mx-4 px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-body-md">Financials</span>
+</a>
+<a class="text-secondary-fixed-dim hover:text-white mx-4 px-4 py-3 flex items-center gap-3 hover:bg-white/5 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+</nav>
+<div class="mt-auto pt-6 border-t border-white/5">
+<a class="text-secondary-fixed-dim hover:text-white mx-4 px-4 py-3 flex items-center gap-3 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-body-md">Support</span>
+</a>
+<a class="text-secondary-fixed-dim hover:text-white mx-4 px-4 py-3 flex items-center gap-3 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-body-md">Account</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] min-h-screen">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 bg-background-surface/80 backdrop-blur-md border-b border-white/5 flex justify-between items-center h-16 px-margin-desktop w-full">
+<div class="flex items-center gap-8">
+<span class="font-headline-sm text-xl font-black text-primary">SmartSportz.in</span>
+<div class="hidden md:flex gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 text-sm" href="#">Analytics</a>
+<a class="text-on-surface-variant hover:text-white text-sm transition-all" href="#">Reports</a>
+<a class="text-on-surface-variant hover:text-white text-sm transition-all" href="#">Logs</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-low rounded-full transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-xs font-bold border border-white/10 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a corporate sports director, sharp suit, confident expression, soft stadium lighting in the background, cinematic bokeh, high-fidelity photography." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLnx7ZmPdSJLCPIZ8FzjwQpQL4GtcxvVKkGp6NLag-e5h-26f9bxzYTIYi2vpqT00_M1XSjzi_8scgRz00vVd3ubXLKTK3P-JjkhOEiKbqlJ8TtehP3Lk-BEtxSHTRNpFvRy6d0peL0WHq4Lkkmf9Jtur8jZCgYVt_dHmWRQc1YLNJTLREUjICljGNBkDujkDGsAk0l4vGBHg_ifCBObI0Scu7q0VkqkezIdxCHzNn8FDBxKhI1FY0vcKMZoRCqr4qNxTjQ-yA3t1L"/>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="p-margin-desktop max-w-[1200px] mx-auto">
+<!-- Hero Title -->
+<div class="mb-12">
+<h2 class="font-headline-lg text-4xl mb-2">Professional Tournament Registration</h2>
+<p class="text-on-surface-variant text-lg">Initialize your competitive journey within the SmartSportz ecosystem.</p>
+</div>
+<!-- Stepper -->
+<div class="mb-16 relative">
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-white/10 -translate-y-1/2 z-0"></div>
+<div class="flex justify-between items-center relative z-10">
+<!-- Step 1: Active -->
+<div class="flex flex-col items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-primary-container text-white flex items-center justify-center font-bold active-glow">
+                            1
+                        </div>
+<span class="text-primary text-sm font-bold">Personal</span>
+</div>
+<!-- Step 2: Active (Current Focus) -->
+<div class="flex flex-col items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold">
+                            2
+                        </div>
+<span class="text-white text-sm font-bold">Team</span>
+</div>
+<!-- Step 3: Pending -->
+<div class="flex flex-col items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest border border-white/10 text-on-surface-variant flex items-center justify-center font-bold">
+                            3
+                        </div>
+<span class="text-on-surface-variant text-sm">Documents</span>
+</div>
+<!-- Step 4: Pending -->
+<div class="flex flex-col items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest border border-white/10 text-on-surface-variant flex items-center justify-center font-bold">
+                            4
+                        </div>
+<span class="text-on-surface-variant text-sm">Payment</span>
+</div>
+<!-- Step 5: Pending -->
+<div class="flex flex-col items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest border border-white/10 text-on-surface-variant flex items-center justify-center font-bold">
+                            5
+                        </div>
+<span class="text-on-surface-variant text-sm">Review</span>
+</div>
+</div>
+</div>
+<!-- Main Split Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left: Form Section -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Team Details Card -->
+<section class="glass-panel rounded-premium p-stack-lg">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary" data-icon="groups">groups</span>
+<h3 class="font-title-md text-2xl">Team Composition</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Input 1 -->
+<div class="flex flex-col gap-2">
+<label class="text-label-sm text-on-surface-variant uppercase tracking-wider">Team Official Name</label>
+<div class="relative group">
+<input class="w-full bg-tertiary-navy border-0 border-b-2 border-white/10 focus:border-primary focus:ring-0 text-body-md py-4 transition-all placeholder:text-white/20" placeholder="e.g. Maverick Strikers FC" type="text"/>
+<span class="material-symbols-outlined absolute right-2 top-4 text-primary text-sm" data-icon="check_circle">check_circle</span>
+</div>
+</div>
+<!-- Input 2 -->
+<div class="flex flex-col gap-2">
+<label class="text-label-sm text-on-surface-variant uppercase tracking-wider">Primary Category</label>
+<select class="w-full bg-tertiary-navy border-0 border-b-2 border-white/10 focus:border-primary focus:ring-0 text-body-md py-4 appearance-none">
+<option>Professional League A</option>
+<option>Under-21 Elite</option>
+<option>Corporate Invitational</option>
+</select>
+</div>
+<!-- Input 3 -->
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="text-label-sm text-on-surface-variant uppercase tracking-wider">Head Coach Credentials</label>
+<input class="w-full bg-tertiary-navy border-0 border-b-2 border-white/10 focus:border-primary focus:ring-0 text-body-md py-4 transition-all placeholder:text-white/20" placeholder="Full name and AFC/FIFA License ID" type="text"/>
+</div>
+</div>
+</section>
+<!-- Document Upload Section -->
+<section class="glass-panel rounded-premium p-stack-lg">
+<div class="flex items-center gap-3 mb-8">
+<span class="material-symbols-outlined text-primary" data-icon="upload_file">upload_file</span>
+<h3 class="font-title-md text-2xl">Required Verification</h3>
+</div>
+<div class="border-2 border-dashed border-white/10 rounded-xl p-10 flex flex-col items-center justify-center text-center group hover:border-primary/50 transition-all cursor-pointer bg-white/5">
+<div class="w-16 h-16 rounded-full bg-primary-container/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<h4 class="font-title-md mb-2">Drag &amp; Drop Documents</h4>
+<p class="text-on-surface-variant text-sm mb-6 max-w-sm">Upload Player IDs, Medical Certificates, and Insurance Waivers. <br/>Supports PDF, JPEG (Max 10MB per file).</p>
+<button class="bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-8 rounded-full transition-all">Browse Files</button>
+</div>
+<div class="mt-6 flex flex-wrap gap-3">
+<div class="bg-surface-container flex items-center gap-2 px-3 py-2 rounded-lg border border-white/5">
+<span class="material-symbols-outlined text-primary text-sm" data-icon="picture_as_pdf">picture_as_pdf</span>
+<span class="text-xs font-label-sm">Roster_Signed.pdf</span>
+<button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-xs" data-icon="close">close</span></button>
+</div>
+</div>
+</section>
+<!-- Nav Buttons -->
+<div class="flex justify-between items-center pt-4">
+<button class="flex items-center gap-2 text-on-surface-variant hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+<span>Previous Step</span>
+</button>
+<button class="bg-primary-container hover:bg-primary text-white font-bold py-4 px-10 rounded-full active:scale-95 transition-all shadow-lg">
+                            Continue to Review
+                        </button>
+</div>
+</div>
+<!-- Right: Payment & Summary -->
+<div class="space-y-6">
+<div class="glass-panel rounded-premium p-stack-lg sticky top-24">
+<h3 class="font-title-md text-xl mb-6">Payment Summary</h3>
+<div class="space-y-4 mb-8">
+<div class="flex justify-between text-on-surface-variant">
+<span>Registration Fee</span>
+<span class="font-label-sm">₹ 24,999.00</span>
+</div>
+<div class="flex justify-between text-on-surface-variant">
+<span>Service GST (18%)</span>
+<span class="font-label-sm">₹ 4,499.82</span>
+</div>
+<div class="flex justify-between text-on-surface-variant pb-4 border-b border-white/5">
+<span>Processing Fee</span>
+<span class="font-label-sm">₹ 150.00</span>
+</div>
+<div class="flex justify-between text-white font-bold text-lg pt-2">
+<span>Total Payable</span>
+<span class="text-primary">₹ 29,648.82</span>
+</div>
+</div>
+<div class="mb-8">
+<label class="text-label-sm text-on-surface-variant uppercase tracking-wider block mb-2">Coupon Code</label>
+<div class="flex gap-2">
+<input class="flex-1 bg-tertiary-navy border border-white/10 rounded-lg px-4 py-2 focus:ring-primary focus:border-primary transition-all uppercase" placeholder="PRO2024" type="text"/>
+<button class="bg-white/10 px-4 py-2 rounded-lg text-sm font-bold hover:bg-white/20 transition-all">Apply</button>
+</div>
+</div>
+<!-- Razorpay Integration Button -->
+<button class="w-full bg-[#3395FF] hover:bg-[#2084f0] text-white py-4 rounded-xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-xl overflow-hidden relative">
+<span class="font-bold">Pay with Razorpay</span>
+<div class="h-6 w-px bg-white/20"></div>
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</button>
+<div class="mt-6 flex flex-col items-center gap-4">
+<div class="flex items-center gap-2 text-on-surface-variant text-[10px] uppercase tracking-widest">
+<span class="material-symbols-outlined text-xs" data-icon="verified_user">verified_user</span>
+                                Secure PCI-DSS Encrypted Transaction
+                            </div>
+<div class="flex gap-3 opacity-30 grayscale hover:grayscale-0 transition-all cursor-default">
+<span class="material-symbols-outlined" data-icon="credit_card">credit_card</span>
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+<span class="material-symbols-outlined" data-icon="contactless">contactless</span>
+</div>
+</div>
+</div>
+<!-- Help Card -->
+<div class="bg-primary-container/10 border border-primary/20 rounded-premium p-6">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="info">info</span>
+<div>
+<p class="text-sm font-semibold mb-1">Need assistance?</p>
+<p class="text-xs text-on-surface-variant leading-relaxed">Our tournament directors are online to help with documentation or team grouping issues.</p>
+<a class="inline-block mt-3 text-primary text-xs font-bold underline" href="#">Contact Registrar</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Success Feedback Overlay (Hidden by Default) -->
+<div class="fixed bottom-10 right-10 translate-y-20 opacity-0 transition-all duration-500 z-[100]" id="success-toast">
+<div class="glass-panel bg-primary-container/90 border-primary text-white px-6 py-4 rounded-xl flex items-center gap-4 shadow-2xl">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+<div>
+<p class="font-bold">Data Saved</p>
+<p class="text-xs opacity-80">Draft saved successfully.</p>
+</div>
+</div>
+</div>
+<script>
+        // Micro-interactions for form validation and saving state
+        const inputs = document.querySelectorAll('input');
+        const toast = document.getElementById('success-toast');
+
+        inputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                if(input.value.length > 3) {
+                    toast.classList.remove('translate-y-20', 'opacity-0');
+                    setTimeout(() => {
+                        toast.classList.add('translate-y-20', 'opacity-0');
+                    }, 3000);
+                }
+            });
+        });
+
+        // Hover effect for navigation
+        document.querySelectorAll('nav a').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'translateX(4px)';
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateX(0px)';
+            });
+        });
+    </script>
+</body></html>

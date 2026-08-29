@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Future of AI in Professional Sports Analytics | SmartSportz.in</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100..900&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#3e4a41",
+                    "on-tertiary-fixed": "#091b39",
+                    "on-secondary-fixed-variant": "#39475f",
+                    "on-tertiary-container": "#000514",
+                    "on-primary": "#00391f",
+                    "on-primary-container": "#ffffff",
+                    "surface-container-high": "#272a2c",
+                    "surface-tint": "#72db9d",
+                    "on-primary-fixed": "#002110",
+                    "on-background": "#e0e3e5",
+                    "surface": "#101415",
+                    "error": "#ffb4ab",
+                    "on-surface-variant": "#bdcabe",
+                    "secondary": "#b9c7e4",
+                    "surface-bright": "#363a3b",
+                    "primary": "#72db9d",
+                    "tertiary-container": "#67779a",
+                    "surface-variant": "#323537",
+                    "secondary-container": "#3c4962",
+                    "primary-fixed": "#8ef8b7",
+                    "on-error": "#690005",
+                    "surface-dim": "#101415",
+                    "on-tertiary": "#20304f",
+                    "tertiary": "#b6c6ed",
+                    "on-tertiary-fixed-variant": "#374767",
+                    "primary-fixed-dim": "#72db9d",
+                    "surface-container-low": "#191c1e",
+                    "primary-container": "#0b8852",
+                    "on-primary-fixed-variant": "#00522f",
+                    "surface-container-highest": "#323537",
+                    "on-secondary-fixed": "#0d1c32",
+                    "on-surface": "#e0e3e5",
+                    "background": "#101415",
+                    "tertiary-fixed-dim": "#b6c6ed",
+                    "on-secondary-container": "#abb9d6",
+                    "inverse-surface": "#e0e3e5",
+                    "inverse-primary": "#006d40",
+                    "tertiary-fixed": "#d8e2ff",
+                    "inverse-on-surface": "#2d3133",
+                    "surface-container": "#1d2022",
+                    "secondary-fixed": "#d6e3ff",
+                    "outline": "#889489",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#b9c7e4",
+                    "surface-container-lowest": "#0b0f10",
+                    "on-secondary": "#233148",
+                    "on-error-container": "#ffdad6",
+                    "deep-navy": "#0a192f"
+            },
+            "borderRadius": {
+                    "DEFAULT": "18px",
+                    "lg": "18px",
+                    "xl": "24px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "stack-sm": "8px",
+                    "stack-lg": "32px",
+                    "container-max": "1440px",
+                    "margin-desktop": "40px",
+                    "margin-mobile": "16px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "stats-xl": ["Be Vietnam Pro"],
+                    "label-sm": ["JetBrains Mono"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "title-md": ["Be Vietnam Pro"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "stats-xl": ["40px", {"lineHeight": "40px", "fontWeight": "800"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(17, 34, 64, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #101415; }
+        ::-webkit-scrollbar-thumb { background: #323537; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3e4a41; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 flex justify-between items-center px-margin-desktop h-20 w-full max-w-container-max mx-auto bg-background-surface dark:bg-deep-navy border-b border-border-subtle dark:border-outline shadow-sm dark:shadow-none">
+<div class="flex items-center gap-8">
+<span class="font-display-lg text-headline-md font-bold text-deep-navy dark:text-primary-fixed">SmartSportz.in</span>
+<nav class="hidden lg:flex items-center space-x-6">
+<a class="font-label-md text-label-md text-primary dark:text-primary-fixed font-bold border-b-2 border-primary py-2" href="#">Tournaments</a>
+<a class="font-label-md text-label-md text-text-secondary dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Live Scores</a>
+<a class="font-label-md text-label-md text-text-secondary dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Rankings</a>
+<a class="font-label-md text-label-md text-text-secondary dark:text-on-surface-variant hover:text-primary dark:hover:text-primary-fixed transition-colors duration-200" href="#">Partners</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center space-x-2">
+<button class="px-4 py-2 text-primary font-bold hover:scale-95 transition-all">Login</button>
+<button class="px-6 py-2 bg-primary-container text-on-primary-container rounded-full font-bold hover:scale-95 transition-all">Register Team</button>
+</div>
+<div class="flex items-center space-x-3 ml-4 border-l border-outline-variant pl-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">settings</span>
+<img alt="User profile" class="w-10 h-10 rounded-full border-2 border-primary-container object-cover" data-alt="Close-up professional studio portrait of a sports executive in a sleek dark suit, sharp lighting with deep shadows, high-end professional aesthetic, navy and emerald color palette, 8k resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-xCbi3Mx-eGz4yP5oMHmnB7t8SKeGT-6zEdKV-WbB7W7sJmeYi7wPpbjA3rUqEw3uENGUH__6qiOz6uGUafhico0URD1elOCDqByn86EHIb22LTaZbUVF8E3k_Ei6CuiqZuCFbnljblI4dax03toPfjjurRShrq-z1HbSf34Y0U9Pk2bExdwuZ1FvTelrK2_YMHgveXJYPgNkHJZ0UsZhfGz2DYEkHaiB4gFxS6z8J0i-si9V3unGs3dHh4EFXqqgMMhgwvzIDUJX"/>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen max-w-[1920px] mx-auto">
+<!-- SideNavBar -->
+<aside class="hidden xl:flex flex-col p-6 space-y-4 fixed left-0 top-20 h-[calc(100vh-5rem)] w-[280px] bg-deep-navy dark:bg-black shadow-xl z-40">
+<div class="flex items-center space-x-3 pb-6 border-b border-outline-variant/30">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary">sports_kabaddi</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-white leading-tight">Pro League Admin</h3>
+<p class="text-xs text-on-surface-variant font-label-sm uppercase tracking-wider">Enterprise Tier</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2 py-4">
+<a class="flex items-center space-x-3 p-3 text-on-surface-variant hover:bg-surface-variant/10 rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center space-x-3 p-3 bg-primary dark:bg-primary-container text-white rounded-lg translate-x-1 transition-all" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="font-label-md">Tournaments</span>
+</a>
+<a class="flex items-center space-x-3 p-3 text-on-surface-variant hover:bg-surface-variant/10 rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-md">Teams</span>
+</a>
+<a class="flex items-center space-x-3 p-3 text-on-surface-variant hover:bg-surface-variant/10 rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md">Players</span>
+</a>
+<a class="flex items-center space-x-3 p-3 text-on-surface-variant hover:bg-surface-variant/10 rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-md">Schedules</span>
+</a>
+</nav>
+<div class="pt-4 border-t border-outline-variant/30 space-y-2">
+<a class="flex items-center space-x-3 p-3 text-on-surface-variant hover:bg-surface-variant/10 rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md">Help Center</span>
+</a>
+<a class="flex items-center space-x-3 p-3 text-on-surface-variant hover:bg-surface-variant/10 rounded-lg transition-all duration-200 text-error" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 xl:ml-[280px] w-full transition-all">
+<!-- Hero Section -->
+<section class="relative w-full h-[716px] flex items-end overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="A wide cinematic shot of a professional futuristic stadium at night, with neon stadium lights in championship green and deep navy. A high-speed motion blur of an athlete in action is visible in the background, creating a sense of elite performance. High contrast, atmospheric fog, luxury sports aesthetic, hyper-realistic photography." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAVpracFIlKE25QcMYIo4wl3IsV69F5AxKe8yhgoGxJpWkZ-1CokXimpMTK4YUQd-_PERDf1gwOPQ6RT4KUFWL7Qt1JpQWpBooGH6XZ_R6cP6erURjfqt2VVLySVFAFUza_nDaCSTrNeDekeWie_kNhLC1nM8tFrbHXJ5ya5hGbinCjIb8spUxJO6qiOQgqNF9LL1QVFD3fmksBrL5EhXZau1MYh0j0VSHX5wWrBtl-rkRi70l8npEHGhyk7YCqMTjCk6Dvh5uio4Bd')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent"></div>
+</div>
+<div class="relative z-10 px-margin-desktop pb-stack-lg max-w-4xl">
+<div class="flex items-center space-x-3 mb-6">
+<span class="px-3 py-1 bg-primary text-on-primary font-label-sm text-xs rounded-full uppercase tracking-widest">Enterprise Feature</span>
+<span class="text-on-surface-variant font-label-sm">• 8 min read</span>
+</div>
+<h1 class="font-display-lg text-6xl md:text-7xl text-white mb-8 leading-tight tracking-tight">
+                        The Future of AI in Professional <span class="text-primary italic">Sports Analytics</span>
+</h1>
+<div class="flex items-center space-x-4">
+<img class="w-14 h-14 rounded-full border-2 border-primary object-cover" data-alt="Professional headshot of a middle-aged South Asian male sports analyst, wearing a modern gray suit, smiling confidently. Soft studio lighting, blurred high-tech analytics background, professional corporate style, sharp focus, 8k resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCB5OGLbJh_cWhwKHwRAQvYNxVdEOEO9uTT-WJ3wthUqwLBGQP5ieOvL0UQlh5VRX1UxznRumuX7StpStsK_G5sumHxr2awCACBne-OcMo71kf10iv0SA9wQl6bm-iE_IQ6la92gxdrNhU8AYojXKkGdHH1hOXCHjZtCj1larWyah20ijr8j0fiFN4i4WRh2j_jg4T4rBw5uH7KoNuNWXuLe8mfJHYM0DupBySTLptjVtUXEcWFT9cAlgEei3tz8BghKMqwp_P4yeB9"/>
+<div>
+<p class="font-title-md text-white">Arjun Mehta</p>
+<p class="text-on-surface-variant font-body-md text-sm">Director of Analytics • Oct 24, 2024</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Article Content Grid -->
+<div class="px-margin-desktop py-stack-lg max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left: Sidebar Tools -->
+<div class="hidden lg:block lg:col-span-1">
+<div class="sticky top-32 flex flex-col items-center space-y-6">
+<button class="p-3 rounded-xl glass-card text-on-surface-variant hover:text-primary transition-all hover:scale-110">
+<span class="material-symbols-outlined">share</span>
+</button>
+<button class="p-3 rounded-xl glass-card text-on-surface-variant hover:text-primary transition-all hover:scale-110">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+<div class="h-12 w-px bg-outline-variant/30"></div>
+<p class="font-label-sm text-[10px] uppercase tracking-tighter text-on-surface-variant rotate-90 whitespace-nowrap mb-8">Scroll Progress</p>
+</div>
+</div>
+<!-- Main Article Body -->
+<article class="lg:col-span-7 space-y-8">
+<p class="font-body-lg text-on-surface leading-relaxed first-letter:text-7xl first-letter:font-bold first-letter:text-primary first-letter:mr-3 first-letter:float-left">
+                        In the high-stakes world of professional sports, data has evolved from a luxury to a fundamental necessity. As we move into 2025, the integration of Artificial Intelligence is no longer about simple box scores; it is about predictive physiological modeling and real-time strategic pivot points that can decide championships in milliseconds.
+                    </p>
+<h2 class="font-headline-lg text-white mt-12 mb-4">The Real-Time Paradigm Shift</h2>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                        Traditional analytics relied on retrospective data—studying what happened after the final whistle. Today's AI models, powered by enterprise platforms like SmartSportz, process thousands of data points per second from wearable sensors and high-fidelity optical tracking. This allows coaches to receive "Tactical Alerts" before a player even shows visible signs of fatigue.
+                    </p>
+<blockquote class="my-12 p-8 glass-card border-l-4 border-primary rounded-r-xl">
+<p class="font-headline-lg-mobile text-primary-fixed-dim italic leading-snug">
+                            "The difference between a championship and a second-place finish is now measured in the latency of your data pipeline."
+                        </p>
+<cite class="block mt-4 text-on-surface-variant font-label-sm not-italic">— Dr. Sarah Chen, MIT Sports Lab</cite>
+</blockquote>
+<h3 class="font-title-md text-white">Hyper-Personalized Athlete Recovery</h3>
+<p class="font-body-md text-on-surface-variant leading-relaxed">
+                        Injury prevention has seen the most dramatic gains. By correlating sleep patterns, hydration levels, and biomechanical strain, AI can predict the probability of soft-tissue injuries with 87% accuracy. This "Pre-habilitation" approach ensures that elite rosters remain at peak performance throughout a grueling season.
+                    </p>
+<!-- Interactive Share Module -->
+<div class="mt-16 p-8 bg-surface-container rounded-xl border border-outline-variant/20 flex flex-col md:flex-row items-center justify-between gap-6">
+<div>
+<h4 class="font-title-md text-white">Found this insightful?</h4>
+<p class="text-on-surface-variant font-body-md">Share this article with your professional network.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center space-x-2 px-6 py-3 glass-card rounded-full hover:bg-primary/20 transition-all">
+<span class="material-symbols-outlined text-sm">link</span>
+<span class="font-label-md">Copy Link</span>
+</button>
+<button class="p-3 bg-white/5 hover:bg-primary/20 rounded-full transition-all">
+<img alt="Twitter" class="w-5 h-5 invert" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR_1p5wRxORyF3C0E5Z0-up9hERudZg93YTIlryhQbAs6a2-aaFcTCZUI4RUzbxx9jW71lNb_hzM09M_-UzqzYkCs8sUzQUDA239nwrYAK2CS_W7LttpBS9f2IWUjNcyt1I4drby7GIOag3rVRt6KYpxnIsn9qNepG4W6pzc6IBzy-upOyGhZoLhNIS_Y_hqrC6kaeCcIH_ATMtuav1_SjjCPfRHCU9sFrUOeo_Ui4DXEQ_z06wXAyBuDByOrxAcRiuTLdENQBiFek"/>
+</button>
+<button class="p-3 bg-white/5 hover:bg-primary/20 rounded-full transition-all">
+<img alt="LinkedIn" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIP6JIrS-7Drve3qpJGuGzzv335HU7374W_9ftyeaK_FywIvwoJMfgdQUttynTLF2cSPDC7WXpE-y9GENgzgpTcaNtcHa7F5MNIQtHD7q9azbAEC--ArfwZJRV7n-h1MhKv_NT1qay79yGjCieDxCyEh3sxBdO9-s3H2q3nr_xFP1IGPFAzaIo3tmt7kO8quE6ZTAERm75m-m-u5XLG_t3gGyOP6d3VUnZWId5JKIi-c4V51r3fF7L1H3tYZ72heRS_ZLx6iXmJtzw"/>
+</button>
+</div>
+</div>
+<!-- Comments Section -->
+<section class="mt-20 pt-12 border-t border-outline-variant/30">
+<h3 class="font-headline-lg text-white mb-8">Insights & Discussion <span class="text-on-surface-variant text-xl">(24)</span></h3>
+<div class="space-y-10">
+<!-- Comment 1 -->
+<div class="flex space-x-4">
+<img class="w-12 h-12 rounded-full object-cover" data-alt="Portrait of a young woman with glasses, professional casual attire, background of a modern sports office with jerseys on the wall. Soft lighting, high-end photography, emerald accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKkP8FCXP0wdxaM61OyiLD3TIDRF3PT1ChkwfPvgB25gZC1r3FdFBJxg5hmXadsZvdceYlPr_rySNw67pCgBkW4Gp5Nta5QKv6bUyZGHrG1fYGtNr_rADGTTmTUYv8Y34Liwo6GIPK8jNSt8soqhelFFrreHsJ_BBfhGaNSwLRZlCwMVyBjLQu5jC2aimO5wMcgYPLyDpy3nMbf8xBTQnBx8mIcFovA3J4p_u3Nnt-XmS8ToMkzGps-5bmR_czHGvyQdHDclYo35kr"/>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-2">
+<h5 class="font-title-md text-sm text-white">Elena Rodriguez <span class="ml-2 px-2 py-0.5 bg-outline-variant/30 text-[10px] text-primary-fixed rounded">PRO TEAM COACH</span></h5>
+<span class="text-xs text-on-surface-variant font-label-sm">2 hours ago</span>
+</div>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-4">
+                                        The point about pre-habilitation is spot on. We've seen a 14% reduction in muscle strains since integrating predictive modeling last season. Great write-up, Arjun.
+                                    </p>
+<div class="flex items-center space-x-4">
+<button class="flex items-center space-x-1 text-xs text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-sm">thumb_up</span>
+<span>12</span>
+</button>
+<button class="text-xs text-on-surface-variant hover:text-primary font-label-sm transition-all">REPLY</button>
+</div>
+<!-- Threaded Reply -->
+<div class="mt-6 pl-8 border-l-2 border-outline-variant/20 flex space-x-4">
+<img class="w-10 h-10 rounded-full object-cover" data-alt="Close-up of a diverse young man in a tech hoodie, minimalist office background with soft bokeh, high-resolution portrait, championship green lighting accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfQ10ZrGY2zUbAOoFZkP2S_SIdtmB9IONhZWR69eFoAT_dHSqZ1egSMu-wjUxjPUHLSZfEPbe11RSmvnzpc-DtqvFQN3htUr639daeUgg6zy9sGVvkfvkOjtYxN3WDstTDm_EAiW6DiHbUxJdfw9qpiCBKa7iFaVvxIPLINdWj4aPxWg4XRIhYrRtZR01Jt9J5sVx4m_Rd-fyjKCx0vWvCE8zLORog1BepcP4bAvFhnwKw_oCOBJ5ZLTSWNX8ZVVKozb8NTtuUfNCU"/>
+<div class="flex-1">
+<div class="flex items-center justify-between mb-1">
+<h5 class="font-title-md text-xs text-white">Mark Thompson</h5>
+<span class="text-[10px] text-on-surface-variant font-label-sm">1 hour ago</span>
+</div>
+<p class="text-on-surface-variant text-xs leading-relaxed mb-3">
+                                                Agreed, Elena. Did you find the hardware latency was the biggest hurdle initially?
+                                            </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Add Comment Box -->
+<div class="mt-12 p-6 glass-card rounded-xl">
+<textarea class="w-full bg-transparent border-none focus:ring-0 text-on-surface-variant placeholder:text-outline p-0 resize-none" placeholder="Join the discussion..."></textarea>
+<div class="mt-4 flex justify-end">
+<button class="px-6 py-2 bg-primary text-on-primary rounded-lg font-bold hover:scale-95 transition-all">Post Insight</button>
+</div>
+</div>
+</section>
+</article>
+<!-- Right Sidebar: Newsletter & Related -->
+<aside class="lg:col-span-4 space-y-gutter">
+<!-- Newsletter Box -->
+<div class="p-8 bg-gradient-to-br from-primary-container to-deep-navy rounded-xl border border-primary/20 relative overflow-hidden group">
+<div class="absolute -right-12 -top-12 w-32 h-32 bg-primary/20 rounded-full blur-3xl group-hover:bg-primary/40 transition-all"></div>
+<h4 class="font-headline-lg-mobile text-white mb-2 relative z-10">Join the <br/><span class="italic">Insider Feed</span></h4>
+<p class="text-on-primary-container/80 text-sm mb-6 relative z-10">Get enterprise-level sports tech insights delivered weekly to your inbox.</p>
+<div class="space-y-3 relative z-10">
+<input class="w-full px-4 py-3 bg-black/30 border border-white/10 rounded-lg text-white focus:border-primary outline-none transition-all" placeholder="work@email.com" type="email"/>
+<button class="w-full py-3 bg-white text-deep-navy font-bold rounded-lg hover:bg-primary-fixed transition-all">Subscribe Now</button>
+</div>
+<p class="mt-4 text-[10px] text-on-primary-container/40 text-center uppercase tracking-widest">Privacy guaranteed. Unsubscribe anytime.</p>
+</div>
+<!-- Trending Widget -->
+<div class="p-6 glass-card rounded-xl">
+<h4 class="font-title-md text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+                            Trending Now
+                        </h4>
+<ul class="space-y-6">
+<li class="group cursor-pointer">
+<span class="font-label-sm text-primary-fixed text-[10px] uppercase">MANAGEMENT</span>
+<h5 class="text-sm font-title-md text-on-surface group-hover:text-primary transition-colors mt-1">Maximizing ROI on Stadium Digital Assets</h5>
+</li>
+<li class="group cursor-pointer">
+<span class="font-label-sm text-primary-fixed text-[10px] uppercase">LEGAL</span>
+<h5 class="text-sm font-title-md text-on-surface group-hover:text-primary transition-colors mt-1">New NIL Regulations: A 2025 Survival Guide</h5>
+</li>
+<li class="group cursor-pointer">
+<span class="font-label-sm text-primary-fixed text-[10px] uppercase">SCOUTING</span>
+<h5 class="text-sm font-title-md text-on-surface group-hover:text-primary transition-colors mt-1">Why Video-Based Scouting is Failing Elite Clubs</h5>
+</li>
+</ul>
+</div>
+</aside>
+</div>
+<!-- Related Articles Grid -->
+<section class="px-margin-desktop py-20 bg-surface-container-low border-t border-outline-variant/20">
+<div class="max-w-container-max mx-auto">
+<div class="flex items-center justify-between mb-12">
+<h2 class="font-headline-lg text-white">Recommended Reading</h2>
+<a class="text-primary font-label-md flex items-center gap-2 hover:translate-x-1 transition-transform" href="#">
+                            View All Articles <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="group cursor-pointer">
+<div class="relative h-64 mb-6 overflow-hidden rounded-xl">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="High-speed photograph of a basketball player mid-dunk, dramatic stadium lighting, emerald and white color accents, professional sports photography style, cinematic motion blur." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDWDtwmFCxa8SjIApHupoC_GB-jICw0sAh3w-8ZScwPlWTMMEMNa8hby0ptY0IR7V524xpetTaJ6zsFd2V0mCzHsOoi1K3BdrS-BxJwjjjCByCRK5bIfl7WJ0zeVo0WiJYow7Vi5IXW_ASxDupnaOyD4yJK3OcC-HKs3ZTMdkO4sXaeWRTTBfQM3m2WCU3g7dBjBD27YUAW58c3fXmXCUIdAJSgSVGXopUEiyLaDSX31SVUwaTls_x1nDmkOW5W-boI22XW8CpVDOVG')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-deep-navy to-transparent opacity-60"></div>
+<span class="absolute top-4 left-4 px-3 py-1 bg-primary text-on-primary font-label-sm text-[10px] rounded">ANALYSIS</span>
+</div>
+<h3 class="font-title-md text-white mb-2 group-hover:text-primary transition-colors">The Psychology of Clutch Performance</h3>
+<p class="text-on-surface-variant text-sm line-clamp-2">How neuro-analytics is helping players stay calm during high-pressure game-ending moments.</p>
+</div>
+<!-- Card 2 -->
+<div class="group cursor-pointer">
+<div class="relative h-64 mb-6 overflow-hidden rounded-xl">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="A futuristic stadium training facility with rows of high-tech rowing machines and smart screens showing performance metrics. Minimalist architectural design, soft glowing green lights, elite professional atmosphere." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAAt6oHXNqxRyCTZ5wfLWfpZ4I0Naqu14Cle2VYi4-zYmRsZkD3Fnw3vWUq0i18lr7jcn6RTm0SIzX_jvoUcr3Yt3hk2S_ydV3z1sf-jmz7lIcaYwYBM8ig1LoFnp9-4hoHZU4loOQPdLbgfMXZJwkvEwQOVO9LM5nk_0UjDX06ar3pMVF6Cw6-LcFT7L2WFlX1Em-dczH8Blnei99HvwRqkCkqdGI-u_Xr9zsbyqltbbZV__cV2glM5NIHrkjsjWf6FkRFjkP9uZCd')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-deep-navy to-transparent opacity-60"></div>
+<span class="absolute top-4 left-4 px-3 py-1 bg-primary text-on-primary font-label-sm text-[10px] rounded">INFRASTRUCTURE</span>
+</div>
+<h3 class="font-title-md text-white mb-2 group-hover:text-primary transition-colors">Smart Stadiums: The $5B Revenue Revolution</h3>
+<p class="text-on-surface-variant text-sm line-clamp-2">Understanding how IoT and 5G are transforming the fan experience and secondary revenue streams.</p>
+</div>
+<!-- Card 3 -->
+<div class="group cursor-pointer">
+<div class="relative h-64 mb-6 overflow-hidden rounded-xl">
+<div class="w-full h-full bg-cover bg-center group-hover:scale-105 transition-transform duration-500" data-alt="Close up of a smart wearable sports watch on an athlete's wrist, glowing interface with championship green heart rate and velocity data. Raindrops visible, dark outdoor night training environment, cinematic high-fidelity lighting." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCK4t5-G65PGJbl3Grju8HHIOP_MSdDVGT4PQ99fgzNy6sXk4M-4DNEPByavkqx2g0pADpcKJ3ytfgfzvZ8zVAKsegq4fL_9uM8FNVNpXUQfOIRrm99_MjD3E9eqf8P8vHy4nr47nmQQ1JsOD_TgD6s5flXTD6UInVfhSyVraHFVKFDZtHA7NeG85Wc6OD81rd5YX1Kjmo-CI-WRXVq2JFw8oi8MBaWIwiI5Bb-ZPWlcPj2TFfE_O2V94V6Aq0m2Agtoked-dEX92kH')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-deep-navy to-transparent opacity-60"></div>
+<span class="absolute top-4 left-4 px-3 py-1 bg-primary text-on-primary font-label-sm text-[10px] rounded">WEARABLES</span>
+</div>
+<h3 class="font-title-md text-white mb-2 group-hover:text-primary transition-colors">Wearable Tech: Beyond the Heart Rate</h3>
+<p class="text-on-surface-variant text-sm line-clamp-2">Exploring the next frontier of biosensors: hydration levels, blood oxygen, and electrolyte balance.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-section-gap px-margin-desktop flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto bg-surface-container-low dark:bg-deep-navy border-t border-border-subtle dark:border-outline">
+<div class="mb-8 md:mb-0">
+<span class="font-headline-md text-headline-md text-deep-navy dark:text-white font-bold">SmartSportz.in</span>
+<p class="text-on-surface-variant text-xs mt-2 opacity-60">Elite Sports Management Ecosystem</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8 mb-8 md:mb-0">
+<a class="text-text-secondary dark:text-on-surface-variant hover:text-primary underline transition-all font-body-md text-sm" href="#">Privacy Policy</a>
+<a class="text-text-secondary dark:text-on-surface-variant hover:text-primary underline transition-all font-body-md text-sm" href="#">Terms of Service</a>
+<a class="text-text-secondary dark:text-on-surface-variant hover:text-primary underline transition-all font-body-md text-sm" href="#">Cookie Policy</a>
+<a class="text-text-secondary dark:text-on-surface-variant hover:text-primary underline transition-all font-body-md text-sm" href="#">Support</a>
+<a class="text-text-secondary dark:text-on-surface-variant hover:text-primary underline transition-all font-body-md text-sm" href="#">Contact</a>
+</div>
+<p class="text-text-secondary dark:text-on-surface-variant text-[10px] opacity-60">© 2024 SmartSportz.in. All rights reserved.</p>
+</footer>
+</main>
+</div>
+<!-- Micro-interaction Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Progress Indicator Logic (simplified for visual demo)
+            const article = document.querySelector('article');
+            window.addEventListener('scroll', () => {
+                const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+                // This could be mapped to a visual progress bar if added
+            });
+
+            // Smooth Hover Effects
+            const cards = document.querySelectorAll('.glass-card, .group');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-4px)';
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body></html>

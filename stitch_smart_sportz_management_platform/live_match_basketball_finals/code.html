@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SMART SPORTZ - Live Match Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Inter:wght@400;700&amp;family=JetBrains+Mono:wght@600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton:wght@100..900&amp;family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        @keyframes pulse-red {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.4; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .live-pulse-dot {
+            animation: pulse-red 2s infinite ease-in-out;
+        }
+        .glass-panel {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-panel-overlay {
+            background: rgba(23, 31, 51, 0.85);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .stadium-glow {
+            box-shadow: 0 0 20px rgba(173, 198, 255, 0.1);
+        }
+        .live-indicator-glow {
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+        }
+        body {
+            background-color: #0b1326;
+            color: #dae2fd;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b1326;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3449;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#ff5451",
+                        "on-primary-container": "#00285d",
+                        "surface-tint": "#adc6ff",
+                        "on-surface-variant": "#c2c6d6",
+                        "on-surface": "#dae2fd",
+                        "surface": "#0b1326",
+                        "inverse-primary": "#005ac2",
+                        "background": "#0b1326",
+                        "surface-dim": "#0b1326",
+                        "on-secondary-fixed-variant": "#783200",
+                        "tertiary-fixed-dim": "#ffb3ad",
+                        "tertiary-fixed": "#ffdad7",
+                        "outline": "#8c909f",
+                        "on-primary-fixed-variant": "#004395",
+                        "error": "#ffb4ab",
+                        "error-container": "#93000a",
+                        "secondary-fixed-dim": "#ffb690",
+                        "on-tertiary-fixed-variant": "#930013",
+                        "on-primary-fixed": "#001a42",
+                        "inverse-surface": "#dae2fd",
+                        "surface-container-lowest": "#060e20",
+                        "outline-variant": "#424754",
+                        "surface-container-highest": "#2d3449",
+                        "surface-container": "#171f33",
+                        "surface-variant": "#2d3449",
+                        "on-error-container": "#ffdad6",
+                        "primary-fixed": "#d8e2ff",
+                        "secondary-container": "#ec6a06",
+                        "primary-fixed-dim": "#adc6ff",
+                        "tertiary": "#ffb3ad",
+                        "on-tertiary": "#68000a",
+                        "on-secondary-fixed": "#341100",
+                        "on-tertiary-container": "#5c0008",
+                        "surface-container-high": "#222a3d",
+                        "on-secondary": "#552100",
+                        "on-primary": "#002e6a",
+                        "primary": "#adc6ff",
+                        "on-error": "#690005",
+                        "on-background": "#dae2fd",
+                        "surface-bright": "#31394d",
+                        "inverse-on-surface": "#283044",
+                        "surface-container-low": "#131b2e",
+                        "secondary-fixed": "#ffdbca",
+                        "on-secondary-container": "#4a1c00",
+                        "primary-container": "#4d8eff",
+                        "secondary": "#ffb690",
+                        "on-tertiary-fixed": "#410004"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "max-width": "1440px",
+                        "margin-desktop": "48px",
+                        "margin-mobile": "16px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Anton"],
+                        "body-md": ["Inter"],
+                        "display-xl": ["Anton"],
+                        "headline-lg-mobile": ["Anton"],
+                        "body-lg": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "live-tag": ["Inter"],
+                        "headline-md": ["Anton"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["48px", { "lineHeight": "48px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-xl": ["72px", { "lineHeight": "72px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["32px", { "lineHeight": "32px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600" }],
+                        "live-tag": ["14px", { "lineHeight": "14px", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "28px", "fontWeight": "400" }]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- TopNavBar Implementation -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface/70 backdrop-blur-md dark:bg-surface/70 border-b border-white/10 shadow-sm">
+<div class="font-headline-md text-headline-md text-primary tracking-wider uppercase">SMART SPORTZ</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Home</a>
+<a class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1 transition-colors duration-200" href="#">Live</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Tournaments</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Sports</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Gallery</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">About</a>
+</nav>
+<div class="flex items-center gap-6">
+<div class="relative group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="bg-surface-variant/30 border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary w-48 transition-all duration-300" placeholder="Search..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary font-label-caps text-label-caps px-6 py-2.5 rounded-lg active:scale-95 transition-transform">Admin Login</button>
+</div>
+</header>
+<main class="pt-24 pb-12 px-4 md:px-margin-desktop max-w-[1600px] mx-auto min-h-screen relative">
+<!-- Atmospheric Background Animation -->
+
+<!-- Match Header / Scoreboard Section -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-gutter mb-8">
+<!-- Left Info Card -->
+<div class="glass-panel p-6 rounded-xl flex flex-col justify-center">
+<div class="flex items-center gap-2 mb-2">
+<span class="live-indicator-glow bg-error text-on-error font-live-tag text-live-tag px-3 py-1 rounded flex items-center gap-2">
+<span class="w-2 h-2 bg-on-error rounded-full live-pulse-dot"></span>
+                        LIVE
+                    </span>
+<span class="text-on-surface-variant font-label-caps text-label-caps">MATCH #48 • QUARTER 3</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary uppercase leading-none mb-1">PRO ELITE BASH</h1>
+<p class="text-on-surface-variant font-body-md">Basketball • Madison Square Garden, NYC</p>
+</div>
+<!-- Central Scoreboard -->
+<div class="glass-panel p-8 rounded-xl flex items-center justify-between col-span-1 lg:col-span-2 stadium-glow">
+<!-- Team A -->
+<div class="flex flex-col items-center gap-4 flex-1">
+<div class="w-24 h-24 rounded-full bg-surface-variant/40 flex items-center justify-center p-4 border border-white/5">
+<img class="w-full h-full object-contain" data-alt="A professional basketball team logo featuring an aggressive hawk soaring over a basketball, dynamic strokes, electric blue and metallic silver color scheme, athletic branding style, dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjb3qVh0pvDseA9dzb2-mBjN4toyqIYtSfEA1BOHWeVKOnyOLMo7xtm9q_iMeqsk5lRxstg2FEJuKwU2Wq-qfWEABo28ge6KDFsBfWCNuyTowOaaRoXbKfcCfOmmiNN2mUCJPAsTzh2tQ_-_jNZzHXntzte3MywN0f3nOMv6i4mANzblVdAbRR6AAgT2nvl5yL2m8p2D-29LJHPIB5r52vVB-mxITxlCymuAB-csLrQGUPBoHr8mM"/>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface text-center">TITANS UNITED</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">HOME</span>
+</div>
+<!-- Score & Timer -->
+<div class="flex flex-col items-center px-8 border-x border-white/10 h-full justify-center">
+<div class="flex items-center gap-4 mb-2">
+<span class="font-display-xl text-display-xl text-on-surface tabular-nums">58</span>
+<span class="font-display-xl text-display-xl text-primary opacity-50">:</span>
+<span class="font-display-xl text-display-xl text-on-surface tabular-nums">62</span>
+</div>
+<div class="bg-surface-variant/50 px-6 py-2 rounded-full flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary text-xl">schedule</span>
+<span class="font-label-caps text-xl tracking-widest text-secondary" id="match-timer">08:42</span>
+</div>
+</div>
+<!-- Team B -->
+<div class="flex flex-col items-center gap-4 flex-1">
+<div class="w-24 h-24 rounded-full bg-surface-variant/40 flex items-center justify-center p-4 border border-white/5">
+<img class="w-full h-full object-contain" data-alt="A sleek professional sports logo for a team named Phoenix Fire, depicting a stylized fiery bird with wings spread, vibrant orange and deep crimson color palette, modern minimalist design, professional esports aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuARPDW8QB4Jf9XIxakzXR_gxnhwm3Rc1Z4Ee10FHi6Eq9V96vOA5cROeTwyZhVKzqO9hQwmuNSbXiouGpbgeYbK8fKfVSCX9oQQJM1jH2NAQvqYInHkEgj5EJu86rdXVSBaE2CeQTz14NN_2Acmc-kCmGhnaU0sEG5Q7tyEd55Q7aRV7XSJ-yBnmtySVa2vhio8vLNvRuoE8vM8rCIfsD2MYVziSiizMEClKPe064xmIwUwCDUzbDo"/>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface text-center">PHOENIX FIRE</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">AWAY</span>
+</div>
+</div>
+</section>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-gutter items-start">
+<!-- Left Column: Match Stats & Players (xl:col-span-8) -->
+<div class="xl:col-span-8 space-y-gutter">
+<!-- Match Statistics Bento Box -->
+<div class="glass-panel p-6 rounded-xl">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">analytics</span>
+                            MATCH STATISTICS
+                        </h3>
+<div class="flex gap-2">
+<span class="font-label-caps text-label-caps px-3 py-1 bg-primary-container/20 text-primary rounded border border-primary/20">REAL-TIME</span>
+</div>
+</div>
+<div class="space-y-8">
+<!-- Possession Bar -->
+<div class="space-y-2">
+<div class="flex justify-between text-on-surface font-label-caps text-label-caps px-1">
+<span>POSSESSION</span>
+<div class="flex gap-4">
+<span class="text-primary">48%</span>
+<span class="text-on-surface-variant">|</span>
+<span class="text-secondary">52%</span>
+</div>
+</div>
+<div class="h-4 bg-surface-variant rounded-full overflow-hidden flex">
+<div class="h-full bg-primary-container transition-all duration-1000" style="width: 48%"></div>
+<div class="h-full bg-secondary transition-all duration-1000" style="width: 52%"></div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Field Goals -->
+<div class="space-y-4">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant border-b border-white/5 pb-2">FIELD GOALS (%)</h4>
+<div class="space-y-4">
+<div class="space-y-1">
+<div class="flex justify-between text-xs font-label-caps"><span>TITANS</span> <span>42%</span></div>
+<div class="h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 42%"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-xs font-label-caps"><span>PHOENIX</span> <span>45%</span></div>
+<div class="h-2 bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full bg-secondary" style="width: 45%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Fouls -->
+<div class="space-y-4">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant border-b border-white/5 pb-2">FOULS &amp; TIMEOUTS</h4>
+<div class="flex justify-between items-center">
+<div class="text-center">
+<div class="text-2xl font-headline-md text-on-surface">12</div>
+<div class="text-[10px] font-label-caps text-on-surface-variant">TOTAL FOULS</div>
+</div>
+<div class="h-8 w-px bg-white/10"></div>
+<div class="text-center">
+<div class="text-2xl font-headline-md text-on-surface">2</div>
+<div class="text-[10px] font-label-caps text-on-surface-variant">TIMEOUTS REMAINING</div>
+</div>
+<div class="h-8 w-px bg-white/10"></div>
+<div class="text-center">
+<div class="text-2xl font-headline-md text-secondary">0</div>
+<div class="text-[10px] font-label-caps text-on-surface-variant">YELLOW CARDS</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Teams & Rosters -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Home Team Players -->
+<div class="glass-panel p-6 rounded-xl">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded bg-primary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">groups</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md leading-tight">TITANS UNITED</h3>
+<p class="text-[10px] font-label-caps text-on-surface-variant">ACTIVE ROSTER</p>
+</div>
+</div>
+<ul class="space-y-3">
+<li class="flex items-center justify-between p-3 bg-surface-variant/20 rounded border border-white/5 hover:bg-surface-variant/40 transition-colors">
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-primary w-6">#23</span>
+<div class="flex flex-col">
+<span class="font-body-md font-bold">Marcus Johnson</span>
+<span class="text-[10px] text-on-surface-variant font-label-caps">POINT GUARD</span>
+</div>
+</div>
+<span class="font-label-caps text-on-surface-variant">18 PTS</span>
+</li>
+<li class="flex items-center justify-between p-3 bg-surface-variant/20 rounded border border-white/5 hover:bg-surface-variant/40 transition-colors">
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-primary w-6">#11</span>
+<div class="flex flex-col">
+<span class="font-body-md font-bold">Kevin Durant</span>
+<span class="text-[10px] text-on-surface-variant font-label-caps">SMALL FORWARD</span>
+</div>
+</div>
+<span class="font-label-caps text-on-surface-variant">12 PTS</span>
+</li>
+<li class="flex items-center justify-between p-3 bg-surface-variant/20 rounded border border-white/5 hover:bg-surface-variant/40 transition-colors">
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-primary w-6">#05</span>
+<div class="flex flex-col">
+<span class="font-body-md font-bold">Steve Austin</span>
+<span class="text-[10px] text-on-surface-variant font-label-caps">CENTER</span>
+</div>
+</div>
+<span class="font-label-caps text-on-surface-variant">8 PTS</span>
+</li>
+</ul>
+</div>
+<!-- Away Team Players -->
+<div class="glass-panel p-6 rounded-xl">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded bg-secondary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">groups</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md leading-tight">PHOENIX FIRE</h3>
+<p class="text-[10px] font-label-caps text-on-surface-variant">ACTIVE ROSTER</p>
+</div>
+</div>
+<ul class="space-y-3">
+<li class="flex items-center justify-between p-3 bg-surface-variant/20 rounded border border-white/5 hover:bg-surface-variant/40 transition-colors">
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-secondary w-6">#30</span>
+<div class="flex flex-col">
+<span class="font-body-md font-bold">Stephen Curry</span>
+<span class="text-[10px] text-on-surface-variant font-label-caps">POINT GUARD</span>
+</div>
+</div>
+<span class="font-label-caps text-on-surface-variant">24 PTS</span>
+</li>
+<li class="flex items-center justify-between p-3 bg-surface-variant/20 rounded border border-white/5 hover:bg-surface-variant/40 transition-colors">
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-secondary w-6">#01</span>
+<div class="flex flex-col">
+<span class="font-body-md font-bold">Devin Booker</span>
+<span class="text-[10px] text-on-surface-variant font-label-caps">SHOOTING GUARD</span>
+</div>
+</div>
+<span class="font-label-caps text-on-surface-variant">15 PTS</span>
+</li>
+<li class="flex items-center justify-between p-3 bg-surface-variant/20 rounded border border-white/5 hover:bg-surface-variant/40 transition-colors">
+<div class="flex items-center gap-4">
+<span class="font-label-caps text-secondary w-6">#13</span>
+<div class="flex flex-col">
+<span class="font-body-md font-bold">James Harden</span>
+<span class="text-[10px] text-on-surface-variant font-label-caps">GUARD</span>
+</div>
+</div>
+<span class="font-label-caps text-on-surface-variant">10 PTS</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Officials -->
+<div class="glass-panel p-6 rounded-xl">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">person</span>
+                        MATCH OFFICIALS
+                    </h3>
+<div class="flex flex-wrap gap-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">shield</span>
+</div>
+<div class="text-sm font-body-md">
+<div class="font-bold">Robert Madley</div>
+<div class="text-[10px] text-on-surface-variant font-label-caps uppercase">Referee</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-variant/40 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">shield</span>
+</div>
+<div class="text-sm font-body-md">
+<div class="font-bold">Sarah Williams</div>
+<div class="text-[10px] text-on-surface-variant font-label-caps uppercase">Umpire</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Live Timeline & Commentary (xl:col-span-4) -->
+<aside class="xl:col-span-4 h-full sticky top-24 space-y-gutter">
+<div class="glass-panel rounded-xl overflow-hidden flex flex-col h-[700px]">
+<div class="p-6 border-b border-white/10 bg-surface-container-high/50 flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-primary flex items-center gap-2">
+<span class="material-symbols-outlined">history</span>
+                            LIVE TIMELINE
+                        </h3>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-error rounded-full live-pulse-dot"></span>
+<span class="font-label-caps text-[10px] text-on-surface-variant">AUTO-UPDATE</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Timeline Event: Score -->
+<div class="relative pl-8 border-l border-white/10 group">
+<div class="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-primary ring-4 ring-primary/20"></div>
+<div class="space-y-1">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-[10px] text-on-surface-variant">08:12 • 3Q</span>
+<span class="bg-primary-container/20 text-primary font-label-caps text-[10px] px-2 py-0.5 rounded">3-POINTER</span>
+</div>
+<p class="font-body-md text-on-surface"><strong>Marcus Johnson</strong> nails a deep three from the wing! Crowd goes wild.</p>
+<div class="text-sm text-on-surface-variant flex gap-4 mt-2 font-label-caps">
+<span>TIT 58</span>
+<span>PHO 59</span>
+</div>
+</div>
+</div>
+<!-- Timeline Event: Foul -->
+<div class="relative pl-8 border-l border-white/10">
+<div class="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-secondary ring-4 ring-secondary/20"></div>
+<div class="space-y-1">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-[10px] text-on-surface-variant">07:55 • 3Q</span>
+<span class="bg-secondary/20 text-secondary font-label-caps text-[10px] px-2 py-0.5 rounded">FOUL</span>
+</div>
+<p class="font-body-md text-on-surface">Personal foul called on <strong>Kevin Durant</strong>. Charging into the paint.</p>
+</div>
+</div>
+<!-- Timeline Event: Timeout -->
+<div class="relative pl-8 border-l border-white/10">
+<div class="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-on-surface-variant ring-4 ring-on-surface-variant/10"></div>
+<div class="space-y-1">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-[10px] text-on-surface-variant">06:20 • 3Q</span>
+<span class="bg-surface-variant/50 text-on-surface-variant font-label-caps text-[10px] px-2 py-0.5 rounded">TIMEOUT</span>
+</div>
+<p class="font-body-md text-on-surface"><strong>PHOENIX FIRE</strong> takes their second timeout of the half.</p>
+</div>
+</div>
+<!-- Timeline Event: Score -->
+<div class="relative pl-8 border-l border-white/10">
+<div class="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-primary ring-4 ring-primary/20"></div>
+<div class="space-y-1">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-[10px] text-on-surface-variant">05:40 • 3Q</span>
+<span class="bg-primary-container/20 text-primary font-label-caps text-[10px] px-2 py-0.5 rounded">LAYUP</span>
+</div>
+<p class="font-body-md text-on-surface">Fast break finished by <strong>Steve Austin</strong> with a powerful dunk.</p>
+</div>
+</div>
+<!-- Timeline Event: Substitution -->
+<div class="relative pl-8 border-l border-white/10">
+<div class="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-surface-variant ring-4 ring-white/5"></div>
+<div class="space-y-1">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-[10px] text-on-surface-variant">04:15 • 3Q</span>
+<span class="font-label-caps text-[10px]">SUBSTITUTION</span>
+</div>
+<p class="font-body-md text-on-surface-variant italic">Devin Booker (OUT) - James Harden (IN)</p>
+</div>
+</div>
+</div>
+<div class="p-4 bg-surface-container-high/50 border-t border-white/10">
+<div class="relative">
+<input class="w-full bg-surface-variant/30 border border-white/10 rounded-lg py-2 px-4 text-sm font-body-md placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Add commentary (Admin Only)..." type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 material-symbols-outlined text-primary hover:text-white transition-colors">send</button>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer Implementation -->
+<footer class="w-full py-12 px-margin-desktop flex flex-col md:flex-row justify-between items-center bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-white/10 flat no shadows">
+<div class="flex flex-col items-center md:items-start gap-2 mb-8 md:mb-0">
+<span class="font-headline-md text-headline-md text-primary">SMART SPORTZ</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">© 2024 SMART SPORTZ. ALL RIGHTS RESERVED.</span>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors" href="#">Contact Us</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors" href="#">Sponsorships</a>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Match Timer simulation
+        let minutes = 8;
+        let seconds = 42;
+        const timerElement = document.getElementById('match-timer');
+
+        setInterval(() => {
+            if (seconds === 0) {
+                if (minutes > 0) {
+                    minutes--;
+                    seconds = 59;
+                }
+            } else {
+                seconds--;
+            }
+            const m = minutes.toString().padStart(2, '0');
+            const s = seconds.toString().padStart(2, '0');
+            timerElement.textContent = `${m}:${s}`;
+        }, 1000);
+
+        // Simple scale effect on live feed items
+        const timelineItems = document.querySelectorAll('.relative.pl-8');
+        timelineItems.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'translateX(4px)';
+                item.style.transition = 'transform 0.2s ease-out';
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateX(0)';
+            });
+        });
+    </script>
+</body></html>

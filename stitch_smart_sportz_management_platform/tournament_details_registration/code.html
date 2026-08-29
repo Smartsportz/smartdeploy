@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SMART SPORTZ | Tournament Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Anton:wght@100..900&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .glass-card {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-overlay {
+            background: rgba(11, 19, 38, 0.85);
+            backdrop-filter: blur(24px);
+        }
+        .live-pulse {
+            position: relative;
+        }
+        .live-pulse::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #EF4444;
+            border-radius: 50%;
+            left: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: translateY(-50%) scale(1); opacity: 1; }
+            100% { transform: translateY(-50%) scale(2); opacity: 0; }
+        }
+        .btn-primary {
+            box-shadow: 0 4px 0 0 #004395;
+            transition: all 0.1s ease;
+        }
+        .btn-primary:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 0 #004395;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-container": "#ff5451",
+                      "on-primary-container": "#00285d",
+                      "surface-tint": "#adc6ff",
+                      "on-surface-variant": "#c2c6d6",
+                      "on-surface": "#dae2fd",
+                      "surface": "#0b1326",
+                      "inverse-primary": "#005ac2",
+                      "background": "#0b1326",
+                      "surface-dim": "#0b1326",
+                      "on-secondary-fixed-variant": "#783200",
+                      "tertiary-fixed-dim": "#ffb3ad",
+                      "tertiary-fixed": "#ffdad7",
+                      "outline": "#8c909f",
+                      "on-primary-fixed-variant": "#004395",
+                      "error": "#ffb4ab",
+                      "error-container": "#93000a",
+                      "secondary-fixed-dim": "#ffb690",
+                      "on-tertiary-fixed-variant": "#930013",
+                      "on-primary-fixed": "#001a42",
+                      "inverse-surface": "#dae2fd",
+                      "surface-container-lowest": "#060e20",
+                      "outline-variant": "#424754",
+                      "surface-container-highest": "#2d3449",
+                      "surface-container": "#171f33",
+                      "surface-variant": "#2d3449",
+                      "on-error-container": "#ffdad6",
+                      "primary-fixed": "#d8e2ff",
+                      "secondary-container": "#ec6a06",
+                      "primary-fixed-dim": "#adc6ff",
+                      "tertiary": "#ffb3ad",
+                      "on-tertiary": "#68000a",
+                      "on-secondary-fixed": "#341100",
+                      "on-tertiary-container": "#5c0008",
+                      "surface-container-high": "#222a3d",
+                      "on-secondary": "#552100",
+                      "on-primary": "#002e6a",
+                      "primary": "#adc6ff",
+                      "on-error": "#690005",
+                      "on-background": "#dae2fd",
+                      "surface-bright": "#31394d",
+                      "inverse-on-surface": "#283044",
+                      "surface-container-low": "#131b2e",
+                      "secondary-fixed": "#ffdbca",
+                      "on-secondary-container": "#4a1c00",
+                      "primary-container": "#4d8eff",
+                      "secondary": "#ffb690",
+                      "on-tertiary-fixed": "#410004"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "max-width": "1440px",
+                      "margin-desktop": "48px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "headline-lg": ["Anton"],
+                      "body-md": ["Inter"],
+                      "display-xl": ["Anton"],
+                      "headline-lg-mobile": ["Anton"],
+                      "body-lg": ["Inter"],
+                      "label-caps": ["JetBrains Mono"],
+                      "live-tag": ["Inter"],
+                      "headline-md": ["Anton"]
+              },
+              "fontSize": {
+                      "headline-lg": ["48px", {"lineHeight": "48px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "display-xl": ["72px", {"lineHeight": "72px", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                      "headline-lg-mobile": ["32px", {"lineHeight": "32px", "fontWeight": "400"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                      "live-tag": ["14px", {"lineHeight": "14px", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "28px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface/70 backdrop-blur-md dark:bg-surface/70 border-b border-white/10 shadow-sm">
+<div class="font-headline-md text-headline-md text-primary tracking-wider">SMART SPORTZ</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Home</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Live</a>
+<a class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1 transition-colors duration-200" href="#">Tournaments</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Sports</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">Gallery</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200" href="#">About</a>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center bg-surface-container rounded-full px-4 py-2 border border-white/5">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-48 text-on-surface" placeholder="Search..." type="text"/>
+</div>
+<button class="bg-primary text-on-primary font-label-caps text-label-caps px-6 py-2 rounded-lg btn-primary">Admin Login</button>
+</div>
+</nav>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative h-[614px] min-h-[500px] overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A cinematic, high-action wide shot of a professional basketball arena under dramatic blue and orange stage lighting. The court surface is gleaming, reflecting the intense overhead lights, and the atmosphere is filled with a light haze that catches the neon glows. The overall aesthetic is dark, premium, and energetic, perfectly aligning with the elite sports management brand." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC-0DpcT0e_BEjxP_ZKphBtPzjUepp3i-LmWHI2u2wTqZI8VAZimyqrwd9kG2Sg8nMjY4aThHJmXio3Jx8wv50XbYArRQfUVkGe7jEjHG5syesGUctD4cg9M8PQa5v_qZ8-eUijhSSDf0y-lOdyv5FjY8VzvTQlboNhPyBMhOdQeNxK1u9PvblrljIflJXKEtbA4qekbBs5Ol8aS9gFq-bGb-rXgpLx4gkwl6LC18B85WLkdbF9CTM')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
+<div class="relative h-full flex flex-col justify-end px-margin-desktop pb-16 max-w-max-width mx-auto">
+<div class="flex items-center gap-3 mb-4">
+<span class="bg-tertiary text-on-tertiary px-3 py-1 rounded font-live-tag text-live-tag flex items-center gap-2">
+<span class="w-2 h-2 bg-on-tertiary rounded-full animate-pulse"></span>
+                        REGISTRATION OPEN
+                    </span>
+<span class="font-label-caps text-label-caps text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded">ELITE SERIES</span>
+</div>
+<h1 class="font-display-xl text-display-xl text-on-surface uppercase mb-6 max-w-4xl">Metropolis Masters Basketball Championship 2024</h1>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary text-on-primary font-label-caps text-label-caps px-10 py-4 rounded-lg btn-primary text-lg" onclick="document.getElementById('registration-section').scrollIntoView({behavior: 'smooth'})">Register Now</button>
+<button class="bg-surface-variant/30 backdrop-blur-md border border-white/10 text-on-surface font-label-caps text-label-caps px-10 py-4 rounded-lg hover:bg-surface-variant/50 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined">download</span>
+                        Download Rulebook
+                    </button>
+</div>
+</div>
+</section>
+<!-- Details Bento Grid -->
+<section class="px-margin-desktop py-20 max-w-max-width mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Schedule & Rules -->
+<div class="md:col-span-8 flex flex-col gap-gutter">
+<div class="glass-card p-8 rounded-xl">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">gavel</span>
+<h2 class="font-headline-md text-headline-md">Tournament Rules</h2>
+</div>
+<ul class="space-y-4 text-on-surface-variant font-body-md">
+<li class="flex items-start gap-3">
+<span class="text-primary font-bold">•</span>
+                                5v5 Full Court tournament following official FIBA regulations.
+                            </li>
+<li class="flex items-start gap-3">
+<span class="text-primary font-bold">•</span>
+                                Minimum 8 players and maximum 12 players per team roster.
+                            </li>
+<li class="flex items-start gap-3">
+<span class="text-primary font-bold">•</span>
+                                All players must be 18+ and present valid ID during check-in.
+                            </li>
+<li class="flex items-start gap-3">
+<span class="text-primary font-bold">•</span>
+                                Professional jersey matching requirement for all participating teams.
+                            </li>
+</ul>
+</div>
+<div class="glass-card p-8 rounded-xl">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+<h2 class="font-headline-md text-headline-md">Match Schedule</h2>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="bg-surface-container-high p-4 rounded-lg border-l-4 border-primary">
+<p class="font-label-caps text-label-caps text-primary">Qualifiers</p>
+<p class="text-lg font-bold mt-1">Oct 12 - Oct 15</p>
+<p class="text-on-surface-variant text-sm">Round Robin Format</p>
+</div>
+<div class="bg-surface-container-high p-4 rounded-lg border-l-4 border-secondary">
+<p class="font-label-caps text-label-caps text-secondary">Quarter Finals</p>
+<p class="text-lg font-bold mt-1">Oct 18 - Oct 19</p>
+<p class="text-on-surface-variant text-sm">Knockout Stage</p>
+</div>
+<div class="bg-surface-container-high p-4 rounded-lg border-l-4 border-tertiary">
+<p class="font-label-caps text-label-caps text-tertiary">Semi Finals</p>
+<p class="text-lg font-bold mt-1">Oct 21</p>
+<p class="text-on-surface-variant text-sm">Best of 3</p>
+</div>
+<div class="bg-surface-container-high p-4 rounded-lg border-l-4 border-error">
+<p class="font-label-caps text-label-caps text-error">Grand Finale</p>
+<p class="text-lg font-bold mt-1">Oct 24</p>
+<p class="text-on-surface-variant text-sm">Championship Night</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Prize & Fee -->
+<div class="md:col-span-4 flex flex-col gap-gutter">
+<div class="glass-card p-8 rounded-xl bg-gradient-to-br from-primary-container/20 to-transparent">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-secondary">emoji_events</span>
+<h2 class="font-headline-md text-headline-md">Prize Pool</h2>
+</div>
+<div class="text-center py-6">
+<p class="font-display-xl text-5xl text-secondary">$25,000</p>
+<p class="font-label-caps text-label-caps text-on-surface-variant tracking-[0.2em] mt-2">TOTAL VALUE</p>
+</div>
+<div class="space-y-4 border-t border-white/10 pt-6">
+<div class="flex justify-between items-center">
+<span class="font-body-md">1st Place</span>
+<span class="font-bold text-primary">$15,000 + Trophy</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md">2nd Place</span>
+<span class="font-bold text-on-surface">$7,000</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md">MVP Award</span>
+<span class="font-bold text-on-surface">$3,000</span>
+</div>
+</div>
+</div>
+<div class="glass-card p-8 rounded-xl">
+<h3 class="font-label-caps text-label-caps text-on-surface-variant mb-2">ENTRY FEE</h3>
+<div class="flex items-baseline gap-2 mb-6">
+<span class="text-4xl font-bold">$450</span>
+<span class="text-on-surface-variant">/ Team</span>
+</div>
+<div class="space-y-2 text-sm text-on-surface-variant">
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">check_circle</span> Includes Official Team Kit</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">check_circle</span> Hydration & Snacks</p>
+<p class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">check_circle</span> Digital Game Analytics</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Venue Section -->
+<div class="mt-gutter grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<div class="md:col-span-12 glass-card rounded-xl overflow-hidden flex flex-col md:flex-row">
+<div class="md:w-1/3 p-8 flex flex-col justify-center">
+<div class="flex items-center gap-3 mb-4">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<h2 class="font-headline-md text-headline-md">The Arena</h2>
+</div>
+<p class="font-body-lg mb-2">Metropolis Sports Complex</p>
+<p class="text-on-surface-variant font-body-md mb-6">1200 Elite Drive, Silicon Valley, CA 94025, United States</p>
+<button class="flex items-center gap-2 text-primary font-label-caps text-label-caps hover:underline">
+                            Open in Maps <span class="material-symbols-outlined text-sm">arrow_outward</span>
+</button>
+</div>
+<div class="md:w-2/3 h-64 md:h-auto min-h-[300px] relative">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A stylized, architectural dark-mode map of a city's sports district, featuring clean glowing lines for roads and highlighted structural icons for major stadiums and transit hubs. The map uses a palette of navy, electric blue, and faint grey, emphasizing the modern tech-forward location of the tournament venue." data-location="San Francisco" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD9hnmVBtNYO0VYu6AmerPJqkAiQqvyaoGj_uA-ADozuzRlDpTQiMkwYBjNG-zwW_KxScCkQI8hkfkDYbwp0njIJmzGpK6hobWvSNY2KVNHZREr7PYtiAj6UGDiorDLVQQssOvOXj2EdJ_-rQNKWD55ID94zmUIR167otsEZZkBjXQ0T2HAe4GHuhHy16_3zqhXawRaoVxuvgLjJzzu5RsIogN7_qy46AsTu38yea3PO5WMVZmf7yA')"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Organizer Section -->
+<section class="bg-surface-container-low py-16">
+<div class="px-margin-desktop max-w-max-width mx-auto">
+<div class="flex flex-col md:flex-row items-center justify-between gap-10">
+<div class="flex flex-col md:flex-row items-center gap-8 text-center md:text-left">
+<div class="w-24 h-24 rounded-full glass-card flex items-center justify-center p-4 border-primary/20">
+<span class="material-symbols-outlined text-5xl text-primary">sports_score</span>
+</div>
+<div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">ORGANIZED BY</p>
+<h3 class="font-headline-md text-headline-md">SMART SPORTZ FEDERATION</h3>
+<p class="text-on-surface-variant">Ensuring competitive integrity and sportsmanship since 2018.</p>
+</div>
+</div>
+<div class="flex gap-6">
+<div class="text-right hidden sm:block">
+<p class="font-label-caps text-label-caps text-on-surface-variant">CONTACT US</p>
+<p class="font-body-lg text-primary font-bold">support@smartsportz.io</p>
+</div>
+<button class="bg-surface-variant/30 p-4 rounded-full hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined">mail</span>
+</button>
+<button class="bg-surface-variant/30 p-4 rounded-full hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined">call</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Registration Form Section -->
+<section class="px-margin-desktop py-20 max-w-max-width mx-auto" id="registration-section">
+<div class="glass-card p-10 md:p-16 rounded-2xl max-w-4xl mx-auto shadow-2xl relative overflow-hidden">
+<!-- Atmospheric background element -->
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="relative z-10">
+<div class="text-center mb-12">
+<h2 class="font-display-xl text-5xl mb-4">Secure Your Spot</h2>
+<p class="text-on-surface-variant text-lg">Complete the form below to register your team. Professional rosters are required.</p>
+</div>
+<form class="space-y-10" onsubmit="event.preventDefault(); alert('Registration Submitted!');">
+<!-- Team Core Info -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-primary">Team Name</label>
+<input class="w-full bg-surface-container-high border-white/10 rounded-lg py-3 px-4 focus:border-primary focus:ring-primary text-on-surface" placeholder="Enter team name" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-primary">Captain Name</label>
+<input class="w-full bg-surface-container-high border-white/10 rounded-lg py-3 px-4 focus:border-primary focus:ring-primary text-on-surface" placeholder="Full name" type="text"/>
+</div>
+</div>
+<!-- Contact & Email -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-primary">Contact Email</label>
+<input class="w-full bg-surface-container-high border-white/10 rounded-lg py-3 px-4 focus:border-primary focus:ring-primary text-on-surface" placeholder="email@example.com" type="email"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-caps text-label-caps text-primary">Phone Number</label>
+<input class="w-full bg-surface-container-high border-white/10 rounded-lg py-3 px-4 focus:border-primary focus:ring-primary text-on-surface" placeholder="+1 (555) 000-0000" type="tel"/>
+</div>
+</div>
+<!-- Player List -->
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-label-caps text-label-caps text-primary">Roster (Active Players)</label>
+<span class="text-xs text-on-surface-variant">Min: 8 | Max: 12</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="player-list">
+<input class="bg-surface-container-high border-white/10 rounded-lg py-3 px-4 focus:border-primary focus:ring-primary text-on-surface" placeholder="Player 1 (Captain)" type="text"/>
+<input class="bg-surface-container-high border-white/10 rounded-lg py-3 px-4 focus:border-primary focus:ring-primary text-on-surface" placeholder="Player 2" type="text"/>
+<input class="bg-surface-container-high border-white/10 rounded-lg py-3 px-4 focus:border-primary focus:ring-primary text-on-surface" placeholder="Player 3" type="text"/>
+<input class="bg-surface-container-high border-white/10 rounded-lg py-3 px-4 focus:border-primary focus:ring-primary text-on-surface" placeholder="Player 4" type="text"/>
+<input class="bg-surface-container-high border-white/10 rounded-lg py-3 px-4 focus:border-primary focus:ring-primary text-on-surface" placeholder="Player 5" type="text"/>
+<input class="bg-surface-container-high border-white/10 rounded-lg py-3 px-4 focus:border-primary focus:ring-primary text-on-surface" placeholder="Player 6" type="text"/>
+</div>
+<button class="text-primary font-label-caps text-xs flex items-center gap-1 hover:text-secondary transition-colors" type="button">
+<span class="material-symbols-outlined text-sm">add</span> Add More Players
+                            </button>
+</div>
+<!-- Submit / Pay -->
+<div class="pt-10 border-t border-white/10 text-center space-y-6">
+<div class="flex justify-center items-center gap-4 text-on-surface-variant">
+<span class="material-symbols-outlined">lock</span>
+<span class="text-sm">Secure Payment Gateway • Major Cards & Crypto Accepted</span>
+</div>
+<button class="w-full bg-secondary text-on-secondary-container font-headline-md text-headline-md py-6 rounded-xl hover:bg-secondary-fixed transition-colors shadow-lg active:scale-95 duration-100 uppercase tracking-widest" type="submit">
+                                Pay Entry Fee - $450.00
+                            </button>
+<p class="text-xs text-on-surface-variant/60">By clicking the button above, you agree to our Tournament Terms of Service and Privacy Policy.</p>
+</div>
+</form>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-margin-desktop flex flex-col md:flex-row justify-between items-center bg-surface-container-lowest border-t border-white/10 mt-20">
+<div class="mb-8 md:mb-0">
+<div class="font-headline-md text-headline-md text-primary mb-2">SMART SPORTZ</div>
+<p class="font-label-caps text-label-caps text-on-surface-variant">© 2024 SMART SPORTZ. ALL RIGHTS RESERVED.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors" href="#">Contact Us</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors" href="#">Sponsorships</a>
+</div>
+<div class="mt-8 md:mt-0 flex gap-4">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">
+<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
+</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">
+<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+</div>
+</footer>
+<script>
+        // Micro-interaction for inputs
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('label')?.classList.add('text-secondary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('label')?.classList.remove('text-secondary');
+            });
+        });
+    </script>
+</body></html>

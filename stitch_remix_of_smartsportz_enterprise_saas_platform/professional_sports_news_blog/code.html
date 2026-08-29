@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Insights | SmartSportz.in</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#0b0f10",
+                    "surface-container-low": "#191c1e",
+                    "outline-variant": "#3e4a41",
+                    "on-secondary-fixed": "#0d1c32",
+                    "error-container": "#93000a",
+                    "surface-variant": "#323537",
+                    "inverse-surface": "#e0e3e5",
+                    "background": "#101415",
+                    "primary-fixed": "#8ef8b7",
+                    "primary-container": "#0b8852",
+                    "on-secondary-fixed-variant": "#39475f",
+                    "on-tertiary-fixed": "#091b39",
+                    "on-primary-fixed": "#002110",
+                    "on-tertiary": "#20304f",
+                    "on-error": "#690005",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed-variant": "#00522f",
+                    "on-secondary": "#233148",
+                    "inverse-primary": "#006d40",
+                    "surface-container": "#1d2022",
+                    "primary-fixed-dim": "#72db9d",
+                    "tertiary-fixed": "#d8e2ff",
+                    "outline": "#889489",
+                    "tertiary-container": "#67779a",
+                    "secondary-container": "#3c4962",
+                    "surface-container-high": "#272a2c",
+                    "primary": "#72db9d",
+                    "surface": "#101415",
+                    "on-tertiary-container": "#000514",
+                    "surface-tint": "#72db9d",
+                    "on-secondary-container": "#abb9d6",
+                    "tertiary": "#b6c6ed",
+                    "surface-dim": "#101415",
+                    "surface-container-highest": "#323537",
+                    "secondary-fixed": "#d6e3ff",
+                    "on-error-container": "#ffdad6",
+                    "secondary": "#b9c7e4",
+                    "inverse-on-surface": "#2d3133",
+                    "tertiary-fixed-dim": "#b6c6ed",
+                    "on-tertiary-fixed-variant": "#374767",
+                    "surface-bright": "#363a3b",
+                    "on-surface": "#e0e3e5",
+                    "on-surface-variant": "#bdcabe",
+                    "secondary-fixed-dim": "#b9c7e4",
+                    "on-primary": "#00391f",
+                    "on-primary-container": "#ffffff",
+                    "on-background": "#e0e3e5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "container-max": "1440px",
+                    "stack-sm": "8px",
+                    "stack-md": "16px",
+                    "stack-lg": "32px",
+                    "margin-desktop": "40px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "title-md": ["Be Vietnam Pro"],
+                    "label-sm": ["JetBrains Mono"],
+                    "headline-lg-mobile": ["Be Vietnam Pro"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "stats-xl": ["Be Vietnam Pro"],
+                    "headline-lg": ["Be Vietnam Pro"],
+                    "display-lg": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "stats-xl": ["40px", {"lineHeight": "40px", "fontWeight": "800"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #101415;
+            color: #e0e3e5;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-card {
+            background: rgba(17, 34, 64, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+        }
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101415;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1d2022;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #323537;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant/10 flex flex-col p-4 gap-stack-md z-50 hidden md:flex">
+<div class="flex items-center gap-3 px-2 mb-8">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<div class="flex flex-col">
+<span class="font-headline-lg text-headline-lg text-primary font-bold leading-tight">SmartSportz.in</span>
+<span class="text-on-surface-variant text-[10px] uppercase tracking-widest font-bold">Enterprise Management</span>
+</div>
+</div>
+<nav class="flex-1 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-sm text-label-sm">Dashboard</span>
+</a>
+<!-- Active Tab: Magazine/Articles logic maps to Analytics or a custom feed -->
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg transition-all duration-200 cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-sm text-label-sm">Insights</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="font-label-sm text-label-sm">Tournaments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-sm text-label-sm">Teams</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">person_celebrate</span>
+<span class="font-label-sm text-label-sm">Players</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 cursor-pointer active:scale-95" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-label-sm text-label-sm">Schedules</span>
+</a>
+</nav>
+<div class="mt-auto space-y-2 border-t border-outline-variant/10 pt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-sm text-label-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 text-error" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-sm text-label-sm">Sign Out</span>
+</a>
+</div>
+</aside>
+<!-- Main Wrapper -->
+<div class="md:ml-64 flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="w-full sticky top-0 z-40 bg-surface/80 dark:bg-surface-container-lowest/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm flex justify-between items-center px-margin-desktop py-4">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-display-lg font-bold text-primary md:hidden">SS</span>
+<h1 class="font-title-md text-title-md text-primary hidden md:block">Insights Portal</h1>
+</div>
+<div class="flex items-center gap-stack-lg flex-1 justify-end max-w-2xl ml-auto">
+<div class="relative w-full max-w-sm group hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container rounded-full pl-10 pr-4 py-2 border-none focus:ring-2 focus:ring-primary/50 text-body-md" placeholder="Search sports news..." type="text"/>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer active:opacity-80">settings</button>
+<div class="h-10 w-10 rounded-full overflow-hidden border-2 border-outline-variant/20 cursor-pointer active:opacity-80">
+<img class="w-full h-full object-cover" data-alt="A professional close-up headshot of a diverse athlete manager wearing high-end sportswear, set against a blurred stadium background with dramatic lighting and a modern, dark aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZMAnMv-xWk6qyXpUoyYJ_YigG-LhMjbDJ_-Gg8CK64TIL_i-M2L7rqajYQUhFYgMAEhvWRGDD0b12-6pFPCa5_KiwIMiBJmdmImGEUqV6H8U_YyITINl33N0o1-p8LO3yX4TnX0TcbLB4-ZDFV11PGS_jof0J5-HR4cULWR8rscjdLZ5pmIRXAAG4yS2IqEX9HKgFEisnfMh_IdU9oxWX5nghSTjYvE6sLILv961c7oUW8Tpo2w4-qn-tLnhz5TAOtGiAGUVglQyi"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<main class="px-margin-desktop py-stack-lg max-w-container-max mx-auto w-full grid grid-cols-1 lg:grid-cols-10 gap-gutter">
+<!-- Left Column (70%) -->
+<div class="lg:col-span-7 space-y-stack-lg">
+<!-- Featured Article -->
+<section>
+<div class="relative group cursor-pointer overflow-hidden glass-card h-[500px]">
+<div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-10"></div>
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="A cinematic, low-angle shot of a cricket player hitting a powerful shot at a packed stadium under night floodlights. Dust and intensity are captured in ultra-high resolution with deep shadows and vibrant Championship Green accents in the team colors." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVDqOMCHV5xM6MnsMPjTCqsf9yUuuBPlyYuoSFlquQwG5c-B-KGSq3JUZroFMOK-KViA-zqfZHaAL6dlK1OOVYTHz-SqH23m-hO9WY0b2pIwDuO_heCbPxxSk6rtX-v1xDZUwZeWju6hq3YXt-X_NKdlCEHgyXNLb_2zoEqYZrTqu6AT4RpI1MkIcUPF57uTT8tndTXydhkUi0WjJE_jU9dwgygzU8ggzFUifJaF71A3Y-A8E38RhfHsMJyQhaK0nNkEFDGuzEZU_k"/>
+<div class="absolute bottom-0 left-0 p-stack-lg z-20 w-full lg:w-4/5">
+<span class="inline-block px-3 py-1 bg-primary-container text-on-primary-container rounded-full font-label-sm text-label-sm mb-4">Cricket</span>
+<h2 class="font-display-lg text-headline-lg lg:text-display-lg text-on-primary leading-tight mb-4">The Evolution of T20 Analytics: How Data is Reshaping the Modern Game</h2>
+<div class="flex items-center gap-4 text-on-surface-variant font-body-md mb-6">
+<span class="flex items-center gap-2"><span class="material-symbols-outlined text-primary" style="font-variation-settings: 'opsz' 20">person</span> Arjun Mehta</span>
+<span class="flex items-center gap-2"><span class="material-symbols-outlined text-primary" style="font-variation-settings: 'opsz' 20">calendar_today</span> Oct 24, 2023</span>
+<span class="flex items-center gap-2"><span class="material-symbols-outlined text-primary" style="font-variation-settings: 'opsz' 20">timer</span> 8 min read</span>
+</div>
+<button class="px-8 py-3 bg-primary-container text-on-primary-container font-title-md text-title-md rounded-xl hover:bg-primary-container/90 transition-colors shadow-lg active:scale-95">Read More</button>
+</div>
+</div>
+</section>
+<!-- Recent Posts Grid -->
+<section>
+<div class="flex justify-between items-end mb-stack-md">
+<h3 class="font-headline-lg text-headline-lg text-on-surface">Recent Posts</h3>
+<a class="text-primary font-title-md text-title-md hover:underline" href="#">View all</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-lg">
+<!-- Card 1 -->
+<div class="glass-card hover-lift overflow-hidden group flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A high-intensity football action shot capturing a goal celebration in a dark stadium atmosphere. Atmospheric fog and bright green stadium lights illuminate the scene, reflecting off the grass with sharp modern photographic clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZ9qwV0D4ZxxKHkidg6uupnakVkRN21e-fKgBbv6EDJYYYTd1hlEqK2lJaq9F4oPgzrbZSQkKPfJ7ssZbW_LDJI5HXf6g_BwlfjXyG8Ht-HKimip8i9TYES863tw7EJpcKi6Rqh9AzcrYUkS4S9cVz3Fj1U6p36Zij7UYVmLB4-7jDpAyqSz8QbRUNjT9tNzdtZ2FgEpV_1HS0Buw0_bVYNEcTOiSQJTIXd4SdNCEg5FjhSy0xHUxzwWrZwCttCd0JyRtXw_DtoQg2"/>
+<span class="absolute top-4 right-4 bg-surface-container-highest/90 backdrop-blur-md px-3 py-1 rounded-full font-label-sm text-label-sm text-primary">Football</span>
+</div>
+<div class="p-stack-md flex-1 flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface mb-3 group-hover:text-primary transition-colors">Digital Scouting: Tracking Talent Across 5 Continents</h4>
+<p class="text-on-surface-variant font-body-md mb-4 line-clamp-2">Our latest integration with global databases allows managers to see real-time player stats from local leagues to international stages.</p>
+<div class="mt-auto flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm">
+<span>5 min read</span>
+<span>Oct 22, 2023</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card hover-lift overflow-hidden group flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="Close up action shot of a basketball player executing a slam dunk, with a motion blur effect highlighting the speed. The scene is lit with cool blue and neon green tones against a dark arena background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-iQNfqb2tHIOcpjAlAIdmaaTAecGdM0VkL1YjL0Y_PQFvqgBuYFyIK6SJ7E7y8H2JTPI9E7D82AHP8a0IRrIcjZZPxvVarCFPc8dTOtpLdyJ1LrLrfcXKUBKjzKrgfODzFT1Y9On2vYtnd90ELSgbI6BvsyoYN0ZRwu-pYTmqEgb1FQnZQGVDA6iFPjMA42ZCxNi_4Q46kLx5b2KvgV-ce_KTiy3dM00-IEQWc_cGu8a6acPAhBbe4cwMiFhoS2plCOSicaLZud23"/>
+<span class="absolute top-4 right-4 bg-surface-container-highest/90 backdrop-blur-md px-3 py-1 rounded-full font-label-sm text-label-sm text-primary">Basketball</span>
+</div>
+<div class="p-stack-md flex-1 flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface mb-3 group-hover:text-primary transition-colors">Wearable Tech in the NBA: Pre-empting Injuries</h4>
+<p class="text-on-surface-variant font-body-md mb-4 line-clamp-2">How biometric sensors are providing the data necessary to extend athletic careers by years through smart recovery.</p>
+<div class="mt-auto flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm">
+<span>12 min read</span>
+<span>Oct 20, 2023</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-card hover-lift overflow-hidden group flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A wide-angle landscape shot of a tennis match at night under high-intensity floodlights. The blue court pops against the dark surroundings, with the green tennis ball frozen in motion near the net." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChCUQ_nnmmEE8pELMSejEVFyovtjTejVunAThwYrAMmCJwoXa_o_lggNv2O9K6jQIZp9uCVS_H2iS_IsdcF2RY5A74Ow5GPLyU_2Uqy7A79xoFvCEqpnLBYbr4TuvgqHl_c-eni5-7u6VKxnSx_GClSb2tytOK21tFFT8rQdBDN0WY2Id8uT-HsVNyLjhZomdVQ1FjVDJJRRhpZ-j6ZT6YmwoXxvnNQDc4MB7o7C71-f57SjCA1vxUxolq1q7bsXJc8HTsGadlGEfC"/>
+<span class="absolute top-4 right-4 bg-surface-container-highest/90 backdrop-blur-md px-3 py-1 rounded-full font-label-sm text-label-sm text-primary">Tennis</span>
+</div>
+<div class="p-stack-md flex-1 flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface mb-3 group-hover:text-primary transition-colors">Serve Dynamics: Analyzing the Fastest Shots in History</h4>
+<p class="text-on-surface-variant font-body-md mb-4 line-clamp-2">A deep dive into the biomechanics of the serve and how new training protocols are breaking speed records.</p>
+<div class="mt-auto flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm">
+<span>7 min read</span>
+<span>Oct 18, 2023</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="glass-card hover-lift overflow-hidden group flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="An abstract, high-tech sports laboratory with athletes wearing sensor-equipped gear on a treadmill. The environment is clinical yet futuristic, lit with glowing green accents and deep navy tech-inspired hues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA698H9pl-rRaGedD1FIK39V9iccM7Yj5P4E7jCfZsAy3UQBVK_UgAYLjNzK1uw9izrx9k7fiCmvf4GIL0Z3nQB6U6cGQsENAXkOyx6d5pDrBA7299_ThTfVIfSUzuY2mkxWQ1ixpMeALb49TH53EFYwpxGoBqHE-UYQ3F-iZshso1t0lJy5r79cpOIL76ZnGewJbbobO7NszumXvvN8doYn9Hi5INzIIAsjb283uxgBQFnC9i588asf1QbcYXryOvHx3PxocIsDvUo"/>
+<span class="absolute top-4 right-4 bg-surface-container-highest/90 backdrop-blur-md px-3 py-1 rounded-full font-label-sm text-label-sm text-primary">Science</span>
+</div>
+<div class="p-stack-md flex-1 flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface mb-3 group-hover:text-primary transition-colors">Hyper-Personalized Nutrition for Elite Teams</h4>
+<p class="text-on-surface-variant font-body-md mb-4 line-clamp-2">Moving beyond standard diets—how DNA testing and real-time blood analysis are tailoring meal plans for performance.</p>
+<div class="mt-auto flex justify-between items-center text-on-surface-variant font-label-sm text-label-sm">
+<span>10 min read</span>
+<span>Oct 15, 2023</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pagination -->
+<div class="flex items-center justify-center gap-4 pt-stack-lg">
+<button class="w-12 h-12 flex items-center justify-center rounded-xl glass-card text-on-surface-variant hover:text-primary transition-colors active:scale-90">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<div class="flex items-center gap-2">
+<button class="w-12 h-12 flex items-center justify-center rounded-xl bg-primary-container text-on-primary-container font-label-sm">1</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-xl glass-card text-on-surface font-label-sm hover:border-primary/50 transition-colors">2</button>
+<button class="w-12 h-12 flex items-center justify-center rounded-xl glass-card text-on-surface font-label-sm hover:border-primary/50 transition-colors">3</button>
+<span class="text-on-surface-variant px-2">...</span>
+<button class="w-12 h-12 flex items-center justify-center rounded-xl glass-card text-on-surface font-label-sm hover:border-primary/50 transition-colors">12</button>
+</div>
+<button class="w-12 h-12 flex items-center justify-center rounded-xl glass-card text-on-surface-variant hover:text-primary transition-colors active:scale-90">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Right Column (Sidebar 30%) -->
+<aside class="lg:col-span-3 space-y-stack-lg">
+<!-- Trending Now -->
+<div class="glass-card p-stack-md">
+<h3 class="font-title-md text-title-md text-on-surface mb-stack-md flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">trending_up</span> Trending Now
+                    </h3>
+<div class="space-y-4">
+<!-- Trending Item 1 -->
+<div class="flex gap-4 group cursor-pointer">
+<div class="flex-shrink-0 font-stats-xl text-primary/20 group-hover:text-primary/40 transition-colors">01</div>
+<div class="flex-1">
+<h5 class="font-label-sm text-on-surface group-hover:text-primary transition-colors leading-tight mb-1">Champions League: New Format Explained for 2024</h5>
+<p class="text-[11px] text-on-surface-variant uppercase font-bold tracking-wider">Football • 2.4k reads</p>
+</div>
+</div>
+<!-- Trending Item 2 -->
+<div class="flex gap-4 group cursor-pointer">
+<div class="flex-shrink-0 font-stats-xl text-primary/20 group-hover:text-primary/40 transition-colors">02</div>
+<div class="flex-1">
+<h5 class="font-label-sm text-on-surface group-hover:text-primary transition-colors leading-tight mb-1">The Rise of Esports in Professional Training Camps</h5>
+<p class="text-[11px] text-on-surface-variant uppercase font-bold tracking-wider">Tech • 1.9k reads</p>
+</div>
+</div>
+<!-- Trending Item 3 -->
+<div class="flex gap-4 group cursor-pointer">
+<div class="flex-shrink-0 font-stats-xl text-primary/20 group-hover:text-primary/40 transition-colors">03</div>
+<div class="flex-1">
+<h5 class="font-label-sm text-on-surface group-hover:text-primary transition-colors leading-tight mb-1">Cricket World Cup: Top 5 Data Trends to Watch</h5>
+<p class="text-[11px] text-on-surface-variant uppercase font-bold tracking-wider">Cricket • 1.5k reads</p>
+</div>
+</div>
+<!-- Trending Item 4 -->
+<div class="flex gap-4 group cursor-pointer">
+<div class="flex-shrink-0 font-stats-xl text-primary/20 group-hover:text-primary/40 transition-colors">04</div>
+<div class="flex-1">
+<h5 class="font-label-sm text-on-surface group-hover:text-primary transition-colors leading-tight mb-1">Mental Resilience: The New Frontier of Sports Tech</h5>
+<p class="text-[11px] text-on-surface-variant uppercase font-bold tracking-wider">Health • 1.2k reads</p>
+</div>
+</div>
+<!-- Trending Item 5 -->
+<div class="flex gap-4 group cursor-pointer">
+<div class="flex-shrink-0 font-stats-xl text-primary/20 group-hover:text-primary/40 transition-colors">05</div>
+<div class="flex-1">
+<h5 class="font-label-sm text-on-surface group-hover:text-primary transition-colors leading-tight mb-1">Wimbledon's AI Ref: First-Year Performance Review</h5>
+<p class="text-[11px] text-on-surface-variant uppercase font-bold tracking-wider">Tennis • 900 reads</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Categories Widget -->
+<div class="glass-card p-stack-md">
+<h3 class="font-title-md text-title-md text-on-surface mb-stack-md">Categories</h3>
+<div class="space-y-1">
+<a class="flex justify-between items-center px-3 py-2 rounded-lg hover:bg-surface-container-highest transition-colors group" href="#">
+<span class="text-on-surface-variant group-hover:text-primary transition-colors">Football</span>
+<span class="font-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded text-[10px]">42</span>
+</a>
+<a class="flex justify-between items-center px-3 py-2 rounded-lg hover:bg-surface-container-highest transition-colors group" href="#">
+<span class="text-on-surface-variant group-hover:text-primary transition-colors">Cricket</span>
+<span class="font-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded text-[10px]">38</span>
+</a>
+<a class="flex justify-between items-center px-3 py-2 rounded-lg hover:bg-surface-container-highest transition-colors group" href="#">
+<span class="text-on-surface-variant group-hover:text-primary transition-colors">Basketball</span>
+<span class="font-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded text-[10px]">29</span>
+</a>
+<a class="flex justify-between items-center px-3 py-2 rounded-lg hover:bg-surface-container-highest transition-colors group" href="#">
+<span class="text-on-surface-variant group-hover:text-primary transition-colors">Tennis</span>
+<span class="font-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded text-[10px]">21</span>
+</a>
+<a class="flex justify-between items-center px-3 py-2 rounded-lg hover:bg-surface-container-highest transition-colors group" href="#">
+<span class="text-on-surface-variant group-hover:text-primary transition-colors">Formula 1</span>
+<span class="font-label-sm text-on-surface-variant bg-surface-container px-2 py-0.5 rounded text-[10px]">15</span>
+</a>
+</div>
+</div>
+<!-- Newsletter Signup -->
+<div class="glass-card p-stack-lg border-2 border-primary/20 relative overflow-hidden group">
+<!-- Subtle background interaction -->
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/10 blur-3xl group-hover:bg-primary/20 transition-all"></div>
+<h3 class="font-headline-lg text-title-md text-on-surface mb-2 relative z-10">Get the Insider Feed</h3>
+<p class="text-on-surface-variant font-body-md mb-6 relative z-10">Premium analysis and sports tech news delivered weekly to your inbox.</p>
+<div class="space-y-4 relative z-10">
+<div class="relative">
+<input class="w-full bg-surface-container border-outline-variant/30 rounded-xl px-4 py-3 text-on-surface focus:ring-primary focus:border-primary placeholder:text-on-surface-variant/50" placeholder="Your work email" type="email"/>
+</div>
+<button class="w-full py-3 bg-primary-container text-on-primary-container font-title-md text-title-md rounded-xl hover:brightness-110 transition-all shadow-lg active:scale-95">Subscribe</button>
+<p class="text-center text-[10px] text-on-surface-variant uppercase tracking-widest font-bold">No spam. Ever.</p>
+</div>
+</div>
+<!-- Social Stats (Extra widget for high-end feel) -->
+<div class="grid grid-cols-2 gap-stack-md">
+<div class="glass-card p-stack-md text-center">
+<div class="text-primary font-stats-xl text-headline-lg">120K</div>
+<div class="text-on-surface-variant font-label-sm text-[10px] uppercase">Followers</div>
+</div>
+<div class="glass-card p-stack-md text-center">
+<div class="text-primary font-stats-xl text-headline-lg">1.5M</div>
+<div class="text-on-surface-variant font-label-sm text-[10px] uppercase">Monthly Viewers</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Footer -->
+<footer class="mt-auto py-stack-lg px-margin-desktop border-t border-outline-variant/10 bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="font-headline-lg text-title-md text-primary font-bold">SmartSportz.in</span>
+<span class="text-on-surface-variant font-body-md">© 2023 Elite Media.</span>
+</div>
+<div class="flex gap-stack-lg">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-sm" href="#">Advertise</a>
+</div>
+<div class="flex gap-4">
+<button class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-lg">share</span>
+</button>
+<button class="w-10 h-10 rounded-full glass-card flex items-center justify-center text-on-surface-variant hover:text-primary transition-all">
+<span class="material-symbols-outlined text-lg">alternate_email</span>
+</button>
+</div>
+</div>
+</footer>
+</div>
+<!-- Micro-interaction Scripts -->
+<script>
+        document.querySelectorAll('.hover-lift').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.4)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.boxShadow = 'none';
+            });
+        });
+
+        // Sticky Nav logic (Scroll background shift)
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-xl');
+            } else {
+                header.classList.remove('shadow-xl');
+            }
+        });
+    </script>
+</body></html>

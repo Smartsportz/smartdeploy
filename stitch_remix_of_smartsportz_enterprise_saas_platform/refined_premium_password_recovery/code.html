@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Password Recovery | SmartSportz.in</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error-container": "#ffdad6",
+                      "secondary": "#b9c7e4",
+                      "primary-fixed-dim": "#72db9d",
+                      "inverse-surface": "#e0e3e5",
+                      "tertiary-container": "#67779a",
+                      "secondary-container": "#3c4962",
+                      "outline": "#889489",
+                      "tertiary-fixed": "#d8e2ff",
+                      "on-tertiary-container": "#000514",
+                      "on-surface-variant": "#bdcabe",
+                      "on-secondary-fixed-variant": "#39475f",
+                      "on-tertiary-fixed": "#091b39",
+                      "surface-dim": "#101415",
+                      "primary-fixed": "#8ef8b7",
+                      "surface-container-high": "#272a2c",
+                      "surface-container": "#1d2022",
+                      "on-primary": "#00391f",
+                      "on-error": "#690005",
+                      "inverse-on-surface": "#2d3133",
+                      "on-background": "#e0e3e5",
+                      "surface-variant": "#323537",
+                      "surface-container-low": "#191c1e",
+                      "primary-container": "#0b8852",
+                      "on-secondary-fixed": "#0d1c32",
+                      "on-secondary-container": "#abb9d6",
+                      "on-primary-container": "#ffffff",
+                      "tertiary-fixed-dim": "#b6c6ed",
+                      "error-container": "#93000a",
+                      "on-tertiary-fixed-variant": "#374767",
+                      "on-surface": "#e0e3e5",
+                      "secondary-fixed": "#d6e3ff",
+                      "error": "#ffb4ab",
+                      "inverse-primary": "#006d40",
+                      "surface-tint": "#72db9d",
+                      "on-tertiary": "#20304f",
+                      "on-primary-fixed": "#002110",
+                      "surface-container-highest": "#323537",
+                      "surface-container-lowest": "#0b0f10",
+                      "surface-bright": "#363a3b",
+                      "outline-variant": "#3e4a41",
+                      "tertiary": "#b6c6ed",
+                      "surface": "#101415",
+                      "primary": "#72db9d",
+                      "secondary-fixed-dim": "#b9c7e4",
+                      "on-secondary": "#233148",
+                      "background": "#101415",
+                      "on-primary-fixed-variant": "#00522f"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-md": "16px",
+                      "stack-lg": "32px",
+                      "margin-mobile": "16px",
+                      "container-max": "1440px",
+                      "gutter": "24px",
+                      "stack-sm": "8px",
+                      "margin-desktop": "40px"
+              },
+              "fontFamily": {
+                      "title-md": ["Be Vietnam Pro"],
+                      "headline-lg-mobile": ["Be Vietnam Pro"],
+                      "stats-xl": ["Be Vietnam Pro"],
+                      "display-lg": ["Be Vietnam Pro"],
+                      "label-sm": ["JetBrains Mono"],
+                      "headline-lg": ["Be Vietnam Pro"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "stats-xl": ["40px", {"lineHeight": "40px", "fontWeight": "800"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(17, 34, 64, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .step-transition {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hidden-step {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            position: absolute;
+        }
+        .active-step {
+            opacity: 1;
+            transform: translateY(0);
+            position: relative;
+        }
+        input:focus {
+            box-shadow: 0 0 0 4px rgba(114, 219, 157, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen overflow-x-hidden">
+<main class="flex min-h-screen w-full">
+<!-- Left Side: Cinematic Sports Photography -->
+<div class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-surface-container-lowest">
+<div class="absolute inset-0 z-10 bg-gradient-to-r from-background/40 to-transparent"></div>
+<div class="absolute inset-0 z-10 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<img class="w-full h-full object-cover" data-alt="A cinematic, high-contrast wide shot of a professional football stadium at twilight, with intense floodlights creating dramatic lens flares. The atmosphere is electric and foggy, featuring a deep navy and emerald green color palette to match the SmartSportz branding. In the foreground, the sharp detail of the stadium's architecture is visible, suggesting a premium and elite sports environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuClEAHKMqDMTY1Ugg1VXp81LgpgUu39ClubSRWwOCCDXSS6yvPLir6BbQZiU_hKxOzS1C6znQmv3EOUxq5J5lhmWmzHSco8xQF0ewNEAJ2Ug-ckODf1s0IpisEz0sDmNgz9vbEU9TJgw8VcjIfBxOQq8kcjLpmPk2eW8wqdxYCMTmDmIrvseJnMun2aD-76cAx5fL9ks-kPtNn93WoVBdWpqqBUYAeUdrd3_RPbVFZHBf6TIh9EpeB6bMiJ1b8NEI8sEhfvMfd1NsJj"/>
+<!-- Overlay Brand Info -->
+<div class="absolute bottom-12 left-12 z-20 max-w-md">
+<h1 class="font-headline-lg text-headline-lg text-white mb-4">Elite Sports Management Platform</h1>
+<p class="font-body-lg text-body-lg text-secondary-fixed-dim">Join thousands of professional organizers who trust SmartSportz for high-performance tournament operations and athlete analytics.</p>
+</div>
+</div>
+<!-- Right Side: Authentication UI -->
+<div class="w-full lg:w-1/2 flex items-center justify-center p-6 md:p-12 lg:p-24 bg-background relative">
+<!-- Branding Mobile -->
+<div class="absolute top-8 left-8 lg:left-24 lg:top-16">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-on-primary font-bold" data-icon="sports_score">sports_score</span>
+</div>
+<span class="font-headline-lg text-headline-lg font-black tracking-tighter text-on-background">SmartSportz.in</span>
+</div>
+</div>
+<div class="w-full max-w-[440px] mt-16 lg:mt-0">
+<!-- Step 1: Forgot Password Form -->
+<section class="step-transition active-step" id="step-1">
+<header class="mb-8">
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-3 tracking-tight">Forgot Password?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">No worries. Enter your email address and we'll send you a 6-digit code to reset your account access.</p>
+</header>
+<form class="space-y-6" onsubmit="event.preventDefault(); goToStep(2);">
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm uppercase tracking-widest text-outline" for="email">Registered Email</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline" data-icon="mail">mail</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg py-4 pl-12 pr-4 text-on-surface focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-outline-variant/60" id="email" placeholder="name@organization.com" required="" type="email"/>
+</div>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container font-title-md text-title-md py-4 rounded-lg hover:brightness-110 hover:shadow-primary/20 transition-all active:scale-[0.99] flex items-center justify-center gap-2" type="submit">
+<span>Send OTP</span>
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<div class="text-center">
+<a class="font-body-md text-body-md text-outline hover:text-primary transition-colors" href="#">Back to Login</a>
+</div>
+</form>
+</section>
+<!-- Step 2: Verify OTP Form -->
+<section class="step-transition hidden-step" id="step-2">
+<header class="mb-8">
+<button class="flex items-center gap-2 text-primary mb-6 hover:gap-3 transition-all group" onclick="goToStep(1)">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+<span class="font-label-sm text-label-sm">CHANGE EMAIL</span>
+</button>
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-2">Check your email</h2>
+<p class="font-body-md text-body-md text-secondary">We've sent a verification code to <span class="text-on-background font-bold">j***@smartsportz.in</span></p>
+</header>
+<form class="space-y-8" onsubmit="event.preventDefault(); goToStep(3);">
+<div class="flex justify-between gap-3">
+<input class="otp-input w-14 h-16 bg-surface-container-low border border-outline-variant rounded-xl text-center text-headline-lg text-primary focus:border-primary focus:ring-0 font-label-sm" maxlength="1" type="text"/>
+<input class="otp-input w-14 h-16 bg-surface-container-low border border-outline-variant rounded-xl text-center text-headline-lg text-primary focus:border-primary focus:ring-0 font-label-sm" maxlength="1" type="text"/>
+<input class="otp-input w-14 h-16 bg-surface-container-low border border-outline-variant rounded-xl text-center text-headline-lg text-primary focus:border-primary focus:ring-0 font-label-sm" maxlength="1" type="text"/>
+<input class="otp-input w-14 h-16 bg-surface-container-low border border-outline-variant rounded-xl text-center text-headline-lg text-primary focus:border-primary focus:ring-0 font-label-sm" maxlength="1" type="text"/>
+<input class="otp-input w-14 h-16 bg-surface-container-low border border-outline-variant rounded-xl text-center text-headline-lg text-primary focus:border-primary focus:ring-0 font-label-sm" maxlength="1" type="text"/>
+<input class="otp-input w-14 h-16 bg-surface-container-low border border-outline-variant rounded-xl text-center text-headline-lg text-primary focus:border-primary focus:ring-0 font-label-sm" maxlength="1" type="text"/>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container font-title-md text-title-md py-4 rounded-xl hover:bg-primary transition-all active:scale-[0.98] shadow-lg shadow-primary/10" type="submit">
+                            Verify OTP
+                        </button>
+<div class="text-center font-body-md text-body-md text-secondary">
+                            Didn't receive code? <button class="text-primary hover:underline" type="button">Resend in 0:45</button>
+</div>
+</form>
+</section>
+<!-- Step 3: Success State -->
+<section class="step-transition hidden-step flex flex-col items-center text-center" id="step-3">
+<div class="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mb-8 relative">
+<div class="absolute inset-0 bg-primary/20 rounded-full animate-ping opacity-25"></div>
+<span class="material-symbols-outlined text-primary text-5xl" data-icon="check_circle" data-weight="fill" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-background mb-4">Account Verified</h2>
+<p class="font-body-md text-body-md text-secondary mb-10 px-4">Your identification has been confirmed. You can now securely reset your password or proceed to your dashboard.</p>
+<div class="w-full space-y-4">
+<button class="w-full bg-primary-container text-on-primary-container font-title-md text-title-md py-4 rounded-xl hover:bg-primary transition-all active:scale-[0.98]">
+                            Reset Password
+                        </button>
+<a class="w-full inline-block border border-outline-variant text-on-surface font-title-md text-title-md py-4 rounded-xl hover:bg-white/5 transition-all" href="/">
+                            Back to Login
+                        </a>
+</div>
+</section>
+</div>
+<!-- Footer Meta Links -->
+<footer class="absolute bottom-12 left-8 lg:left-24 flex gap-8 text-outline/60 font-label-sm text-label-sm">
+<a class="hover:text-primary transition-colors uppercase tracking-widest" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors uppercase tracking-widest" href="#">Terms of Service</a>
+</footer>
+</div>
+</main>
+<script>
+        function goToStep(stepNumber) {
+            const steps = [1, 2, 3];
+            steps.forEach(num => {
+                const stepEl = document.getElementById(`step-${num}`);
+                if (num === stepNumber) {
+                    stepEl.classList.remove('hidden-step');
+                    stepEl.classList.add('active-step');
+                } else {
+                    stepEl.classList.remove('active-step');
+                    stepEl.classList.add('hidden-step');
+                }
+            });
+        }
+
+        // OTP Input Auto-focus Logic
+        const otpInputs = document.querySelectorAll('.otp-input');
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+            });
+        });
+
+        // Simple Fade-in micro-interaction
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('opacity-0');
+            setTimeout(() => {
+                document.body.classList.remove('opacity-0');
+                document.body.classList.add('transition-opacity', 'duration-1000', 'opacity-100');
+            }, 50);
+        });
+    </script>
+</body></html>

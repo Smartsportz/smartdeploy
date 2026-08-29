@@ -1,0 +1,225 @@
+import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { Page } from "../components/UI";
+import { assets, sports as fallbackSports } from "../data/platform";
+import { apiRequest, mediaUrl } from "../lib/api";
+
+const sportDetails: Record<string, {
+  title: string;
+  image: string;
+  season: string;
+  sponsor: string;
+  contact: string;
+  description: string;
+  operations: string;
+  attributes?: SportAttributePair[];
+  exploreUrl?: string;
+  exploreLabel?: string;
+}> = {
+  chess: {
+    title: "Chess Championship Operations",
+    image: "/assets/generated/sport-chess-sponsor.png",
+    season: "Winter 2026 planning window",
+    sponsor: "Mind Sports Development Desk",
+    contact: "City academy coordinators and school tournament committees",
+    description: "Chess events in Smart Sportz can be managed as school meets, academy leagues, open city championships, or corporate mind-sport festivals. The platform structure supports player identity, category selection, round allocation, result entry, certificates, and public ranking records.",
+    operations: "Organizers can publish tournament rules, sponsor notes, venue details, round timing, arbiters, participant instructions, and final standings in one structured page.",
+    exploreUrl: "/sports/chess/schools",
+    exploreLabel: "Explore",
+  },
+  cricket: {
+    title: "Cricket League Management",
+    image: assets.cricket,
+    season: "Aug 2026 registration and match season",
+    sponsor: "SmartSportz Premier Partners",
+    contact: "Mumbai, Bengaluru, Delhi, and corporate league managers",
+    description: "Cricket is designed for full tournament operations: team registration, captain and roster verification, payment collection, fixture generation, live score updates, overs, wickets, player scores, match highlights, and sponsor promotion.",
+    operations: "Each tournament page can include registration windows, city selection, team member count, prize slabs, rulebooks, payment receipts, QR passes, live score rooms, and completed match archives.",
+  },
+  football: {
+    title: "Football Tournament Circuits",
+    image: assets.football,
+    season: "Sep 2026 youth and club calendar",
+    sponsor: "Grassroots Football Network",
+    contact: "Club organizers, school federations, and venue partners",
+    description: "Football pages support squad-based registration, city-wise tournament discovery, match scheduling, substitutions, cards, goals, highlights, brackets, completed scores, and gallery publishing after each round.",
+    operations: "Sponsors, managers, and event staff can maintain venue information, team approvals, player lists, live match records, and public-facing tournament stories.",
+  },
+  basketball: {
+    title: "Basketball Pro-Series Events",
+    image: assets.basketball,
+    season: "Oct 2026 indoor arena series",
+    sponsor: "Arena Sports Collective",
+    contact: "Indoor venue teams and pro-series coordinators",
+    description: "Basketball tournaments need compact rosters, fast match updates, points tracking, team statistics, individual records, live video support, and polished public cards for each event.",
+    operations: "Smart Sportz can organize sponsor placements, payment summaries, match centers, team pages, completed round archives, and winner stories.",
+  },
+  volleyball: {
+    title: "Volleyball Classics And Archives",
+    image: assets.volleyball,
+    season: "Dec 2025 completed event archive",
+    sponsor: "Kerala Sports Circle",
+    contact: "District sports councils and court managers",
+    description: "Volleyball events combine roster registration, round fixtures, set scores, player records, media galleries, final results, and archived winner content for completed tournaments.",
+    operations: "The public view can show tournament month, team totals, prize values, gallery albums, round media, likes, comments, and shareable image links.",
+  },
+  badminton: {
+    title: "Badminton Court Events",
+    image: "/assets/generated/sport-badminton-sponsor.png",
+    season: "2026 indoor court calendar",
+    sponsor: "Indoor Court Partners",
+    contact: "Academy owners, school sports teams, and local associations",
+    description: "Badminton programs can support singles, doubles, category rules, court timing, player check-in, round progression, score entry, certificates, and winner records.",
+    operations: "Managers can publish sport-specific rules, player categories, venue contacts, registration documents, and sponsor announcements.",
+  },
+  "table-tennis": {
+    title: "Table Tennis Ranking Meets",
+    image: "/assets/generated/sport-table-tennis-sponsor.png",
+    season: "2026 ranking cycle",
+    sponsor: "SmartSportz Ranking Desk",
+    contact: "Club ranking committees and indoor sports venues",
+    description: "Table tennis pages can handle fast brackets, group stages, player ranking, live score notes, knockout rounds, completed scorecards, and public player records.",
+    operations: "The system can present match schedules, sponsors, city filters, category details, and downloadable results for players and organizers.",
+  },
+  esports: {
+    title: "E-Sports Streaming Brackets",
+    image: assets.basketball,
+    season: "2026 digital season",
+    sponsor: "Digital Arena Partners",
+    contact: "Online event hosts, stream teams, and college gaming clubs",
+    description: "E-sports tournaments need online team registration, bracket rooms, live video links, match proof, player aliases, sponsor banners, and quick announcement updates.",
+    operations: "Smart Sportz can connect team approvals, payments, match records, video highlights, news updates, and public bracket progression.",
+  },
+  athletics: {
+    title: "Athletics Meet Records",
+    image: "/assets/generated/sport-athletics-sponsor.png",
+    season: "2026 meet schedule",
+    sponsor: "City Athletics Council",
+    contact: "Schools, colleges, city meets, and sports federations",
+    description: "Athletics events can be structured by discipline, age group, heat, timing, lane assignment, medal records, certificates, and historical performance tracking.",
+    operations: "Public pages can include meet dates, sponsors, venue contacts, result downloads, media albums, and leaderboard records.",
+  },
+};
+
+const sportOrder = ["chess", "cricket", "football", "basketball", "volleyball", "badminton", "table-tennis", "esports", "athletics"];
+
+type PublicSportRecord = {
+  slug: string;
+  name: string;
+  active?: number;
+  color?: string;
+  title?: string;
+  image?: string;
+  description?: string;
+  operations?: string;
+  attribute_json?: string;
+  attributes?: SportAttributePair[];
+  explore_label?: string;
+  explore_url?: string;
+};
+
+type SportAttributePair = {
+  label: string;
+  value: string;
+};
+
+function normaliseSlug(slug: string) {
+  return slug === "e-sports" ? "esports" : slug;
+}
+
+function parseSportAttributes(sport: PublicSportRecord, fallback?: (typeof sportDetails)[string]): SportAttributePair[] {
+  const raw = sport.attributes ?? (() => {
+    try {
+      return JSON.parse(sport.attribute_json || "[]") as SportAttributePair[];
+    } catch {
+      return [];
+    }
+  })();
+  const clean = Array.isArray(raw)
+    ? raw
+        .map((item) => ({ label: String(item.label || "").trim(), value: String(item.value || "").trim() }))
+        .filter((item) => item.label || item.value)
+    : [];
+  if (clean.length) return clean;
+  return [
+    { label: "Season", value: fallback?.season || "Manager scheduled" },
+    { label: "Sponsor", value: fallback?.sponsor || "SmartSportz" },
+    { label: "Contact", value: fallback?.contact || "Admin and manager sports desk" },
+  ];
+}
+
+export function SportsPage() {
+  const { data } = useQuery({
+    queryKey: ["public-sports-page"],
+    queryFn: () => apiRequest<PublicSportRecord[]>("/public/sports", { silent: true, toast: false }),
+  });
+  const apiSports: PublicSportRecord[] = data?.length
+    ? data
+    : fallbackSports.map(({ slug, name, active, color }) => ({ slug, name, active, color }));
+  const sortedSports = [...apiSports].sort((left, right) => {
+    const leftIndex = sportOrder.indexOf(normaliseSlug(left.slug));
+    const rightIndex = sportOrder.indexOf(normaliseSlug(right.slug));
+    const leftScore = leftIndex >= 0 ? leftIndex : sportOrder.length;
+    const rightScore = rightIndex >= 0 ? rightIndex : sportOrder.length;
+    return leftScore === rightScore ? left.name.localeCompare(right.name) : leftScore - rightScore;
+  });
+  const items = sortedSports.map((sport) => {
+    const normalized = normaliseSlug(sport.slug);
+    const fallback = sportDetails[normalized];
+    const title = sport.title || fallback?.title || `${sport.name} Tournament Operations`;
+    const description = sport.description || fallback?.description || `${sport.name} programs can publish tournaments, sponsor details, registration information, media, and public records from Smart Sportz.`;
+    const operations = sport.operations || fallback?.operations || "Admins and managers can keep the public sport page updated with images, descriptions, tournaments, and optional Explore links.";
+    const image = sport.image || fallback?.image || assets.cricket;
+    const exploreUrl = sport.explore_url || fallback?.exploreUrl || "";
+    const exploreLabel = sport.explore_label || fallback?.exploreLabel || "Explore";
+    const attributes = parseSportAttributes(sport, fallback);
+    return {
+      sport,
+      detail: {
+        title,
+        image,
+        season: fallback?.season || "Manager scheduled",
+        sponsor: fallback?.sponsor || "SmartSportz",
+        contact: fallback?.contact || "Admin and manager sports desk",
+        description,
+        operations,
+        attributes,
+        exploreUrl,
+        exploreLabel,
+      },
+    };
+  });
+
+  return (
+    <Page className="sports-editorial-page">
+      <section className="page-hero sports-hero-clean">
+        <p className="eyebrow">SmartSportz Sports</p>
+        <h1>Sport Programs And Tournament Operations</h1>
+        <p>Explore how each sport can be presented with tournaments, sponsors, dates, contacts, player records, and manager-controlled public content.</p>
+      </section>
+      <div className="sports-editorial-list">
+        {items.map(({ sport, detail }, index) => (
+          <section className={`sports-editorial-row ${index % 2 ? "reverse" : ""}`} key={sport.slug}>
+            <div className="sports-editorial-copy">
+              <h2>{detail.title}</h2>
+              <p>{detail.description}</p>
+              <p>{detail.operations}</p>
+              <dl>
+                {detail.attributes.map((item) => (
+                  <div key={`${sport.slug}-${item.label}-${item.value}`}><dt>{item.label}</dt><dd>{item.value}</dd></div>
+                ))}
+              </dl>
+              <div className="sports-editorial-actions">
+                <Link className="inline-link" to={`/sports/${sport.slug}`}>Open {sport.name} tournaments</Link>
+                {detail.exploreUrl && <Link className="btn btn-secondary" to={detail.exploreUrl}>{detail.exploreLabel}</Link>}
+              </div>
+            </div>
+            <div className="sports-editorial-image">
+              <img src={mediaUrl(detail.image)} alt="" />
+            </div>
+          </section>
+        ))}
+      </div>
+    </Page>
+  );
+}

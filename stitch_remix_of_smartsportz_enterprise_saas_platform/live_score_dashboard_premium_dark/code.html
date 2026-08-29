@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ProSports AI | Live Score Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "border-subtle": "#E2E8F0",
+                    "primary-fixed-dim": "#72db9d",
+                    "on-primary-container": "#ffffff",
+                    "tertiary-fixed-dim": "#52df91",
+                    "secondary-fixed-dim": "#c0c6db",
+                    "text-primary": "#111827",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-variant": "#e0e3e5",
+                    "on-tertiary-fixed": "#00210f",
+                    "tertiary-container": "#00884f",
+                    "surface-container-high": "#e6e8ea",
+                    "on-primary-fixed": "#002110",
+                    "secondary": "#575e70",
+                    "deep-navy": "#081C3A",
+                    "on-tertiary": "#ffffff",
+                    "background": "#0B0F1A", /* Overridden for Dark Mode specific request */
+                    "background-surface": "#111827",
+                    "on-secondary-fixed-variant": "#404758",
+                    "on-secondary-fixed": "#141b2b",
+                    "on-primary": "#ffffff",
+                    "surface-dim": "#d8dadc",
+                    "tertiary": "#006c3e",
+                    "text-secondary": "#94A3B8",
+                    "on-surface-variant": "#3e4a41",
+                    "surface": "#0B0F1A",
+                    "error-container": "#ffdad6",
+                    "secondary-container": "#d9dff5",
+                    "inverse-on-surface": "#eff1f3",
+                    "primary-fixed": "#8ef8b7",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#5c6274",
+                    "inverse-primary": "#72db9d",
+                    "secondary-fixed": "#dce2f7",
+                    "on-background": "#FFFFFF",
+                    "outline-variant": "#bdcabe",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#e0e3e5",
+                    "surface-bright": "#f7f9fb",
+                    "outline": "#6e7a70",
+                    "accent-cyan": "#00D4FF",
+                    "primary-container": "#0b8852",
+                    "surface-tint": "#006d40",
+                    "on-surface": "#FFFFFF",
+                    "on-tertiary-fixed-variant": "#00522e",
+                    "inverse-surface": "#2d3133",
+                    "on-secondary": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "primary": "#0B8852",
+                    "on-tertiary-container": "#ffffff",
+                    "on-primary-fixed-variant": "#00522f",
+                    "tertiary-fixed": "#72fcab",
+                    "surface-container": "#1F2937"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "unit": "8px",
+                    "container-max": "1440px",
+                    "margin-desktop": "48px",
+                    "section-gap": "80px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Poppins"],
+                    "label-md": ["Poppins"],
+                    "body-md": ["Poppins"],
+                    "body-lg": ["Poppins"],
+                    "title-lg": ["Poppins"],
+                    "headline-lg": ["Poppins"],
+                    "display-lg": ["Poppins"],
+                    "caption": ["Poppins"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Poppins', sans-serif; }
+        .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .live-pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.1); } 100% { opacity: 1; transform: scale(1); } }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] bg-deep-navy border-r border-on-secondary-fixed-variant flex flex-col py-8 shadow-lg z-50">
+<div class="px-6 mb-10">
+<h1 class="font-headline-md text-headline-md font-bold text-primary-fixed-dim">ProSports AI</h1>
+<p class="font-label-md text-label-md text-secondary-fixed-dim opacity-60">Enterprise Management</p>
+</div>
+<nav class="flex-1 space-y-2 px-3">
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg bg-primary/10 text-primary-fixed-dim border-r-4 border-primary-fixed-dim transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-weight="fill">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-secondary-fixed-dim hover:text-white hover:bg-on-secondary-fixed-variant transition-all duration-200" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="font-label-md text-label-md">Tournaments</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-secondary-fixed-dim hover:text-white hover:bg-on-secondary-fixed-variant transition-all duration-200" href="#">
+<span class="material-symbols-outlined">live_tv</span>
+<span class="font-label-md text-label-md">Live Matches</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-secondary-fixed-dim hover:text-white hover:bg-on-secondary-fixed-variant transition-all duration-200" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-md text-label-md">Teams</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-secondary-fixed-dim hover:text-white hover:bg-on-secondary-fixed-variant transition-all duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md">Athletes</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-secondary-fixed-dim hover:text-white hover:bg-on-secondary-fixed-variant transition-all duration-200" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+</nav>
+<div class="px-3 mt-auto space-y-2">
+<button class="w-full py-3 bg-primary-container text-on-primary-container rounded-lg font-label-md text-label-md shadow-md active:scale-95 transition-transform mb-6">
+                Create Tournament
+            </button>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-secondary-fixed-dim hover:text-white hover:bg-on-secondary-fixed-variant transition-all duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-4 px-4 py-3 rounded-lg text-secondary-fixed-dim hover:text-white hover:bg-on-secondary-fixed-variant transition-all duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-label-md text-label-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-280px)] h-20 glass backdrop-blur-md border-b border-on-secondary-fixed-variant z-40 px-gutter flex justify-between items-center">
+<div class="flex items-center gap-8">
+<h2 class="font-title-lg text-title-lg text-primary-fixed-dim font-bold">Live Score Dashboard</h2>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="font-body-md text-body-md text-primary font-bold border-b-2 border-primary pb-1" href="#">Global View</a>
+<a class="font-body-md text-body-md text-text-secondary hover:text-on-background transition-all" href="#">My Leagues</a>
+<a class="font-body-md text-body-md text-text-secondary hover:text-on-background transition-all" href="#">Archive</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<button class="px-6 py-2 bg-primary-container text-white rounded-full font-label-md text-label-md uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all">
+                    Go Live
+                </button>
+<div class="flex items-center gap-4 text-text-secondary">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="material-symbols-outlined cursor-pointer hover:text-primary transition-colors">dark_mode</span>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-primary/30">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a senior sports administrator with a clean, cinematic aesthetic. They are wearing a sharp charcoal suit against a soft-focus background of a modern sports stadium at dusk. High-end editorial lighting, dark navy tones, and premium enterprise feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3AtFyjCOBbJ0DJlEVa68v20Bw1uu5hWQug-kpB0Q8LKCOCC_SkFZ7et2NzTgFabYvppGhuMs5M2_nsHstWrk3QMv80B3mK9MeRRclMSyO4HuU_7Mif2_vlp_3IFkrjzURvVX7LUYsREOghxZecg3RfTQpfUJv0-lBN4uxETn0larLZh3tSf5Uk88DbGig4b8NTMU7jwJ0UXWMAFaRHsX6GGzyZm5tXCnVELNA6C0pke9NqUffU_CiMBVOO5khg2bD-XyACdJXf1VS"/>
+</div>
+</div>
+</div>
+</header>
+<div class="mt-20 p-8 grid grid-cols-12 gap-6">
+<!-- Left Column: Match & Timeline -->
+<div class="col-span-12 xl:col-span-8 space-y-6">
+<!-- Main Match Scoreboard (Marquee) -->
+<section class="relative overflow-hidden rounded-2xl glass p-8 shadow-2xl bg-gradient-to-br from-deep-navy to-background">
+<div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+
+</div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-10">
+<div class="flex items-center gap-3 bg-red-600/20 text-red-500 px-4 py-1 rounded-full border border-red-500/30">
+<span class="w-2 h-2 bg-red-500 rounded-full live-pulse"></span>
+<span class="text-xs font-bold uppercase tracking-widest">Live Match • World Cup Qualifiers</span>
+</div>
+<div class="text-right">
+<p class="text-text-secondary font-label-md text-label-md">Narendra Modi Stadium, Ahmedabad</p>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<!-- Team A -->
+<div class="flex flex-col items-center gap-4 w-1/3">
+<div class="w-24 h-24 rounded-full glass p-2 border-2 border-primary/20 shadow-xl overflow-hidden bg-white/5">
+<img class="w-full h-full object-contain" data-alt="Official logo of the Indian Cricket Team featuring a stylized blue chakra with orange and green accents. High-resolution vector style, clean white background within a premium circular badge. Vibrant colors, professional sports branding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV6gNpQBd6apsmWi_mn3aGadrupKpy4WqCT7YlxzQDvYjK9ZRLb7NfUnNfojRSag419Gx377ivrqv7_ZS2HOmHYbmCHkEH2AR9gdjaymXm5TrV7zLy1b4Kw3ffuQkfCIOGxBDUeryxHksn46ZIR_I812rLCN-DlQdFEZXZgh3x8YoLE7Pj_sWBFpHPJZb9bgHZoQnmjdO4-6IHPkNe514j4OJlnCyVxq4mp1th7M2a55dEvwe6R-tJCH1pfsk4Wp9Tp91f-_eBcUVc"/>
+</div>
+<h3 class="font-headline-lg text-headline-lg">INDIA</h3>
+</div>
+<!-- Score Center -->
+<div class="flex flex-col items-center gap-2 w-1/3 text-center">
+<div class="flex flex-col items-center">
+<span class="font-display-lg text-display-lg text-primary-fixed-dim leading-none">142/3</span>
+<span class="text-text-secondary font-title-lg mt-2">(18.4 Overs)</span>
+</div>
+<div class="mt-6 flex gap-4">
+<div class="px-4 py-2 bg-white/5 rounded-lg border border-white/10">
+<p class="text-[10px] text-text-secondary uppercase">CRR</p>
+<p class="font-bold text-primary">7.61</p>
+</div>
+<div class="px-4 py-2 bg-white/5 rounded-lg border border-white/10">
+<p class="text-[10px] text-text-secondary uppercase">Projected</p>
+<p class="font-bold text-accent-cyan">210</p>
+</div>
+</div>
+</div>
+<!-- Team B -->
+<div class="flex flex-col items-center gap-4 w-1/3">
+<div class="w-24 h-24 rounded-full glass p-2 border-2 border-secondary/20 shadow-xl overflow-hidden bg-white/5">
+<img class="w-full h-full object-contain" data-alt="Official logo of the Australian Cricket Team featuring a golden kangaroo and southern cross stars. High-resolution vector style, clean dark green background within a premium circular badge. Bold sports branding, elegant metallic gold finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjXua9eEPYhYEbMzZf4L5t1SD2Km0u-IKDWwxKYBM5ycpdkVBe6SI3_9QWOP8ZLK1Gd44vkKe8LpEiGHS4scjyJGjWNJ943QZ4VXRVBPTllwDBmCZ2g5MgIKjruceVKm2bVv8QM_t9Bu1toK7k1GmfTTRIUYrYlhomC6Ld0nFsG9u6k7zj7Or2q0jRas1WOBcaLzPnF9A2VXN8RpdwO-zMOevpqItPxiEmtky5abJW9TucNgkDrpKZnR8WP7SYCeTsivdiTaiOhzDi"/>
+</div>
+<h3 class="font-headline-lg text-headline-lg">AUSTRALIA</h3>
+</div>
+</div>
+<div class="mt-12 pt-8 border-t border-white/5 grid grid-cols-2 gap-12">
+<div class="space-y-4">
+<p class="text-xs uppercase text-text-secondary font-bold tracking-widest">On Strike</p>
+<div class="flex justify-between items-center glass p-4 rounded-xl border-l-4 border-primary">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-primary/20">
+<img class="w-full h-full object-cover" data-alt="Close-up action portrait of a famous Indian cricketer in a blue jersey, looking focused during a match. Sharp focus, high-speed photography, cinematic stadium lighting, professional athlete portfolio style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMyvt-VmC2VJCa0G0EkNzWwOayBFoYA9IcIlZLGNg8Uq1G_H7QOlZv2nb7YylPA614YMgISZgmLbHVvIpsJfozRX6GKGcA505bcIWR_6eLi1Qkd7uzimFkZdV_ySTTcXpTLbSO-E184KIsQV4g_6DpJ6IcoFnGibk1oLMN3laY0XN5TWw42iazB_E6w7yUuhRt2DiOsP9Nh--WD2tbkUFTVNt8JMVV0NIg1QCPZIan7pLFWXd5G493GssYTbNo8NiJ8UidBEenLtMy"/>
+</div>
+<div>
+<p class="font-bold">Virat Kohli*</p>
+<p class="text-xs text-text-secondary">64 (42)</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-primary font-bold">S.R: 152.38</p>
+<div class="flex gap-1 mt-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-white/20"></span>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<p class="text-xs uppercase text-text-secondary font-bold tracking-widest">Bowler</p>
+<div class="flex justify-between items-center glass p-4 rounded-xl border-l-4 border-accent-cyan">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full overflow-hidden bg-accent-cyan/20">
+<img class="w-full h-full object-cover" data-alt="Action shot of a world-class Australian fast bowler mid-delivery under bright stadium lights. Dramatic sweat droplets, intense facial expression, sharp sports photography, dark stadium background with glowing lights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd4PMedkYVDw6r8bMFE5uiYm5im_HeAB-CZrd9MPOmw4gwbhPsH6FXVzz5GBanIlNuBlFXai7A-4LDd5niNPrjcQskK-rMOR6T5He3KUG208-Lt4KzlCFmdYpcqa8OK13rjCq4XvOOJUGvy92KkMFtmQEV6uvv2DIGajgeiUbBPOPlIll6tBCOK6ww6AD1N6mCbz7U0icUJ57eW5qSq8jzmUYnWQMELAiOcpFgK5vk7P-ZRqmOZOYGCpWozkidczGlSEAZ_QSkn-3u"/>
+</div>
+<div>
+<p class="font-bold">Pat Cummins</p>
+<p class="text-xs text-text-secondary">3.4 - 0 - 28 - 1</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-accent-cyan font-bold">ECON: 7.63</p>
+<div class="flex gap-1 mt-1 justify-end">
+<span class="w-4 h-4 bg-white/10 rounded-full flex items-center justify-center text-[10px] text-text-secondary">W</span>
+<span class="w-4 h-4 bg-white/10 rounded-full flex items-center justify-center text-[10px] text-primary">4</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Analytics & Stats -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="glass p-6 rounded-2xl">
+<div class="flex justify-between items-start mb-4">
+<h4 class="font-label-md text-label-md text-text-secondary uppercase">Win Probability</h4>
+<span class="material-symbols-outlined text-primary">trending_up</span>
+</div>
+<div class="relative h-24 flex items-end gap-2 overflow-hidden">
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="text-3xl font-bold text-on-background">68%</span>
+</div>
+<div class="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 68%"></div>
+</div>
+</div>
+<p class="text-xs text-text-secondary mt-2">India is currently favored to win</p>
+</div>
+<div class="glass p-6 rounded-2xl">
+<div class="flex justify-between items-start mb-4">
+<h4 class="font-label-md text-label-md text-text-secondary uppercase">Run Rate Graph</h4>
+<span class="material-symbols-outlined text-accent-cyan">bar_chart</span>
+</div>
+<div class="h-24 flex items-end gap-1">
+<div class="flex-1 bg-primary/20 rounded-t h-[40%]"></div>
+<div class="flex-1 bg-primary/40 rounded-t h-[60%]"></div>
+<div class="flex-1 bg-primary/20 rounded-t h-[30%]"></div>
+<div class="flex-1 bg-primary/60 rounded-t h-[80%]"></div>
+<div class="flex-1 bg-primary/80 rounded-t h-[70%]"></div>
+<div class="flex-1 bg-primary rounded-t h-[100%]"></div>
+</div>
+<p class="text-xs text-text-secondary mt-2">Last 5 Overs: 48 runs, 0 wickets</p>
+</div>
+<div class="glass p-6 rounded-2xl flex flex-col justify-between">
+<div class="flex justify-between items-start mb-2">
+<h4 class="font-label-md text-label-md text-text-secondary uppercase">Ball by Ball</h4>
+<span class="material-symbols-outlined text-on-tertiary-fixed">info</span>
+</div>
+<div class="flex gap-2 justify-center py-2">
+<span class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-xs">1</span>
+<span class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold">4</span>
+<span class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-xs">wd</span>
+<span class="w-8 h-8 rounded-full bg-accent-cyan flex items-center justify-center text-xs font-bold">W</span>
+<span class="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-xs">0</span>
+<span class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-xs font-bold">6</span>
+</div>
+<p class="text-xs text-center text-text-secondary">Current Over: 15 Runs</p>
+</div>
+</div>
+<!-- Match Commentary -->
+<section class="glass rounded-2xl overflow-hidden flex flex-col h-[400px]">
+<div class="p-6 border-b border-white/5 flex justify-between items-center bg-white/5">
+<h3 class="font-title-lg text-title-lg">Live Commentary</h3>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded bg-primary/20 text-primary text-xs font-bold">KEY EVENTS</button>
+<button class="px-3 py-1 rounded bg-white/5 text-text-secondary text-xs font-bold">ALL</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-6 space-y-8 no-scrollbar">
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<span class="font-bold text-primary">18.4</span>
+<div class="w-0.5 flex-1 bg-white/10 my-2"></div>
+</div>
+<div class="flex-1">
+<p class="font-bold mb-1">SIX! Kohli is on fire.</p>
+<p class="text-sm text-text-secondary">Short and wide from Cummins, Kohli stands tall and slaps it over deep extra cover. The crowd is erupting here in Ahmedabad! That takes him to 64.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<span class="font-bold text-accent-cyan">18.3</span>
+<div class="w-0.5 flex-1 bg-white/10 my-2"></div>
+</div>
+<div class="flex-1">
+<p class="font-bold mb-1">WICKET! Cummins strikes back.</p>
+<p class="text-sm text-text-secondary">Hardik Pandya tries to clear the long-on boundary but mistimes it completely. Starc takes a comfortable catch. A huge blow for India just before the death overs.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex flex-col items-center">
+<span class="font-bold text-white/50">18.2</span>
+<div class="w-0.5 flex-1 bg-white/10 my-2"></div>
+</div>
+<div class="flex-1">
+<p class="font-bold mb-1">No run.</p>
+<p class="text-sm text-text-secondary">Good length delivery, pushed back to the bowler. Sharp fielding by Cummins.</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Other Matches & Action Bar -->
+<div class="col-span-12 xl:col-span-4 space-y-6">
+<!-- Action Bar -->
+<section class="glass p-6 rounded-2xl grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all active:scale-95">
+<span class="material-symbols-outlined text-primary">share</span>
+<span class="font-label-md text-label-md">Share Score</span>
+</button>
+<button class="flex items-center justify-center gap-2 py-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all active:scale-95">
+<span class="material-symbols-outlined text-accent-cyan">notifications_active</span>
+<span class="font-label-md text-label-md">Set Alerts</span>
+</button>
+<button class="col-span-2 flex items-center justify-center gap-2 py-3 bg-primary-container text-white rounded-xl hover:opacity-90 transition-all active:scale-95 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Detailed Analytics</span>
+</button>
+</section>
+<!-- Multi-Sport Match Cards -->
+<section class="space-y-4">
+<h3 class="font-title-lg text-title-lg px-2 flex justify-between items-center">
+                        Active Global Matches
+                        <span class="text-xs text-primary font-bold uppercase cursor-pointer hover:underline">View All</span>
+</h3>
+<!-- Football Card -->
+<div class="glass p-4 rounded-2xl border-l-4 border-primary hover:translate-x-1 transition-transform cursor-pointer">
+<div class="flex justify-between items-center mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary text-sm">sports_soccer</span>
+<span class="text-[10px] text-text-secondary uppercase font-bold tracking-widest">Premier League</span>
+</div>
+<span class="text-xs text-primary font-bold bg-primary/10 px-2 py-0.5 rounded italic">74' Live</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center font-bold text-[10px]">ARS</div>
+<span class="font-bold">2</span>
+</div>
+<div class="text-text-secondary text-xs">vs</div>
+<div class="flex items-center gap-3">
+<span class="font-bold">1</span>
+<div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-[10px]">MCI</div>
+</div>
+</div>
+<div class="mt-4 flex items-center gap-4">
+<div class="flex-1 h-1 bg-white/5 rounded-full overflow-hidden flex">
+<div class="h-full bg-red-500" style="width: 58%"></div>
+<div class="h-full bg-blue-500" style="width: 42%"></div>
+</div>
+<span class="text-[10px] text-text-secondary">58% Possession</span>
+</div>
+</div>
+<!-- Basketball Card -->
+<div class="glass p-4 rounded-2xl border-l-4 border-accent-cyan hover:translate-x-1 transition-transform cursor-pointer">
+<div class="flex justify-between items-center mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary text-sm">sports_basketball</span>
+<span class="text-[10px] text-text-secondary uppercase font-bold tracking-widest">NBA Season</span>
+</div>
+<span class="text-xs text-accent-cyan font-bold bg-accent-cyan/10 px-2 py-0.5 rounded italic">Q4 2:14</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-purple-700 flex items-center justify-center font-bold text-[10px]">LAL</div>
+<span class="font-bold">88</span>
+</div>
+<div class="text-text-secondary text-xs">vs</div>
+<div class="flex items-center gap-3">
+<span class="font-bold">92</span>
+<div class="w-8 h-8 rounded-full bg-green-700 flex items-center justify-center font-bold text-[10px]">BOS</div>
+</div>
+</div>
+<div class="mt-4 flex justify-between text-[10px] text-text-secondary uppercase font-bold">
+<span>FG%: 46.2%</span>
+<span>Timeouts: 2 | 1</span>
+</div>
+</div>
+<!-- Another Cricket Card (Compact) -->
+<div class="glass p-4 rounded-2xl border-l-4 border-on-secondary-fixed-variant hover:translate-x-1 transition-transform cursor-pointer">
+<div class="flex justify-between items-center mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-text-secondary text-sm">sports_cricket</span>
+<span class="text-[10px] text-text-secondary uppercase font-bold tracking-widest">The Hundred</span>
+</div>
+<span class="text-xs text-text-secondary font-bold bg-white/5 px-2 py-0.5 rounded">Delayed</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3 opacity-60">
+<div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center font-bold text-[10px] text-black">OB</div>
+<span class="font-bold">Yet to bat</span>
+</div>
+<div class="text-text-secondary text-xs">vs</div>
+<div class="flex items-center gap-3">
+<span class="font-bold">120/4</span>
+<div class="w-8 h-8 rounded-full bg-pink-500 flex items-center justify-center font-bold text-[10px]">MO</div>
+</div>
+</div>
+<p class="mt-3 text-[10px] text-text-secondary italic">Rain delay at Old Trafford. Inspection in 10 mins.</p>
+</div>
+</section>
+<!-- Trending Topics / Highlights -->
+<section class="glass p-6 rounded-2xl">
+<h3 class="font-label-md text-label-md text-text-secondary uppercase mb-4 tracking-widest">Key Highlights</h3>
+<div class="space-y-4">
+<div class="group relative overflow-hidden rounded-xl h-24 cursor-pointer">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Action shot of a basketball player executing a powerful slam dunk in a high-tech stadium. The background is blurred with vibrant crowd lights and camera flashes. Deep saturation, sharp focus, professional sports marketing aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCtrqJ5nWhiktAEsB3fwG5rc2EgD_CCMe7G0LV7hrCSZgD_ZaR1FGdBcdvz-_u_TBGevIWe25A6WqJT8SoWAdGjiGWHH7Y4KA1nRSpA_u4B-a3sTwKFAIHRljQZUeBU4pGkX9TWlfAzJtX_InFYN7XDu-gZbuJXE73Yt_bLRtZL4nXcMvxR00XiwdIR60idq-XURSoVYHpPnBV_6sEkR_fLI8eykz-rbUfuPk5tu9OEWunv1rAvVNFympF1KYMdngJ2U4xxZEs9fBd8')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-3">
+<p class="text-xs font-bold leading-tight">LeBron's record-breaking dunk against Celtics</p>
+</div>
+</div>
+<div class="group relative overflow-hidden rounded-xl h-24 cursor-pointer">
+<div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Cinematic shot of a football flying into the top corner of a soccer net, freezing the moment of impact. The stadium lights create a lens flare effect, and blades of grass are flying in the air. High-speed action photography, premium dark UI style." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDTvJxVmNPAx5lwWaDMi7_e3_V9GIU-9D7cgAOEQ2oMq7Ikg7NzpLQsqKwGRNaVjFH9UnaebPNU1GFW8yDnC3rUPuh4U3kIBG2fp5LcrFmi3OYxNefKUgTiNwBK1YAZ2Yw3ZAKt3gtqFqW1arLvT3jxMkZntE2DszlYCKfX5-jnyYnpoqUco2bExbXalUHQKCIYzoMD00zelpo27dkuhgMk1Ro4PnnqnWa8d9H_2bbDVHewUv4sR1tZLRZHjM6rQVVx3fiCXAx5o8h3')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-3">
+<p class="text-xs font-bold leading-tight">Saka's brilliant volley to put Arsenal ahead</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+<!-- Footer / Action Area (Bottom) -->
+<footer class="mt-auto p-gutter border-t border-white/5 flex justify-between items-center text-text-secondary text-caption">
+<p>© 2024 ProSports AI Management System • SmartSportz.in Platform</p>
+<div class="flex gap-6">
+<a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-primary transition-colors" href="#">API Docs</a>
+<a class="hover:text-primary transition-colors" href="#">Data Integrity</a>
+</div>
+</footer>
+</main>
+<!-- Interactive Elements Script -->
+<script>
+        // Simple real-time data simulator
+        document.addEventListener('DOMContentLoaded', () => {
+            const scoreDisplay = document.querySelector('.font-display-lg');
+            const oversDisplay = document.querySelector('.text-text-secondary.font-title-lg');
+            let runs = 142;
+            let wickets = 3;
+            let balls = 112; // 18.4 overs
+
+            setInterval(() => {
+                // Randomly add runs or wicket
+                const rand = Math.random();
+                if (rand > 0.95) {
+                    wickets++;
+                    if (wickets > 10) wickets = 10;
+                } else if (rand > 0.8) {
+                    runs += Math.floor(Math.random() * 4) + 1;
+                }
+                
+                balls++;
+                const overs = Math.floor(balls / 6);
+                const currentBall = balls % 6;
+                
+                scoreDisplay.textContent = `${runs}/${wickets}`;
+                oversDisplay.textContent = `(${overs}.${currentBall} Overs)`;
+                
+                // Visual feedback
+                scoreDisplay.classList.add('text-white');
+                setTimeout(() => scoreDisplay.classList.remove('text-white'), 500);
+            }, 10000); // Update every 10 seconds for demo
+        });
+    </script>
+</body></html>

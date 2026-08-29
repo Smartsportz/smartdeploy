@@ -1,0 +1,175 @@
+services:
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    ports:
+      - "6379:6379"
+    volumes:
+      - smart_sportz_redis:/data
+
+  backend-init:
+    build:
+      context: ./backend
+    command: ["python", "-m", "app.cli", "init-db", "--no-seed"]
+    environment:
+      APP_ENV: docker
+      APP_SECRET_KEY: change-this-docker-secret
+      DATABASE_BACKEND: sqlite
+      DATABASE_PATH: storage/smartsportz.db
+      MIRROR_DATABASE_PATH: storage/smartsportz_mirror.db
+      AUDIT_DATABASE_PATH: storage/smartsportz_audit.db
+      READ_FROM_MIRROR: "false"
+      REDIS_URL: redis://redis:6379/0
+      INIT_DB_ON_STARTUP: "false"
+      SEED_DB_ON_STARTUP: "false"
+      CLEANUP_MEDIA_ON_STARTUP: "false"
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - smart_sportz_storage:/app/storage
+
+  backend:
+    build:
+      context: ./backend
+    environment:
+      APP_ENV: docker
+      APP_SECRET_KEY: change-this-docker-secret
+      DATABASE_BACKEND: sqlite
+      DATABASE_PATH: storage/smartsportz.db
+      MIRROR_DATABASE_PATH: storage/smartsportz_mirror.db
+      AUDIT_DATABASE_PATH: storage/smartsportz_audit.db
+      REDIS_URL: redis://redis:6379/0
+      INIT_DB_ON_STARTUP: "true"
+      SEED_DB_ON_STARTUP: "false"
+      CLEANUP_MEDIA_ON_STARTUP: "false"
+      PUBLIC_CACHE_TTL_SECONDS: "45"
+      DASHBOARD_CACHE_TTL_SECONDS: "20"
+      ALLOWED_ORIGINS: http://localhost:8080,http://127.0.0.1:8080
+      WEB_CONCURRENCY: "4"
+    depends_on:
+      backend-init:
+        condition: service_completed_successfully
+    volumes:
+      - smart_sportz_storage:/app/storage
+    ports:
+      - "8000:8000"
+
+  worker:
+    build:
+      context: ./backend
+    command: ["python", "-m", "app.cli", "worker"]
+    environment:
+      APP_ENV: docker
+      APP_SECRET_KEY: change-this-docker-secret
+      DATABASE_BACKEND: sqlite
+      DATABASE_PATH: storage/smartsportz.db
+      MIRROR_DATABASE_PATH: storage/smartsportz_mirror.db
+      AUDIT_DATABASE_PATH: storage/smartsportz_audit.db
+      REDIS_URL: redis://redis:6379/0
+      INIT_DB_ON_STARTUP: "false"
+      SEED_DB_ON_STARTUP: "false"
+      CLEANUP_MEDIA_ON_STARTUP: "false"
+    depends_on:
+      backend-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    volumes:
+      - smart_sportz_storage:/app/storage
+
+  celery-worker:
+    build:
+      context: ./backend
+    command: ["celery", "-A", "app.services.celery_app.celery_app", "worker", "--loglevel=INFO", "--concurrency=2"]
+    environment:
+      APP_ENV: docker
+      APP_SECRET_KEY: change-this-docker-secret
+      DATABASE_BACKEND: sqlite
+      DATABASE_PATH: storage/smartsportz.db
+      MIRROR_DATABASE_PATH: storage/smartsportz_mirror.db
+      AUDIT_DATABASE_PATH: storage/smartsportz_audit.db
+      REDIS_URL: redis://redis:6379/1
+      INIT_DB_ON_STARTUP: "false"
+      SEED_DB_ON_STARTUP: "false"
+      CLEANUP_MEDIA_ON_STARTUP: "false"
+    depends_on:
+      backend-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    volumes:
+      - smart_sportz_storage:/app/storage
+
+  celery-beat:
+    build:
+      context: ./backend
+    command: ["celery", "-A", "app.services.celery_app.celery_app", "beat", "--loglevel=INFO"]
+    environment:
+      APP_ENV: docker
+      APP_SECRET_KEY: change-this-docker-secret
+      DATABASE_BACKEND: sqlite
+      DATABASE_PATH: storage/smartsportz.db
+      MIRROR_DATABASE_PATH: storage/smartsportz_mirror.db
+      AUDIT_DATABASE_PATH: storage/smartsportz_audit.db
+      REDIS_URL: redis://redis:6379/1
+      INIT_DB_ON_STARTUP: "false"
+      SEED_DB_ON_STARTUP: "false"
+      CLEANUP_MEDIA_ON_STARTUP: "false"
+    depends_on:
+      backend-init:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    volumes:
+      - smart_sportz_storage:/app/storage
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_BASE_PATH: /
+        VITE_API_BASE_URL: /api/v1
+    depends_on:
+      - backend
+    ports:
+      - "8080:80"
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+    volumes:
+      - ./deploy/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - smart_sportz_prometheus:/prometheus
+    depends_on:
+      - backend
+      - frontend
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:11.4.0
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - ./deploy/grafana/provisioning:/etc/grafana/provisioning:ro
+      - smart_sportz_grafana:/var/lib/grafana
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+
+volumes:
+  smart_sportz_storage:
+  smart_sportz_redis:
+  smart_sportz_prometheus:
+  smart_sportz_grafana:

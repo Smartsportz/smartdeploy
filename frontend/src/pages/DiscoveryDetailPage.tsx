@@ -1,0 +1,70 @@
+import { useQuery } from "@tanstack/react-query";
+import { Link, useParams } from "react-router-dom";
+import { Page } from "../components/UI";
+import { apiRequest, mediaUrl } from "../lib/api";
+import { ProgressiveSection, SectionSkeleton } from "../lib/progressive";
+
+type DiscoveryDetail = Record<string, any> & {
+  tournament?: Record<string, any> | null;
+};
+
+export function DiscoveryDetailPage() {
+  const { slug } = useParams();
+  const detailQuery = useQuery({
+    queryKey: ["public", "home-discovery", slug],
+    queryFn: () => apiRequest<DiscoveryDetail>(`/public/home-discovery/${slug}`, { silent: true }),
+    enabled: Boolean(slug),
+  });
+  const detail = detailQuery.data ?? null;
+
+  const tournament = detail?.tournament;
+  const canRegister = tournament?.status === "Registration Open" && detail?.register_path;
+
+  return (
+    <Page className="discovery-detail-page">
+      {detailQuery.isError && <div className="form-alert">Could not load sponsor detail.</div>}
+      {detailQuery.isLoading || !detail ? (
+        <SectionSkeleton rows={3} />
+      ) : (
+        <>
+          <section className="discovery-detail-hero">
+            <img src={mediaUrl(detail.image)} alt="" loading="eager" fetchpriority="high" />
+            <div>
+              <span className="status emerald">{detail.label}</span>
+              <h1>{detail.title}</h1>
+              <p>{detail.description}</p>
+              <div className="hero-actions">
+                {canRegister ? <Link className="btn btn-primary" to={detail.register_path}>Tournament Register</Link> : <Link className="btn btn-secondary" to={tournament ? `/tournaments/${tournament.slug}` : "/tournaments"}>View Tournament</Link>}
+                <Link className="btn btn-secondary" to="/sports">Explore Sports</Link>
+              </div>
+            </div>
+          </section>
+          <ProgressiveSection query={{ queryKey: ["discovery-detail-panels", slug] as const, queryFn: async () => detail }} skeletonRows={2}>
+            {() => (
+              <section className="discovery-detail-grid">
+                <article className="panel">
+                  <h2>Game And Tournament</h2>
+                  <p>{detail.sport} is connected to {tournament?.name || detail.title}. The event page includes tournament schedule, registration state, sponsor presentation, venue context, team flow, and public records for participants and organizers.</p>
+                  <dl className="detail-dl">
+                    <div><dt>Sport</dt><dd>{detail.sport}</dd></div>
+                    <div><dt>Tournament Date</dt><dd>{detail.event_date}</dd></div>
+                    <div><dt>Location</dt><dd>{tournament?.location || "Configured by admin"}</dd></div>
+                    <div><dt>Status</dt><dd>{tournament?.status || "Published"}</dd></div>
+                  </dl>
+                </article>
+                <article className="panel">
+                  <h2>Sponsor Details</h2>
+                  <div className="sponsor-detail-logo">
+                    <img src={mediaUrl(detail.sponsor_image || detail.image)} alt="" loading="lazy" />
+                    <strong>{detail.sponsor_name}</strong>
+                  </div>
+                  <p>{detail.sponsor_details}</p>
+                </article>
+              </section>
+            )}
+          </ProgressiveSection>
+        </>
+      )}
+    </Page>
+  );
+}

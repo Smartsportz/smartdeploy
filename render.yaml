@@ -1,0 +1,62 @@
+services:
+  - type: web
+    name: smart-sportz-backend
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app.main:app --worker-class uvicorn.workers.UvicornWorker --workers 1 --bind 0.0.0.0:$PORT --timeout 60
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: APP_NAME
+        value: Smart Sportz Backend
+      - key: APP_ENV
+        value: production
+      - key: APP_SECRET_KEY
+        generateValue: true
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DATABASE_BACKEND
+        value: sqlite
+      - key: DATABASE_PATH
+        value: storage/smartsportz.db
+      - key: MIRROR_DATABASE_PATH
+        value: storage/smartsportz_mirror.db
+      - key: AUDIT_DATABASE_PATH
+        value: storage/smartsportz_audit.db
+      - key: AUTO_MIRROR_SYNC
+        value: "false"
+      - key: BACKUP_DIR
+        value: storage/backups
+      - key: UPLOAD_DIR
+        value: storage/uploads
+      - key: REDIS_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_URL
+        value: https://moved-seahorse-170162.upstash.io
+      - key: UPSTASH_REDIS_REST_TOKEN
+        value: gQAAAAAAApiyAAIgcDFlM2UwZjMzOTNhNDA0MDliOTFkNzAwYjcyNjJmNGUwNA
+      - key: INIT_DB_ON_STARTUP
+        value: "true"
+      - key: SEED_DB_ON_STARTUP
+        value: "false"
+      - key: CLEANUP_MEDIA_ON_STARTUP
+        value: "false"
+      - key: PUBLIC_CACHE_TTL_SECONDS
+        value: "300"
+      - key: DASHBOARD_CACHE_TTL_SECONDS
+        value: "120"
+      - key: OTP_DELIVERY_MODE
+        value: local
+      - key: NOTIFICATION_DELIVERY_MODE
+        value: whatsapp
+      - key: WHATSAPP_DELIVERY_ENABLED
+        value: "false"
+      - key: WHATSAPP_PROVIDER
+        value: disabled
+      - key: WHATSAPP_DEFAULT_TO
+        value: "+916374409006"
+      - key: GOOGLE_CLIENT_ID
+        value: 1052442707513-ht85fnn4ag34pvna47vv6cnorv4bto7c.apps.googleusercontent.com
+      - key: ALLOWED_ORIGINS
+        value: https://smart-sportz-dun.vercel.app,https://smart-sportz.vercel.app,https://smartsportz.github.io,https://smartsportz.github.io/Smart_Sportz,http://127.0.0.1:5173,http://localhost:5173

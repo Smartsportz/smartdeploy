@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Tournaments | SmartSportz.in</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#e5eeff",
+                    "primary": "#006c40",
+                    "on-tertiary-fixed-variant": "#7f272f",
+                    "primary-container": "#0b8852",
+                    "primary-fixed-dim": "#72db9d",
+                    "tertiary": "#9e3e44",
+                    "primary-fixed": "#8ef8b7",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#0b1c30",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#d8e3fb",
+                    "surface-tint": "#006d40",
+                    "on-surface": "#0b1c30",
+                    "inverse-primary": "#72db9d",
+                    "tertiary-fixed-dim": "#ffb3b3",
+                    "outline": "#6e7a70",
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-secondary-fixed": "#111c2d",
+                    "surface-bright": "#f8f9ff",
+                    "on-primary-fixed": "#002110",
+                    "surface-container-high": "#dce9ff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#586377",
+                    "on-tertiary-fixed": "#40000a",
+                    "surface-container-low": "#eff4ff",
+                    "on-surface-variant": "#3e4a41",
+                    "surface": "#f8f9ff",
+                    "tertiary-fixed": "#ffdad9",
+                    "secondary": "#545f73",
+                    "tertiary-container": "#bd565b",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#ffffff",
+                    "secondary-container": "#d5e0f8",
+                    "surface-container-highest": "#d3e4fe",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-variant": "#d3e4fe",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#ffffff",
+                    "on-primary-fixed-variant": "#00522f",
+                    "inverse-surface": "#213145",
+                    "background": "#f8f9ff",
+                    "outline-variant": "#bdcabe",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#cbdbf5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "40px",
+                    "section-gap-lg": "120px",
+                    "container-max": "1280px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "section-gap-md": "80px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Poppins"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "body-sm": ["Be Vietnam Pro"],
+                    "headline-sm": ["Poppins"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "headline-md": ["Poppins"],
+                    "display-lg-mobile": ["Poppins"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .soft-shadow {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        body {
+            background-color: #f8f9ff;
+            color: #0b1c30;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md antialiased">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-md shadow-sm border-b border-outline-variant/30 dark:border-outline/20 h-20">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-margin-desktop h-full">
+<div class="font-display-lg text-headline-md font-bold text-primary dark:text-primary-fixed-dim">
+                SmartSportz.in
+            </div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200" href="#">Home</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 hover:text-primary-container transition-colors duration-200" href="#">Tournaments</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200" href="#">Live Scores</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200" href="#">Results</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200" href="#">Leaderboards</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200" href="#">Sports</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-on-surface font-label-md px-4 py-2 hover:bg-surface-container transition-colors">Login</button>
+<button class="bg-primary text-on-primary font-label-md px-6 py-2 rounded-lg hover:opacity-90 active:scale-95 transition-all duration-150">Register</button>
+</div>
+</div>
+</header>
+<main class="pt-28 pb-section-gap-lg">
+<!-- Filter and Search Section -->
+<section class="max-w-container-max mx-auto px-margin-desktop mb-section-gap-md">
+<div class="flex flex-col gap-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="font-display-lg text-display-lg text-on-background mb-2">Upcoming Tournaments</h1>
+<p class="text-on-surface-variant max-w-2xl font-body-lg">Discover and register for the elite sporting events across the country. Track your progress and rise through the ranks.</p>
+</div>
+<div class="relative w-full md:w-96 group">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-12 pr-4 py-4 bg-surface-container-lowest border border-outline-variant/50 rounded-[18px] focus:ring-2 focus:ring-primary focus:outline-none transition-all soft-shadow" placeholder="Search tournaments..." type="text"/>
+</div>
+</div>
+<!-- Bento-ish Filter Bar -->
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-on-surface-variant uppercase tracking-wider ml-1">Sport</label>
+<select class="bg-surface-container-low border-none rounded-xl px-4 py-3 font-label-md text-on-surface focus:ring-2 focus:ring-primary">
+<option>All Sports</option>
+<option>Cricket</option>
+<option>Football</option>
+<option>Tennis</option>
+<option>Basketball</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-on-surface-variant uppercase tracking-wider ml-1">Location</label>
+<select class="bg-surface-container-low border-none rounded-xl px-4 py-3 font-label-md text-on-surface focus:ring-2 focus:ring-primary">
+<option>All Cities</option>
+<option>Mumbai</option>
+<option>Delhi</option>
+<option>Bangalore</option>
+<option>Pune</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-on-surface-variant uppercase tracking-wider ml-1">Date Range</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">calendar_month</span>
+<input class="w-full bg-surface-container-low border-none rounded-xl pl-10 pr-4 py-3 font-label-md text-on-surface focus:ring-2 focus:ring-primary" placeholder="Select Date" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-sm text-on-surface-variant uppercase tracking-wider ml-1">Entry Fee</label>
+<select class="bg-surface-container-low border-none rounded-xl px-4 py-3 font-label-md text-on-surface focus:ring-2 focus:ring-primary">
+<option>Any Price</option>
+<option>Free</option>
+<option>Under ₹1000</option>
+<option>₹1000 - ₹5000</option>
+</select>
+</div>
+<div class="flex items-end md:col-span-1 col-span-2">
+<button class="w-full bg-secondary-container text-on-secondary-container font-label-md py-3.5 rounded-xl hover:bg-secondary-container/80 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">filter_alt</span>
+                            Apply Filters
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Tournament Grid -->
+<section class="max-w-container-max mx-auto px-margin-desktop">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest rounded-[18px] overflow-hidden soft-shadow group flex flex-col hover:-translate-y-1 transition-transform duration-300">
+<div class="relative h-56 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Professional cricket players in white uniforms during a match in a sun-drenched stadium in Mumbai. The lighting is high-contrast, capturing the vibrant green pitch and the blue afternoon sky. The aesthetic is clean and high-fidelity, emphasizing elite performance and professional sports competition." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBnnzXZcFimLL7T9ac2kTo8J77vfkdXk4C5bjAaHg0DlXTFdWMYGO8QX7ya8zuAKbQ9xlxxGtE6O5K_lAln4OCOV_9GkBIQgeYh-v5jvjVrT2ULM8p5rvu6lUc-Ljec7dkKjq0k28U_sXTpmb9pTSbsPwmYsAq_PfZhZpWjScmDDmame6V73TzlS3AHPdSP-EydLk5uv8H_0pJsxl2SK-i3GruZQT_19cdlON3Wr6IIb-h5lf8uLyN7PsblkN83wL7SCfBsoCK9EgPV')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-primary/90 backdrop-blur-md text-on-primary font-label-sm px-3 py-1.5 rounded-[4px] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">sports_cricket</span>
+                                Cricket
+                            </span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+<span class="text-white font-label-md flex items-center gap-1.5">
+<span class="material-symbols-outlined text-lg">event</span>
+                                Oct 24, 2024
+                            </span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-grow gap-4">
+<div>
+<h3 class="font-headline-sm text-on-background mb-1">Mumbai Premier Bash</h3>
+<p class="text-on-surface-variant text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                                DY Patil Stadium, Mumbai
+                            </p>
+</div>
+<div class="flex items-center justify-between py-3 border-y border-outline-variant/30">
+<div class="flex flex-col">
+<span class="text-label-sm text-on-surface-variant uppercase">Prize Pool</span>
+<span class="font-headline-sm text-primary">₹5,00,000</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-label-sm text-on-surface-variant uppercase">Slots Left</span>
+<span class="font-label-md text-on-surface">12 / 32</span>
+</div>
+</div>
+<div class="mt-auto pt-2">
+<button class="w-full bg-primary text-on-primary font-label-md py-4 rounded-lg hover:bg-primary-container transition-all active:scale-[0.98]">Register Now</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-[18px] overflow-hidden soft-shadow group flex flex-col hover:-translate-y-1 transition-transform duration-300">
+<div class="relative h-56 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Dynamic action shot of a professional football match under stadium lights at dusk in Delhi. Players in athletic kits are mid-stride on a perfectly manicured emerald green field. The visual style is premium and cinematic, with soft light blooming from the floodlights and high-resolution textures." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-Q4lSZ2bs-z8oYzP5hbZtHFpAd5D_R91MATkCZm66OntxRj7Py1GPv_zJzN7eQOvs75WsBaSAgMXpdD6cPudl4u62eyxi1cQlw9YDlH5KVzl7x7pE3lWe7XBB4LtPeiwFcdAlxcR1HELvMmqoGGQ9i91A-jUMHidmAYBPqmh4nfETJeVvAznAuX4C4qCnYka5bNqVetF7Th2x6Slfkuv8nfUiu2PkGQb4zZVck090EbfumGLMZdfgqzNIGIbigR3sXxlnZ6F6qgAT')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-tertiary/90 backdrop-blur-md text-on-primary font-label-sm px-3 py-1.5 rounded-[4px] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">sports_soccer</span>
+                                Football
+                            </span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+<span class="text-white font-label-md flex items-center gap-1.5">
+<span class="material-symbols-outlined text-lg">event</span>
+                                Nov 02, 2024
+                            </span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-grow gap-4">
+<div>
+<h3 class="font-headline-sm text-on-background mb-1">Delhi Elite Cup</h3>
+<p class="text-on-surface-variant text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                                Jawaharlal Nehru Stadium, Delhi
+                            </p>
+</div>
+<div class="flex items-center justify-between py-3 border-y border-outline-variant/30">
+<div class="flex flex-col">
+<span class="text-label-sm text-on-surface-variant uppercase">Prize Pool</span>
+<span class="font-headline-sm text-primary">₹3,50,000</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-label-sm text-on-surface-variant uppercase">Slots Left</span>
+<span class="font-label-md text-on-surface">4 / 16</span>
+</div>
+</div>
+<div class="mt-auto pt-2">
+<button class="w-full bg-primary text-on-primary font-label-md py-4 rounded-lg hover:bg-primary-container transition-all active:scale-[0.98]">Register Now</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-[18px] overflow-hidden soft-shadow group flex flex-col hover:-translate-y-1 transition-transform duration-300">
+<div class="relative h-56 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="Elite tennis tournament setting on an outdoor hard court in Bangalore. The image shows high-tension rackets and professional athletes in focus against a minimalist stadium background. Bright daylight creates crisp shadows, following the premium light mode aesthetic with white and emerald green accents." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCv20Z2rtRZrD9_IcO9n-vThCtkrwMnIJpz_yWKL80v-xI_pAHiJ2nnmlGd63yZlKfdcH2TS0qFSntoP22KKHGW4xC7IpsoqlO3WvCXd8WQ5UlXDlA3hiERPMyQp3moXkmRx93hzKKU_zShEQkDNPF_y2sfvfdRLxk78BpT35AO9QkNgWdUB6anVXGZCcFFUwgvqRtO-Kv9rAgitrbDuVQuKJHT0WwVVBJ14J_XV-F-R5pCzDzlh7PnKGnztVKxpycwxaeBR3M952P1')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-secondary/90 backdrop-blur-md text-on-primary font-label-sm px-3 py-1.5 rounded-[4px] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">sports_tennis</span>
+                                Tennis
+                            </span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+<span class="text-white font-label-md flex items-center gap-1.5">
+<span class="material-symbols-outlined text-lg">event</span>
+                                Nov 15, 2024
+                            </span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-grow gap-4">
+<div>
+<h3 class="font-headline-sm text-on-background mb-1">Bangalore Open Smash</h3>
+<p class="text-on-surface-variant text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                                KSLTA Stadium, Bangalore
+                            </p>
+</div>
+<div class="flex items-center justify-between py-3 border-y border-outline-variant/30">
+<div class="flex flex-col">
+<span class="text-label-sm text-on-surface-variant uppercase">Prize Pool</span>
+<span class="font-headline-sm text-primary">₹2,00,000</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-label-sm text-on-surface-variant uppercase">Slots Left</span>
+<span class="font-label-md text-on-surface">Full</span>
+</div>
+</div>
+<div class="mt-auto pt-2">
+<button class="w-full bg-outline-variant text-on-surface-variant font-label-md py-4 rounded-lg cursor-not-allowed" disabled="">Registration Closed</button>
+</div>
+</div>
+</div>
+<!-- Card 4 (Duplicate patterns with different data) -->
+<div class="bg-surface-container-lowest rounded-[18px] overflow-hidden soft-shadow group flex flex-col hover:-translate-y-1 transition-transform duration-300">
+<div class="relative h-56 overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" data-alt="High-speed indoor basketball game in a modern, glass-walled arena in Pune. The polished court reflects the bright overhead lights, creating a sense of luxury and professionalism. Minimalist UI elements would overlay this scene of athletic intensity and high-stakes competition." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDCGLHyx0uIcSplPHWca8K8anwmYjgSwX4bR3L78QuAOnei7uVa7Tf14SE31shIjAdZ_8l31M7jgWKyWmOOZN4EBoGxHJ7rg_Pqy8bI0R3CL44iowlFNzmgtE1RUddMnplTJIkzZx_f76vYRVrpibFmba5XT2iyT-EOVF0js_Xxl_2DYJgBgPBLJrTwEYYVTAglKDcEcbTs_nlfRt4p7NYQH3FnxeEzAwLM9RjMCZMig9QYhJ2sSC4O_0U4HlPAayG-ZxcHPAW97UvJ')"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-primary-container text-on-primary-container font-label-sm px-3 py-1.5 rounded-[4px] flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm">sports_basketball</span>
+                                Basketball
+                            </span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-4 left-4 right-4 flex justify-between items-end">
+<span class="text-white font-label-md flex items-center gap-1.5">
+<span class="material-symbols-outlined text-lg">event</span>
+                                Dec 05, 2024
+                            </span>
+</div>
+</div>
+<div class="p-6 flex flex-col flex-grow gap-4">
+<div>
+<h3 class="font-headline-sm text-on-background mb-1">Pune Dunk Masters</h3>
+<p class="text-on-surface-variant text-body-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+                                Balewadi Stadium, Pune
+                            </p>
+</div>
+<div class="flex items-center justify-between py-3 border-y border-outline-variant/30">
+<div class="flex flex-col">
+<span class="text-label-sm text-on-surface-variant uppercase">Prize Pool</span>
+<span class="font-headline-sm text-primary">₹1,50,000</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-label-sm text-on-surface-variant uppercase">Slots Left</span>
+<span class="font-label-md text-on-surface">24 / 24</span>
+</div>
+</div>
+<div class="mt-auto pt-2">
+<button class="w-full bg-primary text-on-primary font-label-md py-4 rounded-lg hover:bg-primary-container transition-all active:scale-[0.98]">Register Now</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Pagination/Load More -->
+<div class="mt-section-gap-md flex flex-col items-center gap-4">
+<p class="text-on-surface-variant font-body-sm text-center">Showing 4 of 28 upcoming tournaments</p>
+<button class="flex items-center gap-2 text-primary font-label-md hover:translate-y-0.5 transition-transform">
+                    View All Tournaments
+                    <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full relative bg-surface-container-lowest dark:bg-surface-dim border-t border-outline-variant/30">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto px-margin-desktop py-section-gap-md">
+<div class="flex flex-col gap-4">
+<div class="font-display-lg text-headline-md font-bold text-primary">SmartSportz.in</div>
+<p class="text-on-surface-variant font-body-sm max-w-xs">Connecting athletes with elite opportunities through professional tournament management and data-driven performance tracking.</p>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-md text-on-surface uppercase">Platform</h4>
+<div class="flex flex-col gap-2">
+<a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Teams</a>
+<a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Players</a>
+<a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Gallery</a>
+<a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Sponsors</a>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-md text-on-surface uppercase">Resources</h4>
+<div class="flex flex-col gap-2">
+<a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Blogs</a>
+<a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">FAQ</a>
+<a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Contact</a>
+<a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors opacity-80 hover:opacity-100" href="#">Privacy Policy</a>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="font-label-md text-on-surface uppercase">Connect</h4>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-primary hover:text-white transition-all" href="#">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"></path></svg>
+</a>
+<a class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-primary hover:text-white transition-all" href="#">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path></svg>
+</a>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop py-8 border-t border-outline-variant/30 text-center">
+<p class="text-on-surface-variant font-body-sm">© 2024 SmartSportz.in. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Active state logic for nav
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                navLinks.forEach(l => {
+                    l.classList.remove('text-primary', 'font-bold', 'border-b-2', 'border-primary');
+                    l.classList.add('text-on-surface-variant', 'font-medium');
+                });
+                link.classList.remove('text-on-surface-variant', 'font-medium');
+                link.classList.add('text-primary', 'font-bold', 'border-b-2', 'border-primary');
+            });
+        });
+
+        // Search highlight effect
+        const searchInput = document.querySelector('input[type="text"]');
+        const searchIcon = searchInput?.previousElementSibling;
+        searchInput?.addEventListener('focus', () => {
+            searchIcon?.classList.add('text-primary');
+        });
+        searchInput?.addEventListener('blur', () => {
+            searchIcon?.classList.remove('text-primary');
+        });
+    </script>
+</body></html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartSportz.in | Enterprise Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#575e70",
+                    "inverse-primary": "#72db9d",
+                    "text-primary": "#111827",
+                    "on-background": "#191c1e",
+                    "inverse-surface": "#2d3133",
+                    "surface-dim": "#d8dadc",
+                    "primary-fixed": "#8ef8b7",
+                    "primary": "#006c40",
+                    "accent-cyan": "#00D4FF",
+                    "on-surface-variant": "#3e4a41",
+                    "on-tertiary": "#ffffff",
+                    "on-primary-fixed-variant": "#00522f",
+                    "surface-variant": "#e0e3e5",
+                    "surface-container-high": "#e6e8ea",
+                    "on-tertiary-fixed-variant": "#00522e",
+                    "tertiary-container": "#00884f",
+                    "outline": "#6e7a70",
+                    "on-secondary-fixed": "#141b2b",
+                    "on-secondary": "#ffffff",
+                    "surface-container": "#eceef0",
+                    "secondary-fixed": "#dce2f7",
+                    "secondary-fixed-dim": "#c0c6db",
+                    "background-surface": "#FFFFFF",
+                    "surface-container-low": "#f2f4f6",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-tertiary-container": "#ffffff",
+                    "on-surface": "#191c1e",
+                    "outline-variant": "#bdcabe",
+                    "on-error-container": "#93000a",
+                    "on-error": "#ffffff",
+                    "text-secondary": "#4B5563",
+                    "on-primary-container": "#ffffff",
+                    "surface": "#f7f9fb",
+                    "surface-tint": "#006d40",
+                    "deep-navy": "#081C3A",
+                    "tertiary": "#006c3e",
+                    "on-tertiary-fixed": "#00210f",
+                    "primary-container": "#0b8852",
+                    "on-primary-fixed": "#002110",
+                    "on-secondary-container": "#5c6274",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#d9dff5",
+                    "surface-container-highest": "#e0e3e5",
+                    "tertiary-fixed": "#72fcab",
+                    "error-container": "#ffdad6",
+                    "border-subtle": "#E2E8F0",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#72db9d",
+                    "on-secondary-fixed-variant": "#404758",
+                    "background": "#f7f9fb",
+                    "tertiary-fixed-dim": "#52df91",
+                    "error": "#ba1a1a",
+                    "surface-bright": "#f7f9fb"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "18px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "48px",
+                    "unit": "8px",
+                    "container-max": "1440px",
+                    "gutter": "24px",
+                    "section-gap": "80px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Poppins"],
+                    "headline-lg": ["Poppins"],
+                    "body-md": ["Poppins"],
+                    "body-lg": ["Poppins"],
+                    "title-lg": ["Poppins"],
+                    "display-lg": ["Poppins"],
+                    "label-md": ["Poppins"],
+                    "caption": ["Poppins"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "title-lg": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["13px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Poppins', sans-serif; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .sidebar-gradient {
+            background: linear-gradient(180deg, #081C3A 0%, #040E1D 100%);
+        }
+        .financial-gradient {
+            background: linear-gradient(135deg, #006c40 0%, #0b8852 100%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar Component -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] bg-deep-navy shadow-2xl flex flex-col py-8 z-50">
+<div class="px-8 mb-10">
+<h1 class="font-headline-md text-headline-md font-bold text-primary-fixed">SmartSportz</h1>
+<p class="font-body-md text-body-md text-secondary-fixed-dim/60">Enterprise Admin</p>
+</div>
+<nav class="flex-grow space-y-1 overflow-y-auto">
+<!-- Dashboard Active -->
+<a class="bg-primary-container text-on-primary-container rounded-lg mx-4 px-4 py-3 flex items-center gap-3 active:scale-95 transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-body-md text-body-md">Dashboard</span>
+</a>
+<a class="text-secondary-fixed-dim hover:text-white hover:bg-white/5 mx-4 px-4 py-3 flex items-center gap-3 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="trophy">trophy</span>
+<span class="font-body-md text-body-md">Tournaments</span>
+</a>
+<a class="text-secondary-fixed-dim hover:text-white hover:bg-white/5 mx-4 px-4 py-3 flex items-center gap-3 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-body-md text-body-md">Teams &amp; Players</span>
+</a>
+<a class="text-secondary-fixed-dim hover:text-white hover:bg-white/5 mx-4 px-4 py-3 flex items-center gap-3 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span class="font-body-md text-body-md">Schedule</span>
+</a>
+<a class="text-secondary-fixed-dim hover:text-white hover:bg-white/5 mx-4 px-4 py-3 flex items-center gap-3 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-body-md text-body-md">Financials</span>
+</a>
+<a class="text-secondary-fixed-dim hover:text-white hover:bg-white/5 mx-4 px-4 py-3 flex items-center gap-3 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-body-md text-body-md">Settings</span>
+</a>
+</nav>
+<div class="px-4 mt-8">
+<button class="w-full bg-primary-container hover:bg-primary-container/90 text-white py-3 px-4 rounded-xl font-body-md text-body-md font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-primary-container/20">
+<span class="material-symbols-outlined">add_circle</span>
+                Create Tournament
+            </button>
+</div>
+<div class="mt-auto border-t border-white/10 pt-6">
+<a class="text-secondary-fixed-dim hover:text-white hover:bg-white/5 mx-4 px-4 py-3 flex items-center gap-3 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="font-body-md text-body-md">Support</span>
+</a>
+<a class="text-secondary-fixed-dim hover:text-white hover:bg-white/5 mx-4 px-4 py-3 flex items-center gap-3 transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="font-body-md text-body-md">Account</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-[280px] min-h-screen">
+<!-- TopAppBar Component -->
+<header class="sticky top-0 z-40 bg-background-surface/80 backdrop-blur-md border-b border-border-subtle h-16 flex justify-between items-center px-gutter transition-all shadow-sm">
+<div class="flex items-center gap-8">
+<span class="font-headline-sm text-headline-sm font-black text-deep-navy">SmartSportz.in</span>
+<div class="hidden md:flex gap-6">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Analytics</a>
+<a class="text-text-secondary hover:text-text-primary transition-all font-label-md text-label-md" href="#">Reports</a>
+<a class="text-text-secondary hover:text-text-primary transition-all font-label-md text-label-md" href="#">Logs</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined text-text-secondary hover:text-primary cursor-pointer p-2 rounded-full hover:bg-surface-container-low transition-all">search</span>
+</div>
+<div class="relative group">
+<span class="material-symbols-outlined text-text-secondary hover:text-primary cursor-pointer p-2 rounded-full hover:bg-surface-container-low transition-all">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</div>
+<div class="flex items-center gap-3 ml-2 pl-4 border-l border-border-subtle">
+<div class="text-right hidden lg:block">
+<p class="font-label-md text-label-md text-text-primary">Rahul Sharma</p>
+<p class="text-[10px] font-semibold text-text-secondary uppercase tracking-wider">Tournament Director</p>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-primary-fixed overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged Indian male sports executive, wearing a sharp navy blazer, smiling confidently against a soft-focus athletic stadium background. The lighting is bright and high-key, reflecting a clean, corporate enterprise aesthetic with high-definition clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjtMpoCHjI2HvOpiBcwN5Vo0nxXTVIEOdu2VMBzywlHw6tTmu7_BzLUUSkOFBAvGcBwDEvy11WUL21LCfPPk99aTLedSB4Nc7jLWSHeCKY0BiP5Qk5xWuruscKZ2qfgG_FGcwHBFKGX0kETKL3TAIxrkZbQgKC8TvIzMp-ZKpuZxJwkzyd3zSi9fKao3GM_KLiPpa2p0ECmap2M9A-l2X134Ai7o_4OUS6vmEr74lFxIdIiFm1YioRQpxdTSpwix59bC0mEuO3SU82"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Dashboard Canvas -->
+<div class="p-gutter space-y-gutter max-w-container-max mx-auto">
+<!-- Summary Stats & Bento Header -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<!-- Financial Overview - Large Card -->
+<div class="md:col-span-2 financial-gradient rounded-2xl p-8 text-white shadow-xl relative overflow-hidden flex flex-col justify-between min-h-[220px] active:scale-[0.98] transition-transform">
+<div class="relative z-10">
+<div class="flex justify-between items-start">
+<div>
+<p class="font-label-md text-label-md opacity-80 uppercase tracking-widest">Total Revenue</p>
+<h2 class="font-display-lg text-display-lg mt-2">₹12,84,500</h2>
+</div>
+<div class="bg-white/20 p-3 rounded-xl backdrop-blur-md">
+<span class="material-symbols-outlined text-[32px]">payments</span>
+</div>
+</div>
+</div>
+<div class="relative z-10 flex items-end justify-between">
+<div class="flex gap-4">
+<div class="bg-white/10 px-4 py-2 rounded-lg backdrop-blur-sm border border-white/10">
+<p class="text-[10px] opacity-70">Active Subs</p>
+<p class="font-bold">428</p>
+</div>
+<div class="bg-white/10 px-4 py-2 rounded-lg backdrop-blur-sm border border-white/10">
+<p class="text-[10px] opacity-70">Growth</p>
+<p class="font-bold text-inverse-primary">+12.4%</p>
+</div>
+</div>
+<button class="text-sm font-semibold flex items-center gap-1 hover:underline">
+                            View Report <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+<!-- Decorative background graphic -->
+<div class="absolute -right-10 -bottom-10 opacity-10">
+<span class="material-symbols-outlined text-[240px]" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+</div>
+<!-- Active Tournaments Counter -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-border-subtle flex flex-col justify-between hover:shadow-md transition-all">
+<div>
+<div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary">sports_cricket</span>
+</div>
+<p class="font-label-md text-label-md text-text-secondary">Active Tournaments</p>
+<h3 class="font-headline-lg text-headline-lg text-deep-navy">14</h3>
+</div>
+<div class="flex items-center gap-2 text-primary font-semibold text-sm">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>3 launching this week</span>
+</div>
+</div>
+<!-- Registered Teams -->
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-border-subtle flex flex-col justify-between hover:shadow-md transition-all">
+<div>
+<div class="w-12 h-12 bg-accent-cyan/10 rounded-xl flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-accent-cyan" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+<p class="font-label-md text-label-md text-text-secondary">Total Teams</p>
+<h3 class="font-headline-lg text-headline-lg text-deep-navy">156</h3>
+</div>
+<div class="flex items-center gap-2 text-text-secondary font-semibold text-sm">
+<span class="material-symbols-outlined text-sm">person_add</span>
+<span>24 new this month</span>
+</div>
+</div>
+</div>
+<!-- Main Content Split -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Tournament Feed - Left (Span 2) -->
+<div class="lg:col-span-2 space-y-6">
+<div class="flex justify-between items-center px-2">
+<h3 class="font-headline-md text-headline-md text-deep-navy">Featured Tournaments</h3>
+<button class="text-primary font-bold text-sm hover:underline">Manage All</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Tournament Card 1 -->
+<div class="bg-white rounded-2xl shadow-sm border border-border-subtle overflow-hidden hover:shadow-xl transition-all duration-300 group">
+<div class="h-48 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-action, professional sports photograph of a dynamic cricket match at dusk. A batsman is captured in mid-stroke with theatrical stadium lighting creating sharp highlights and long shadows. The atmosphere is vibrant and competitive, emphasizing a premium athletic experience with deep greens and clear stadium details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDfESm7w1tDg2h8UZyAx8LuW6_YMqYynqjLTVpJ3y5e_fE4nQTD3g7K2ug5fz_M0WDfvbq__p7e0IMVOw73I4banAeR4p6TrovX188vZ1xKhHla7QOw4tMxPTqtCpvkJrNyPrJdisDOLXvXMCtUpEaEtNXiFMCY6rZO6BKFHWUIUVTnMzrgHcSrIWPmF7QpBq6d-MYqnzX7yyeeAWwLDAfFj0ELBIunZAk6sfJegBUuTIrCxRJvw-F8CtbZYRSVjW1mNzCActaYzv1w"/>
+<div class="absolute top-4 left-4">
+<span class="bg-primary/90 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm">LIVE</span>
+</div>
+</div>
+<div class="p-6">
+<h4 class="font-title-lg text-title-lg text-deep-navy mb-2">IPL Regional Qualifiers 2024</h4>
+<p class="font-body-md text-body-md text-text-secondary line-clamp-2 mb-4">Maharashtra State Cricket Association regional qualifiers for the upcoming national season.</p>
+<div class="flex items-center justify-between pt-4 border-t border-border-subtle">
+<div class="flex -space-x-3">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-slate-200"></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-slate-300"></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-slate-400"></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-primary text-[10px] text-white flex items-center justify-center font-bold">+12</div>
+</div>
+<span class="text-xs font-semibold text-text-secondary">42/48 Teams</span>
+</div>
+</div>
+</div>
+<!-- Tournament Card 2 -->
+<div class="bg-white rounded-2xl shadow-sm border border-border-subtle overflow-hidden hover:shadow-xl transition-all duration-300 group">
+<div class="h-48 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A dramatic close-up shot of professional football players in action during a night match under bright floodlights. Water droplets fly from the ball as a striker prepares for a shot. The scene is full of energy, with a dark, high-contrast aesthetic that fits an enterprise sports dashboard. Rich blues and vibrant stadium lights dominate the palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD75EOAKyLxEbQbA6VxnPjM9bG2wMBJvicJKHLBaVEGLPNl57kWpUV-i2ne3upZ4-rGMv3NzKSeTqrnIBHxrDGdXQjg9ZJU0Ah1LJN1Vop62oIcO8IzhrejNPapMZKcLdh7CPEkS6-Lx9bmpGRypt_Z_HygWevnEiltxuzA-DcjczvYT87jx11jkYl-3FfCY_OQV-FOAurFeA1SD8iOZLoE_myE3HASmLBc78quik7SA77GdaoIpwjqHgb6sKTyS8NFCrQEd4E9AFWT"/>
+<div class="absolute top-4 left-4">
+<span class="bg-deep-navy/90 text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur-sm">REGISTRATION OPEN</span>
+</div>
+</div>
+<div class="p-6">
+<h4 class="font-title-lg text-title-lg text-deep-navy mb-2">Corporate Soccer League</h4>
+<p class="font-body-md text-body-md text-text-secondary line-clamp-2 mb-4">The ultimate networking arena for tech and finance giants in Bengaluru's premium arenas.</p>
+<div class="flex items-center justify-between pt-4 border-t border-border-subtle">
+<div class="flex -space-x-3">
+<div class="w-8 h-8 rounded-full border-2 border-white bg-slate-200"></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-slate-300"></div>
+<div class="w-8 h-8 rounded-full border-2 border-white bg-primary text-[10px] text-white flex items-center justify-center font-bold">+8</div>
+</div>
+<span class="text-xs font-semibold text-text-secondary">18/20 Teams</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Task Table -->
+<div class="bg-white rounded-2xl shadow-sm border border-border-subtle overflow-hidden">
+<div class="p-6 border-b border-border-subtle flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-deep-navy">Upcoming Schedule</h3>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-6 py-4 font-label-md text-label-md text-text-secondary uppercase">Match ID</th>
+<th class="px-6 py-4 font-label-md text-label-md text-text-secondary uppercase">Teams</th>
+<th class="px-6 py-4 font-label-md text-label-md text-text-secondary uppercase">Time</th>
+<th class="px-6 py-4 font-label-md text-label-md text-text-secondary uppercase">Status</th>
+<th class="px-6 py-4 font-label-md text-label-md text-text-secondary uppercase">Venue</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-subtle">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4 font-body-md text-body-md font-semibold text-deep-navy">#CR-4021</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md">Titans vs Blazers</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary font-body-md">14:00 IST</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-green-100 text-green-700 text-[10px] font-bold rounded-full uppercase">On Schedule</span>
+</td>
+<td class="px-6 py-4 text-text-secondary font-body-md">Ground A</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4 font-body-md text-body-md font-semibold text-deep-navy">#FB-9920</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md">United FC vs City Stars</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary font-body-md">16:30 IST</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-amber-100 text-amber-700 text-[10px] font-bold rounded-full uppercase">Warm up</span>
+</td>
+<td class="px-6 py-4 text-text-secondary font-body-md">Main Stadium</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4 font-body-md text-body-md font-semibold text-deep-navy">#CR-4022</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="font-body-md text-body-md">Warriors vs Kings</span>
+</div>
+</td>
+<td class="px-6 py-4 text-text-secondary font-body-md">18:00 IST</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-slate-100 text-slate-500 text-[10px] font-bold rounded-full uppercase">Pending</span>
+</td>
+<td class="px-6 py-4 text-text-secondary font-body-md">Ground B</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Recent Activity & Notifications - Right (Span 1) -->
+<div class="space-y-6">
+<div class="bg-white rounded-2xl shadow-sm border border-border-subtle p-6 flex flex-col h-full">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-headline-md text-headline-md text-deep-navy">System Logs</h3>
+<span class="material-symbols-outlined text-text-secondary text-sm">history</span>
+</div>
+<div class="space-y-6 flex-grow">
+<!-- Activity Item 1 -->
+<div class="flex gap-4">
+<div class="relative">
+<div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center relative z-10">
+<span class="material-symbols-outlined text-primary text-xl">verified</span>
+</div>
+<div class="absolute top-10 bottom-[-24px] left-5 w-[1px] bg-border-subtle"></div>
+</div>
+<div>
+<p class="font-body-md text-body-md text-deep-navy font-semibold">Payment Verified</p>
+<p class="text-caption text-text-secondary">Corporate Soccer League registration fee received from 'Tech Mahindra'.</p>
+<span class="text-[10px] font-bold text-text-secondary/50 uppercase mt-1 inline-block">12 mins ago</span>
+</div>
+</div>
+<!-- Activity Item 2 -->
+<div class="flex gap-4">
+<div class="relative">
+<div class="w-10 h-10 bg-accent-cyan/10 rounded-full flex items-center justify-center relative z-10">
+<span class="material-symbols-outlined text-accent-cyan text-xl">edit_calendar</span>
+</div>
+<div class="absolute top-10 bottom-[-24px] left-5 w-[1px] bg-border-subtle"></div>
+</div>
+<div>
+<p class="font-body-md text-body-md text-deep-navy font-semibold">Schedule Updated</p>
+<p class="text-caption text-text-secondary">IPL Regional Match #CR-4022 moved from 17:30 to 18:00 IST.</p>
+<span class="text-[10px] font-bold text-text-secondary/50 uppercase mt-1 inline-block">1 hour ago</span>
+</div>
+</div>
+<!-- Activity Item 3 -->
+<div class="flex gap-4">
+<div class="relative">
+<div class="w-10 h-10 bg-error/10 rounded-full flex items-center justify-center relative z-10">
+<span class="material-symbols-outlined text-error text-xl">report</span>
+</div>
+<div class="absolute top-10 bottom-[-24px] left-5 w-[1px] bg-border-subtle"></div>
+</div>
+<div>
+<p class="font-body-md text-body-md text-deep-navy font-semibold">Disciplinary Action</p>
+<p class="text-caption text-text-secondary">Red card reported in Match #FB-882. Automated review pending.</p>
+<span class="text-[10px] font-bold text-text-secondary/50 uppercase mt-1 inline-block">3 hours ago</span>
+</div>
+</div>
+<!-- Activity Item 4 -->
+<div class="flex gap-4">
+<div class="relative">
+<div class="w-10 h-10 bg-deep-navy/10 rounded-full flex items-center justify-center relative z-10">
+<span class="material-symbols-outlined text-deep-navy text-xl">person_add</span>
+</div>
+</div>
+<div>
+<p class="font-body-md text-body-md text-deep-navy font-semibold">New Team Registered</p>
+<p class="text-caption text-text-secondary">'Mumbai Strikers' completed onboarding for Winter Cup.</p>
+<span class="text-[10px] font-bold text-text-secondary/50 uppercase mt-1 inline-block">5 hours ago</span>
+</div>
+</div>
+</div>
+<button class="mt-8 w-full py-3 bg-surface-container text-deep-navy font-semibold rounded-xl hover:bg-surface-container-high transition-colors">
+                            View All Activity
+                        </button>
+</div>
+<!-- Mini CTA Card -->
+<div class="bg-deep-navy rounded-2xl p-6 text-white relative overflow-hidden">
+<h4 class="font-title-lg text-title-lg mb-2 relative z-10">Need Custom Reports?</h4>
+<p class="text-caption opacity-70 mb-4 relative z-10">Our enterprise analytics engine can generate deep-dive performance metrics for your sponsors.</p>
+<button class="bg-primary hover:bg-primary-container px-4 py-2 rounded-lg text-sm font-bold transition-all relative z-10">
+                            Upgrade Plan
+                        </button>
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[100px]">rocket_launch</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- FAB for Global Action -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-2xl">add</span>
+</button>
+<script>
+        // Micro-interaction for cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Future implementation for hover effects
+            });
+        });
+
+        // Search highlight logic
+        const searchIcon = document.querySelector('.material-symbols-outlined[data-icon="search"]');
+        if (searchIcon) {
+            searchIcon.addEventListener('click', () => {
+                // Trigger search overlay
+            });
+        }
+    </script>
+</body></html>

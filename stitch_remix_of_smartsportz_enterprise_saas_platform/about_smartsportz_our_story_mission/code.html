@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>About Us | SmartSportz.in</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#72db9d",
+                        "primary-fixed": "#8ef8b7",
+                        "on-primary-container": "#ffffff",
+                        "on-tertiary-fixed-variant": "#374767",
+                        "on-tertiary-fixed": "#091b39",
+                        "on-error": "#690005",
+                        "tertiary": "#b6c6ed",
+                        "on-secondary-container": "#abb9d6",
+                        "surface-container-high": "#272a2c",
+                        "inverse-on-surface": "#2d3133",
+                        "surface-container": "#1d2022",
+                        "surface-bright": "#363a3b",
+                        "error-container": "#93000a",
+                        "outline": "#889489",
+                        "tertiary-container": "#67779a",
+                        "on-secondary-fixed-variant": "#39475f",
+                        "surface-variant": "#323537",
+                        "primary-container": "#0b8852",
+                        "on-primary": "#00391f",
+                        "inverse-surface": "#e0e3e5",
+                        "tertiary-fixed": "#d8e2ff",
+                        "on-surface": "#e0e3e5",
+                        "on-tertiary-container": "#000514",
+                        "on-secondary": "#233148",
+                        "on-primary-fixed": "#002110",
+                        "on-background": "#e0e3e5",
+                        "primary": "#72db9d",
+                        "secondary-container": "#3c4962",
+                        "on-primary-fixed-variant": "#00522f",
+                        "outline-variant": "#3e4a41",
+                        "on-surface-variant": "#bdcabe",
+                        "background": "#101415",
+                        "tertiary-fixed-dim": "#b6c6ed",
+                        "secondary": "#b9c7e4",
+                        "surface-dim": "#101415",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-low": "#191c1e",
+                        "on-secondary-fixed": "#0d1c32",
+                        "secondary-fixed": "#d6e3ff",
+                        "surface-tint": "#72db9d",
+                        "surface-container-lowest": "#0b0f10",
+                        "on-tertiary": "#20304f",
+                        "secondary-fixed-dim": "#b9c7e4",
+                        "surface-container-highest": "#323537",
+                        "error": "#ffb4ab",
+                        "surface": "#101415",
+                        "inverse-primary": "#006d40"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "card": "18px"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "container-max": "1440px",
+                        "margin-desktop": "40px",
+                        "stack-md": "16px",
+                        "margin-mobile": "16px",
+                        "stack-sm": "8px",
+                        "stack-lg": "32px"
+                    },
+                    "fontFamily": {
+                        "title-md": ["Be Vietnam Pro"],
+                        "body-lg": ["Inter"],
+                        "stats-xl": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "display-lg": ["Be Vietnam Pro"],
+                        "label-sm": ["JetBrains Mono"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "stats-xl": ["40px", {"lineHeight": "40px", "fontWeight": "800"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #101415;
+            color: #e0e3e5;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(17, 34, 64, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 18px;
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #72db9d 0%, #0b8852 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .timeline-line {
+            background: linear-gradient(to bottom, #72db9d 0%, #112240 100%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-desktop h-20 bg-surface-container-low dark:bg-surface-container-low border-b border-outline-variant shadow-sm">
+<div class="flex items-center gap-8">
+<span class="font-display-lg text-headline-lg text-primary-fixed tracking-tight">SmartSportz.in</span>
+<div class="hidden md:flex gap-6 items-center">
+<a class="text-on-surface-variant dark:text-on-surface-variant font-title-md text-title-md hover:text-primary-fixed transition-colors" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-title-md text-title-md hover:text-primary-fixed transition-colors" href="#">Tournaments</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-title-md text-title-md hover:text-primary-fixed transition-colors" href="#">Matches</a>
+<a class="text-on-surface-variant dark:text-on-surface-variant font-title-md text-title-md hover:text-primary-fixed transition-colors" href="#">Teams</a>
+</div>
+</div>
+<div class="flex items-center gap-stack-lg">
+<div class="hidden lg:flex items-center bg-surface-variant px-4 py-2 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md placeholder:text-on-surface-variant/50" placeholder="Search..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary-fixed-dim">notifications</button>
+<button class="material-symbols-outlined text-primary-fixed-dim">settings</button>
+<div class="h-10 w-10 rounded-full bg-primary-container flex items-center justify-center overflow-hidden border-2 border-primary">
+<img class="w-full h-full object-cover" data-alt="A professional close-up headshot of a senior sports executive in a dark tailored suit, with soft studio lighting and a subtle out-of-focus stadium background in deep navy tones, maintaining a high-contrast corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2cdMRqdYVkHXkB60XNdF20iz5LBSX623LJdHH40OmEZsoEZoPcHL-b0ZUtpHSIkn0r5x6UiKW6kt50N8M53fCJkaVmYWxbwmfNTIybHoCW0hGadnNUDK4sJDVTssGKFr2VeJGSzu7crsiIWQLO0gj6Py20Nj8_uG6cUtOb8aSadC3HfPtOBIPNe38niPLAXJzdTT_Qyu4BRvaoiilZXZvAArVA241Hu5jsdIeCXnWF1MrlLjzJktVwdWh6ZlD3__3bxRrt0OIaU_F"/>
+</div>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative h-[80vh] flex items-center justify-center text-center px-margin-desktop overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-b from-[#101415]/60 via-[#101415]/40 to-[#101415] z-10"></div>
+<img alt="Stadium at Night" class="w-full h-full object-cover scale-105" src="https://lh3.googleusercontent.com/aida/AP1WRLsac1dgTCF0QMNSSiu7lZ_ymjOa9yaADYzCWjFFP0yCtBB4CkhRnDI1TYAVth5wefk7EDPaLeTt7E3_dyNa0N1hiqj4aNBLzRTVjLgR0nkrHw6TF7cY3rIkr9hbI7254_8M0YyFCLHGm1jo8EeLp5q2VGgePqYZYj9znR_HR5mXDmaiI3wK2Bj2Dviks36zzASG4zWZxpTCzHmGd7Wjs74Hle6HacL1mKdwCmRRv7kZg5_bsVqgYYtzon6y"/>
+</div>
+<div class="relative z-20 max-w-4xl mx-auto">
+<span class="font-label-sm text-label-sm text-primary-fixed-dim uppercase tracking-[0.2em] mb-stack-md block">Our Vision, Your Victory</span>
+<h1 class="font-display-lg text-[64px] leading-tight mb-stack-lg">Elevating the Game: The SmartSportz Story</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">The definitive enterprise ecosystem for elite sports management, engineered for performance and precision.</p>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="relative -mt-20 z-30 px-margin-desktop pb-stack-lg">
+<div class="max-w-container-max mx-auto glass-card p-stack-lg flex flex-wrap justify-between gap-8 items-center border-primary-fixed/10">
+<div class="flex-1 min-w-[200px] text-center border-r border-outline-variant/30 last:border-none">
+<div class="font-stats-xl text-stats-xl text-primary-fixed">500+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-2">Tournaments</div>
+</div>
+<div class="flex-1 min-w-[200px] text-center border-r border-outline-variant/30 last:border-none">
+<div class="font-stats-xl text-stats-xl text-primary-fixed">1.2M+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-2">Athletes</div>
+</div>
+<div class="flex-1 min-w-[200px] text-center border-r border-outline-variant/30 last:border-none">
+<div class="font-stats-xl text-stats-xl text-primary-fixed">50+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-2">Sports Categories</div>
+</div>
+<div class="flex-1 min-w-[200px] text-center">
+<div class="font-stats-xl text-stats-xl text-primary-fixed">15+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant mt-2">Countries</div>
+</div>
+</div>
+</section>
+<!-- Mission & Vision -->
+<section class="py-stack-lg px-margin-desktop max-w-container-max mx-auto">
+<div class="grid md:grid-cols-2 gap-gutter">
+<div class="glass-card p-stack-lg flex flex-col gap-6 hover:border-primary-fixed/30 transition-all group">
+<div class="w-16 h-16 rounded-xl bg-primary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-fixed text-4xl group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary-fixed mb-4">Our Mission</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">To empower every sports organization with world-class technology and analytics, bridging the gap between raw talent and data-driven excellence.</p>
+</div>
+</div>
+<div class="glass-card p-stack-lg flex flex-col gap-6 hover:border-primary-fixed/30 transition-all group">
+<div class="w-16 h-16 rounded-xl bg-primary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-fixed text-4xl group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 1;">visibility</span>
+</div>
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary-fixed mb-4">Our Vision</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">To become the global standard for professional tournament and athlete management, creating a unified digital footprint for the future of sports.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Journey Timeline -->
+<section class="py-24 px-margin-desktop bg-surface-container-lowest overflow-hidden">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-display-lg text-headline-lg text-primary-fixed mb-4">The SmartSportz Evolution</h2>
+<p class="text-on-surface-variant font-body-md">A relentless pursuit of excellence since our inception.</p>
+</div>
+<div class="relative">
+<!-- Desktop Timeline Line -->
+<div class="absolute top-1/2 left-0 w-full h-[2px] bg-outline-variant hidden md:block"></div>
+<div class="grid md:grid-cols-4 gap-gutter relative z-10">
+<!-- 2018 -->
+<div class="flex flex-col items-center text-center">
+<div class="w-12 h-12 rounded-full bg-primary-container border-4 border-background flex items-center justify-center mb-6 z-20">
+<span class="w-3 h-3 rounded-full bg-primary-fixed"></span>
+</div>
+<div class="font-stats-xl text-primary-fixed-dim text-[24px] mb-2">2018</div>
+<h4 class="font-title-md text-title-md mb-2">Founding</h4>
+<p class="font-body-md text-on-surface-variant">SmartSportz is established with a vision to digitize local sports leagues.</p>
+</div>
+<!-- 2020 -->
+<div class="flex flex-col items-center text-center">
+<div class="w-12 h-12 rounded-full bg-primary-container border-4 border-background flex items-center justify-center mb-6 z-20">
+<span class="w-3 h-3 rounded-full bg-primary-fixed"></span>
+</div>
+<div class="font-stats-xl text-primary-fixed-dim text-[24px] mb-2">2020</div>
+<h4 class="font-title-md text-title-md mb-2">National Scale</h4>
+<p class="font-body-md text-on-surface-variant">Rapid adoption across 100+ national sports federations.</p>
+</div>
+<!-- 2022 -->
+<div class="flex flex-col items-center text-center">
+<div class="w-12 h-12 rounded-full bg-primary-container border-4 border-background flex items-center justify-center mb-6 z-20">
+<span class="w-3 h-3 rounded-full bg-primary-fixed"></span>
+</div>
+<div class="font-stats-xl text-primary-fixed-dim text-[24px] mb-2">2022</div>
+<h4 class="font-title-md text-title-md mb-2">Global Entry</h4>
+<p class="font-body-md text-on-surface-variant">Expanding operations into MENA and SEA markets.</p>
+</div>
+<!-- 2024 -->
+<div class="flex flex-col items-center text-center">
+<div class="w-12 h-12 rounded-full bg-primary border-4 border-background flex items-center justify-center mb-6 z-20 shadow-[0_0_20px_rgba(114,219,157,0.5)]">
+<span class="w-3 h-3 rounded-full bg-white animate-pulse"></span>
+</div>
+<div class="font-stats-xl text-primary text-[24px] mb-2">2024</div>
+<h4 class="font-title-md text-title-md mb-2">Enterprise Leader</h4>
+<p class="font-body-md text-on-surface-variant">The definitive ecosystem for elite sports analytics globally.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Team Section -->
+<section class="py-24 px-margin-desktop">
+<div class="max-w-container-max mx-auto">
+<h2 class="font-display-lg text-headline-lg text-center text-primary-fixed mb-16">The Leadership Team</h2>
+<div class="grid md:grid-cols-4 gap-gutter">
+<!-- Member 1 -->
+<div class="glass-card overflow-hidden group">
+<div class="h-64 relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-110" data-alt="A cinematic, high-contrast professional portrait of a tech CEO in a charcoal grey blazer, set against a dark, minimalist architectural background. The lighting is sophisticated and dramatic, emphasizing an authoritative yet modern leadership style, with a color palette of deep navy and sharp emerald accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtv_tnxm3C5vWNilFn81a2A2gImJW7-Tnuzk9kKnZ2qxYnj_VAg8RjXwuDcHoTRGbfSBUy9S0b9e63OgaHjzWv_47F13yuv2YizLhu5rCa8DJcUxJ7RdGuTVFxog_XDBzZy50UbXJ_GzacedVO6reQircfv8HNmWijxbdzX3wQBrCmZt8oBjrpOYa-ZdtNhohn5Woomnpqo8rXQOKdWDTc1ehbf4AGI9CLc6obzzph50g6DFrHWmIyGgjijo-mkjmHyrlteiXOiDMJ"/>
+</div>
+<div class="p-6">
+<h4 class="font-title-md text-title-md text-primary-fixed">Vikram Sharma</h4>
+<p class="font-label-sm text-on-surface-variant mb-4">Founder &amp; CEO</p>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-fixed-dim cursor-pointer text-sm">link</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-fixed-dim cursor-pointer text-sm">mail</span>
+</div>
+</div>
+</div>
+<!-- Member 2 -->
+<div class="glass-card overflow-hidden group">
+<div class="h-64 relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-110" data-alt="A professional headshot of a female Chief Operating Officer in a sleek black business suit. The background is a high-end, blurred modern office space with subtle emerald green lighting accents. The photography is sharp and cinematic, capturing an expression of confidence and strategic brilliance." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0fuvjG7r7O5FyDztZV0RfjkMzbC4ft_q0h9FpaQU3pp_cE6jV3CVOl0JPDjuaPdKiKQZguMbun1PdK963b9N-HdMhKP70wO7QbsSybNkDF40rlX5Hnz1YpHhgMd33OfaJ2JYXdD_rGR9-hScfLs4n52ubiu0fvjlS2PBW9tyhxZ4D5YwjqHL9I0EuRt2MWaCPtABhRi1h7pQ_Hup8IQd0Duk25gJBObmjgrRTOgzbzy9LBEIAnmp2vWwAENTauH7glAcxpKOLrPGn"/>
+</div>
+<div class="p-6">
+<h4 class="font-title-md text-title-md text-primary-fixed">Sarah Jenkins</h4>
+<p class="font-label-sm text-on-surface-variant mb-4">COO</p>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-fixed-dim cursor-pointer text-sm">link</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-fixed-dim cursor-pointer text-sm">mail</span>
+</div>
+</div>
+</div>
+<!-- Member 3 -->
+<div class="glass-card overflow-hidden group">
+<div class="h-64 relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-110" data-alt="A sophisticated portrait of a CTO in a minimalist dark turtleneck, standing before a high-resolution data visualization screen in a dark room. The lighting is tech-focused with cyan and emerald hues, emphasizing innovation and professional expertise in a cinematic style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9EifQ2rzCb1C0PyRF5TkwOo6hVi3cY9gWLk0GTlhDZyVfz_tdlrjjPDWeyMlg3n0DmycTVgAV-bxh-Jt-B1Dd_IneMGLm7q3vjHKwLiJiq2_nm8yIIZXgU6C0YvX8ax-Vb8A74WcFZlOeWgf1xmcWnqfH-Cj3CvlPbDGRRX1pdpvkk97Y4zKlzIRpOGIXUd3Sk9catQLoBwhXyo8rZhBF77LXzoNNbd_-O1vROXEWjfN-TQsZV1rkdRWkkv-wPg2yFZAesBrIsJc7"/>
+</div>
+<div class="p-6">
+<h4 class="font-title-md text-title-md text-primary-fixed">Arjun Mehta</h4>
+<p class="font-label-sm text-on-surface-variant mb-4">CTO</p>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-fixed-dim cursor-pointer text-sm">link</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-fixed-dim cursor-pointer text-sm">mail</span>
+</div>
+</div>
+</div>
+<!-- Member 4 -->
+<div class="glass-card overflow-hidden group">
+<div class="h-64 relative overflow-hidden bg-surface-container">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-110" data-alt="A modern professional portrait of a Head of Sports Science in high-end athletic apparel. The background features a blurred professional training facility with sophisticated medical and performance tracking hardware. The mood is energetic and clinical, with a high-fidelity cinematic look and emerald color accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHIGTCKIvR89Iea9qTTX7Nlz8XNnV0zorpGNgw8Sg-yQHUk0__jcki8zNrq4d4ICZeZctcS3jyjEfWicaf9FYppTcU-S6WJFHMXoxnc3iiicdKovHxggxV6gJhkvy2sn5th4JckrVtT3IE3RWEYYY7NjFNPHudWOUHwjmbbgcUQ9lUa-wLLEe_BCkphETCVe2giRcrhRn-ZYiUaFF7svc3hakQih8n35qvJn6bfCYXfE9gnybbH5Buol8qcfvRLkHHXzD7vLPt1-IL"/>
+</div>
+<div class="p-6">
+<h4 class="font-title-md text-title-md text-primary-fixed">Elena Rossi</h4>
+<p class="font-label-sm text-on-surface-variant mb-4">Head of Performance</p>
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-fixed-dim cursor-pointer text-sm">link</span>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary-fixed-dim cursor-pointer text-sm">mail</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Partners Logo Grid -->
+<section class="py-24 px-margin-desktop bg-surface-container-lowest">
+<div class="max-w-container-max mx-auto text-center">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-12">Trusted by Elite Partners</p>
+<div class="grid grid-cols-2 md:grid-cols-6 gap-gutter opacity-40 grayscale hover:grayscale-0 transition-all">
+<div class="h-20 flex items-center justify-center">
+<span class="font-display-lg text-headline-lg opacity-30">PROLEAGUE</span>
+</div>
+<div class="h-20 flex items-center justify-center">
+<span class="font-display-lg text-headline-lg opacity-30">ELITEATH</span>
+</div>
+<div class="h-20 flex items-center justify-center">
+<span class="font-display-lg text-headline-lg opacity-30">SPORTX</span>
+</div>
+<div class="h-20 flex items-center justify-center">
+<span class="font-display-lg text-headline-lg opacity-30">FEDERATION</span>
+</div>
+<div class="h-20 flex items-center justify-center">
+<span class="font-display-lg text-headline-lg opacity-30">DATACO</span>
+</div>
+<div class="h-20 flex items-center justify-center">
+<span class="font-display-lg text-headline-lg opacity-30">CLOUDNEXT</span>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-32 px-margin-desktop relative overflow-hidden">
+<div class="absolute inset-0 bg-primary-container/10 z-0"></div>
+<div class="max-w-4xl mx-auto text-center relative z-10">
+<h2 class="font-display-lg text-[48px] mb-stack-lg">Join the Elite. Partner with SmartSportz.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-12">Ready to transform your organization with the world's most advanced sports management technology? Let's build the future together.</p>
+<button class="bg-primary text-on-primary px-10 py-4 rounded-xl font-title-md text-title-md hover:bg-primary-fixed transition-all shadow-lg hover:shadow-primary/20 active:scale-95">Contact Us</button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-stack-lg px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-gutter bg-surface-container-lowest dark:bg-surface-container-lowest border-t border-outline-variant">
+<div class="flex flex-col gap-4">
+<span class="font-title-md text-title-md text-primary-fixed">SmartSportz.in</span>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 SmartSportz.in. All Rights Reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-on-surface-variant hover:text-primary-fixed-dim underline transition-all font-body-md" href="#">About Us</a>
+<a class="text-on-surface-variant hover:text-primary-fixed-dim underline transition-all font-body-md" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary-fixed-dim underline transition-all font-body-md" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary-fixed-dim underline transition-all font-body-md" href="#">Contact Support</a>
+<a class="text-on-surface-variant hover:text-primary-fixed-dim underline transition-all font-body-md" href="#">Careers</a>
+<a class="text-on-surface-variant hover:text-primary-fixed-dim underline transition-all font-body-md" href="#">API Docs</a>
+</div>
+</footer>
+<script>
+        // Simple scroll reveal interaction
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.glass-card, .flex-col.items-center').forEach(el => {
+            el.classList.add('transition-all', 'duration-700', 'opacity-0', 'translate-y-10');
+            observer.observe(el);
+        });
+    </script>
+</body></html>

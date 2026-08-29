@@ -1,0 +1,277 @@
+import { AnimatePresence } from "framer-motion";
+import { Suspense, lazy, useEffect } from "react";
+import type { ComponentType } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { ProtectedRoute } from "./auth/ProtectedRoute";
+import { Footer, PublicHeader } from "./components/UI";
+import { ScreenLoader } from "./loading/ScreenLoader";
+import { useLoading } from "./loading/LoadingContext";
+
+function lazyNamed(loader: () => Promise<Record<string, any>>, exportName: string) {
+  return lazy(() => loader().then((module) => ({ default: module[exportName] }))) as ComponentType<any>;
+}
+
+const AdminPage = lazyNamed(() => import("./pages/AdminPage"), "AdminPage");
+const AdminCMSEditPage = lazyNamed(() => import("./pages/AdminPage"), "AdminCMSEditPage");
+const AdminManagerCreatePage = lazyNamed(() => import("./pages/AdminPage"), "AdminManagerCreatePage");
+const AdminManagerDetailPage = lazyNamed(() => import("./pages/AdminPage"), "AdminManagerDetailPage");
+const AdminRegistrationTeamDetailPage = lazyNamed(() => import("./pages/AdminPage"), "AdminRegistrationTeamDetailPage");
+const AdminTeamEditPage = lazyNamed(() => import("./pages/AdminPage"), "AdminTeamEditPage");
+const AdminTournamentEditorPage = lazyNamed(() => import("./pages/AdminPage"), "AdminTournamentEditorPage");
+const AdminTournamentPaymentsPage = lazyNamed(() => import("./pages/AdminPage"), "AdminTournamentPaymentsPage");
+const AdminTournamentTeamsPage = lazyNamed(() => import("./pages/AdminPage"), "AdminTournamentTeamsPage");
+const AdminUserCreatePage = lazyNamed(() => import("./pages/AdminPage"), "AdminUserCreatePage");
+const AdminUserDetailPage = lazyNamed(() => import("./pages/AdminPage"), "AdminUserDetailPage");
+const ChessSchoolManagementPage = lazyNamed(() => import("./pages/AdminPage"), "ChessSchoolManagementPage");
+const SportEditorPage = lazyNamed(() => import("./pages/AdminPage"), "SportEditorPage");
+const SportManagementPage = lazyNamed(() => import("./pages/AdminPage"), "SportManagementPage");
+const CmsSectionPage = lazyNamed(() => import("./pages/CmsSectionPage"), "CmsSectionPage");
+const ChessSchoolsPage = lazyNamed(() => import("./pages/ChessSchoolsPage"), "ChessSchoolsPage");
+const ContentPage = lazyNamed(() => import("./pages/ContentPage"), "ContentPage");
+const DiscoveryDetailPage = lazyNamed(() => import("./pages/DiscoveryDetailPage"), "DiscoveryDetailPage");
+const GalleryAlbumPage = lazyNamed(() => import("./pages/GalleryPage"), "GalleryAlbumPage");
+const GalleryPage = lazyNamed(() => import("./pages/GalleryPage"), "GalleryPage");
+const HomePage = lazyNamed(() => import("./pages/HomePage"), "HomePage");
+const LeaderboardsPage = lazyNamed(() => import("./pages/LeaderboardsPage"), "LeaderboardsPage");
+const LiveHubPage = lazyNamed(() => import("./pages/LiveHubPage"), "LiveHubPage");
+const LiveMatchPage = lazyNamed(() => import("./pages/LiveMatchPage"), "LiveMatchPage");
+const LoginPage = lazyNamed(() => import("./pages/LoginPage"), "LoginPage");
+const ManagementPage = lazyNamed(() => import("./pages/ManagementPage"), "ManagementPage");
+const ManagementSectionPage = lazyNamed(() => import("./pages/PortalSectionPage"), "ManagementSectionPage");
+const NewsDetailPage = lazyNamed(() => import("./pages/NewsPages"), "NewsDetailPage");
+const NewsPage = lazyNamed(() => import("./pages/NewsPages"), "NewsPage");
+const RegistrationPage = lazyNamed(() => import("./pages/RegistrationPage"), "RegistrationPage");
+const RegistrationPassPage = lazyNamed(() => import("./pages/RegistrationPage"), "RegistrationPassPage");
+const RegistrationPaymentPage = lazyNamed(() => import("./pages/RegistrationPage"), "RegistrationPaymentPage");
+const RegistrationReviewPage = lazyNamed(() => import("./pages/RegistrationPage"), "RegistrationReviewPage");
+const RegistrationRosterPage = lazyNamed(() => import("./pages/RegistrationPage"), "RegistrationRosterPage");
+const SettingsPage = lazyNamed(() => import("./pages/SettingsPage"), "SettingsPage");
+const SportDetailPage = lazyNamed(() => import("./pages/SportDetailPage"), "SportDetailPage");
+const SportsPage = lazyNamed(() => import("./pages/SportsPage"), "SportsPage");
+const TeamDetailPage = lazyNamed(() => import("./pages/TeamDetailPage"), "TeamDetailPage");
+const TeamsPage = lazyNamed(() => import("./pages/TeamsPage"), "TeamsPage");
+const TournamentDetailPage = lazyNamed(() => import("./pages/TournamentDetailPage"), "TournamentDetailPage");
+const TournamentRoundsPage = lazyNamed(() => import("./pages/BracketPages"), "TournamentRoundsPage");
+const TournamentsPage = lazyNamed(() => import("./pages/TournamentsPage"), "TournamentsPage");
+const UserDashboardPage = lazyNamed(() => import("./pages/UserDashboardPage"), "UserDashboardPage");
+const UserSectionPage = lazyNamed(() => import("./pages/PortalSectionPage"), "UserSectionPage");
+const UtilityDetailPage = lazyNamed(() => import("./pages/UtilityDetailPage"), "UtilityDetailPage");
+const RoleProgramsPage = lazyNamed(() => import("./pages/RoleProgramsPage"), "RoleProgramsPage");
+const BracketWorkspacePage = lazyNamed(() => import("./pages/BracketPages"), "BracketWorkspacePage");
+
+function RouteSkeleton() {
+  return null;
+}
+
+function ScrollToTop() {
+  const { hash, pathname, search } = useLocation();
+  const { showFor } = useLoading();
+
+  useEffect(() => {
+    const actionButtonPattern = /\b(save|saved|confirm|publish|create|update|upload|login|sign in|change password|record refund|cancel payment)\b/i;
+
+    function elementText(element: HTMLElement) {
+      if (element instanceof HTMLInputElement) {
+        return element.value || element.getAttribute("aria-label") || "";
+      }
+      return `${element.textContent || ""} ${element.getAttribute("aria-label") || ""}`.trim();
+    }
+
+    function shouldShowActionLoader(element: HTMLElement | null) {
+      if (!element || element.hasAttribute("disabled") || element.getAttribute("aria-disabled") === "true") {
+        return false;
+      }
+      const text = elementText(element);
+      return actionButtonPattern.test(text);
+    }
+
+    function handleActionClick(event: MouseEvent) {
+      const target = event.target as HTMLElement | null;
+      const button = target?.closest("button, input[type='submit'], input[type='button'], [role='button']") as HTMLElement | null;
+      if (shouldShowActionLoader(button)) {
+        showFor(1800);
+      }
+    }
+
+    function handleFormSubmit(event: SubmitEvent) {
+      const submitter = event.submitter as HTMLElement | null;
+      if (shouldShowActionLoader(submitter)) {
+        showFor(2200);
+      }
+    }
+
+    function handleInternalNavigation(event: MouseEvent) {
+      const target = event.target as HTMLElement | null;
+      const link = target?.closest("a[href]") as HTMLAnchorElement | null;
+      if (!link || link.target || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+      const destination = new URL(link.href);
+      const current = new URL(window.location.href);
+      if (destination.origin !== current.origin || destination.pathname === current.pathname) {
+        return;
+      }
+      showFor(1300);
+    }
+
+    document.addEventListener("click", handleActionClick, true);
+    document.addEventListener("submit", handleFormSubmit, true);
+    document.addEventListener("click", handleInternalNavigation, true);
+    return () => {
+      document.removeEventListener("click", handleActionClick, true);
+      document.removeEventListener("submit", handleFormSubmit, true);
+      document.removeEventListener("click", handleInternalNavigation, true);
+    };
+  }, [showFor]);
+
+  useEffect(() => {
+    if (hash) {
+      window.requestAnimationFrame(() => {
+        document.getElementById(hash.slice(1))?.scrollIntoView({ block: "start" });
+      });
+    } else {
+      window.scrollTo(0, 0);
+    }
+    (window as any).gtag?.("config", "G-YFZSW0TZP1", {
+      page_path: `${pathname}${search}${hash}`,
+    });
+    showFor(window.location.search.includes("loading=1") ? 3000 : 1200);
+  }, [hash, pathname, search]);
+
+  return null;
+}
+
+export default function App() {
+  const location = useLocation();
+  const isPortal = location.pathname.startsWith("/admin") || location.pathname.startsWith("/management") || location.pathname.startsWith("/user");
+
+  useEffect(() => {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("smart-sportz-theme", "light");
+  }, []);
+
+  return (
+    <div className={`app-shell ${isPortal ? "portal-app-shell" : "public-shell"}`}>
+      <ScrollToTop />
+      <ScreenLoader />
+      {!isPortal && <PublicHeader />}
+      <AnimatePresence mode="wait">
+        <Suspense fallback={<RouteSkeleton />}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/tournaments" element={<TournamentsPage />} />
+          <Route path="/tournaments/:slug" element={<TournamentDetailPage />} />
+          <Route path="/tournaments/:slug/rounds" element={<TournamentRoundsPage />} />
+          <Route path="/tournaments/:slug/register" element={<ProtectedRoute roles={["user"]}><RegistrationPage /></ProtectedRoute>} />
+          <Route path="/tournaments/:slug/register/roster" element={<ProtectedRoute roles={["user"]}><RegistrationRosterPage /></ProtectedRoute>} />
+          <Route path="/tournaments/:slug/register/payment" element={<ProtectedRoute roles={["user"]}><RegistrationPaymentPage /></ProtectedRoute>} />
+          <Route path="/tournaments/:slug/register/review" element={<ProtectedRoute roles={["user"]}><RegistrationReviewPage /></ProtectedRoute>} />
+          <Route path="/tournaments/:slug/registration-pass" element={<ProtectedRoute roles={["user"]}><RegistrationPassPage /></ProtectedRoute>} />
+          <Route path="/registration/:id/payment" element={<ProtectedRoute roles={["user"]}><RegistrationPaymentPage /></ProtectedRoute>} />
+          <Route path="/payments/:id/receipt" element={<ProtectedRoute roles={["user", "super_admin"]}><UtilityDetailPage type="payment" /></ProtectedRoute>} />
+          <Route path="/sports" element={<SportsPage />} />
+          <Route path="/sports/chess/schools" element={<ChessSchoolsPage />} />
+          <Route path="/sports/chess/schools/:schoolSlug" element={<ChessSchoolsPage />} />
+          <Route path="/sports/:slug" element={<SportDetailPage />} />
+          <Route path="/discover/:slug" element={<DiscoveryDetailPage />} />
+          <Route path="/live" element={<LiveHubPage />} />
+          <Route path="/live/:matchId" element={<LiveMatchPage />} />
+          <Route path="/leaderboards" element={<LeaderboardsPage />} />
+          <Route path="/teams" element={<TeamsPage />} />
+          <Route path="/teams/:slug" element={<TeamDetailPage />} />
+          <Route path="/athletes/:slug" element={<AdminPage section="players" />} />
+          <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/gallery/:slug" element={<GalleryAlbumPage />} />
+          <Route path="/news" element={<NewsPage />} />
+          <Route path="/news/:slug" element={<NewsDetailPage />} />
+          <Route path="/blog" element={<Navigate to="/news" replace />} />
+          <Route path="/blog/:slug" element={<NewsDetailPage />} />
+          <Route path="/about" element={<ContentPage type="about" />} />
+          <Route path="/contact" element={<ContentPage type="contact" />} />
+          <Route path="/sponsors" element={<ContentPage type="sponsors" />} />
+          <Route path="/faq" element={<ContentPage type="faq" />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/forgot-password" element={<LoginPage recovery />} />
+          <Route path="/otp" element={<LoginPage recovery />} />
+          <Route path="/reset-password" element={<LoginPage recovery />} />
+          <Route path="/participant" element={<Navigate to="/participant/programs" replace />} />
+          <Route path="/participant/programs" element={<ProtectedRoute roles={["user"]}><RoleProgramsPage role="user" /></ProtectedRoute>} />
+          <Route path="/participant/*" element={<Navigate to="/user/dashboard" replace />} />
+          <Route path="/user/profile" element={<ProtectedRoute roles={["user"]}><UserSectionPage section="profile" /></ProtectedRoute>} />
+          <Route path="/user/registrations" element={<ProtectedRoute roles={["user"]}><UserSectionPage section="registrations" /></ProtectedRoute>} />
+          <Route path="/user/payments" element={<ProtectedRoute roles={["user"]}><UserSectionPage section="payments" /></ProtectedRoute>} />
+          <Route path="/user/members" element={<ProtectedRoute roles={["user"]}><UserSectionPage section="members" /></ProtectedRoute>} />
+          <Route path="/user/certificates" element={<ProtectedRoute roles={["user"]}><UserSectionPage section="certificates" /></ProtectedRoute>} />
+          <Route path="/user/schedules" element={<ProtectedRoute roles={["user"]}><UserSectionPage section="schedules" /></ProtectedRoute>} />
+          <Route path="/user/documents" element={<ProtectedRoute roles={["user"]}><UserSectionPage section="documents" /></ProtectedRoute>} />
+          <Route path="/user/settings" element={<ProtectedRoute roles={["user"]}><SettingsPage /></ProtectedRoute>} />
+          <Route path="/user/*" element={<ProtectedRoute roles={["user"]}><UserDashboardPage /></ProtectedRoute>} />
+          <Route path="/management/programs" element={<ProtectedRoute roles={["management"]}><RoleProgramsPage role="management" /></ProtectedRoute>} />
+          <Route path="/management/tournaments" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="tournaments" /></ProtectedRoute>} />
+          <Route path="/management/sports/new" element={<ProtectedRoute roles={["management"]}><SportEditorPage role="manager" /></ProtectedRoute>} />
+          <Route path="/management/sports/chess/schools" element={<ProtectedRoute roles={["management"]}><ChessSchoolManagementPage role="manager" /></ProtectedRoute>} />
+          <Route path="/management/sports/:slug/edit" element={<ProtectedRoute roles={["management"]}><SportEditorPage role="manager" /></ProtectedRoute>} />
+          <Route path="/management/sports" element={<ProtectedRoute roles={["management"]}><SportManagementPage role="manager" /></ProtectedRoute>} />
+          <Route path="/management/registrations" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="registrations" /></ProtectedRoute>} />
+          <Route path="/management/matches" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="matches" /></ProtectedRoute>} />
+          <Route path="/management/players" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="players" /></ProtectedRoute>} />
+          <Route path="/management/announcements" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="announcements" /></ProtectedRoute>} />
+          <Route path="/management/news" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="news" /></ProtectedRoute>} />
+          <Route path="/management/gallery" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="gallery" /></ProtectedRoute>} />
+          <Route path="/management/reports" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="reports" /></ProtectedRoute>} />
+          <Route path="/management/matches/:id/control" element={<ProtectedRoute roles={["management"]}><LiveMatchPage /></ProtectedRoute>} />
+          <Route path="/management/group-bracket" element={<ProtectedRoute roles={["management"]}><BracketWorkspacePage /></ProtectedRoute>} />
+          <Route path="/management/tournaments/:slug/bracket" element={<ProtectedRoute roles={["management"]}><BracketWorkspacePage /></ProtectedRoute>} />
+          <Route path="/management/settings" element={<ProtectedRoute roles={["management"]}><SettingsPage /></ProtectedRoute>} />
+          <Route path="/management/*" element={<ProtectedRoute roles={["management"]}><ManagementPage /></ProtectedRoute>} />
+          <Route path="/super-admin" element={<Navigate to="/super-admin/programs" replace />} />
+          <Route path="/super-admin/programs" element={<ProtectedRoute roles={["super_admin"]}><RoleProgramsPage role="super_admin" /></ProtectedRoute>} />
+          <Route path="/super-admin/*" element={<Navigate to="/admin/dashboard" replace />} />
+          <Route path="/admin/dashboard" element={<ProtectedRoute roles={["super_admin"]}><AdminPage /></ProtectedRoute>} />
+          <Route path="/admin/tournaments/new" element={<ProtectedRoute roles={["super_admin"]}><AdminTournamentEditorPage /></ProtectedRoute>} />
+          <Route path="/admin/tournaments/:slug/edit" element={<ProtectedRoute roles={["super_admin"]}><AdminTournamentEditorPage /></ProtectedRoute>} />
+          <Route path="/admin/group-bracket" element={<ProtectedRoute roles={["super_admin"]}><BracketWorkspacePage /></ProtectedRoute>} />
+          <Route path="/admin/tournaments/:slug/group-bracket" element={<ProtectedRoute roles={["super_admin"]}><BracketWorkspacePage /></ProtectedRoute>} />
+          <Route path="/admin/tournaments/:slug/bracket" element={<ProtectedRoute roles={["super_admin"]}><BracketWorkspacePage /></ProtectedRoute>} />
+          <Route path="/admin/tournaments" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="tournaments" /></ProtectedRoute>} />
+          <Route path="/admin/sports/new" element={<ProtectedRoute roles={["super_admin"]}><SportEditorPage role="admin" /></ProtectedRoute>} />
+          <Route path="/admin/sports/chess/schools" element={<ProtectedRoute roles={["super_admin"]}><ChessSchoolManagementPage role="admin" /></ProtectedRoute>} />
+          <Route path="/admin/sports/:slug/edit" element={<ProtectedRoute roles={["super_admin"]}><SportEditorPage role="admin" /></ProtectedRoute>} />
+          <Route path="/admin/sports" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="sports" /></ProtectedRoute>} />
+          <Route path="/admin/announcements" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="announcements" /></ProtectedRoute>} />
+          <Route path="/admin/users/add" element={<ProtectedRoute roles={["super_admin"]}><AdminUserCreatePage /></ProtectedRoute>} />
+          <Route path="/admin/users/:id" element={<ProtectedRoute roles={["super_admin"]}><AdminUserDetailPage /></ProtectedRoute>} />
+          <Route path="/admin/users" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="users" /></ProtectedRoute>} />
+          <Route path="/admin/managers/new" element={<ProtectedRoute roles={["super_admin"]}><AdminManagerCreatePage /></ProtectedRoute>} />
+          <Route path="/admin/managers/:id" element={<ProtectedRoute roles={["super_admin"]}><AdminManagerDetailPage /></ProtectedRoute>} />
+          <Route path="/admin/managers" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="managers" /></ProtectedRoute>} />
+          <Route path="/admin/roles" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="roles" /></ProtectedRoute>} />
+          <Route path="/admin/registrations" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="registrations" /></ProtectedRoute>} />
+          <Route path="/admin/teams/:id/edit" element={<ProtectedRoute roles={["super_admin"]}><AdminTeamEditPage /></ProtectedRoute>} />
+          <Route path="/admin/teams/tournament/:slug" element={<ProtectedRoute roles={["super_admin"]}><AdminTournamentTeamsPage /></ProtectedRoute>} />
+          <Route path="/admin/teams/registrations/:id" element={<ProtectedRoute roles={["super_admin"]}><AdminRegistrationTeamDetailPage /></ProtectedRoute>} />
+          <Route path="/admin/teams" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="teams" /></ProtectedRoute>} />
+          <Route path="/admin/players" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="players" /></ProtectedRoute>} />
+          <Route path="/admin/payments/tournament/:slug" element={<ProtectedRoute roles={["super_admin"]}><AdminTournamentPaymentsPage /></ProtectedRoute>} />
+          <Route path="/admin/payments" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="payments" /></ProtectedRoute>} />
+          <Route path="/admin/payments/operations" element={<ProtectedRoute roles={["super_admin"]}><UtilityDetailPage type="admin-payments" /></ProtectedRoute>} />
+          <Route path="/admin/news" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="news" /></ProtectedRoute>} />
+          <Route path="/admin/gallery" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="gallery" /></ProtectedRoute>} />
+          <Route path="/admin/cms" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="cms" /></ProtectedRoute>} />
+          <Route path="/admin/cms/edit/:type/:id" element={<ProtectedRoute roles={["super_admin"]}><AdminCMSEditPage /></ProtectedRoute>} />
+          <Route path="/admin/cms/:section" element={<ProtectedRoute roles={["super_admin"]}><CmsSectionPage /></ProtectedRoute>} />
+          <Route path="/admin/reports" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="reports" /></ProtectedRoute>} />
+          <Route path="/admin/reports/detail" element={<ProtectedRoute roles={["super_admin"]}><UtilityDetailPage type="admin-reports" /></ProtectedRoute>} />
+          <Route path="/admin/logs" element={<ProtectedRoute roles={["super_admin"]}><AdminPage section="logs" /></ProtectedRoute>} />
+          <Route path="/admin/logs/detail" element={<ProtectedRoute roles={["super_admin"]}><UtilityDetailPage type="admin-logs" /></ProtectedRoute>} />
+          <Route path="/admin/settings" element={<ProtectedRoute roles={["super_admin"]}><SettingsPage /></ProtectedRoute>} />
+          <Route path="/live-ops/*" element={<ProtectedRoute roles={["management", "super_admin"]}><LiveMatchPage /></ProtectedRoute>} />
+          <Route path="/settings" element={<ProtectedRoute roles={["super_admin", "management", "user"]}><SettingsPage /></ProtectedRoute>} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        </Suspense>
+      </AnimatePresence>
+      {!isPortal && <Footer />}
+    </div>
+  );
+}

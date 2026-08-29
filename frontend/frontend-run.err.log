@@ -1,0 +1,134 @@
+[2m11:43:17 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: D:\JOB\Brillaris\Smart_Sportz\frontend\src\pages\UserDashboardPage.tsx: Expected corresponding JSX closing tag for <section>. (189:16)
+
+[0m [90m 187 |[31m                   [33m<[31m[33mp[31m[33m>[31m[33mOpen[31m [36mpublic[31m live centers [36mfor[31m tournaments you follow[33m.[31m [33mYour[31m registered tournaments appear here after manager approval[33m.[31m[33m<[31m[33m/[31m[33mp[31m[33m>[31m
+ [90m 188 |[31m                   [33m<[31m[33mLink[31m className[33m=[31m[32m"btn btn-secondary"[31m to[33m=[31m[32m"/live"[31m[33m>[31m[33m<[31m[33mActivity[31m size[33m=[31m{[35m16[31m} [33m/[31m[33m>[31m[33mOpen[31m live matches[33m<[31m[33m/[31m[33mLink[31m[33m>[31m
+[31m[1m>[22m[31m[90m 189 |[31m                 [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m     |[31m                 [31m[1m^[22m[31m
+ [90m 190 |[31m               [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 191 |[31m             )}
+ [90m 192 |[31m           [33m<[31m[33m/[31m[33m>[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mD:/JOB/Brillaris/Smart_Sportz/frontend/src/pages/UserDashboardPage.tsx[39m:189:16
+[33m  187|                    <p>Open public live centers for tournaments you follow. Your registered tournaments appear here after manager approval.</p>
+  188|                    <Link className="btn btn-secondary" to="/live"><Activity size={16} />Open live matches</Link>
+  189|                  </div>
+     |                  ^
+  190|                </div>
+  191|              )}[39m
+      at constructor (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:6616:19)
+      at TypeScriptParserMixin.jsxParseElementAt (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4739:16)
+      at TypeScriptParserMixin.jsxParseElementAt (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4710:32)
+      at TypeScriptParserMixin.jsxParseElement (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4761:17)
+      at TypeScriptParserMixin.parseExprAtom (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4771:19)
+      at TypeScriptParserMixin.parseExprSubscripts (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10848:21)
+      at D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9792:39
+      at TypeScriptParserMixin.tryParse (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:6924:20)
+      at TypeScriptParserMixin.parseMaybeAssign (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9792:18)
+      at D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10817:39
+      at TypeScriptParserMixin.allowInAnd (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:12443:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10817:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:12510:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11692:28)
+      at TypeScriptParserMixin.parseExprAtom (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11348:23)
+      at TypeScriptParserMixin.parseExprAtom (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4776:20)
+      at TypeScriptParserMixin.parseExprSubscripts (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseConditional (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10910:29)
+      at TypeScriptParserMixin.parseConditional (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9620:18)
+      at TypeScriptParserMixin.parseMaybeConditional (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10902:17)
+      at TypeScriptParserMixin.parseMaybeAssign (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseExpressionBase (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10801:23)
+      at D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10797:39
+      at TypeScriptParserMixin.allowInAnd (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:12443:12)
+      at TypeScriptParserMixin.parseExpression (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10797:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4644:31)
+      at TypeScriptParserMixin.jsxParseElementAt (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4723:36)
+      at TypeScriptParserMixin.jsxParseElement (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4761:17)
+      at TypeScriptParserMixin.parseExprAtom (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4771:19)
+      at TypeScriptParserMixin.parseExprSubscripts (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9854:18)
+[2m11:43:25 AM[22m [31m[1m[vite][22m[39m [31mInternal server error: D:\JOB\Brillaris\Smart_Sportz\frontend\src\pages\UserDashboardPage.tsx: Expected corresponding JSX closing tag for <section>. (189:16)
+
+[0m [90m 187 |[31m                   [33m<[31m[33mp[31m[33m>[31m[33mOpen[31m [36mpublic[31m live centers [36mfor[31m tournaments you follow[33m.[31m [33mYour[31m registered tournaments appear here after manager approval[33m.[31m[33m<[31m[33m/[31m[33mp[31m[33m>[31m
+ [90m 188 |[31m                   [33m<[31m[33mLink[31m className[33m=[31m[32m"btn btn-secondary"[31m to[33m=[31m[32m"/live"[31m[33m>[31m[33m<[31m[33mActivity[31m size[33m=[31m{[35m16[31m} [33m/[31m[33m>[31m[33mOpen[31m live matches[33m<[31m[33m/[31m[33mLink[31m[33m>[31m
+[31m[1m>[22m[31m[90m 189 |[31m                 [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m     |[31m                 [31m[1m^[22m[31m
+ [90m 190 |[31m               [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 191 |[31m             )}
+ [90m 192 |[31m           [33m<[31m[33m/[31m[33m>[31m[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mD:/JOB/Brillaris/Smart_Sportz/frontend/src/pages/UserDashboardPage.tsx[39m:189:16
+[33m  187|                    <p>Open public live centers for tournaments you follow. Your registered tournaments appear here after manager approval.</p>
+  188|                    <Link className="btn btn-secondary" to="/live"><Activity size={16} />Open live matches</Link>
+  189|                  </div>
+     |                  ^
+  190|                </div>
+  191|              )}[39m
+      at constructor (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:365:19)
+      at TypeScriptParserMixin.raise (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:6616:19)
+      at TypeScriptParserMixin.jsxParseElementAt (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4739:16)
+      at TypeScriptParserMixin.jsxParseElementAt (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4710:32)
+      at TypeScriptParserMixin.jsxParseElement (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4761:17)
+      at TypeScriptParserMixin.parseExprAtom (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4771:19)
+      at TypeScriptParserMixin.parseExprSubscripts (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10848:21)
+      at D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9792:39
+      at TypeScriptParserMixin.tryParse (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:6924:20)
+      at TypeScriptParserMixin.parseMaybeAssign (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9792:18)
+      at D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10817:39
+      at TypeScriptParserMixin.allowInAnd (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:12443:12)
+      at TypeScriptParserMixin.parseMaybeAssignAllowIn (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10817:17)
+      at TypeScriptParserMixin.parseMaybeAssignAllowInOrVoidPattern (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:12510:17)
+      at TypeScriptParserMixin.parseParenAndDistinguishExpression (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11692:28)
+      at TypeScriptParserMixin.parseExprAtom (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11348:23)
+      at TypeScriptParserMixin.parseExprAtom (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4776:20)
+      at TypeScriptParserMixin.parseExprSubscripts (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9854:18)
+      at TypeScriptParserMixin.parseMaybeUnaryOrPrivate (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10916:61)
+      at TypeScriptParserMixin.parseExprOps (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10921:23)
+      at TypeScriptParserMixin.parseMaybeConditional (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10898:23)
+      at TypeScriptParserMixin.parseMaybeAssign (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseConditional (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10910:29)
+      at TypeScriptParserMixin.parseConditional (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9620:18)
+      at TypeScriptParserMixin.parseMaybeConditional (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10902:17)
+      at TypeScriptParserMixin.parseMaybeAssign (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10848:21)
+      at TypeScriptParserMixin.parseMaybeAssign (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9803:20)
+      at TypeScriptParserMixin.parseExpressionBase (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10801:23)
+      at D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10797:39
+      at TypeScriptParserMixin.allowInAnd (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:12443:12)
+      at TypeScriptParserMixin.parseExpression (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:10797:17)
+      at TypeScriptParserMixin.jsxParseExpressionContainer (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4644:31)
+      at TypeScriptParserMixin.jsxParseElementAt (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4723:36)
+      at TypeScriptParserMixin.jsxParseElement (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4761:17)
+      at TypeScriptParserMixin.parseExprAtom (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:4771:19)
+      at TypeScriptParserMixin.parseExprSubscripts (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11098:23)
+      at TypeScriptParserMixin.parseUpdate (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11083:21)
+      at TypeScriptParserMixin.parseMaybeUnary (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:11063:23)
+      at TypeScriptParserMixin.parseMaybeUnary (D:\JOB\Brillaris\Smart_Sportz\frontend\node_modules\@babel\parser\lib\index.js:9854:18)

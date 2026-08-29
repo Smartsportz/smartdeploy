@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SMART SPORTZ - Elite Tournament Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Inter:wght@400;700&amp;family=JetBrains+Mono:wght@600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        .glass-card {
+            background: rgba(23, 31, 51, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .glass-overlay {
+            background: rgba(23, 31, 51, 0.85);
+            backdrop-filter: blur(24px);
+        }
+        .live-pulse {
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.2); opacity: 0.4; box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .ticker-scroll {
+            display: flex;
+            white-space: nowrap;
+            animation: ticker 30s linear infinite;
+        }
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .btn-primary-tactile {
+            box-shadow: 0 4px 0 0 #004395;
+            transition: all 0.1s ease;
+        }
+        .btn-primary-tactile:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 0 #004395;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#ff5451",
+                    "on-primary-container": "#00285d",
+                    "surface-tint": "#adc6ff",
+                    "on-surface-variant": "#c2c6d6",
+                    "on-surface": "#dae2fd",
+                    "surface": "#0b1326",
+                    "inverse-primary": "#005ac2",
+                    "background": "#0b1326",
+                    "surface-dim": "#0b1326",
+                    "on-secondary-fixed-variant": "#783200",
+                    "tertiary-fixed-dim": "#ffb3ad",
+                    "tertiary-fixed": "#ffdad7",
+                    "outline": "#8c909f",
+                    "on-primary-fixed-variant": "#004395",
+                    "error": "#ffb4ab",
+                    "error-container": "#93000a",
+                    "secondary-fixed-dim": "#ffb690",
+                    "on-tertiary-fixed-variant": "#930013",
+                    "on-primary-fixed": "#001a42",
+                    "inverse-surface": "#dae2fd",
+                    "surface-container-lowest": "#060e20",
+                    "outline-variant": "#424754",
+                    "surface-container-highest": "#2d3449",
+                    "surface-container": "#171f33",
+                    "surface-variant": "#2d3449",
+                    "on-error-container": "#ffdad6",
+                    "primary-fixed": "#d8e2ff",
+                    "secondary-container": "#ec6a06",
+                    "primary-fixed-dim": "#adc6ff",
+                    "tertiary": "#ffb3ad",
+                    "on-tertiary": "#68000a",
+                    "on-secondary-fixed": "#341100",
+                    "on-tertiary-container": "#5c0008",
+                    "surface-container-high": "#222a3d",
+                    "on-secondary": "#552100",
+                    "on-primary": "#002e6a",
+                    "primary": "#adc6ff",
+                    "on-error": "#690005",
+                    "on-background": "#dae2fd",
+                    "surface-bright": "#31394d",
+                    "inverse-on-surface": "#283044",
+                    "surface-container-low": "#131b2e",
+                    "secondary-fixed": "#ffdbca",
+                    "on-secondary-container": "#4a1c00",
+                    "primary-container": "#4d8eff",
+                    "secondary": "#ffb690",
+                    "on-tertiary-fixed": "#410004"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "max-width": "1440px",
+                    "margin-desktop": "48px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["Anton"],
+                    "body-md": ["Inter"],
+                    "display-xl": ["Anton"],
+                    "headline-lg-mobile": ["Anton"],
+                    "body-lg": ["Inter"],
+                    "label-caps": ["JetBrains Mono"],
+                    "live-tag": ["Inter"],
+                    "headline-md": ["Anton"]
+            },
+            "fontSize": {
+                    "headline-lg": ["48px", {"lineHeight": "48px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-xl": ["72px", {"lineHeight": "72px", "letterSpacing": "0.02em", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "32px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "live-tag": ["14px", {"lineHeight": "14px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-12 h-20 bg-surface/70 backdrop-blur-md border-b border-white/10 shadow-sm">
+<div class="font-headline-md text-headline-md text-primary tracking-wider uppercase">SMART SPORTZ</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-label-caps text-label-caps text-primary border-b-2 border-primary pb-1 uppercase" href="#">Home</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200 uppercase" href="#">Live</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200 uppercase" href="#">Tournaments</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200 uppercase" href="#">Sports</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200 uppercase" href="#">Gallery</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-on-surface transition-colors duration-200 uppercase" href="#">About</a>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">search</span>
+<button class="bg-primary-container text-on-primary-container px-6 py-2 rounded-lg font-label-caps text-label-caps hover:scale-95 transition-transform uppercase">Admin Login</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative min-h-screen flex items-center pt-20">
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="A cinematic low-angle shot of a grand sports stadium at night, with dramatic floodlights piercing through a light mist. The color palette is dominated by deep navy blues and sharp electric blue highlights, creating a high-contrast 'Stadium-Tech' atmosphere. The image feels energetic yet elite, serving as a powerful backdrop for a premium sports management interface." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBouvNl46aR3dq3uH9FmMDiJsEmjl1yN-haKDKJFDBc_dWZwyWYlpFVQ_9iqbOzjBVIUGaUz7n2BPkQjcNu71X414kD4VaMjymYuiFCE0iMocfBlNjVv7X7wNTH0UlXhuq4L7ip9ZLG93mzVtPvAKXI8YojTA5GcjT8TjDHz3mBy-FoCzGbBmGrEk4rRyTWtdUKYpLBya53uD6VCs4CwXQBfjmVS-dvOnThI8cCpPB02dQXFQTKbhk')"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/60 to-transparent"></div>
+</div>
+<div class="relative z-10 px-12 max-w-4xl">
+<span class="inline-block px-4 py-1 bg-primary text-on-primary font-label-caps text-label-caps rounded-full mb-6 uppercase tracking-widest">The Future of Athletics</span>
+<h1 class="font-display-xl text-display-xl text-on-surface leading-tight mb-6 uppercase">Master Your <span class="text-primary">Tournament</span> Ecosystem</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-10 max-w-2xl">Precision data, real-time broadcasting, and elite competition management. Smart Sportz brings professional-grade logistics to every league, everywhere.</p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-lg font-label-caps text-label-caps uppercase btn-primary-tactile">Explore Tournaments</button>
+<button class="glass-card text-on-surface px-8 py-4 rounded-lg font-label-caps text-label-caps uppercase hover:bg-surface-variant transition-colors">Register Now</button>
+</div>
+</div>
+<!-- Floating Analytics Card (Glassmorphism) -->
+<div class="hidden lg:block absolute right-12 bottom-24 w-80 glass-card p-6 rounded-xl animate-bounce-slow">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">Global Ranking</span>
+<span class="material-symbols-outlined text-primary">trending_up</span>
+</div>
+<div class="text-3xl font-headline-md mb-2">12,480 PTS</div>
+<div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full w-[75%]"></div>
+</div>
+<p class="font-label-caps text-[10px] mt-2 text-on-surface-variant uppercase">Top 2% Globally • Analytics Enabled</p>
+</div>
+</header>
+<!-- Live Tournament Ribbon -->
+<div class="bg-surface-container-low border-y border-white/10 h-14 overflow-hidden flex items-center">
+<div class="bg-tertiary-container text-on-tertiary-container px-6 h-full flex items-center font-label-caps text-label-caps z-10 shadow-lg uppercase">
+            Live Feed
+        </div>
+<div class="ticker-scroll flex gap-12 items-center px-6">
+<div class="flex items-center gap-3 font-label-caps text-label-caps uppercase">
+<span class="w-2 h-2 rounded-full bg-error live-pulse"></span>
+<span class="text-error">LIVE:</span> Basketball Finals (Titans 88 : 82 Warriors)
+            </div>
+<div class="flex items-center gap-3 font-label-caps text-label-caps uppercase">
+<span class="w-2 h-2 rounded-full bg-error live-pulse"></span>
+<span class="text-error">LIVE:</span> Cricket Championship (Team Red 240/4 : Team Blue 180/7)
+            </div>
+<div class="flex items-center gap-3 font-label-caps text-label-caps uppercase">
+<span class="w-2 h-2 rounded-full bg-error live-pulse"></span>
+<span class="text-error">LIVE:</span> Football Qualifiers (Strikers 2 : 1 United)
+            </div>
+<!-- Repeat for loop -->
+<div class="flex items-center gap-3 font-label-caps text-label-caps uppercase">
+<span class="w-2 h-2 rounded-full bg-error live-pulse"></span>
+<span class="text-error">LIVE:</span> Basketball Finals (Titans 88 : 82 Warriors)
+            </div>
+<div class="flex items-center gap-3 font-label-caps text-label-caps uppercase">
+<span class="w-2 h-2 rounded-full bg-error live-pulse"></span>
+<span class="text-error">LIVE:</span> Cricket Championship (Team Red 240/4 : Team Blue 180/7)
+            </div>
+</div>
+</div>
+<!-- Featured Tournaments Carousel -->
+<section class="py-24 px-12 overflow-hidden bg-background">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="font-headline-lg text-headline-lg uppercase mb-2">Featured Series</h2>
+<p class="text-on-surface-variant">The elite tier of active competitions.</p>
+</div>
+<div class="flex gap-2">
+<button class="w-12 h-12 glass-card flex items-center justify-center rounded-lg hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-12 h-12 glass-card flex items-center justify-center rounded-lg hover:bg-primary hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Card 1 -->
+<div class="group relative rounded-xl overflow-hidden glass-card h-96 transition-all duration-500 hover:-translate-y-2">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700 opacity-40" data-alt="A dynamic shot of a basketball player mid-dunk, with a background of blurred stadium lights and a deep navy and electric blue color grading. The image should have a sense of motion and high energy, reflecting the kinetic brand personality of Smart Sportz." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDBLF02ALIFWg1vnLI-UhHsa2kdfJbQec3tA0bJPxWJGFbhgMb_U_SRxuD57vJARnTqSNuKwlIj2FzE06BK7qDL1s11Y0zf35yA7pzBZrRZWcG9qlggJZ86ITCtIjkrQRTfjXvUWwnSf40hGwcgAUE16epCU6iElHr3r20ybZfZxMjdNGCW5h-fMjma96e1qzmldKoe8DWiGaoAK_lqCGlGB7VTEcLHF6W-WrJ16YlQGAt9zgCGYmk')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute inset-0 p-8 flex flex-col justify-end">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">sports_basketball</span>
+<span class="bg-primary/20 text-primary px-3 py-1 rounded font-label-caps text-[10px] uppercase">Basketball</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2 uppercase">Pro-Elite Dunk Fest</h3>
+<div class="flex justify-between items-center border-t border-white/10 pt-4 mt-2">
+<div class="font-label-caps text-label-caps">
+<span class="text-on-surface-variant block">PRIZE POOL</span>
+<span class="text-secondary">$25,000</span>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-caps text-label-caps uppercase">Join Now</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative rounded-xl overflow-hidden glass-card h-96 transition-all duration-500 hover:-translate-y-2">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700 opacity-40" data-alt="A powerful action shot of a soccer player striking a ball on a lush green field under dramatic stadium lighting. The atmosphere is professional and elite, with a dark aesthetic that highlights the player's focus and the speed of the game. Colors include deep blues, vibrant greens, and crisp whites." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDg566ah5GvEJAekKcauPCAHp9a4fUDduqBUidTB2YK0dwaeqb9-xgmx5YWDu0ZLHbAY8cwS4rUb0Pqxjs90qydZTPM-W5KfrcBsZQL4MhfZ0ni2ucTrUZxbTAtlGJOcTdxcluf6YjK4jluLslTZI7St14Bn4vL-mzoVJOvdGWGwJ-SI65vcqT1lV1AGEAFy6RmJ-BgdKBTPsqpJERLWAs1UjMOT6qllbc5v8KHrwUeyO6UwRR2F9k')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute inset-0 p-8 flex flex-col justify-end">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">sports_soccer</span>
+<span class="bg-primary/20 text-primary px-3 py-1 rounded font-label-caps text-[10px] uppercase">Football</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2 uppercase">Global Strikers Cup</h3>
+<div class="flex justify-between items-center border-t border-white/10 pt-4 mt-2">
+<div class="font-label-caps text-label-caps">
+<span class="text-on-surface-variant block">PRIZE POOL</span>
+<span class="text-secondary">$50,000</span>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-caps text-label-caps uppercase">Join Now</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative rounded-xl overflow-hidden glass-card h-96 transition-all duration-500 hover:-translate-y-2">
+<div class="absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-700 opacity-40" data-alt="A high-intensity cricket match scene, showing a batsman hitting a boundary as the wicketkeeper reacts. The lighting is crisp and cinematic, capturing the dust from the pitch and the focused energy of the players. The color scheme aligns with the dark mode aesthetic, emphasizing electric blue and deep slate tones." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBt9yTXWsM6lwKv2u1ATYu7jtRu6Lie34ZO-ZVLS4YrM33jvBfYrzYKdd9jvNa_ENr-TvRVbfO9k_IpPvAUbgR8HTShBavY7kkQs1zqQs4hDRMOCYAPx7wO4P7_hPNhel0TK1ajpgD0brG8U1Vmjn6HC45UNpZoQ59v2rzLCsXBYssVeYjPgUAFdau38lvz8QMVt9ETjY4HYkqL7G3zz7BIGSXirR8mmAmnTIXtRyA0qxSr8YAAWds')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent"></div>
+<div class="absolute inset-0 p-8 flex flex-col justify-end">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary">sports_cricket</span>
+<span class="bg-primary/20 text-primary px-3 py-1 rounded font-label-caps text-[10px] uppercase">Cricket</span>
+</div>
+<h3 class="font-headline-md text-headline-md mb-2 uppercase">Summer Smash T20</h3>
+<div class="flex justify-between items-center border-t border-white/10 pt-4 mt-2">
+<div class="font-label-caps text-label-caps">
+<span class="text-on-surface-variant block">PRIZE POOL</span>
+<span class="text-secondary">$15,000</span>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-caps text-label-caps uppercase">Join Now</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Statistics Section -->
+<section class="py-20 relative bg-surface-container-lowest">
+
+<div class="relative z-10 px-12 grid grid-cols-2 md:grid-cols-4 gap-gutter text-center">
+<div>
+<div class="text-5xl font-display-xl text-primary mb-2" id="count-events">500+</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Global Events</div>
+</div>
+<div>
+<div class="text-5xl font-display-xl text-primary mb-2" id="count-players">15K+</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Active Players</div>
+</div>
+<div>
+<div class="text-5xl font-display-xl text-primary mb-2">2.4M</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Streaming Reach</div>
+</div>
+<div>
+<div class="text-5xl font-display-xl text-primary mb-2">99%</div>
+<div class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest">Data Accuracy</div>
+</div>
+</div>
+</section>
+<!-- Upcoming Tournaments with Filters -->
+<section class="py-24 px-12 bg-background">
+<div class="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
+<h2 class="font-headline-lg text-headline-lg uppercase">Upcoming <span class="text-primary">Fixtures</span></h2>
+<div class="flex gap-2 p-1 glass-card rounded-lg overflow-x-auto max-w-full">
+<button class="px-6 py-2 bg-primary text-on-primary rounded-lg font-label-caps text-label-caps uppercase">All Sports</button>
+<button class="px-6 py-2 hover:bg-surface-variant transition-colors rounded-lg font-label-caps text-label-caps uppercase">Cricket</button>
+<button class="px-6 py-2 hover:bg-surface-variant transition-colors rounded-lg font-label-caps text-label-caps uppercase">Football</button>
+<button class="px-6 py-2 hover:bg-surface-variant transition-colors rounded-lg font-label-caps text-label-caps uppercase">eSports</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Grid Card 1 -->
+<div class="glass-card rounded-xl p-6 border border-white/5 hover:border-primary/40 transition-all group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-primary/10 text-primary rounded-lg group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">sports_esports</span>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded font-label-caps text-[10px] uppercase">Opening Soon</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-2 uppercase">Pro Gaming League</h4>
+<div class="space-y-3 mb-6">
+<div class="flex items-center gap-3 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-primary text-lg">calendar_today</span>
+                        Sept 12 - Sept 20
+                    </div>
+<div class="flex items-center gap-3 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-primary text-lg">groups</span>
+                        32 Teams Maximum
+                    </div>
+</div>
+<button class="w-full py-3 border border-primary/40 text-primary rounded-lg font-label-caps text-label-caps uppercase hover:bg-primary hover:text-on-primary transition-all">Details</button>
+</div>
+<!-- Grid Card 2 -->
+<div class="glass-card rounded-xl p-6 border border-white/5 hover:border-primary/40 transition-all group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-primary/10 text-primary rounded-lg group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">sports_volleyball</span>
+</div>
+<span class="bg-primary/20 text-primary px-3 py-1 rounded font-label-caps text-[10px] uppercase">Invitational</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-2 uppercase">Beach Volley Open</h4>
+<div class="space-y-3 mb-6">
+<div class="flex items-center gap-3 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-primary text-lg">calendar_today</span>
+                        Oct 05 - Oct 08
+                    </div>
+<div class="flex items-center gap-3 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-primary text-lg">groups</span>
+                        16 Pro Pairs
+                    </div>
+</div>
+<button class="w-full py-3 border border-primary/40 text-primary rounded-lg font-label-caps text-label-caps uppercase hover:bg-primary hover:text-on-primary transition-all">Details</button>
+</div>
+<!-- Grid Card 3 -->
+<div class="glass-card rounded-xl p-6 border border-white/5 hover:border-primary/40 transition-all group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-primary/10 text-primary rounded-lg group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">sports_tennis</span>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded font-label-caps text-[10px] uppercase">Limited Slots</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-2 uppercase">The Grand Ace Masters</h4>
+<div class="space-y-3 mb-6">
+<div class="flex items-center gap-3 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-primary text-lg">calendar_today</span>
+                        Oct 14 - Oct 22
+                    </div>
+<div class="flex items-center gap-3 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-primary text-lg">groups</span>
+                        Single Elimination
+                    </div>
+</div>
+<button class="w-full py-3 border border-primary/40 text-primary rounded-lg font-label-caps text-label-caps uppercase hover:bg-primary hover:text-on-primary transition-all">Details</button>
+</div>
+<!-- Grid Card 4 -->
+<div class="glass-card rounded-xl p-6 border border-white/5 hover:border-primary/40 transition-all group">
+<div class="flex justify-between items-start mb-6">
+<div class="p-3 bg-primary/10 text-primary rounded-lg group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined">fitness_center</span>
+</div>
+<span class="bg-primary/20 text-primary px-3 py-1 rounded font-label-caps text-[10px] uppercase">Open Qualifiers</span>
+</div>
+<h4 class="font-headline-md text-headline-md mb-2 uppercase">Iron Athlete Series</h4>
+<div class="space-y-3 mb-6">
+<div class="flex items-center gap-3 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-primary text-lg">calendar_today</span>
+                        Nov 01 - Nov 05
+                    </div>
+<div class="flex items-center gap-3 text-on-surface-variant text-sm">
+<span class="material-symbols-outlined text-primary text-lg">groups</span>
+                        Unlimited Entry
+                    </div>
+</div>
+<button class="w-full py-3 border border-primary/40 text-primary rounded-lg font-label-caps text-label-caps uppercase hover:bg-primary hover:text-on-primary transition-all">Details</button>
+</div>
+</div>
+</section>
+<!-- Why Smart Sportz (Benefits) -->
+<section class="py-24 px-12 bg-surface-container-low">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg uppercase mb-4">Elite Capabilities</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto">Why the world's leading sports organizations choose our technology.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="glass-card p-10 rounded-2xl border-t-2 border-primary">
+<span class="material-symbols-outlined text-5xl text-primary mb-8" style="font-variation-settings: 'FILL' 1;">speed</span>
+<h3 class="font-headline-md text-headline-md mb-4 uppercase">Real-Time Sync</h3>
+<p class="text-on-surface-variant leading-relaxed">Score updates, bracket transitions, and live broadcasts are synchronized within 100ms globally.</p>
+</div>
+<div class="glass-card p-10 rounded-2xl border-t-2 border-secondary">
+<span class="material-symbols-outlined text-5xl text-secondary mb-8" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<h3 class="font-headline-md text-headline-md mb-4 uppercase">Secure Payments</h3>
+<p class="text-on-surface-variant leading-relaxed">Enterprise-grade encryption for player registrations, sponsorship deals, and prize distributions.</p>
+</div>
+<div class="glass-card p-10 rounded-2xl border-t-2 border-tertiary-container">
+<span class="material-symbols-outlined text-5xl text-tertiary-container mb-8" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<h3 class="font-headline-md text-headline-md mb-4 uppercase">Deep Analytics</h3>
+<p class="text-on-surface-variant leading-relaxed">From player efficiency ratings to audience engagement heatmaps, gain unparalleled insight.</p>
+</div>
+</div>
+</section>
+<!-- Footer Section -->
+<footer class="w-full py-12 px-12 flex flex-col md:flex-row justify-between items-center bg-surface-container-lowest border-t border-white/10">
+<div class="flex flex-col mb-8 md:mb-0">
+<div class="font-headline-md text-headline-md text-primary uppercase mb-2">SMART SPORTZ</div>
+<div class="text-on-surface-variant font-body-md uppercase text-xs tracking-widest">© 2024 SMART SPORTZ. ALL RIGHTS RESERVED.</div>
+</div>
+<div class="flex flex-wrap gap-8 justify-center mb-8 md:mb-0">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors uppercase" href="#">Privacy Policy</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors uppercase" href="#">Terms of Service</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors uppercase" href="#">Contact Us</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-secondary transition-colors uppercase" href="#">Sponsorships</a>
+</div>
+<div class="flex gap-4">
+<div class="w-10 h-10 glass-card rounded-full flex items-center justify-center hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-lg">share</span>
+</div>
+<div class="w-10 h-10 glass-card rounded-full flex items-center justify-center hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-lg">public</span>
+</div>
+<div class="w-10 h-10 glass-card rounded-full flex items-center justify-center hover:text-primary transition-colors cursor-pointer">
+<span class="material-symbols-outlined text-lg">mail</span>
+</div>
+</div>
+</footer>
+<script>
+        // Simple micro-interactions for counters
+        document.addEventListener('DOMContentLoaded', () => {
+            const counters = [
+                { id: 'count-events', end: 500, suffix: '+' },
+                { id: 'count-players', end: 15, suffix: 'K+' }
+            ];
+
+            counters.forEach(counter => {
+                const el = document.getElementById(counter.id);
+                if (el) {
+                    let start = 0;
+                    const duration = 2000;
+                    const increment = counter.end / (duration / 16);
+                    
+                    const timer = setInterval(() => {
+                        start += increment;
+                        if (start >= counter.end) {
+                            el.textContent = counter.end + counter.suffix;
+                            clearInterval(timer);
+                        } else {
+                            el.textContent = Math.floor(start) + counter.suffix;
+                        }
+                    }, 16);
+                }
+            });
+        });
+    </script>
+</body></html>

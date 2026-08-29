@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Media Gallery | SmartSportz.in</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Be+Vietnam+Pro:wght@500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100..900&family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(17, 34, 64, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 24px;
+        }
+        @media (min-width: 768px) { .masonry-grid { column-count: 2; } }
+        @media (min-width: 1280px) { .masonry-grid { column-count: 3; } }
+        
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 24px;
+        }
+        
+        .active-filter {
+            background-color: #0b8852;
+            color: #ffffff;
+        }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101415;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #323537;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #72db9d;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0b0f10",
+                        "on-tertiary": "#20304f",
+                        "on-secondary-fixed-variant": "#39475f",
+                        "tertiary-fixed-dim": "#b6c6ed",
+                        "tertiary-fixed": "#d8e2ff",
+                        "inverse-on-surface": "#2d3133",
+                        "primary": "#72db9d",
+                        "error": "#ffb4ab",
+                        "surface-container-low": "#191c1e",
+                        "on-tertiary-fixed-variant": "#374767",
+                        "surface-container-highest": "#323537",
+                        "surface-variant": "#323537",
+                        "surface-tint": "#72db9d",
+                        "on-primary-fixed-variant": "#00522f",
+                        "on-error-container": "#ffdad6",
+                        "on-secondary-fixed": "#0d1c32",
+                        "on-primary-container": "#ffffff",
+                        "inverse-primary": "#006d40",
+                        "secondary-fixed-dim": "#b9c7e4",
+                        "on-tertiary-container": "#000514",
+                        "secondary-fixed": "#d6e3ff",
+                        "outline": "#889489",
+                        "surface-container-high": "#272a2c",
+                        "secondary-container": "#3c4962",
+                        "secondary": "#b9c7e4",
+                        "on-background": "#e0e3e5",
+                        "on-error": "#690005",
+                        "surface-dim": "#101415",
+                        "on-primary-fixed": "#002110",
+                        "on-primary": "#00391f",
+                        "primary-fixed": "#8ef8b7",
+                        "primary-container": "#0b8852",
+                        "on-secondary": "#233148",
+                        "inverse-surface": "#e0e3e5",
+                        "on-secondary-container": "#abb9d6",
+                        "error-container": "#93000a",
+                        "background": "#101415",
+                        "on-surface-variant": "#bdcabe",
+                        "on-surface": "#e0e3e5",
+                        "on-tertiary-fixed": "#091b39",
+                        "tertiary-container": "#67779a",
+                        "surface": "#101415",
+                        "primary-fixed-dim": "#72db9d",
+                        "tertiary": "#b6c6ed",
+                        "surface-container": "#1d2022",
+                        "surface-bright": "#363a3b",
+                        "outline-variant": "#3e4a41"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "18px",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-md": "16px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "40px",
+                        "container-max": "1440px",
+                        "stack-lg": "32px",
+                        "stack-sm": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "label-sm": ["JetBrains Mono"],
+                        "title-md": ["Be Vietnam Pro"],
+                        "display-lg": ["Be Vietnam Pro"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Be Vietnam Pro"],
+                        "stats-xl": ["Be Vietnam Pro"],
+                        "headline-lg": ["Be Vietnam Pro"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background selection:bg-primary/30 min-h-screen">
+<!-- TopNavBar component -->
+<header class="w-full sticky top-0 z-40 bg-surface/80 dark:bg-surface-container-lowest/80 backdrop-blur-xl border-b border-outline-variant/10 shadow-sm flex justify-between items-center px-margin-desktop py-4">
+<div class="flex items-center gap-4">
+<h1 class="font-display-lg text-display-lg font-bold text-primary">SmartSportz.in</h1>
+</div>
+<div class="flex items-center gap-stack-md">
+<div class="hidden md:flex items-center bg-surface-container rounded-full px-4 py-2 border border-outline-variant/20">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md w-64 placeholder:text-on-surface-variant" placeholder="Search media..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant cursor-pointer active:opacity-80">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant cursor-pointer active:opacity-80">settings</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20 cursor-pointer">
+<img class="w-full h-full object-cover" data-alt="Close-up professional headshot of a sports executive in a dark navy suit against a soft-focus stadium backdrop. The lighting is sophisticated, with a warm rim light highlighting the silhouette, maintaining a premium corporate sports media aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEq3J2ZisLPAJMDHsPssN7B1bA1c9gmojfqVvF7EHPJoRpi4da3MNsGeXYkwU-Aqr2_RpC5ODWLOXnxNj9aS3w9-69_D29neuIyr6GA_Rpj1J3YFEUFhK7Ylx46goBYMgkg9huEt9T26H61E9z-SqFdAjXL0MWF8MRbgbCxaSo2vrkNlCzpcqyQ7aQcQo-1EF9o3EojFzA-6EjxjteIf-OKq3oN59tuVeLyRAlVgIlMnxot89YCAewUFFDRmYBT9vMYEFw3YOfQhO1"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex">
+<!-- SideNavBar component -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-surface-container-low border-r border-outline-variant/10 flex flex-col p-4 gap-stack-md pt-24 hidden md:flex z-30">
+<div class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+                    Tournaments
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg transition-all duration-200 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">image</span>
+                    Media Gallery
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">groups</span>
+                    Teams
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">person_celebrate</span>
+                    Players
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+                    Schedules
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">analytics</span>
+                    Analytics
+                </a>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant/10 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">help</span>
+                    Support
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-all duration-200 font-label-sm text-label-sm" href="#">
+<span class="material-symbols-outlined">logout</span>
+                    Sign Out
+                </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 p-margin-desktop min-h-screen">
+<div class="max-w-container-max mx-auto space-y-stack-lg">
+<!-- Page Header & Filters -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+<div class="space-y-2">
+<span class="text-primary font-label-sm tracking-widest uppercase">Asset Management</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Sports Media Gallery</h2>
+<p class="text-on-surface-variant font-body-md max-w-xl">Curated high-performance visual assets, match highlights, and behind-the-scenes athlete documentation.</p>
+</div>
+<!-- Filtering System -->
+<div class="flex flex-wrap gap-3 bg-surface-container-low p-2 rounded-xl border border-outline-variant/10">
+<button class="px-5 py-2 rounded-lg text-label-sm font-label-sm transition-all duration-200 active-filter">All Media</button>
+<button class="px-5 py-2 rounded-lg text-label-sm font-label-sm transition-all duration-200 text-on-surface-variant hover:bg-surface-container-high">Match Highlights</button>
+<button class="px-5 py-2 rounded-lg text-label-sm font-label-sm transition-all duration-200 text-on-surface-variant hover:bg-surface-container-high">Training</button>
+<button class="px-5 py-2 rounded-lg text-label-sm font-label-sm transition-all duration-200 text-on-surface-variant hover:bg-surface-container-high">Events</button>
+<button class="px-5 py-2 rounded-lg text-label-sm font-label-sm transition-all duration-200 text-on-surface-variant hover:bg-surface-container-high flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+                            Videos
+                        </button>
+</div>
+</div>
+<!-- Masonry Gallery Grid -->
+<div class="masonry-grid w-full">
+<!-- Card 1: Cricket Action -->
+<div class="masonry-item group relative overflow-hidden rounded-xl border border-outline-variant/10 cursor-pointer transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5">
+<img class="w-full h-auto transition-transform duration-700 group-hover:scale-110" data-alt="High-speed action photograph of a professional cricket batsman hitting a powerful lofted shot. Dust and turf are kicked up by the movement. The stadium floodlights create a dramatic high-contrast rim lighting effect against a deep stadium navy evening sky. Shot on a telephoto lens with beautiful bokeh." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRE3W4e5dbb6wg3aqCDcyUwCzc9ld3aq2xom6g_YdZzth40fLN1rmIh7gne4KtIVHxq4wQtTkf5jh-Lzvkq9hOAr66d4fkWHSXQqKedVZYBZ-jBUYX68C0Rovb2YTBSs0AJqK8MB_h9D2icH2O8RnLR2YH07wwH0HtCCpmonDxjncAqMoGpKQfgWi2UEfPrHLEfidiGuDkHWU5i-KCs4LBKU_VmYOIMLSCnZzavlSOPBqAwNbbN4ieplXEh7zf5MTp4BpUfTkI9O09"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<div class="glass-panel p-4 rounded-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+<h4 class="font-title-md text-title-md text-on-primary-container">IPL Finals - Mumbai Indians</h4>
+<div class="flex justify-between items-center mt-2">
+<p class="text-label-sm text-primary">May 24, 2024</p>
+<p class="text-label-sm text-on-surface-variant italic">by Aris Malik</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Football Video (Indicators) -->
+<div class="masonry-item group relative overflow-hidden rounded-xl border border-outline-variant/10 cursor-pointer transition-all duration-500">
+<div class="relative">
+<img class="w-full h-auto transition-transform duration-700 group-hover:scale-110" data-alt="A cinematic wide shot of a professional football match under heavy rain. The vibrant green turf contrasts with the dark, moody blue-navy sky. Players are captured mid-stride, water splashing from their boots. The lighting is cinematic with lens flares from the overhead stadium lights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPNQxZWm7jY8tb81r39Mu3aA1YmXt6Hhe8n7LhWy9DiZvPscscaHslLxlmPoZaSbXDjVg2ep5AYZARm5wjgq1AS8hWH6jFTpz3-qPO45neO9px1GY66Qly1qg1E8ubwRr-LRgIqv_btZC8bFJeqk4TChUMfPabc4fW4hpYgaw_KMUDl_BLbgXEqdJNWCqvA1DqFQbvwXc4ZRx7HCTU4ASRJjS0KnrdPL8wDC2UEjGVDIGXfkUrSY-1bWwFPzKJKg-YluORt0yYfSXM"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-primary/90 text-on-primary flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</div>
+</div>
+</div>
+<div class="absolute top-4 left-4">
+<span class="bg-primary/20 backdrop-blur-md text-primary text-label-sm px-3 py-1 rounded-full border border-primary/30">03:45</span>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<div class="glass-panel p-4 rounded-lg">
+<h4 class="font-title-md text-title-md text-on-primary-container">Season Opening Highlights</h4>
+<div class="flex justify-between items-center mt-2">
+<p class="text-label-sm text-primary">Aug 12, 2024</p>
+<p class="text-label-sm text-on-surface-variant">4K HDR Production</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: Training Session -->
+<div class="masonry-item group relative overflow-hidden rounded-xl border border-outline-variant/10 cursor-pointer transition-all duration-500">
+<img class="w-full h-auto transition-transform duration-700 group-hover:scale-110" data-alt="Elite athlete performing a high-intensity kettlebell swing in a dark, ultra-modern gym. The background features glowing green accent lights and high-performance equipment. Professional lighting focuses on the athlete's muscular definition and sweat, conveying high-performance effort. Cinematic dark-mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_x86hGERdmNaVXLqo-a5VPjmUiARiO3dxf7yPRsWFDVoQPmPiUXVtRW_PIUQdTkAEcP6Iv0xcPRCi37mCxoOEt7nakqVko3rPeffwDHCjaCdfIc1lvzctZCZWm5HhhV4GBD1RMNP6M1h6BCKNHipFzV6d8mWyvu0EBF06YOcnfcRHnr89Fdv0mBEfUhd23wy-feUMPLtMLOY8YDEaCOo5hwomun_AAz-htZrvb-HOOgI-qQgUoZdPYSnNCt5S-eMm8iscX-0Yze_S"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<div class="glass-panel p-4 rounded-lg">
+<h4 class="font-title-md text-title-md text-on-primary-container">Pre-Season Conditioning</h4>
+<div class="flex justify-between items-center mt-2">
+<p class="text-label-sm text-primary">Jun 15, 2024</p>
+<p class="text-label-sm text-on-surface-variant italic">by Fitness Metrics Unit</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4: Event Gala -->
+<div class="masonry-item group relative overflow-hidden rounded-xl border border-outline-variant/10 cursor-pointer transition-all duration-500">
+<img class="w-full h-auto transition-transform duration-700 group-hover:scale-110" data-alt="Wide angle view of a premium sports awards gala. The venue is dark with deep blue and championship green spotlights. Elegant tables are arranged across a grand ballroom. In the background, a large screen displays sports statistics and branding. The atmosphere is elite, corporate, and prestigious." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCV17yv9XoLISSybx96mqo8t5apczsYd91DIeRKAy9qHI1JYwqk9Q0ehilnE4rZIzb7NFfYbe38wZzaoqU9rx7MkOxPVYdpM8NWiX6Qt2SgJbQh6Xe_2UH9tw4EtSC5KLj_t3pur3HA7uIbsnz46aqIBTYsVe5ZC4OuzBBf58Xoqe_ot0e1M_JsVN4AIXPfpD0uA8rvOhxTBCOOYbL1gztxwmZvTy6XGFA4PO9CUkesRTyn4dwPN1h1gPmr4A2poRPRYlcHkJyL2XgB"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<div class="glass-panel p-4 rounded-lg">
+<h4 class="font-title-md text-title-md text-on-primary-container">Annual Athlete Excellence Gala</h4>
+<div class="flex justify-between items-center mt-2">
+<p class="text-label-sm text-primary">Dec 20, 2023</p>
+<p class="text-label-sm text-on-surface-variant italic">PR Department</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 5: Close up portrait -->
+<div class="masonry-item group relative overflow-hidden rounded-xl border border-outline-variant/10 cursor-pointer transition-all duration-500">
+<img class="w-full h-auto transition-transform duration-700 group-hover:scale-110" data-alt="High-detail intimate portrait of a professional female football player focusing intensely before a match. Beads of sweat are visible on her forehead. The lighting is dramatic side-lighting in a dark locker room tunnel, creating a heroic and determined mood. Color palette of dark teals and championship green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAG1KPlVPvgljk011vyoGXbF24MYnD3bCwn3DlhxURGNdAy7qhwSdrR2KSIuXRGtGWBMszrRCK95TJqI3zUFr1Fh2J374bKKMPWT-s6nonJNtBnriaAk_0CyduDrDKNPwoAuCCmIkRleReSoJNyZt_mWK3k3rr0aqO4iUf7yGI4upIso4XKxeslWYK3yVn3pnj9czb9b2bC6FoGK6xwgpGZD2cSk7e02e6uumq8-j4Xv5s2Ch99ALxMAsvdiVgtXpnPNfOnpzF1_nup"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<div class="glass-panel p-4 rounded-lg">
+<h4 class="font-title-md text-title-md text-on-primary-container">Athlete Focus Series: Elena Rossi</h4>
+<div class="flex justify-between items-center mt-2">
+<p class="text-label-sm text-primary">Sept 05, 2024</p>
+<p class="text-label-sm text-on-surface-variant italic">by Portrait Studio</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 6: Stadium View -->
+<div class="masonry-item group relative overflow-hidden rounded-xl border border-outline-variant/10 cursor-pointer transition-all duration-500">
+<img class="w-full h-auto transition-transform duration-700 group-hover:scale-110" data-alt="Aerial drone photography of a futuristic world-class cricket stadium at night during a sold-out match. The stadium bowl is a ring of brilliant white light against a surrounding city of deep navy and electric cyan. The scale is monumental, showcasing the grandeur of elite sports entertainment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXVaCAQZ16DTX8xlnmkJefTB6GvcH3brvuK15ktFAGIEJnPZPPrpgYWG2E6kWrOsuc1wVwM0xjw3wHlKqSK5qo4gLELXpYLlAm6-RpV_ky0IanzIzypC9csnlIDRwCZdUESO0FURROPFx-XRWh6LbEH6pJFMST_dNePwJmDdb2k8AKgJ9r_R3adABPWv5sjG0uHSnkhrTpB4Nt2GSk4Ys4FqA3bQ3rhqzrH7K0iQKyorAX4pszKtH1boVy59P6LNswmga8rB4bLnrA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+<div class="glass-panel p-4 rounded-lg">
+<h4 class="font-title-md text-title-md text-on-primary-container">Venue Highlight: Ahmedabad Arena</h4>
+<div class="flex justify-between items-center mt-2">
+<p class="text-label-sm text-primary">Jan 10, 2024</p>
+<p class="text-label-sm text-on-surface-variant italic">SkyView Media</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Load More -->
+<div class="py-12 flex flex-col items-center gap-6">
+<p class="text-on-surface-variant font-label-sm">Showing 6 of 1,240 Assets</p>
+<button class="px-8 py-4 bg-transparent border border-primary text-primary rounded-xl font-body-lg hover:bg-primary/10 transition-colors duration-300 flex items-center gap-3 active:scale-95">
+<span class="material-symbols-outlined">refresh</span>
+                        Load Professional Archive
+                    </button>
+</div>
+</div>
+</main>
+</div>
+<!-- Lightbox Placeholder UI (Hidden by default, shown on click) -->
+<div class="fixed inset-0 z-50 bg-surface-container-lowest/95 backdrop-blur-2xl flex items-center justify-center p-8 hidden opacity-0 transition-opacity duration-500" id="lightbox">
+<button class="absolute top-8 right-8 text-on-surface-variant hover:text-primary transition-colors" id="closeLightbox">
+<span class="material-symbols-outlined text-4xl">close</span>
+</button>
+<div class="max-w-6xl w-full flex flex-col lg:flex-row gap-gutter">
+<!-- Large Image -->
+<div class="flex-1 rounded-xl overflow-hidden shadow-2xl border border-outline-variant/10">
+<img class="w-full h-full object-contain" data-alt="Extremely high-resolution sports action shot being previewed in an elegant dark-mode digital lightbox. The image detail is sharp, showing every blade of grass and drop of sweat on an athlete's brow. The UI surroundings are minimal and sophisticated." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCggBz6QBr344P4r2DShpDEduWq8CVxkG6j8wGI9rUWKgaFNXJ4wDDGJhas84maLtFfI094Hg6m_1fMw18pSDIxAHCiyJd7Hpnte_1WfqZnmd3ZeTEBCeMyer9W1Q6PYSOOeoQwkHGxpDetNOdTqPBf0Wr2v_VJl89cwvnaUyzwEh6xn1nTg4d-IlYQYDFdLUS8Icv7I-FfuXsyv03K6d508Wl9XChNh4fYc2JPEFlImDYZXXCtD23UFhaRtlEx2zX1EpMYKeBAi_40"/>
+</div>
+<!-- Metadata Panel -->
+<div class="w-full lg:w-80 glass-panel p-8 rounded-xl flex flex-col gap-6">
+<div>
+<h3 class="text-headline-lg font-headline-lg text-primary">Action Shot 842</h3>
+<p class="text-on-surface-variant text-body-md mt-2">Pro Football League Week 4. Captured at the North Stand during the decisive goal.</p>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-label-sm uppercase tracking-wider">Photographer</span>
+<span class="text-on-surface font-label-sm">Sarah Jenkins</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-label-sm uppercase tracking-wider">Camera</span>
+<span class="text-on-surface font-label-sm">Sony Alpha 1</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-on-surface-variant text-label-sm uppercase tracking-wider">Aperture</span>
+<span class="text-on-surface font-label-sm">f/2.8</span>
+</div>
+</div>
+<div class="mt-auto flex flex-col gap-3">
+<button class="w-full py-4 bg-primary text-on-primary font-bold rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">download</span>
+                        Download 4K RAW
+                    </button>
+<button class="w-full py-4 border border-outline-variant text-on-surface-variant rounded-lg flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">share</span>
+                        Share Link
+                    </button>
+</div>
+</div>
+</div>
+<!-- Controls -->
+<button class="absolute left-8 top-1/2 -translate-y-1/2 text-on-surface-variant/50 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-6xl">chevron_left</span>
+</button>
+<button class="absolute right-8 top-1/2 -translate-y-1/2 text-on-surface-variant/50 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-6xl">chevron_right</span>
+</button>
+</div>
+<!-- Interaction Script -->
+<script>
+        const lightbox = document.getElementById('lightbox');
+        const closeLightbox = document.getElementById('closeLightbox');
+        const masonryItems = document.querySelectorAll('.masonry-item');
+
+        masonryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                lightbox.classList.remove('hidden');
+                setTimeout(() => {
+                    lightbox.classList.add('opacity-100');
+                }, 10);
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeLightbox.addEventListener('click', () => {
+            lightbox.classList.remove('opacity-100');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }, 500);
+        });
+
+        // Filter toggle simulation
+        const filters = document.querySelectorAll('button[class*="px-5"]');
+        filters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                filters.forEach(f => {
+                    f.classList.remove('active-filter');
+                    f.classList.add('text-on-surface-variant', 'hover:bg-surface-container-high');
+                });
+                filter.classList.add('active-filter');
+                filter.classList.remove('text-on-surface-variant', 'hover:bg-surface-container-high');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartSportz.in | Elite Tournament Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#e5eeff",
+                    "primary": "#006c40",
+                    "on-tertiary-fixed-variant": "#7f272f",
+                    "primary-container": "#0b8852",
+                    "primary-fixed-dim": "#72db9d",
+                    "tertiary": "#9e3e44",
+                    "primary-fixed": "#8ef8b7",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#0b1c30",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#d8e3fb",
+                    "surface-tint": "#006d40",
+                    "on-surface": "#0b1c30",
+                    "inverse-primary": "#72db9d",
+                    "tertiary-fixed-dim": "#ffb3b3",
+                    "outline": "#6e7a70",
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-secondary-fixed": "#111c2d",
+                    "surface-bright": "#f8f9ff",
+                    "on-primary-fixed": "#002110",
+                    "surface-container-high": "#dce9ff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#586377",
+                    "on-tertiary-fixed": "#40000a",
+                    "surface-container-low": "#eff4ff",
+                    "on-surface-variant": "#3e4a41",
+                    "surface": "#f8f9ff",
+                    "tertiary-fixed": "#ffdad9",
+                    "secondary": "#545f73",
+                    "tertiary-container": "#bd565b",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#ffffff",
+                    "secondary-container": "#d5e0f8",
+                    "surface-container-highest": "#d3e4fe",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-variant": "#d3e4fe",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#ffffff",
+                    "on-primary-fixed-variant": "#00522f",
+                    "inverse-surface": "#213145",
+                    "background": "#f8f9ff",
+                    "outline-variant": "#bdcabe",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#cbdbf5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "40px",
+                    "section-gap-lg": "120px",
+                    "container-max": "1280px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "section-gap-md": "80px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Poppins"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "body-sm": ["Be Vietnam Pro"],
+                    "headline-sm": ["Poppins"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "headline-md": ["Poppins"],
+                    "display-lg-mobile": ["Poppins"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .premium-shadow { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02); }
+        .glass-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(12px); }
+        .active-nav { border-bottom: 2px solid #006c40; padding-bottom: 4px; }
+        .section-padding { padding-top: 120px; padding-bottom: 120px; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm h-20">
+<div class="flex justify-between items-center max-w-[1280px] mx-auto px-10 h-full">
+<div class="font-display-lg text-headline-md font-bold text-primary">SmartSportz.in</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Tournaments</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Live Scores</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Results</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Leaderboards</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Sports</a>
+</div>
+<div class="flex gap-4 items-center">
+<button class="text-on-surface-variant font-label-md text-label-md hover:text-primary transition-colors">Login</button>
+<button class="bg-primary text-on-primary px-6 py-2.5 rounded-lg font-label-md text-label-md font-bold hover:bg-primary-container transition-all active:scale-95 duration-150">Register</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative min-h-[921px] flex items-center pt-20 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent z-10"></div>
+<div class="w-full h-full" data-alt="A cinematic, low-angle shot of a grand Indian cricket stadium at dusk, with powerful floodlights casting a dramatic glow over the pristine green pitch. The atmosphere is electric, filled with a soft atmospheric haze and a modern, high-fidelity aesthetic. The color palette features deep emerald greens, crisp whites, and sophisticated shadows, perfectly aligned with a premium sports tech brand." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDmtVJt5JrPzI3zjBGPdtZGXbDdGnQR0weCs4XW7_hHlWi3X1-L_GkRJiQ7zQBpkiXqtIDHRL411jM71IBtHmZgZkDnWIFWiu91_yviT0MODiDm5xW3F07GgSJ64hS2LDKqxXbHXmpXOLlwY2ei3NTW_4XGZ2qXmLWz8rltCRoQcgT9u2PQaTUunPNqEknQPWqgoRps2ooE2ypA-6lV5UhTUFBmWB4wID30JK7qFUrVnmqoRytl5bXeo9CxDbVP6ROfp5vZbpUY0ITs')"></div>
+</div>
+<div class="relative z-20 max-w-[1280px] mx-auto px-10 w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+<div class="space-y-8 animate-fade-in-up">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-container/10 text-primary font-label-sm text-label-sm border border-primary-container/20">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+                    The New Standard in Sports Tech
+                </div>
+<h1 class="font-display-lg text-display-lg text-on-background leading-tight">
+                    Elevate Your <span class="text-primary">Tournament Management</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg">
+                    A high-fidelity platform designed for elite athletic organizations to streamline operations, engage fans, and scale championships with surgical precision.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-lg font-label-md text-label-md font-bold shadow-lg hover:bg-primary-container hover:-translate-y-0.5 transition-all">Get Started</button>
+<button class="bg-surface-container-low text-primary border border-outline-variant px-8 py-4 rounded-lg font-label-md text-label-md font-bold hover:bg-surface-container transition-all flex items-center gap-2">
+<span class="material-symbols-outlined">play_circle</span>
+                        Watch Demo
+                    </button>
+</div>
+<div class="flex items-center gap-6 pt-4 grayscale opacity-60">
+<div class="w-24 h-8 bg-on-surface-variant/20 rounded"></div>
+<div class="w-24 h-8 bg-on-surface-variant/20 rounded"></div>
+<div class="w-24 h-8 bg-on-surface-variant/20 rounded"></div>
+</div>
+</div>
+<div class="hidden md:block relative">
+<!-- Floating Metric Tiles -->
+<div class="absolute -top-10 -left-10 glass-card premium-shadow p-6 rounded-2xl animate-bounce-slow">
+<div class="text-primary font-display-lg text-headline-sm">99.9%</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Uptime Reliability</div>
+</div>
+<div class="absolute -bottom-10 -right-4 glass-card premium-shadow p-6 rounded-2xl">
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-weight="fill">trophy</span>
+</div>
+<div>
+<div class="font-display-lg text-headline-sm">2.4k+</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">Tournaments Hosted</div>
+</div>
+</div>
+</div>
+<!-- Main Dashboard Preview -->
+<div class="rounded-2xl overflow-hidden premium-shadow bg-surface border border-outline-variant/30">
+<div class="w-full aspect-[4/3]" data-alt="A clean, minimalist UI dashboard preview showing professional cricket statistics, including batting averages, run rates, and a live tournament bracket. The interface uses a crisp white background with emerald green accents, soft ambient shadows, and refined Be Vietnam Pro typography. The aesthetic is high-tech and professional, mimicking elite sports analytics software." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBLdvzbTePlQdGmt8BaGw5WMky26cgskdXv5SuQbOhTnRgIl2khV7cYARQJEtNrweW-9cEgySMty-acemVV4m9Z4KC9JE0TBPdzwRiJ3yQ0hNlLtPP7IpHAzmYSvRJFiPt5fVk9YxvliOsB2tkQ8M1ObtMGpacbcKWzRKGfjBwYnoMfPLsQicWAAYxzL1RpQzHegurfAjOI7UgHCpKbSyusim9GAZ1iLfSnJQ8-N24P5NXfZWk7nQsGd5tMg80uoShm5J_ZgbTwMLd-')"></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Trusted By Section -->
+<section class="py-20 bg-surface-container-lowest border-y border-outline-variant/20">
+<div class="max-w-[1280px] mx-auto px-10">
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant uppercase tracking-[0.2em] mb-12">Trusted by Global Sports Leaders</p>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-12 items-center opacity-40 hover:opacity-100 transition-opacity duration-500">
+<div class="h-10 w-full flex justify-center items-center">
+<span class="font-bold text-xl text-on-surface-variant">INDCRICKET</span>
+</div>
+<div class="h-10 w-full flex justify-center items-center">
+<span class="font-bold text-xl text-on-surface-variant">ELITE_FED</span>
+</div>
+<div class="h-10 w-full flex justify-center items-center">
+<span class="font-bold text-xl text-on-surface-variant">STATE_LEAGUE</span>
+</div>
+<div class="h-10 w-full flex justify-center items-center">
+<span class="font-bold text-xl text-on-surface-variant">PRO_SERIES</span>
+</div>
+<div class="h-10 w-full flex justify-center items-center">
+<span class="font-bold text-xl text-on-surface-variant">CHAMP_ZONE</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="section-padding max-w-[1280px] mx-auto px-10">
+<div class="text-center max-w-3xl mx-auto mb-20">
+<h2 class="font-display-lg text-headline-md mb-6">Designed for Every Competitive Edge</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Everything you need to orchestrate world-class tournaments from a single, intuitive command center.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Live Scoring Card -->
+<div class="bg-surface p-10 rounded-[18px] premium-shadow border border-outline-variant/10 hover:-translate-y-2 transition-all duration-300 group">
+<div class="h-14 w-14 rounded-xl bg-primary-container/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary transition-colors" style="font-size: 32px;">sensors</span>
+</div>
+<h3 class="font-display-lg text-headline-sm mb-4">Live Scoring</h3>
+<p class="text-on-surface-variant mb-6 leading-relaxed">Broadcast real-time match data to millions with sub-second latency. Professional-grade ball-by-ball updates.</p>
+<a class="text-primary font-bold inline-flex items-center gap-2 hover:gap-4 transition-all" href="#">
+                    Explore Engine <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<!-- Player Stats Card -->
+<div class="bg-surface p-10 rounded-[18px] premium-shadow border border-outline-variant/10 hover:-translate-y-2 transition-all duration-300 group">
+<div class="h-14 w-14 rounded-xl bg-primary-container/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary transition-colors" style="font-size: 32px;">analytics</span>
+</div>
+<h3 class="font-display-lg text-headline-sm mb-4">Player Stats</h3>
+<p class="text-on-surface-variant mb-6 leading-relaxed">Deep-dive into performance metrics. Automated profile building and historical data tracking for every athlete.</p>
+<a class="text-primary font-bold inline-flex items-center gap-2 hover:gap-4 transition-all" href="#">
+                    View Analytics <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<!-- Automated Scheduling Card -->
+<div class="bg-surface p-10 rounded-[18px] premium-shadow border border-outline-variant/10 hover:-translate-y-2 transition-all duration-300 group">
+<div class="h-14 w-14 rounded-xl bg-primary-container/10 flex items-center justify-center mb-8 group-hover:bg-primary transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-on-primary transition-colors" style="font-size: 32px;">calendar_month</span>
+</div>
+<h3 class="font-display-lg text-headline-sm mb-4">Automated Scheduling</h3>
+<p class="text-on-surface-variant mb-6 leading-relaxed">Optimize venues and time-slots with our AI-driven scheduler. Resolve conflicts instantly with drag-and-drop ease.</p>
+<a class="text-primary font-bold inline-flex items-center gap-2 hover:gap-4 transition-all" href="#">
+                    Learn Process <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Live Preview Section (Bento Style) -->
+<section class="section-padding bg-surface-container-low overflow-hidden">
+<div class="max-w-[1280px] mx-auto px-10">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+<div class="lg:col-span-4 flex flex-col justify-center space-y-8">
+<h2 class="font-display-lg text-headline-md">Real-Time Control</h2>
+<p class="font-body-md text-on-surface-variant">Experience a command center that works as fast as the game itself. From instant results to dynamic leaderboards, control the pulse of your league.</p>
+<ul class="space-y-4">
+<li class="flex items-center gap-3 font-label-md text-on-background">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            One-Click Result Processing
+                        </li>
+<li class="flex items-center gap-3 font-label-md text-on-background">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            Live PDF Certificate Generation
+                        </li>
+<li class="flex items-center gap-3 font-label-md text-on-background">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                            Multi-Venue Syncing
+                        </li>
+</ul>
+</div>
+<div class="lg:col-span-8">
+<div class="grid grid-cols-2 gap-4 h-[500px]">
+<div class="bg-surface rounded-2xl premium-shadow overflow-hidden p-6 border border-outline-variant/30">
+<div class="flex justify-between items-center mb-6">
+<span class="font-label-md text-primary">LIVE STATS</span>
+<div class="bg-error/10 text-error px-2 py-0.5 rounded text-[10px] font-bold">LIVE</div>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3 bg-surface-container-low p-3 rounded-xl">
+<div class="h-10 w-10 rounded-full bg-primary-fixed"></div>
+<div class="flex-1">
+<div class="h-2 w-24 bg-on-surface-variant/20 rounded"></div>
+<div class="h-1.5 w-16 bg-on-surface-variant/10 rounded mt-1"></div>
+</div>
+<div class="font-bold text-primary">84*</div>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-xl border border-outline-variant/10">
+<div class="h-10 w-10 rounded-full bg-secondary-fixed"></div>
+<div class="flex-1">
+<div class="h-2 w-20 bg-on-surface-variant/20 rounded"></div>
+<div class="h-1.5 w-12 bg-on-surface-variant/10 rounded mt-1"></div>
+</div>
+<div class="font-bold text-on-surface-variant">22</div>
+</div>
+<div class="pt-4 h-full">
+<div class="w-full h-32 rounded-lg" data-alt="A sophisticated data visualization chart showing real-time player performance fluctuations over a cricket match. The chart uses high-contrast emerald green lines against a clean, light-mode background with soft gray grid lines. The visual style is inspired by modern financial tech dashboards, emphasizing accuracy and clarity." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA4mL_jt7HMKCVXLhzEwoxwoOOBQzSj3kJ4PfKwrKxAhw8Shvb0wj3b9kJ_1LP8cX7rapRrf2CIf256oXk3Imc-CUFRPKgSxqfVxxo3QR_bCGw5tYydOq8hLnrKAzZC2jQd6S6MyebRLNb9IYbfBJbpU2j_guibBMwP4IcceIqVHuTp4D2AACx4irMNp58IUyGLN0KbfBFs-CVt4RRqPNfo3PAPDj_cVJFMHXD4OCxQpyxT6AxL9RQSR-Fxisuy6mkmdMot6aEkMY9D')"></div>
+</div>
+</div>
+</div>
+<div class="space-y-4 h-full">
+<div class="h-[calc(50%-8px)] bg-primary text-on-primary rounded-2xl p-6 relative overflow-hidden">
+<div class="relative z-10">
+<span class="font-label-sm text-on-primary/70 uppercase">Tournament Reach</span>
+<div class="text-3xl font-display-lg mt-2">1.2M+</div>
+<p class="text-on-primary/80 font-label-sm mt-1">Active Viewers</p>
+</div>
+<div class="absolute right-[-20px] bottom-[-20px] opacity-10">
+<span class="material-symbols-outlined text-[120px]">public</span>
+</div>
+</div>
+<div class="h-[calc(50%-8px)] bg-surface rounded-2xl p-6 premium-shadow border border-outline-variant/30">
+<span class="font-label-sm text-on-surface-variant uppercase">Recent Awards</span>
+<div class="mt-4 space-y-3">
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-tertiary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-sm">stars</span>
+</div>
+<span class="font-label-sm">Top Sports Tech '24</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-full bg-primary-fixed flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">security</span>
+</div>
+<span class="font-label-sm">ISO Certified Secure</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="section-padding">
+<div class="max-w-[1280px] mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="relative bg-primary rounded-[32px] overflow-hidden p-12 md:p-24 text-center">
+<div class="absolute top-0 right-0 p-8 opacity-10 scale-150 rotate-12">
+<span class="material-symbols-outlined text-[300px] text-on-primary">sports_cricket</span>
+</div>
+<div class="relative z-10 max-w-2xl mx-auto space-y-8">
+<h2 class="font-display-lg text-headline-md md:text-display-lg text-on-primary">Join the Elite Organizations Already Winning.</h2>
+<p class="text-on-primary/80 text-body-lg">Scale your tournament from local grounds to global stages with SmartSportz.in.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+<button class="bg-on-primary text-primary px-12 py-5 rounded-xl font-label-md text-label-md font-extrabold hover:bg-primary-fixed transition-all shadow-xl">Get Started Now</button>
+<button class="bg-transparent border-2 border-on-primary text-on-primary px-12 py-5 rounded-xl font-label-md text-label-md font-extrabold hover:bg-on-primary/10 transition-all">Schedule a Consult</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-lowest border-t border-outline-variant/30">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-[1280px] mx-auto px-10 py-20">
+<div class="space-y-6">
+<div class="font-display-lg text-headline-md font-bold text-primary">SmartSportz.in</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-xs">The ultimate tournament orchestration platform for modern sports federations and leagues.</p>
+</div>
+<div>
+<h4 class="font-label-md text-on-background uppercase tracking-widest mb-6">Product</h4>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Tournaments</a></li>
+<li><a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Live Scores</a></li>
+<li><a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Leaderboards</a></li>
+<li><a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Teams</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-on-background uppercase tracking-widest mb-6">Company</h4>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Blogs</a></li>
+<li><a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Sponsors</a></li>
+<li><a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Contact</a></li>
+<li><a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-on-background uppercase tracking-widest mb-6">Community</h4>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Players</a></li>
+<li><a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">Gallery</a></li>
+<li><a class="text-on-surface-variant font-medium hover:text-primary transition-colors" href="#">FAQ</a></li>
+<li class="flex gap-4 pt-4">
+<div class="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary cursor-pointer hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-sm">share</span>
+</div>
+<div class="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary cursor-pointer hover:bg-primary hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-sm">mail</span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="border-t border-outline-variant/30 py-8">
+<div class="max-w-[1280px] mx-auto px-10 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 SmartSportz.in. All rights reserved.</p>
+<div class="flex gap-8">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors text-xs" href="#">Terms of Service</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors text-xs" href="#">Security</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Simple Intersection Observer for Reveal Animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('opacity-0', 'transition-opacity', 'duration-1000');
+        });
+
+        const revealOnScroll = () => {
+            document.querySelectorAll('section').forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top < window.innerHeight * 0.8) {
+                    section.classList.remove('opacity-0');
+                    section.classList.add('opacity-100');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+    </script>
+</body></html>

@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartSportz.in | Professional Leaderboards</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary": "#b9c7e4",
+                    "surface-container-low": "#191c1e",
+                    "primary": "#72db9d",
+                    "tertiary-fixed": "#d8e2ff",
+                    "error-container": "#93000a",
+                    "primary-fixed": "#8ef8b7",
+                    "secondary-fixed": "#d6e3ff",
+                    "primary-fixed-dim": "#72db9d",
+                    "tertiary-fixed-dim": "#b6c6ed",
+                    "on-surface": "#e0e3e5",
+                    "surface-tint": "#72db9d",
+                    "on-tertiary": "#20304f",
+                    "on-secondary-fixed-variant": "#39475f",
+                    "on-primary-fixed": "#002110",
+                    "on-secondary": "#233148",
+                    "background": "#101415",
+                    "on-primary-fixed-variant": "#00522f",
+                    "on-primary": "#00391f",
+                    "on-tertiary-fixed-variant": "#374767",
+                    "surface-container-high": "#272a2c",
+                    "outline-variant": "#3e4a41",
+                    "surface-container-lowest": "#0b0f10",
+                    "surface-dim": "#101415",
+                    "surface-container-highest": "#323537",
+                    "on-surface-variant": "#bdcabe",
+                    "tertiary": "#b6c6ed",
+                    "primary-container": "#0b8852",
+                    "on-error-container": "#ffdad6",
+                    "on-secondary-container": "#abb9d6",
+                    "secondary-container": "#3c4962",
+                    "on-error": "#690005",
+                    "inverse-primary": "#006d40",
+                    "tertiary-container": "#67779a",
+                    "error": "#ffb4ab",
+                    "surface-variant": "#323537",
+                    "on-secondary-fixed": "#0d1c32",
+                    "inverse-surface": "#e0e3e5",
+                    "surface-bright": "#363a3b",
+                    "inverse-on-surface": "#2d3133",
+                    "secondary-fixed-dim": "#b9c7e4",
+                    "surface-container": "#1d2022",
+                    "on-tertiary-container": "#000514",
+                    "surface": "#101415",
+                    "on-tertiary-fixed": "#091b39",
+                    "on-background": "#e0e3e5",
+                    "on-primary-container": "#ffffff",
+                    "outline": "#889489"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "brand": "18px"
+            },
+            "spacing": {
+                    "container-max": "1440px",
+                    "stack-sm": "8px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "stack-lg": "32px",
+                    "gutter": "24px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter", "sans-serif"],
+                    "stats-xl": ["Be Vietnam Pro", "sans-serif"],
+                    "headline-lg": ["Be Vietnam Pro", "sans-serif"],
+                    "display-lg": ["Be Vietnam Pro", "sans-serif"],
+                    "label-sm": ["JetBrains Mono", "monospace"],
+                    "title-md": ["Be Vietnam Pro", "sans-serif"],
+                    "headline-lg-mobile": ["Be Vietnam Pro", "sans-serif"],
+                    "body-lg": ["Inter", "sans-serif"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "stats-xl": ["40px", {"lineHeight": "40px", "fontWeight": "800"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "title-md": ["20px", {"lineHeight": "28px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #101415;
+            color: #e0e3e5;
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(25, 28, 30, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3e4a41;
+            border-radius: 10px;
+        }
+        .text-emerald-brand { color: #0b8852; }
+        .bg-emerald-brand { background-color: #0b8852; }
+        .border-emerald-brand { border-color: #0b8852; }
+    </style>
+</head>
+<body class="overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full py-stack-lg px-stack-md bg-surface-container-low border-r border-outline-variant w-64 flex flex-col hidden md:flex z-50">
+<div class="mb-10 px-4">
+<h1 class="font-headline-lg text-headline-lg text-primary font-bold">SmartSportz</h1>
+<p class="text-on-surface-variant font-body-md text-sm">Enterprise Tier</p>
+</div>
+<nav class="flex-1 space-y-2 overflow-y-auto custom-scrollbar px-2">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">dashboard</span>
+<span class="font-title-md text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-primary font-bold bg-secondary-container rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="font-title-md text-sm">Tournaments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">groups</span>
+<span class="font-title-md text-sm">Teams</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">person</span>
+<span class="font-title-md text-sm">Players</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">calendar_today</span>
+<span class="font-title-md text-sm">Schedules</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">analytics</span>
+<span class="font-title-md text-sm">Analytics</span>
+</a>
+</nav>
+<div class="mt-auto space-y-2 px-2 pt-6 border-t border-outline-variant">
+<button class="w-full bg-primary text-on-primary py-3 rounded-brand font-bold mb-4 hover:opacity-90 transition-opacity">
+                Upgrade Plan
+            </button>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-title-md text-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-variant rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-title-md text-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="md:ml-64 h-screen flex flex-col relative overflow-hidden bg-background">
+<!-- Top Navbar -->
+<header class="h-16 flex justify-between items-center px-margin-desktop w-full bg-background border-b border-outline-variant z-40 sticky top-0">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-full pl-10 pr-4 py-1.5 focus:ring-1 focus:ring-primary outline-none text-body-md" placeholder="Search team or player..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary">settings</span>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div class="flex gap-3">
+<button class="text-on-surface-variant font-body-md hover:text-primary">Login</button>
+<button class="bg-primary text-on-primary px-5 py-1.5 rounded-full font-bold text-sm">Register</button>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-margin-desktop pb-stack-lg">
+<!-- Header & Filters Section -->
+<section class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-stack-lg">
+<div>
+<h2 class="font-display-lg text-headline-lg text-on-surface">Tournament Leaderboards</h2>
+<p class="text-on-surface-variant font-body-lg">Mumbai Premier Bash - Season 2024</p>
+</div>
+<div class="flex flex-wrap gap-3">
+<button class="flex items-center gap-2 bg-surface-container-high border border-outline-variant px-4 py-2 rounded-brand text-on-surface hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-[20px]">share</span>
+<span class="font-body-md text-sm">Share</span>
+</button>
+<button class="flex items-center gap-2 bg-primary-container text-on-primary-container px-4 py-2 rounded-brand font-bold hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span class="font-body-md text-sm">Download PDF</span>
+</button>
+</div>
+</section>
+<!-- Sticky Filters -->
+<div class="sticky top-0 z-30 bg-background/80 backdrop-blur-md py-4 mb-stack-lg border-b border-outline-variant/30">
+<div class="flex flex-wrap items-center gap-4">
+<div class="flex flex-col gap-1">
+<label class="text-label-sm text-primary uppercase">Tournament</label>
+<select class="bg-surface-container border-none rounded-lg text-sm text-on-surface focus:ring-primary w-48">
+<option>Mumbai Premier Bash</option>
+<option>Delhi Super League</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm text-primary uppercase">Sport</label>
+<select class="bg-surface-container border-none rounded-lg text-sm text-on-surface focus:ring-primary w-32">
+<option>Cricket</option>
+<option>Football</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm text-primary uppercase">Season</label>
+<select class="bg-surface-container border-none rounded-lg text-sm text-on-surface focus:ring-primary w-24">
+<option>2024</option>
+<option>2023</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm text-primary uppercase">Category</label>
+<select class="bg-surface-container border-none rounded-lg text-sm text-on-surface focus:ring-primary w-40">
+<option>Men's Open</option>
+<option>U-19 Boys</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Winner Highlights (Top 3) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-stack-lg items-end">
+<!-- 2nd Place -->
+<div class="order-2 md:order-1 h-72 glass-card rounded-brand p-stack-md flex flex-col items-center justify-center relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-1 bg-secondary opacity-50"></div>
+<div class="w-24 h-24 rounded-full border-4 border-secondary/30 mb-4 p-1">
+<img class="w-full h-full object-cover rounded-full" data-alt="A professional team logo for the Mumbai Titans with a stylized silver glint and modern sports typography, high-performance athletic branding style against a dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmr6002P4qE1A2Xx7AMVhXc6q7AZXVyFtutqv7MKmJpkp3h6d88DaVsyqG97CsyNmCBbIxujKNG6JLVVxecGswDuSAD1zP02eXFf0Eoe9XDtI8lD0dmbO8_HqiwHZ_sGUFDKBCgCFwBoMwmqS0ip9l0s6nDuGXRRYI1mrVaVR4uQ1yRCcZVAtPwzU9uCSpDRLMuMLco89J8qGRMayWUYfc8Q2_5lcTB2RxKX0FUClsIwaf4m-fsRfl39DEffRR0XZeFmhRd7PoSW5W"/>
+</div>
+<div class="absolute top-4 right-4 text-secondary">
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<h3 class="font-title-md text-on-surface">Mumbai Titans</h3>
+<p class="text-secondary font-label-sm">2ND PLACE</p>
+<div class="mt-4 flex gap-4 text-center">
+<div>
+<p class="text-label-sm text-on-surface-variant">PTS</p>
+<p class="font-stats-xl text-lg">154</p>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div>
+<p class="text-label-sm text-on-surface-variant">NRR</p>
+<p class="font-stats-xl text-lg">+1.24</p>
+</div>
+</div>
+</div>
+<!-- 1st Place (Featured) -->
+<div class="order-1 md:order-2 h-80 bg-primary-container/10 border-2 border-primary rounded-brand p-stack-md flex flex-col items-center justify-center relative overflow-hidden shadow-2xl shadow-primary/20">
+<div class="absolute top-0 left-0 w-full h-2 bg-primary"></div>
+<div class="w-32 h-32 rounded-full border-4 border-primary p-1 mb-4">
+<img class="w-full h-full object-cover rounded-full" data-alt="A dynamic action shot of a champion athlete in a gold-accented cricket jersey, celebratory lighting, professional sports photography style, cinematic stadium atmosphere, emerald green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuOWZ6u23VEDBFndbDcZgRmwJCPhAqmyBsPWyYE9lXqZMJXlZxz7_cdpC8n_u6PeVk__gnQIhesgjKpZQClgWQ0RR2KU0cxHiu4IAgoy_J1f4l1booWgweJMPfXTCpY565Xi-FmgsPYls2yIyUW5PSRdw-HN1nS9nOzoc42BB7rswcwGCh2Nf2oCJ6NP_4umwzeOPs3BdDoi1bd0kZbMG7HlXDWp4ubsfF5BWy_pKHtWli7ZnszfLN0KP9bJIRtk59gm60nX5K2miQ"/>
+</div>
+<div class="absolute top-6 right-6 text-primary">
+<span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<h3 class="font-headline-lg text-2xl text-on-surface">Bangalore Bulls</h3>
+<p class="text-primary font-bold tracking-widest text-sm">CHAMPIONS</p>
+<div class="mt-4 flex gap-6 text-center">
+<div>
+<p class="text-label-sm text-primary">PTS</p>
+<p class="font-stats-xl text-2xl">182</p>
+</div>
+<div class="h-10 w-[1px] bg-primary/30"></div>
+<div>
+<p class="text-label-sm text-primary">NRR</p>
+<p class="font-stats-xl text-2xl">+2.15</p>
+</div>
+</div>
+</div>
+<!-- 3rd Place -->
+<div class="order-3 md:order-3 h-64 glass-card rounded-brand p-stack-md flex flex-col items-center justify-center relative overflow-hidden">
+<div class="absolute top-0 left-0 w-full h-1 bg-tertiary-container opacity-50"></div>
+<div class="w-20 h-20 rounded-full border-4 border-tertiary-container/30 mb-4 p-1">
+<img class="w-full h-full object-cover rounded-full" data-alt="A stylized logo for the Delhi Dragons sports team featuring deep navy and bronze tones, high-end professional sports management visual identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsAGriiqTxi8FDXdSIdQP1WecA-8yv03VLhXlnsCx8C0lkQiPUA3r8IB-DbwqUvUDJGJy3bngRJHJp8n0cSagAzS6ABm58gdyYAddfiVGzssDlpCZ3CCTuY_2fsO-uVHYOFfYOyI3cBS_FnlpazWcHQ4gq6EnIvO4h_MrnppCVg7mRdwHp5a7vxtniv8Hzs8pIP883kytQvOidb3S8C4cfvrHRfrLA3FSayIqONmfXFB5n7IbRcVpVZo_yAhAqhTDPj0vo7Q6qOJG8"/>
+</div>
+<div class="absolute top-4 right-4 text-tertiary">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+<h3 class="font-title-md text-on-surface">Delhi Dragons</h3>
+<p class="text-tertiary font-label-sm">3RD PLACE</p>
+<div class="mt-3 flex gap-4 text-center">
+<div>
+<p class="text-label-sm text-on-surface-variant">PTS</p>
+<p class="font-stats-xl text-base">142</p>
+</div>
+<div class="h-6 w-[1px] bg-outline-variant"></div>
+<div>
+<p class="text-label-sm text-on-surface-variant">NRR</p>
+<p class="font-stats-xl text-base">+0.85</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Main Data Bento Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-gutter mb-stack-lg">
+<!-- Detailed Points Table (3 Cols) -->
+<div class="lg:col-span-3 glass-card rounded-brand overflow-hidden flex flex-col">
+<div class="px-stack-md py-4 border-b border-outline-variant flex justify-between items-center">
+<h3 class="font-title-md text-on-surface">Full Standings</h3>
+<div class="flex gap-2">
+<span class="w-3 h-3 rounded-full bg-primary/20 border border-primary"></span>
+<span class="text-label-sm text-on-surface-variant">Playoffs Qualification Zone</span>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50 text-label-sm text-primary uppercase tracking-widest">
+<th class="px-6 py-4">Rank</th>
+<th class="px-6 py-4">Team</th>
+<th class="px-6 py-4 text-center">P</th>
+<th class="px-6 py-4 text-center">W</th>
+<th class="px-6 py-4 text-center">L</th>
+<th class="px-6 py-4 text-center">NRR</th>
+<th class="px-6 py-4 text-right">PTS</th>
+</tr>
+</thead>
+<tbody class="text-body-md">
+<tr class="border-b border-outline-variant/30 hover:bg-surface-variant/20 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="font-stats-xl text-base text-primary">04</span>
+<span class="material-symbols-outlined text-primary text-sm">north</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<img class="w-8 h-8 object-contain" data-alt="A clean, minimalist sport logo for Chennai Chargers featuring sharp lightning bolt motifs in high-contrast neon green and dark navy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD45zwgEI2QTCxmEykfb4aB-lG6dGbtJy-EvjwTG5dqJa6FznbWtJyaq5PT0-cU12AgGksJc4-raMWJhziQwBNa8hxMUMv_pzIUGommFsF4gVwwCCCP_gCPwCroJfWYjLUz9-5NqL4dRQ0Wx6gc5jx2vUSfHfjt1NhNJJCMiwCaYlwOntWL-BovUpDnrL5-bnhwwL-k3UUZY9vCBh_JcFx0gGTBitCiDgaPqJeHJ-MlG8SwxyCuQmZ08Wqun8IdHfr1Vi1YpZCOiZEN"/>
+</div>
+<span class="font-title-md text-sm text-on-surface">Chennai Chargers</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-label-sm">14</td>
+<td class="px-6 py-4 text-center font-label-sm">8</td>
+<td class="px-6 py-4 text-center font-label-sm">6</td>
+<td class="px-6 py-4 text-center font-label-sm text-primary">+0.425</td>
+<td class="px-6 py-4 text-right font-stats-xl text-base">16</td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-variant/20 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="font-stats-xl text-base text-on-surface">05</span>
+<span class="material-symbols-outlined text-error text-sm">south</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<img class="w-8 h-8 object-contain" data-alt="Professional sports logo of Rajasthan Royals, modern sleek redesign with pink and blue accent colors, high-end professional league branding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT0_ok6NeToEKIqnxIGUAASrPmB1g6nMMpuMUhEQG7OSN0RzOWaIC0XSAhSms2E4AsqlFMC2IeDYYnEwnVZo7UaPU_zmO092yv2vo4szIo7nboEedBcqHWdTUdODlLu_5OLQ0C4t7N8cAPQ0wB4GbiFlXqxZgH3B9s1NpaNDmhOAKFgAqhoJOg1IbiUFSnNQUSsW_tLkMUn0Myj058yqtle3-VsLw2-VqIxoR7tzwTBko-8UlvT8JiZT9rH4RxbcU7iUyLQPAhfsQp"/>
+</div>
+<span class="font-title-md text-sm text-on-surface">Rajasthan Royals</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-label-sm">14</td>
+<td class="px-6 py-4 text-center font-label-sm">7</td>
+<td class="px-6 py-4 text-center font-label-sm">7</td>
+<td class="px-6 py-4 text-center font-label-sm text-error">-0.112</td>
+<td class="px-6 py-4 text-right font-stats-xl text-base">14</td>
+</tr>
+<tr class="border-b border-outline-variant/30 hover:bg-surface-variant/20 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<span class="font-stats-xl text-base text-on-surface">06</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">remove</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center">
+<img class="w-8 h-8 object-contain" data-alt="Sports logo for Kolkata Knights, high-detail shield design with gold and purple colors, professional esport or professional league aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsFwrJVPYvtgbh7tcgjVrKFpUGogh_GdcehBgmgypeCDd3-IzkaraiXKmdIedFxVZHZ5REVGJvYqUtfRkl6EOF3VtmsvnVQjBJAq7uacqcbTxbMvYfx3GnQdQ6tF6qp3MSFVvH6vHy5TzKKiGPVTgafFgwWH2JJZRHhDGuXp2PsGS5hf_jwor8GBJcRVtA6BVkD4vp9_CdDPBAfW1CW1oz8Ud5b2N7QYiAxOS8EOZUFIOOybU7FI0LZMRU75a6_Wx1cclw4u0g3PhN"/>
+</div>
+<span class="font-title-md text-sm text-on-surface">Kolkata Knights</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center font-label-sm">14</td>
+<td class="px-6 py-4 text-center font-label-sm">6</td>
+<td class="px-6 py-4 text-center font-label-sm">8</td>
+<td class="px-6 py-4 text-center font-label-sm text-error">-0.450</td>
+<td class="px-6 py-4 text-right font-stats-xl text-base">12</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-auto p-4 flex justify-center">
+<button class="text-primary font-bold text-sm flex items-center gap-2 hover:underline">
+                            View All 12 Teams
+                            <span class="material-symbols-outlined">expand_more</span>
+</button>
+</div>
+</div>
+<!-- MVP & Side Stats (1 Col) -->
+<div class="flex flex-col gap-gutter">
+<!-- MVP Card -->
+<div class="glass-card rounded-brand p-stack-md flex flex-col flex-1 border-emerald-brand/30 border-2">
+<div class="flex justify-between items-start mb-6">
+<span class="bg-primary/20 text-primary px-3 py-1 rounded-full text-xs font-bold">MVP 2024</span>
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 rounded-brand overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close-up professional portrait of a male cricket player, intense focus, athletic sweat, high-contrast studio lighting with green rim light, professional sports profile aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAzQ83a2YLXDsE6PnnnktQByDgR28bcsVHNH5qJ0tViO2G6obplhWHbk-xg43PJyZ7IBuavz_ilD864QRQY1d3UsEK_Ob8WZYZ7HxNhMU2DKEyfuuqW0S8m0NyjrFM8XsvmBrYTLz7wtvH_anSYrXgc2OUE6ejqMSeHu66sEpCEGZP34CjEdqsjP_USzLa8qd9G4Q_CBaojWConHheEQNCjn4y5ncUKzTxMBJCfKa4GACzerM3hLYa6WYcY_eZB89nqig3C12ybeuL"/>
+</div>
+<div>
+<h4 class="font-title-md text-on-surface leading-tight">Rohit Sharma</h4>
+<p class="text-on-surface-variant text-sm">Mumbai Titans</p>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-end border-b border-outline-variant pb-2">
+<span class="text-on-surface-variant text-sm">Total Runs</span>
+<span class="font-stats-xl text-xl text-primary">648</span>
+</div>
+<div class="flex justify-between items-end border-b border-outline-variant pb-2">
+<span class="text-on-surface-variant text-sm">Strike Rate</span>
+<span class="font-stats-xl text-xl">154.2</span>
+</div>
+<div class="flex justify-between items-end">
+<span class="text-on-surface-variant text-sm">Matches Played</span>
+<span class="font-stats-xl text-xl">14</span>
+</div>
+</div>
+<button class="mt-auto w-full py-3 border border-primary text-primary rounded-brand font-bold text-sm hover:bg-primary/10 transition-colors">
+                            Full Performance Report
+                        </button>
+</div>
+<!-- Honors Mini Card -->
+<div class="glass-card rounded-brand p-stack-md flex flex-col gap-4">
+<h4 class="font-title-md text-sm uppercase tracking-widest text-primary">Top Performers</h4>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">sports_cricket</span>
+<div class="flex-1">
+<p class="text-xs text-on-surface-variant">Purple Cap (Wickets)</p>
+<p class="font-bold text-sm">Jasprit Bumrah (24)</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">rocket_launch</span>
+<div class="flex-1">
+<p class="text-xs text-on-surface-variant">Fastest Century</p>
+<p class="font-bold text-sm">Surya Kumar (42 balls)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Performance Gauges Section -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="glass-card rounded-brand p-stack-md flex items-center gap-4">
+<div class="w-12 h-12 rounded-full border-4 border-primary/20 flex items-center justify-center relative">
+<svg class="absolute inset-0 w-full h-full -rotate-90">
+<circle class="text-primary" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-dasharray="125" stroke-dashoffset="30" stroke-width="4"></circle>
+</svg>
+<span class="text-[10px] font-bold">78%</span>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant uppercase">Win Rate</p>
+<p class="font-title-md text-lg">Overall League</p>
+</div>
+</div>
+<div class="glass-card rounded-brand p-stack-md flex items-center gap-4">
+<div class="w-12 h-12 rounded-full border-4 border-error/20 flex items-center justify-center relative">
+<svg class="absolute inset-0 w-full h-full -rotate-90">
+<circle class="text-error" cx="24" cy="24" fill="transparent" r="20" stroke="currentColor" stroke-dasharray="125" stroke-dashoffset="80" stroke-width="4"></circle>
+</svg>
+<span class="text-[10px] font-bold">32%</span>
+</div>
+<div>
+<p class="text-xs text-on-surface-variant uppercase">Upset Rate</p>
+<p class="font-title-md text-lg">T20 Bracket</p>
+</div>
+</div>
+<div class="glass-card rounded-brand p-stack-md flex items-center gap-4">
+<span class="material-symbols-outlined text-4xl text-primary/40">groups_3</span>
+<div>
+<p class="text-xs text-on-surface-variant uppercase">Athletes</p>
+<p class="font-title-md text-lg">240 Registered</p>
+</div>
+</div>
+<div class="glass-card rounded-brand p-stack-md flex items-center gap-4">
+<span class="material-symbols-outlined text-4xl text-primary/40">stadium</span>
+<div>
+<p class="text-xs text-on-surface-variant uppercase">Venues</p>
+<p class="font-title-md text-lg">8 Active Stadia</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Sticky Footer -->
+<footer class="mt-auto flex flex-col md:flex-row justify-between items-center px-margin-desktop py-stack-md w-full bg-surface-container-lowest border-t border-outline-variant z-40">
+<div class="mb-4 md:mb-0">
+<p class="font-title-md text-sm text-on-surface">SmartSportz.in</p>
+<p class="text-on-surface-variant text-xs">© 2024 ProSeries India Sports Management. All rights reserved.</p>
+</div>
+<div class="flex gap-6">
+<a class="text-on-surface-variant text-xs hover:text-primary transition-colors" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant text-xs hover:text-primary transition-colors" href="#">Terms of Service</a>
+<a class="text-on-surface-variant text-xs hover:text-primary transition-colors" href="#">Cookie Policy</a>
+<a class="text-on-surface-variant text-xs hover:text-primary transition-colors" href="#">Contact Us</a>
+</div>
+</footer>
+<!-- Floating Action Button (FAB) -->
+<button class="fixed bottom-24 right-10 bg-primary text-on-primary w-14 h-14 rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all z-50">
+<span class="material-symbols-outlined text-2xl">add</span>
+</button>
+</main>
+<script>
+        // Lightweight micro-interaction for hover states on rows
+        document.querySelectorAll('tbody tr').forEach(row => {
+            row.addEventListener('mouseenter', () => {
+                row.style.transform = 'translateX(4px)';
+            });
+            row.addEventListener('mouseleave', () => {
+                row.style.transform = 'translateX(0)';
+            });
+        });
+        
+        // Simple animation for the progress circles on load
+        window.addEventListener('load', () => {
+            const circles = document.querySelectorAll('circle');
+            circles.forEach(circle => {
+                const dash = circle.getAttribute('stroke-dashoffset');
+                circle.style.strokeDashoffset = '125';
+                setTimeout(() => {
+                    circle.style.transition = 'stroke-dashoffset 1s ease-out';
+                    circle.style.strokeDashoffset = dash;
+                }, 100);
+            });
+        });
+    </script>
+</body></html>

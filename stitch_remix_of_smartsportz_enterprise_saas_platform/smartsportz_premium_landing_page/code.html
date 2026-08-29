@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartSportz.in | India's Smart Tournament Management Platform</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Load Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-secondary-fixed-variant": "#404758",
+                "on-primary-fixed-variant": "#00522f",
+                "error-container": "#ffdad6",
+                "on-tertiary": "#ffffff",
+                "surface-container-highest": "#e0e3e5",
+                "on-tertiary-fixed-variant": "#00522e",
+                "on-primary-fixed": "#002110",
+                "on-secondary-fixed": "#141b2b",
+                "inverse-on-surface": "#eff1f3",
+                "outline-variant": "#bdcabe",
+                "error": "#ba1a1a",
+                "deep-navy": "#081C3A",
+                "secondary-fixed-dim": "#c0c6db",
+                "tertiary-fixed-dim": "#52df91",
+                "on-tertiary-fixed": "#00210f",
+                "tertiary": "#006c3e",
+                "primary-container": "#0b8852",
+                "on-secondary": "#ffffff",
+                "on-secondary-container": "#5c6274",
+                "inverse-primary": "#72db9d",
+                "accent-cyan": "#00D4FF",
+                "surface-tint": "#006d40",
+                "text-secondary": "#4B5563",
+                "primary-fixed": "#8ef8b7",
+                "inverse-surface": "#2d3133",
+                "text-primary": "#111827",
+                "surface": "#f7f9fb",
+                "surface-container-lowest": "#ffffff",
+                "on-primary": "#ffffff",
+                "on-tertiary-container": "#ffffff",
+                "outline": "#6e7a70",
+                "background": "#f7f9fb",
+                "surface-container-low": "#f2f4f6",
+                "on-primary-container": "#ffffff",
+                "border-subtle": "#E2E8F0",
+                "tertiary-fixed": "#72fcab",
+                "primary": "#006c40",
+                "secondary-fixed": "#dce2f7",
+                "surface-dim": "#d8dadc",
+                "on-surface": "#191c1e",
+                "background-surface": "#FFFFFF",
+                "on-surface-variant": "#3e4a41",
+                "on-error": "#ffffff",
+                "surface-bright": "#f7f9fb",
+                "primary-fixed-dim": "#72db9d",
+                "on-error-container": "#93000a",
+                "surface-container": "#eceef0",
+                "tertiary-container": "#00884f",
+                "secondary": "#575e70",
+                "on-background": "#191c1e",
+                "surface-variant": "#e0e3e5",
+                "surface-container-high": "#e6e8ea",
+                "secondary-container": "#d9dff5"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "unit": "8px",
+                "section-gap": "80px",
+                "gutter": "24px",
+                "margin-desktop": "48px",
+                "container-max": "1440px"
+            },
+            "fontFamily": {
+                "body-lg": ["Poppins"],
+                "label-md": ["Poppins"],
+                "display-lg": ["Poppins"],
+                "body-md": ["Poppins"],
+                "title-lg": ["Poppins"],
+                "headline-md": ["Poppins"],
+                "headline-lg": ["Poppins"],
+                "caption": ["Poppins"]
+            },
+            "fontSize": {
+                "body-lg": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                "label-md": ["13px", {"lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-md": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                "title-lg": ["20px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .scrolling-wrapper {
+            display: flex;
+            width: fit-content;
+            animation: scroll 30s linear infinite;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+</head>
+<body class="bg-background font-body-lg text-text-primary selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-background-surface/80 backdrop-blur-md border-b border-border-subtle shadow-sm">
+<nav class="flex justify-between items-center px-margin-desktop py-4 max-w-container-max mx-auto h-20">
+<div class="font-display-lg text-headline-md font-bold text-deep-navy">SmartSportz.in</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary border-b-2 border-primary font-semibold font-body-lg text-body-lg" href="#">Home</a>
+<a class="text-secondary hover:text-primary transition-colors font-body-lg text-body-lg" href="#">Sports</a>
+<a class="text-secondary hover:text-primary transition-colors font-body-lg text-body-lg" href="#">Tournaments</a>
+<a class="text-secondary hover:text-primary transition-colors font-body-lg text-body-lg" href="#">Live Score</a>
+<a class="text-secondary hover:text-primary transition-colors font-body-lg text-body-lg" href="#">Results</a>
+<a class="text-secondary hover:text-primary transition-colors font-body-lg text-body-lg" href="#">Gallery</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2.5 rounded-lg border border-deep-navy text-deep-navy font-semibold hover:bg-surface-container-low transition-all">Login</button>
+<button class="px-6 py-2.5 rounded-lg bg-primary-container text-on-primary-container font-semibold shadow-sm active:scale-95 transition-all">Register</button>
+</div>
+</nav>
+</header>
+<main class="pt-20">
+<!-- Hero Section -->
+<section class="relative h-[870px] min-h-[700px] flex items-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-gradient-to-r from-deep-navy/90 via-deep-navy/60 to-transparent z-10"></div>
+<img class="w-full h-full object-cover" data-alt="A wide-angle, high-definition action photograph of a massive, modern sports stadium at twilight. In the foreground, dynamic Indian athletes—a football player mid-sprint, a cricketer striking a ball, and a basketball player jumping for a dunk—are captured in sharp focus. The lighting is cinematic, with stadium floodlights creating long shadows and a vibrant, professional energy. The overall aesthetic is premium and high-performance, dominated by deep navy blues and crisp white highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVTXetmIHCyTB42wZsqkjW_sjJwIPW-DLAjnUQ_kNrAgGSUdrU7G_MNNLLgbu-9GUMiq_fJO6iNS0ONjfDowFkgB53en0RPjIYQnPAYfbyeRAPCG6YkdpyhTAnOSqORiJfwFpRbrnPBr3lpMEl1eq9jwvnCBP0hzJQ83CX39ezx29Jemg2r9bFBvRDr-LGfRJUrq1npM5ot-uTTVyiRmmRYF5JQSxixcpwosrRKgunUT_wbMZbyh-5hzJsqAzTZc0s1NxPbpIZaEby"/>
+</div>
+<div class="relative z-20 max-w-container-max mx-auto px-margin-desktop w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+<div class="space-y-8 max-w-2xl">
+<span class="inline-block py-1.5 px-4 bg-primary-fixed/20 border border-primary-fixed/30 rounded-full text-primary-fixed text-label-md font-label-md uppercase tracking-wider">India's Leading Sports Tech</span>
+<h1 class="text-white font-display-lg text-[64px] leading-[1.1] font-extrabold tracking-tight">
+                        India's Smart Tournament <span class="text-primary-fixed">Management Platform</span>
+</h1>
+<p class="text-white/80 font-body-lg text-title-lg max-w-xl">
+                        Discover elite tournaments, register your team with ease, manage multi-sport events seamlessly, and track every point with real-time live scores.
+                    </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<button class="px-8 py-4 bg-primary-container text-on-primary-container rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-primary/20 transition-all active:scale-95">Explore Tournaments</button>
+<button class="px-8 py-4 border-2 border-white/30 text-white rounded-xl font-bold text-lg hover:bg-white/10 backdrop-blur-sm transition-all active:scale-95">Register Tournament</button>
+</div>
+</div>
+<!-- Floating Cards (Desktop only) -->
+<div class="hidden lg:flex flex-col gap-6 items-end relative">
+<div class="glass-card p-6 rounded-[24px] w-80 shadow-2xl animate-bounce-subtle" style="animation: float 6s ease-in-out infinite;">
+<div class="flex justify-between items-center mb-4">
+<span class="flex items-center gap-2 text-error font-bold text-xs uppercase tracking-widest">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span> Live Match
+                            </span>
+<span class="text-deep-navy/60 text-xs font-semibold">T20 Mumbai Cup</span>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-[10px] text-white font-bold">MI</div>
+<span class="font-bold text-deep-navy">Mumbai Ind</span>
+</div>
+<span class="font-black text-deep-navy">164/4 (18.2)</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-[10px] text-white font-bold">RCB</div>
+<span class="font-bold text-deep-navy">Royal Chall</span>
+</div>
+<span class="font-black text-deep-navy">Yet to Bat</span>
+</div>
+</div>
+</div>
+<div class="glass-card p-6 rounded-[24px] w-72 shadow-2xl mr-20" style="animation: float 8s ease-in-out infinite reverse;">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">trophy</span>
+<span class="font-bold text-deep-navy text-sm">New Registration</span>
+</div>
+<p class="text-deep-navy/80 text-xs leading-relaxed mb-4">Under-19 State Football Championship registrations are now open for all clubs.</p>
+<button class="w-full py-2 bg-deep-navy text-white rounded-lg text-xs font-bold">Apply Now</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Sports Categories Grid -->
+<section class="py-section-gap bg-surface">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-deep-navy mb-4">Discover Your Sport</h2>
+<p class="text-text-secondary max-w-2xl mx-auto">From professional championships to local club matches, we support over 15+ sports disciplines across India.</p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-6">
+<!-- Football -->
+<div class="group bg-background-surface p-6 rounded-xl border border-border-subtle hover:border-primary-container hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center cursor-pointer">
+<div class="w-12 h-12 bg-primary-fixed/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white">sports_soccer</span>
+</div>
+<span class="font-bold text-deep-navy text-sm">Football</span>
+</div>
+<!-- Cricket -->
+<div class="group bg-background-surface p-6 rounded-xl border border-border-subtle hover:border-primary-container hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center cursor-pointer">
+<div class="w-12 h-12 bg-primary-fixed/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white">sports_cricket</span>
+</div>
+<span class="font-bold text-deep-navy text-sm">Cricket</span>
+</div>
+<!-- Basketball -->
+<div class="group bg-background-surface p-6 rounded-xl border border-border-subtle hover:border-primary-container hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center cursor-pointer">
+<div class="w-12 h-12 bg-primary-fixed/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white">sports_basketball</span>
+</div>
+<span class="font-bold text-deep-navy text-sm">Basketball</span>
+</div>
+<!-- Badminton -->
+<div class="group bg-background-surface p-6 rounded-xl border border-border-subtle hover:border-primary-container hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center cursor-pointer">
+<div class="w-12 h-12 bg-primary-fixed/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white">badminton</span>
+</div>
+<span class="font-bold text-deep-navy text-sm">Badminton</span>
+</div>
+<!-- Volleyball -->
+<div class="group bg-background-surface p-6 rounded-xl border border-border-subtle hover:border-primary-container hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center cursor-pointer">
+<div class="w-12 h-12 bg-primary-fixed/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white">sports_volleyball</span>
+</div>
+<span class="font-bold text-deep-navy text-sm">Volleyball</span>
+</div>
+<!-- Hockey -->
+<div class="group bg-background-surface p-6 rounded-xl border border-border-subtle hover:border-primary-container hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center cursor-pointer">
+<div class="w-12 h-12 bg-primary-fixed/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white">sports_hockey</span>
+</div>
+<span class="font-bold text-deep-navy text-sm">Hockey</span>
+</div>
+<!-- Tennis -->
+<div class="group bg-background-surface p-6 rounded-xl border border-border-subtle hover:border-primary-container hover:shadow-xl hover:-translate-y-1 transition-all duration-300 text-center cursor-pointer">
+<div class="w-12 h-12 bg-primary-fixed/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white">sports_tennis</span>
+</div>
+<span class="font-bold text-deep-navy text-sm">Tennis</span>
+</div>
+</div>
+<div class="mt-8 flex justify-center flex-wrap gap-4">
+<span class="px-4 py-2 bg-surface-container rounded-full text-xs font-bold text-deep-navy">Table Tennis</span>
+<span class="px-4 py-2 bg-surface-container rounded-full text-xs font-bold text-deep-navy">Chess</span>
+<span class="px-4 py-2 bg-surface-container rounded-full text-xs font-bold text-deep-navy">Swimming</span>
+<span class="px-4 py-2 bg-surface-container rounded-full text-xs font-bold text-deep-navy">Archery</span>
+<span class="px-4 py-2 bg-surface-container rounded-full text-xs font-bold text-deep-navy">Go Karting</span>
+<span class="px-4 py-2 bg-surface-container rounded-full text-xs font-bold text-deep-navy">Pickleball</span>
+<span class="px-4 py-2 bg-surface-container rounded-full text-xs font-bold text-deep-navy">Skating</span>
+</div>
+</div>
+</section>
+<!-- Upcoming Tournaments -->
+<section class="py-section-gap bg-background-surface">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-deep-navy">Featured Tournaments</h2>
+<p class="text-text-secondary">Register your team before slots run out.</p>
+</div>
+<a class="text-primary font-bold flex items-center gap-2 group" href="#">
+                        View All Tournaments
+                        <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<!-- Tournament Card 1 -->
+<div class="group bg-white rounded-[18px] border border-border-subtle overflow-hidden hover:shadow-2xl transition-all duration-300">
+<div class="h-56 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A professional action shot of young football players in bright green jerseys competing on a lush green grass field under a clear blue sky. The photo is taken from a low angle, emphasizing the speed and athleticism of the game. The lighting is warm and natural afternoon sun, casting soft shadows. The overall feel is inspiring and professional, highlighting sports excellence in India." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvHiDGVVSGvjoO7AFFWzo09bRkQhisG14PJr_28tOcPvaYiAEneZlarM-4dpVKtDHCOkdnksK_BqJDZpwEFLVSNlmWVXuAHrfBjV3zePkFPsQP-KCVp0QpOzAXdFtAFDni-CCh_vHOI_U3X8se0WrlKX9I9mY-PMW1cAeLYgwEVn5C7viEplFaaH8W_A4ZgGC80LhAHSDTcIoZUsIRiklZ8BpsHJVVmYRih4seq6nRthuUF0p2Q68eblNtb9rOtlJBuDkAUfe5KLuJ"/>
+<div class="absolute top-4 left-4">
+<span class="bg-primary-container text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Open</span>
+</div>
+</div>
+<div class="p-6">
+<span class="text-primary font-bold text-xs mb-2 block">Football • U-21</span>
+<h3 class="font-headline-md text-title-lg text-deep-navy mb-4 group-hover:text-primary transition-colors">National Collegiate Cup 2024</h3>
+<div class="flex flex-col gap-3 mb-6">
+<div class="flex items-center gap-2 text-text-secondary text-sm">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+                                    Starts Oct 15, 2024
+                                </div>
+<div class="flex items-center gap-2 text-text-secondary text-sm">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                                    JL Nehru Stadium, New Delhi
+                                </div>
+</div>
+<button class="w-full py-3 bg-deep-navy text-white rounded-xl font-bold hover:bg-primary-container transition-colors">Register Now</button>
+</div>
+</div>
+<!-- Tournament Card 2 -->
+<div class="group bg-white rounded-[18px] border border-border-subtle overflow-hidden hover:shadow-2xl transition-all duration-300">
+<div class="h-56 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-intensity cricket match photograph capturing a batsman playing a classic cover drive. Dust is visible around the crease, and the stadium background is slightly blurred to focus on the athlete. The lighting is bright day-match style with vibrant colors and sharp contrasts. The image exudes a sense of premium competitive sportsmanship, aligned with the deep navy and green corporate aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL_AsiB9r2l9kctWrUtzuPIvmL9tSZnGS3QB1ZfoY0l7HT3qV76UxmoZluNYoJggBzAw7s5SZoMiSrqHzhOvt2ehk_Wuq88-aF539bBzEc4VyL1Ycitgquw_A5l3h6g_yjLrxRz22RRrwQBC4e2pugx7AqPZV5GNHB9uSDroNYIiA023o_k9QFbFlG_XU2hftCPh4S9RpWs8bmpvNqylIqhK9uXBb4lJES_qevoB-oATDkLG98XfCCMVAdWF5ZFQMe1FvYi6IOTzwF"/>
+<div class="absolute top-4 left-4">
+<span class="bg-tertiary text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Filling Fast</span>
+</div>
+</div>
+<div class="p-6">
+<span class="text-primary font-bold text-xs mb-2 block">Cricket • Open</span>
+<h3 class="font-headline-md text-title-lg text-deep-navy mb-4 group-hover:text-primary transition-colors">Corporate Premier League</h3>
+<div class="flex flex-col gap-3 mb-6">
+<div class="flex items-center gap-2 text-text-secondary text-sm">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+                                    Starts Nov 02, 2024
+                                </div>
+<div class="flex items-center gap-2 text-text-secondary text-sm">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                                    DY Patil Stadium, Mumbai
+                                </div>
+</div>
+<button class="w-full py-3 bg-deep-navy text-white rounded-xl font-bold hover:bg-primary-container transition-colors">Register Now</button>
+</div>
+</div>
+<!-- Tournament Card 3 -->
+<div class="group bg-white rounded-[18px] border border-border-subtle overflow-hidden hover:shadow-2xl transition-all duration-300">
+<div class="h-56 relative overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="An indoor sports arena scene featuring professional badminton players in a fast-paced rally. The court surface is a bright professional mat, and the indoor stadium lighting creates sharp, dramatic highlights on the athletes' movements. The mood is focused and intense, using a clean, modern photographic style that emphasizes high-stakes tournament competition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3XxxtaMWdR7G-UeQ7efNTVGreETSuYIrFBX6mxYJBu_t6uIxwi7XItTBGTl-HmPVdpimrVIJ9RVF-HBjax5Usn3yxClf6VMvzB01i647TzSNhtawVwm35ma0D2aukBgseuvKF_I-Ij9ukJLEGnAaCuJrI588eZrI4W_CvnNzgRoRAO_Bum2lVXzr8rFVbVw2pmAcmnZiYxV0cOpFYVfblg8TAcF6jKuQYZ7E2kMtHX0-hBuj9yaK6TPF677h5c27Ihj0vX9sFZIEm"/>
+<div class="absolute top-4 left-4">
+<span class="bg-primary-container text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase">Open</span>
+</div>
+</div>
+<div class="p-6">
+<span class="text-primary font-bold text-xs mb-2 block">Badminton • Singles</span>
+<h3 class="font-headline-md text-title-lg text-deep-navy mb-4 group-hover:text-primary transition-colors">All India Open Badminton</h3>
+<div class="flex flex-col gap-3 mb-6">
+<div class="flex items-center gap-2 text-text-secondary text-sm">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+                                    Starts Oct 22, 2024
+                                </div>
+<div class="flex items-center gap-2 text-text-secondary text-sm">
+<span class="material-symbols-outlined text-lg">location_on</span>
+                                    Gachibowli Stadium, Hyderabad
+                                </div>
+</div>
+<button class="w-full py-3 bg-deep-navy text-white rounded-xl font-bold hover:bg-primary-container transition-colors">Register Now</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Live Match Banner -->
+<section class="bg-deep-navy py-12 text-white relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1/2 h-full opacity-10">
+<span class="material-symbols-outlined text-[400px] absolute -right-20 -top-20">sports_score</span>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
+<div class="flex items-center gap-6">
+<div class="bg-error px-4 py-1.5 rounded-md flex items-center gap-2 animate-pulse">
+<div class="w-2 h-2 rounded-full bg-white"></div>
+<span class="font-black text-sm uppercase tracking-tighter">Live Score</span>
+</div>
+<div class="h-10 w-[1px] bg-white/20 hidden md:block"></div>
+<div>
+<h4 class="font-bold text-primary-fixed text-sm uppercase tracking-widest mb-1">State Football Finals</h4>
+<p class="text-white/60 text-xs">Stadium: Kalinga Arena, Bhubaneswar</p>
+</div>
+</div>
+<div class="flex items-center gap-12">
+<div class="flex items-center gap-6">
+<div class="text-center">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-2 mx-auto">
+<span class="material-symbols-outlined text-deep-navy text-3xl">shield</span>
+</div>
+<span class="font-bold text-sm">Bengal Warriors</span>
+</div>
+<div class="text-[56px] font-black tracking-tighter leading-none flex items-center gap-4">
+<span>2</span>
+<span class="text-white/30 text-2xl font-normal">-</span>
+<span>1</span>
+</div>
+<div class="text-center">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-2 mx-auto">
+<span class="material-symbols-outlined text-deep-navy text-3xl">sports</span>
+</div>
+<span class="font-bold text-sm">Goa Titans</span>
+</div>
+</div>
+<div class="hidden lg:block">
+<div class="bg-white/10 px-4 py-2 rounded-lg backdrop-blur-md">
+<span class="text-white/60 text-[10px] block uppercase font-bold mb-1">Match Time</span>
+<span class="text-xl font-black">74:12</span>
+</div>
+</div>
+</div>
+<button class="bg-white text-deep-navy px-8 py-3 rounded-xl font-bold hover:bg-primary-fixed transition-all">Match Center</button>
+</div>
+</section>
+<!-- Platform Features -->
+<section class="py-section-gap bg-surface">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-deep-navy mb-4">Powerful Features for Modern Sports</h2>
+<p class="text-text-secondary max-w-2xl mx-auto">Everything you need to manage players, events, and fan experiences from a single dashboard.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+<!-- Feature 1 -->
+<div class="bg-background-surface p-8 rounded-[18px] border border-border-subtle hover:shadow-lg transition-all group">
+<div class="w-14 h-14 bg-primary-fixed/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white text-3xl" style="font-variation-settings: 'FILL' 1;">timer</span>
+</div>
+<h3 class="font-headline-md text-title-lg text-deep-navy mb-3">Live Real-time Scores</h3>
+<p class="text-text-secondary text-body-md">Instant score updates for cricket, football, and multiple other sports with ultra-low latency.</p>
+</div>
+<!-- Feature 2 -->
+<div class="bg-background-surface p-8 rounded-[18px] border border-border-subtle hover:shadow-lg transition-all group">
+<div class="w-14 h-14 bg-primary-fixed/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white text-3xl" style="font-variation-settings: 'FILL' 1;">app_registration</span>
+</div>
+<h3 class="font-headline-md text-title-lg text-deep-navy mb-3">Online Registration</h3>
+<p class="text-text-secondary text-body-md">Streamlined digital onboarding for teams, players, and officials with KYC verification.</p>
+</div>
+<!-- Feature 3 -->
+<div class="bg-background-surface p-8 rounded-[18px] border border-border-subtle hover:shadow-lg transition-all group">
+<div class="w-14 h-14 bg-primary-fixed/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white text-3xl" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<h3 class="font-headline-md text-title-lg text-deep-navy mb-3">Seamless Payments</h3>
+<p class="text-text-secondary text-body-md">Integrated UPI and card payments for tournament fees with automated invoicing.</p>
+</div>
+<!-- Feature 4 -->
+<div class="bg-background-surface p-8 rounded-[18px] border border-border-subtle hover:shadow-lg transition-all group">
+<div class="w-14 h-14 bg-primary-fixed/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white text-3xl" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+<h3 class="font-headline-md text-title-lg text-deep-navy mb-3">Player Management</h3>
+<p class="text-text-secondary text-body-md">Maintain professional player profiles, history, stats, and disciplinary records.</p>
+</div>
+<!-- Feature 5 -->
+<div class="bg-background-surface p-8 rounded-[18px] border border-border-subtle hover:shadow-lg transition-all group">
+<div class="w-14 h-14 bg-primary-fixed/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white text-3xl" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+<h3 class="font-headline-md text-title-lg text-deep-navy mb-3">Deep Analytics</h3>
+<p class="text-text-secondary text-body-md">Comprehensive data visualization for event performance, team metrics, and fan engagement.</p>
+</div>
+<!-- Feature 6 -->
+<div class="bg-background-surface p-8 rounded-[18px] border border-border-subtle hover:shadow-lg transition-all group">
+<div class="w-14 h-14 bg-primary-fixed/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-primary group-hover:text-white text-3xl" style="font-variation-settings: 'FILL' 1;">sports_score</span>
+</div>
+<h3 class="font-headline-md text-title-lg text-deep-navy mb-3">Tournament Automations</h3>
+<p class="text-text-secondary text-body-md">Auto-generate fixtures, brackets, and schedules with smart conflict resolution.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Sponsor Logos (Infinite Scroll) -->
+<section class="py-16 bg-white overflow-hidden border-y border-border-subtle">
+<div class="scrolling-wrapper">
+<!-- Logos Row 1 (Repeated for seamless loop) -->
+<div class="flex items-center gap-16 px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+<div class="font-bold text-2xl text-deep-navy whitespace-nowrap">INDIA SPORTS FED</div>
+<div class="font-bold text-2xl text-deep-navy whitespace-nowrap">ELITE ACADEMY</div>
+<div class="font-bold text-2xl text-deep-navy whitespace-nowrap">GLOBAL CRICKET ORG</div>
+<div class="font-bold text-2xl text-deep-navy whitespace-nowrap">STATE FOOTBALL ASSOC</div>
+<div class="font-bold text-2xl text-deep-navy whitespace-nowrap">PRO LEAGUE IND</div>
+<div class="font-bold text-2xl text-deep-navy whitespace-nowrap">SMART ARENA</div>
+</div>
+<div class="flex items-center gap-16 px-8 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all">
+<div class="font-bold text-2xl text-deep-navy whitespace-nowrap">INDIA SPORTS FED</div>
+<div class="font-bold text-2xl text-deep-navy whitespace-nowrap">ELITE ACADEMY</div>
+<div class="font-bold text-2xl text-deep-navy whitespace-nowrap">GLOBAL CRICKET ORG</div>
+<div class="font-bold text-2xl text-deep-navy whitespace-nowrap">STATE FOOTBALL ASSOC</div>
+<div class="font-bold text-2xl text-deep-navy whitespace-nowrap">PRO LEAGUE IND</div>
+<div class="font-bold text-2xl text-deep-navy whitespace-nowrap">SMART ARENA</div>
+</div>
+</div>
+</section>
+<!-- Gallery -->
+<section class="py-section-gap">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="text-center mb-12">
+<h2 class="font-headline-lg text-headline-lg text-deep-navy">Moments of Excellence</h2>
+<p class="text-text-secondary">A glimpse into the high-energy events managed by SmartSportz.</p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="col-span-2 row-span-2 rounded-2xl overflow-hidden shadow-lg">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="A large-scale sports arena view during a championship final, filled with cheering spectators. The lighting is cinematic and dramatic, focused on the brightly lit center stage where athletes are performing. The color palette is vibrant and celebratory, reflecting the professional and high-stakes atmosphere of a premier sports management event. High-definition photographic quality with wide-angle perspective." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx6TGI_tvnwltrE5587Vl-zvgm9cDhT3BXM20qYtfkitG0z1KPxWo2nT2ItBn-X5G1jgWA4pFwevH99DE9sN1aZK9ABGogB3DxAEO3F73w1EiHLYh8B8NxFdm9O9Htrj10JKN9LyMxj4gO2hFIVeBep3UMNenIoP_d3x7H154laHUJkIO3BMVVKqZoquguj94Hj9xr0-BV9MDGd9gKZC-xDAijgw138vICQp67XzQJtzTPPm5-y9mam1uPO_Rg66HYgL1zUqFSOP9F"/>
+</div>
+<div class="rounded-2xl overflow-hidden shadow-lg aspect-square">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="A close-up high-speed action shot of a professional basketball player attempting a slam dunk. Beads of sweat are visible, and the focus is razor-sharp on the athlete's expression and the ball. The lighting is strong indoor sports lighting, creating a high-performance, athletic energy. The visual style is premium corporate sports photography, consistent with a top-tier management platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNLFB6Fm6yHF-C-38QcfftvMGnab5N0hgi3ONlywNg1O9UPkCNQyx3inuaHYzdrNiRjILB_I1nzJyacerWDNbZlTgxivqTZR4Cmv526gT2kGWYxuKTtImAzDlzHWbRce9uEHQM-kLe4arEcV1b1G-XtBqKFvg3GnQOAF-eIIIIeaPXb1h3UCQkwtZ0xkSf4-V0uxeUkDJ46z_j5doIjBBF55O6W2XK17ugE1zUQiTCEFFGeN6Jtvmu0YcsopDIdqfXSOSAo0F09hJ_"/>
+</div>
+<div class="rounded-2xl overflow-hidden shadow-lg aspect-square">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="A dynamic shot of a professional relay race start in a modern athletics stadium. The athletes are perfectly positioned on their blocks, captured at the moment of the starting gun. The morning sunlight creates sharp, long shadows on the track. The aesthetic is clean, disciplined, and technically precise, emphasizing the professional nature of sports management and timing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi39anIktld1PBn7NWrt72yCzcC8fOIZaN-XOfehExl092LjbopRbJaPQxKyWUS7tOYmsbFp6Djjvl37OLiBfISZlcguiHS1xXeLXAaxmwuPB_F1mWkCXUIz4ADlpfbcUyGygUdRkxZuZI2x7TEgJr3s-0ElcfY8BAy8o1ia5e3shx-IUxQ-3qB3RTJi-4yF9hZ-Su_cG9rUKLFA1T9hPciKhystDa5aXjzCxGdfmM5Dh_JL7lWhAcOZuZ0sq_coH4l3JHG5C_UdTJ"/>
+</div>
+<div class="col-span-2 rounded-2xl overflow-hidden shadow-lg h-64">
+<img class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" data-alt="A wide panoramic shot of an outdoor tennis complex at sunset, featuring multiple matches happening simultaneously under bright floodlights. The sky is a gradient of deep orange and indigo, complementing the deep navy brand colors. The composition is clean and organized, showcasing the scale and logistical success of a large tournament management operation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxvzPXO1dnRPwXWxVmZNOmgUcrGQh6JcabS53WjnX7usZQy_Lq-VY0uQYsNxyP5lHFE16l3SZw54_GCY87HP9JjMAEMgH2c86SMJt5rCBIfRKxYobK5Id6pxteIFzqgtSLmDxdsbhJR6JvqYh9BPfiCQf75K5aPEby9ekpPOzHuxgEHAo_GPAposZTIKTXkUispSNdmR35WcXQZlMLR8mOTXGeMqtzgz4JuMluh-_rNdwNj32EqT5ZwjR1KpVjfyEw_nVWZP8D4LjS"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials -->
+<section class="py-section-gap bg-deep-navy text-white overflow-hidden">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+<div class="lg:col-span-1">
+<h2 class="font-headline-lg text-headline-lg mb-6">Trusted by India's Sports Community</h2>
+<p class="text-white/60 mb-8">Hear from the organizers and athletes who have transformed their sports journey with SmartSportz.</p>
+<div class="flex gap-4">
+<button class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<button class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-all">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-white/5 backdrop-blur-md p-8 rounded-[24px] border border-white/10">
+<div class="flex gap-1 text-primary-fixed mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-lg italic leading-relaxed mb-8">"SmartSportz made organizing our district-level cricket tournament incredibly easy. The automated fixture generation and live score updates kept everyone engaged like never before."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional portrait of a senior Indian sports administrator in business-casual attire. He has a warm, confident smile and is photographed against a clean, modern office backdrop. The lighting is soft and flattering, emphasizing authority and professional trust. The overall aesthetic is aligned with premium enterprise corporate branding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAy5X_rIXl2nNjyNPnLIvTAVCh68CqH2Sd5JywN7_59zn_qsp4BjJ9rfxD0r-c6QzZ2TUVk60lgr3rQKiUuVV8YPaweUx3xoriv7qrm91nIzjqqSlpZwe0JMrntljN70VCPPEfk3MT5cmz5sMQoy4blv0Vm5-QowXFuvwOQuHHvAbG5vvxFBygwdbnlJlfVR3Sqay9Rw87rpieTOwG-OlvwSLNRdYOz__pUqFImkk_nrj9-_grO4AoBnDZpILS_xM_aZOttnBvIHuqL"/>
+</div>
+<div>
+<h4 class="font-bold">Rahul Sharma</h4>
+<p class="text-white/40 text-xs">Director, Mumbai Cricket Academy</p>
+</div>
+</div>
+</div>
+<div class="bg-white/5 backdrop-blur-md p-8 rounded-[24px] border border-white/10">
+<div class="flex gap-1 text-primary-fixed mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star_half</span>
+</div>
+<p class="text-lg italic leading-relaxed mb-8">"As a player, being able to see my stats and upcoming match schedules on a single dashboard is a game changer. The professional feel of the platform is truly top-notch."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a young Indian female athlete in athletic gear. She has a determined and positive expression, looking directly at the camera. The background is a soft-focus stadium setting, and the lighting is crisp and modern. The image represents the modern, dynamic user base of the platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVWPtMjOMzw_twUewEj81Z5pfPzwHigssf6g2SrhkebzNQtxOcFrXSOiAw55V65pc3uBj6htRPt3MBPhaXpah2r_seXH-HbrmFzffeOVRZloJuy3SHRLkE6qG8YtGyfOMIv6iCILKU59Jf8nrY7uqtQpHEenWzQfdQ7DMMqxMCYtqvHn0-Q6ClNQ1E78sdnGzCk58QRHf_uUZDULG5cU3pLYVhcLhyyxH5yvi2Yp7BrDTAfOi6iNPYUB3CzgdOJ-z4nmOHi6L_5d-H"/>
+</div>
+<div>
+<h4 class="font-bold">Priya Verma</h4>
+<p class="text-white/40 text-xs">State Level Footballer</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- FAQ Section -->
+<section class="py-section-gap bg-background">
+<div class="max-w-3xl mx-auto px-margin-desktop">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-deep-navy mb-4">Frequently Asked Questions</h2>
+<p class="text-text-secondary">Everything you need to know about using the SmartSportz platform.</p>
+</div>
+<div class="space-y-4">
+<details class="group bg-white rounded-xl border border-border-subtle overflow-hidden" open="">
+<summary class="flex justify-between items-center p-6 cursor-pointer hover:bg-surface transition-colors list-none">
+<span class="font-bold text-deep-navy">How do I register my team for a tournament?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 text-text-secondary text-body-md border-t border-border-subtle pt-4">
+                            To register, simply click on the 'Explore Tournaments' button, select your desired event, and click 'Register Now'. You'll be prompted to create an account and fill in your team details and player roster.
+                        </div>
+</details>
+<details class="group bg-white rounded-xl border border-border-subtle overflow-hidden">
+<summary class="flex justify-between items-center p-6 cursor-pointer hover:bg-surface transition-colors list-none">
+<span class="font-bold text-deep-navy">Can I manage multiple sports on one account?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 text-text-secondary text-body-md border-t border-border-subtle pt-4">
+                            Yes! SmartSportz supports multi-sport organizations. From your administrative dashboard, you can create and manage tournaments for over 15 different sport categories simultaneously.
+                        </div>
+</details>
+<details class="group bg-white rounded-xl border border-border-subtle overflow-hidden">
+<summary class="flex justify-between items-center p-6 cursor-pointer hover:bg-surface transition-colors list-none">
+<span class="font-bold text-deep-navy">Is there a mobile app for live scoring?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-6 pb-6 text-text-secondary text-body-md border-t border-border-subtle pt-4">
+                            Absolutely. We provide a dedicated scorer's app for tournament officials to input real-time match data, which syncs instantly with the web dashboard for fan viewing.
+                        </div>
+</details>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="py-24 relative overflow-hidden">
+<div class="absolute inset-0 z-0">
+<div class="absolute inset-0 bg-primary-container/95 z-10"></div>
+<img class="w-full h-full object-cover" data-alt="A textured, high-resolution close-up of a premium sports surface, like a modern synthetic athletics track or a high-end basketball court. The surface shows fine detail and is illuminated by cool, professional stadium lighting. The image is used as a background texture, maintaining the high-performance and premium sports brand identity of SmartSportz." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDD8v_vUEQxlXw8K61DVscAlGty2NZ6lbPby1zStNjzl8Do974odCbAI82DjxwcnF3mBqhpyteo9JaD6MsqX_QoXAY7ki936WUBXJRyKTx-twFMcQrmoxr5EjTmX7NoFA_q2WDGlJpR5tjUi41-QcPGQg5FSzVdvmStMbxLpd_hXX686zDjfKrQDiWpRL7uBlTN-V0FBM57Ha520Fdcze-vXb_v8zthR_CerpkJlvfL1K5AwlYtkoCIeaARNeCy4RXe2Vxgspo84UL1"/>
+</div>
+<div class="relative z-20 max-w-container-max mx-auto px-margin-desktop text-center">
+<h2 class="text-white font-display-lg text-[48px] md:text-[64px] font-black mb-8 leading-tight">Ready to elevate <br/> your sports game?</h2>
+<p class="text-white/80 text-title-lg max-w-2xl mx-auto mb-12">Join over 1,000+ organizers and 50,000+ players across India on the most advanced sports management platform.</p>
+<div class="flex flex-col sm:flex-row justify-center gap-6">
+<button class="px-12 py-5 bg-white text-primary-container rounded-2xl font-bold text-xl hover:shadow-2xl hover:scale-105 transition-all">Get Started for Free</button>
+<button class="px-12 py-5 border-2 border-white/30 text-white rounded-2xl font-bold text-xl hover:bg-white/10 backdrop-blur-sm transition-all">Contact Sales</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-deep-navy pt-section-gap pb-8 text-white rounded-t-xl">
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter mb-16">
+<div class="col-span-1 md:col-span-1">
+<div class="font-headline-lg text-headline-lg font-black text-surface-container-lowest mb-6">SmartSportz.in</div>
+<p class="text-surface-container-highest opacity-70 text-body-md mb-6 leading-relaxed">
+                    The ultimate digital ecosystem for Indian sports management, empowering communities through technology and professional excellence.
+                </p>
+<div class="flex gap-4">
+<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary-container transition-all" href="#">
+<span class="material-symbols-outlined text-sm">public</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary-container transition-all" href="#">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary-container transition-all" href="#">
+<span class="material-symbols-outlined text-sm">share</span>
+</a>
+</div>
+</div>
+<div>
+<h4 class="font-bold text-primary-fixed mb-6 uppercase tracking-widest text-xs">Platform</h4>
+<ul class="space-y-4">
+<li><a class="text-surface-container-highest opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Tournaments</a></li>
+<li><a class="text-surface-container-highest opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Live Scores</a></li>
+<li><a class="text-surface-container-highest opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Registration</a></li>
+<li><a class="text-surface-container-highest opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Analytics</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-primary-fixed mb-6 uppercase tracking-widest text-xs">Resources</h4>
+<ul class="space-y-4">
+<li><a class="text-surface-container-highest opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Blogs</a></li>
+<li><a class="text-surface-container-highest opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Tournament Guidelines</a></li>
+<li><a class="text-surface-container-highest opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Support Center</a></li>
+<li><a class="text-surface-container-highest opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Careers</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-primary-fixed mb-6 uppercase tracking-widest text-xs">Legal</h4>
+<ul class="space-y-4">
+<li><a class="text-surface-container-highest opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">About Us</a></li>
+<li><a class="text-surface-container-highest opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Contact</a></li>
+<li><a class="text-surface-container-highest opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Privacy Policy</a></li>
+<li><a class="text-surface-container-highest opacity-80 hover:opacity-100 hover:text-primary-fixed transition-colors" href="#">Terms of Service</a></li>
+</ul>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop pt-8 border-t border-white/10 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-surface-container-highest opacity-60 text-caption">
+                © 2024 SmartSportz.in. All rights reserved. Premium Sports Management Excellence.
+            </p>
+<div class="flex gap-6">
+<span class="text-caption text-surface-container-highest opacity-40">Designed for Performance</span>
+<span class="text-caption text-surface-container-highest opacity-40">Made in India</span>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions and effects
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-lg');
+            } else {
+                header.classList.remove('shadow-lg');
+            }
+        });
+
+        // Simple animation on scroll for grid cards
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'translate-y-0');
+                    entry.target.classList.remove('opacity-0', 'translate-y-10');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.group.bg-white, .group.bg-background-surface').forEach(card => {
+            card.classList.add('transition-all', 'duration-500', 'opacity-0', 'translate-y-10');
+            observer.observe(card);
+        });
+    </script>
+</body></html>

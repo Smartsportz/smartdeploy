@@ -1,0 +1,24 @@
+INFO:     127.0.0.1:58197 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56275 - "OPTIONS /api/v1/registrations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56275 - "POST /api/v1/registrations HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:56275 - "OPTIONS /api/v1/auth/refresh HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54605 - "POST /api/v1/auth/refresh HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54605 - "POST /api/v1/registrations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50564 - "OPTIONS /api/v1/payments/local-intent HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50564 - "POST /api/v1/payments/local-intent HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50564 - "OPTIONS /api/v1/payments/local-intent/rzp_local_e6a33453b93d4b/confirm HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59950 - "POST /api/v1/payments/local-intent/rzp_local_e6a33453b93d4b/confirm HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59950 - "OPTIONS /api/v1/registrations/reg_ace0ebbc37b5/local-payment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50564 - "POST /api/v1/registrations/reg_ace0ebbc37b5/local-payment HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56381 - "OPTIONS /api/v1/registrations/reg_ace0ebbc37b5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57883 - "OPTIONS /api/v1/registrations/reg_ace0ebbc37b5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56381 - "GET /api/v1/registrations/reg_ace0ebbc37b5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57883 - "GET /api/v1/registrations/reg_ace0ebbc37b5 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64333 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60896 - "GET /api/v1/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64480 - "OPTIONS /api/v1/user/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:61942 - "OPTIONS /api/v1/user/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64480 - "GET /api/v1/user/dashboard HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64480 - "GET /api/v1/user/dashboard HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53268 - "GET /api/v1/user/dashboard HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:63300 - "GET /api/v1/user/dashboard HTTP/1.1" 404 Not Found

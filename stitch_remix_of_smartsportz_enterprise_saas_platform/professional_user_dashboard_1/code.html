@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartSportz | Elite Performance Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#b9c7e4",
+                        "error": "#ffb4ab",
+                        "tertiary": "#b6c6ed",
+                        "on-tertiary-fixed-variant": "#374767",
+                        "on-error": "#690005",
+                        "outline-variant": "#3e4a41",
+                        "on-tertiary-fixed": "#091b39",
+                        "primary-fixed-dim": "#72db9d",
+                        "surface-container-low": "#191c1e",
+                        "surface-container-high": "#272a2c",
+                        "primary": "#72db9d",
+                        "error-container": "#93000a",
+                        "primary-fixed": "#8ef8b7",
+                        "on-secondary-container": "#abb9d6",
+                        "on-background": "#e0e3e5",
+                        "surface-bright": "#363a3b",
+                        "tertiary-fixed-dim": "#b6c6ed",
+                        "surface-container-lowest": "#0b0f10",
+                        "on-secondary-fixed-variant": "#39475f",
+                        "background": "#101415",
+                        "tertiary-fixed": "#d8e2ff",
+                        "surface-tint": "#72db9d",
+                        "surface-container": "#1d2022",
+                        "outline": "#889489",
+                        "on-primary-container": "#ffffff",
+                        "on-surface": "#e0e3e5",
+                        "inverse-surface": "#e0e3e5",
+                        "on-tertiary-container": "#000514",
+                        "on-primary-fixed": "#002110",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#2d3133",
+                        "inverse-primary": "#006d40",
+                        "on-tertiary": "#20304f",
+                        "secondary-container": "#3c4962",
+                        "on-primary": "#00391f",
+                        "on-primary-fixed-variant": "#00522f",
+                        "tertiary-container": "#67779a",
+                        "surface-container-highest": "#323537",
+                        "on-secondary-fixed": "#0d1c32",
+                        "surface-variant": "#323537",
+                        "secondary-fixed": "#d6e3ff",
+                        "primary-container": "#0b8852",
+                        "surface": "#101415",
+                        "secondary": "#b9c7e4",
+                        "on-surface-variant": "#bdcabe",
+                        "surface-dim": "#101415",
+                        "on-secondary": "#233148"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "card": "18px"
+                    },
+                    "spacing": {
+                        "stack-lg": "32px",
+                        "margin-desktop": "40px",
+                        "gutter": "24px",
+                        "stack-sm": "8px",
+                        "stack-md": "16px",
+                        "container-max": "1440px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Be Vietnam Pro"],
+                        "title-md": ["Be Vietnam Pro"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Be Vietnam Pro"],
+                        "stats-xl": ["Be Vietnam Pro"],
+                        "label-sm": ["JetBrains Mono"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #101415;
+            color: #e0e3e5;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-card {
+            background: rgba(17, 34, 64, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+        }
+        .performance-gradient {
+            background: linear-gradient(135deg, #0b8852 0%, #72db9d 100%);
+        }
+        .sidebar-border {
+            border-right: 1px solid rgba(62, 74, 65, 0.2);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3e4a41;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="antialiased overflow-hidden">
+<!-- Persistent SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low sidebar-border flex flex-col p-stack-md z-50">
+<div class="flex items-center gap-stack-md mb-10 px-4">
+<div class="w-10 h-10 performance-gradient rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary-fixed font-bold">sports_handball</span>
+</div>
+<div>
+<h1 class="font-headline-lg text-[20px] leading-tight text-primary">SmartSportz</h1>
+<p class="font-label-sm text-[10px] text-on-surface-variant uppercase tracking-widest">Elite Performance</p>
+</div>
+</div>
+<nav class="flex-1 space-y-2 custom-scrollbar overflow-y-auto">
+<!-- Active Tab: Dashboard -->
+<a class="flex items-center gap-stack-md px-4 py-3 bg-secondary-container text-on-secondary-container rounded-lg transition-transform active:scale-95" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-body-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-stack-md px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">emoji_events</span>
+<span class="font-body-md">Tournaments</span>
+</a>
+<a class="flex items-center gap-stack-md px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-body-md">Teams</span>
+</a>
+<a class="flex items-center gap-stack-md px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-body-md">Players</span>
+</a>
+<a class="flex items-center gap-stack-md px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">calendar_today</span>
+<span class="font-body-md">Schedules</span>
+</a>
+<a class="flex items-center gap-stack-md px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-body-md">Analytics</span>
+</a>
+</nav>
+<div class="pt-6 mt-6 border-t border-outline-variant/10 space-y-2">
+<a class="flex items-center gap-stack-md px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-md">Settings</span>
+</a>
+<a class="flex items-center gap-stack-md px-4 py-3 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">help_center</span>
+<span class="font-body-md">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<div class="ml-64 flex flex-col h-screen overflow-hidden">
+<!-- TopNavBar -->
+<header class="fixed top-0 right-0 left-64 h-16 bg-surface/80 backdrop-blur-xl border-b border-outline-variant/10 z-40">
+<div class="flex justify-between items-center px-margin-desktop h-full w-full">
+<div class="flex items-center bg-surface-container-high rounded-full px-4 py-1.5 w-96">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-md text-on-surface w-full ml-2" placeholder="Search tournaments, players..." type="text"/>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:text-primary transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="hover:text-primary transition-colors cursor-pointer active:opacity-80">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+</div>
+<div class="h-8 w-px bg-outline-variant/20"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="font-title-md text-sm text-on-surface leading-none">Marcus Rashford</p>
+<p class="font-label-sm text-[10px] text-primary uppercase">Elite Pro</p>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional athletic profile portrait of a young male athlete with sharp focus, studio lighting against a dark navy background. The lighting highlights his features with a cool cyan and emerald green rim light, creating a high-performance SaaS aesthetic. He has a focused expression, representing elite sportsmanship." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGsEtH3gm6YHTT1XuUYCKs9ENWCFq8cWYawh6xgjzQ_kUXX9dBy9EAC4nqS9P8W7O9AkqAlogNM6-crPIkJEKFYdGkkkHTCx9sSvEWbfnKWqGVgiu4SiycDb1LHqHKQJlftT7PLNNFwX4VZbx0MBIk7CH_CJCxY1E_d91YzALd8SJynu70Ecq6NgplE2spcOCJxGCSuzyOYIpZJ3TJ3jBShW2uX32lhMhR11bvkjko8Bdq5w9VBEXG_HjSthzcAnCGUnw22oMkQ8hD"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="flex-1 overflow-y-auto mt-16 p-margin-desktop custom-scrollbar">
+<div class="max-w-container-max mx-auto space-y-stack-lg">
+<!-- Welcome Section & Quick Actions -->
+<section class="flex flex-col md:flex-row justify-between items-end gap-gutter">
+<div class="space-y-2">
+<h2 class="font-display-lg text-on-surface">Welcome back, Marcus</h2>
+<div class="flex items-center gap-3">
+<span class="px-3 py-1 bg-primary-container/20 text-primary rounded-full font-label-sm text-[10px] border border-primary/30">ELITE STATUS ACTIVE</span>
+<span class="text-on-surface-variant font-body-md">Last training logged: 4 hours ago</span>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 px-6 py-3 bg-surface-container-high text-on-surface rounded-xl font-title-md hover:bg-surface-container-highest transition-all active:scale-95">
+<span class="material-symbols-outlined">download</span>
+                            Download Report
+                        </button>
+<button class="flex items-center gap-2 px-6 py-3 performance-gradient text-on-primary font-title-md rounded-xl shadow-lg shadow-primary/20 hover:brightness-110 transition-all active:scale-95">
+<span class="material-symbols-outlined">add_circle</span>
+                            New Registration
+                        </button>
+</div>
+</section>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Active Registrations (Column 1-8) -->
+<div class="col-span-12 lg:col-span-8 space-y-gutter">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-lg text-2xl text-on-surface">Active Registrations</h3>
+<a class="text-primary font-title-md text-sm hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+<!-- Card 1 -->
+<div class="glass-card p-stack-md flex flex-col group hover:border-primary/50 transition-all cursor-pointer">
+<div class="relative h-40 w-full rounded-xl overflow-hidden mb-4">
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Action shot of a professional football match under stadium lights at night. Vibrant emerald green pitch, intense stadium atmosphere with a slight blur, cinematic photography. The lighting is dramatic and moody, fitting a premium sports dashboard aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1JqdDg0VFUzazTqvo202_2FDomRYq2_hb86D75FPhKroXyuMuI8P-ViTcJRce1oTvQ6xFvdU_u7c1GpV3flgB-rfAA52dMvjMn0Enb3KKR5RAhh0Z9nbYRaJNTamVvVHhFFwDQrOSsnmtDBiu5gHUNYprp9oVdGBgTqBWKLZUq-QdogTV3xqLG0PUkkMaa94bfeK7FlwrqdmWiNT9QRncHip21WbZ_20KIucArOZKPhRsfN9zGWJJ4x-qBg7naIV92B8efq4WpolT"/>
+<div class="absolute top-3 right-3 z-20">
+<span class="px-2 py-1 bg-primary text-on-primary font-label-sm rounded text-[10px]">CONFIRMED</span>
+</div>
+</div>
+<h4 class="font-title-md text-lg text-on-surface">National Premier League Qualifiers</h4>
+<div class="flex items-center gap-4 mt-2 text-on-surface-variant font-body-md text-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+                                        Oct 24, 2024
+                                    </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+                                        Wembley Arena
+                                    </div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-card p-stack-md flex flex-col group hover:border-primary/50 transition-all cursor-pointer">
+<div class="relative h-40 w-full rounded-xl overflow-hidden mb-4">
+<div class="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10"></div>
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="High-speed indoor athletics track with athletes in motion blur. The aesthetic is modern and sleek with cool navy and neon green accents. Precision, speed, and elite performance captured in a high-fidelity sports photography style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvaRazg63jhbLNDm2sWSKBEZm5z_Ty5Gj5N7vPB4Idd6gwi2jQfS5JDe6Rk8nUkPJp_8G3RhcLNDpltB1eg50logkRCkahwzT3kMmDgGyN_JCwuOWciJIVurIIR5K78vQ_4i6Ys6WKh3sFxQRgWOw69CZhSC1A3PaV69n7k651f6Myr7LtWKwr0ynQitWLpxwgu3zqH_A5g2oKMzHRl0Va7I9Y_63KfOuWE6C3v-0_PA_BIyJM-BucvNK-Mu_TwcejBfHBcZCPZJ6g"/>
+<div class="absolute top-3 right-3 z-20">
+<span class="px-2 py-1 bg-primary text-on-primary font-label-sm rounded text-[10px]">CONFIRMED</span>
+</div>
+</div>
+<h4 class="font-title-md text-lg text-on-surface">Regional Sprint Championships</h4>
+<div class="flex items-center gap-4 mt-2 text-on-surface-variant font-body-md text-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+                                        Nov 12, 2024
+                                    </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+                                        Olympic Hub
+                                    </div>
+</div>
+</div>
+</div>
+<!-- Certificates Section -->
+<div class="pt-6">
+<h3 class="font-headline-lg text-2xl text-on-surface mb-6">Certificates &amp; Achievements</h3>
+<div class="grid grid-cols-3 gap-stack-md">
+<div class="glass-card p-4 flex flex-col items-center text-center gap-3 border-dashed border-2 hover:border-primary/40 transition-colors cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">workspace_premium</span>
+</div>
+<p class="font-title-md text-sm">Level 3 Pro Coaching</p>
+<p class="font-label-sm text-[10px] text-on-surface-variant">EARNED AUG 2024</p>
+</div>
+<div class="glass-card p-4 flex flex-col items-center text-center gap-3 border-dashed border-2 hover:border-primary/40 transition-colors cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">military_tech</span>
+</div>
+<p class="font-title-md text-sm">Endurance Master</p>
+<p class="font-label-sm text-[10px] text-on-surface-variant">EARNED JUN 2024</p>
+</div>
+<div class="glass-card p-4 flex flex-col items-center text-center gap-3 border-dashed border-2 hover:border-primary/40 transition-colors cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-primary text-3xl">verified</span>
+</div>
+<p class="font-title-md text-sm">SmartSportz Elite</p>
+<p class="font-label-sm text-[10px] text-on-surface-variant">EARNED JAN 2024</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar Widgets (Column 9-12) -->
+<div class="col-span-12 lg:col-span-4 space-y-gutter">
+<!-- Financial Overview Card -->
+<div class="glass-card p-6 relative overflow-hidden">
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
+<h3 class="font-title-md text-on-surface-variant uppercase text-xs tracking-widest mb-6">Financial Overview</h3>
+<div class="space-y-4">
+<div>
+<p class="font-body-md text-on-surface-variant text-sm">Total Performance Investment</p>
+<p class="font-stats-xl text-primary">$12,450.00</p>
+</div>
+<div class="h-px bg-outline-variant/10 w-full"></div>
+<div class="space-y-3">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">receipt_long</span>
+<span class="text-sm font-body-md">Tournament Entry #902</span>
+</div>
+<span class="font-label-sm text-sm">$450.00</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant text-sm">receipt_long</span>
+<span class="text-sm font-body-md">Elite Membership Fee</span>
+</div>
+<span class="font-label-sm text-sm">$1,200.00</span>
+</div>
+</div>
+<button class="w-full mt-2 py-2 border border-outline-variant/30 rounded-lg text-sm font-title-md hover:bg-surface-container-highest transition-colors">
+                                    View Transaction History
+                                </button>
+</div>
+</div>
+<!-- Recent Notifications -->
+<div class="glass-card p-6">
+<h3 class="font-title-md text-on-surface-variant uppercase text-xs tracking-widest mb-6">Recent Notifications</h3>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+<div>
+<p class="font-body-md text-sm text-on-surface">Registration confirmed for <b>National Premier League</b></p>
+<p class="text-[11px] text-on-surface-variant mt-1">2 hours ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+<div>
+<p class="font-body-md text-sm text-on-surface">Your Level 3 Coaching Certificate is now ready for download</p>
+<p class="text-[11px] text-on-surface-variant mt-1">5 hours ago</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-2 h-2 rounded-full bg-transparent mt-2 flex-shrink-0 border border-outline-variant"></div>
+<div>
+<p class="font-body-md text-sm text-on-surface-variant">Profile update: Training bio has been modified</p>
+<p class="text-[11px] text-on-surface-variant mt-1">Yesterday</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="w-2 h-2 rounded-full bg-transparent mt-2 flex-shrink-0 border border-outline-variant"></div>
+<div>
+<p class="font-body-md text-sm text-on-surface-variant">Payment successful for SmartSportz Monthly Gear Bundle</p>
+<p class="text-[11px] text-on-surface-variant mt-1">Oct 12, 2024</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-8 py-2 text-primary text-sm font-title-md hover:underline transition-colors text-center">
+                                Mark all as read
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Micro-interactions Script -->
+<script>
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>

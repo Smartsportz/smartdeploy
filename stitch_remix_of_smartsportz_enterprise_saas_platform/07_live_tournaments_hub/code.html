@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartSportz.in | Live Tournaments</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100..900&family=Poppins:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed-dim": "#ffb3b3",
+                    "on-tertiary-container": "#ffffff",
+                    "on-secondary-fixed": "#111c2d",
+                    "background": "#f8f9ff",
+                    "primary-fixed": "#8ef8b7",
+                    "surface-container-highest": "#d3e4fe",
+                    "secondary": "#545f73",
+                    "outline-variant": "#bdcabe",
+                    "on-secondary-container": "#586377",
+                    "on-secondary": "#ffffff",
+                    "surface-container-low": "#eff4ff",
+                    "on-tertiary-fixed-variant": "#7f272f",
+                    "on-surface-variant": "#3e4a41",
+                    "on-error": "#ffffff",
+                    "outline": "#6e7a70",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#0b1c30",
+                    "secondary-fixed": "#d8e3fb",
+                    "surface-container-high": "#dce9ff",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-tint": "#006d40",
+                    "inverse-surface": "#213145",
+                    "surface-variant": "#d3e4fe",
+                    "on-tertiary": "#ffffff",
+                    "surface-dim": "#cbdbf5",
+                    "primary-fixed-dim": "#72db9d",
+                    "secondary-container": "#d5e0f8",
+                    "on-primary-fixed-variant": "#00522f",
+                    "inverse-primary": "#72db9d",
+                    "on-surface": "#0b1c30",
+                    "surface-container": "#e5eeff",
+                    "tertiary-container": "#bd565b",
+                    "surface-bright": "#f8f9ff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed": "#40000a",
+                    "error-container": "#ffdad6",
+                    "primary-container": "#0b8852",
+                    "primary": "#006c40",
+                    "tertiary": "#9e3e44",
+                    "surface": "#f8f9ff",
+                    "secondary-fixed-dim": "#bcc7de"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "tournament-card": "20px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "section-gap-lg": "120px",
+                    "section-gap-md": "80px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "40px",
+                    "container-max": "1280px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Poppins"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "display-lg-mobile": ["Poppins"],
+                    "display-lg": ["Poppins"],
+                    "headline-sm": ["Poppins"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "body-sm": ["Be Vietnam Pro"]
+            },
+            "fontSize": {
+                    "headline-md": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Be Vietnam Pro', sans-serif; }
+        .font-headline { font-family: 'Poppins', sans-serif; }
+        .soft-shadow { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .pulse-red {
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- Top Navigation -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-md shadow-sm">
+<nav class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-container-max mx-auto">
+<div class="text-headline-sm font-headline-sm font-bold text-primary">SmartSportz.in</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Dashboard</a>
+<a class="text-secondary font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#">Athletes</a>
+<a class="text-secondary font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#">Teams</a>
+<a class="text-secondary font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#">Analytics</a>
+<a class="text-secondary font-medium hover:text-primary transition-colors font-label-md text-label-md" href="#">Schedules</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-all material-symbols-outlined text-secondary" data-icon="notifications">notifications</button>
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-all material-symbols-outlined text-secondary" data-icon="settings">settings</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional male athlete profile picture, wearing modern team apparel, sharp corporate athletic portrait, soft high-key lighting, clean background, 8k resolution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8twNM8-3VaVaz2paLd9UpoEBVGPNPn4jqJmFzz4IoxJulK2UbaSc4QhOR-x8vFznJ-PHg8wmszNY9ogIxUYBzET0ta_ln1HT9MvcwnjuOzRI2ovUQO78lbFcN_XnjiAIw0NeM0J8_BjFuMZXrdhyGD8kQ3-jZSnl-Q2vv3a9emMXd9yDJGpR3IaAZCDmDojYGLWweu8lKV_mZmuRiwwiKWaxdvVbwS_JQD0xMYLbTIYYLFmQFbnylfaWTeKa7AmGXatm0MYeVNRIf"/>
+</div>
+</div>
+</nav>
+</header>
+<main class="pt-24">
+<!-- Live Tournaments Section -->
+<section class="py-section-gap-md md:py-section-gap-lg px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto overflow-hidden">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+<div class="space-y-2">
+<h1 class="font-headline text-display-lg-mobile md:text-display-lg text-on-surface">🏆 Live Tournaments</h1>
+<p class="font-body-lg text-body-lg text-secondary">Follow live tournaments happening across India in real time.</p>
+</div>
+<div class="flex items-center gap-3 bg-error-container/20 px-4 py-2 rounded-full border border-error/10 self-start md:self-auto">
+<span class="w-3 h-3 bg-error rounded-full pulse-red"></span>
+<span class="text-error font-bold font-label-md tracking-widest">LIVE NOW</span>
+</div>
+</div>
+<!-- Horizontal Scroll Container -->
+<div class="relative group">
+<div class="flex gap-gutter overflow-x-auto pb-12 pt-4 hide-scrollbar snap-x snap-mandatory">
+<!-- Card 1: Football -->
+<div class="min-w-[320px] md:min-w-[420px] snap-center">
+<div class="bg-surface-container-lowest rounded-tournament-card soft-shadow overflow-hidden group/card hover:-translate-y-2 transition-all duration-300 border border-outline-variant/30 h-full flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR4tL7PyTqnmd7JmvYXEAvIxRpEsEr9TVUHEKj7IyyENAzk6GxrsUkNh7OfVOLZ1G5koXQCv3dbPHOx4o0wogv5V5uUsGXedOpC2MfjvULDfnwdif3kVjUWmrkGwiOdLv1HzhGA5I6VWif4Ont-LIy5N7fEzTxy26OI3vY1HIZhzXFPUA5HBSkrzJ-j13xrPZxS5S45sq9SNydPFopPpJK-PHGUqfiYVEnlvpRoV5ssqZjXQb2skGLe5f5qPnHS6ti3wtgTvFrnC_f"/>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-error text-white px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span> LIVE
+                                    </span>
+<span class="bg-black/40 backdrop-blur-md text-white px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="wb_sunny">wb_sunny</span> Sunny
+                                    </span>
+</div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-primary font-bold text-[11px] uppercase tracking-wider mb-1">Football • I-League Junior</p>
+<h3 class="font-headline text-headline-sm text-on-surface">Under-16</h3>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[11px] font-semibold">Semi Final</span>
+</div>
+<div class="space-y-4 mb-6">
+<div class="flex justify-between items-center bg-surface-container-low p-4 rounded-xl">
+<div class="text-center flex-1">
+<p class="font-bold text-on-surface text-sm line-clamp-1">Bengaluru FC</p>
+</div>
+<div class="px-4 text-center">
+<span class="font-headline text-2xl font-bold text-primary">2 - 1</span>
+<p class="text-[10px] font-bold text-error animate-pulse">76'</p>
+</div>
+<div class="text-center flex-1">
+<p class="font-bold text-on-surface text-sm line-clamp-1">ATK Mohun Bagan</p>
+</div>
+</div>
+<div class="flex items-center gap-2 text-secondary text-sm">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+<span class="font-body-sm">Salt Lake Stadium, Kolkata</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 mb-6">
+<div class="bg-surface p-3 rounded-lg text-center border border-outline-variant/20">
+<p class="text-[10px] text-secondary uppercase font-bold mb-1">Teams</p>
+<p class="font-bold text-on-surface">16</p>
+</div>
+<div class="bg-surface p-3 rounded-lg text-center border border-outline-variant/20">
+<p class="text-[10px] text-secondary uppercase font-bold mb-1">Watching</p>
+<p class="font-bold text-on-surface">12k</p>
+</div>
+<div class="bg-surface p-3 rounded-lg text-center border border-outline-variant/20">
+<p class="text-[10px] text-secondary uppercase font-bold mb-1">Pool</p>
+<p class="font-bold text-primary">₹5L</p>
+</div>
+</div>
+<div class="mt-auto">
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mb-6 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 76%"></div>
+</div>
+<div class="flex items-center justify-between">
+<button class="bg-primary hover:bg-primary-container text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-colors flex items-center gap-2">
+                                            Watch Live <span class="material-symbols-outlined text-sm" data-icon="play_circle">play_circle</span>
+</button>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors material-symbols-outlined text-secondary text-lg" data-icon="share">share</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors material-symbols-outlined text-secondary text-lg" data-icon="bookmark">bookmark</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: Cricket -->
+<div class="min-w-[320px] md:min-w-[420px] snap-center">
+<div class="bg-surface-container-lowest rounded-tournament-card soft-shadow overflow-hidden group/card hover:-translate-y-2 transition-all duration-300 border border-outline-variant/30 h-full flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_bQbNZO3K8574cg-9-iIfGGRyQfPTJp-xTlR7YJLxJgx6Do0c3p5cWtP06-Ldm787qqV03C3Fb19qsV6s2DJQwqWZW6HlSoShgsIzr5o1ZRgOcm1yv3wWqdpdH8lFh6DRK_9zBZWMGTHJb1jJsq09jpqLc8OlQTWLJ2LZZ0dVfA3CduSfCzzPaSjyCoCFnOy7sBko9uPbPjVcY1bCxisn27R4I9a2kohMllRZRlmHNNMZ3ej-sUPGUr7JzMdg_Hp5s3aYz-hs8WDf"/>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-error text-white px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span> LIVE
+                                    </span>
+</div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-primary font-bold text-[11px] uppercase tracking-wider mb-1">Cricket • Corporate T20 Cup</p>
+<h3 class="font-headline text-headline-sm text-on-surface">Professional</h3>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[11px] font-semibold">League Stage</span>
+</div>
+<div class="space-y-4 mb-6">
+<div class="bg-surface-container-low p-4 rounded-xl">
+<div class="flex justify-between items-center mb-2">
+<p class="font-bold text-on-surface text-sm">Reliance Titans</p>
+<p class="text-secondary text-xs">Yet to Bat</p>
+</div>
+<div class="flex justify-between items-center">
+<p class="font-bold text-on-surface text-sm">Infosys Knights</p>
+<div class="text-right">
+<span class="font-headline text-xl font-bold text-primary">182/4</span>
+<p class="text-[10px] font-bold text-secondary">(18.3 Overs)</p>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-2 text-secondary text-sm">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+<span class="font-body-sm">Wankhede Stadium, Mumbai</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 mb-6">
+<div class="bg-surface p-3 rounded-lg text-center border border-outline-variant/20">
+<p class="text-[10px] text-secondary uppercase font-bold mb-1">Teams</p>
+<p class="font-bold text-on-surface">32</p>
+</div>
+<div class="bg-surface p-3 rounded-lg text-center border border-outline-variant/20">
+<p class="text-[10px] text-secondary uppercase font-bold mb-1">Watching</p>
+<p class="font-bold text-on-surface">25k</p>
+</div>
+<div class="bg-surface p-3 rounded-lg text-center border border-outline-variant/20">
+<p class="text-[10px] text-secondary uppercase font-bold mb-1">Pool</p>
+<p class="font-bold text-primary">₹10L</p>
+</div>
+</div>
+<div class="mt-auto">
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mb-6 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 92%"></div>
+</div>
+<div class="flex items-center justify-between">
+<button class="bg-primary hover:bg-primary-container text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-colors flex items-center gap-2">
+                                            Watch Live <span class="material-symbols-outlined text-sm" data-icon="play_circle">play_circle</span>
+</button>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors material-symbols-outlined text-secondary text-lg" data-icon="share">share</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors material-symbols-outlined text-secondary text-lg" data-icon="bookmark">bookmark</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3: Basketball -->
+<div class="min-w-[320px] md:min-w-[420px] snap-center">
+<div class="bg-surface-container-lowest rounded-tournament-card soft-shadow overflow-hidden group/card hover:-translate-y-2 transition-all duration-300 border border-outline-variant/30 h-full flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnGL-52RnvnnJFB_1hq78tlKnjUe8Niwis440GdQZQEnr00CjQiEUciIi1k_VZkReoT3nakDHxL4iDbPKXv5W5AIqy-0xc1XJXADTOvjNzSkc-YrzCUmZCcsAy6Hn-aUmwvnAiudWd0kVs6WHXqvdwPRT2Z2SF3MYKj2bJpEkHizFWpRlnzS6cOKNn8Gtz9AATN0oh8lxRNOyd8a4hE3YeliVaksOgWqLsibdSFTnycoQhEg2_eWuRb914btPZc7C2ImG1O_KQhIiB"/>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-error text-white px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span> LIVE
+                                    </span>
+</div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-primary font-bold text-[11px] uppercase tracking-wider mb-1">Basketball • National Pro League</p>
+<h3 class="font-headline text-headline-sm text-on-surface">Open Category</h3>
+</div>
+<span class="bg-tertiary-container text-on-tertiary-container px-3 py-1 rounded-full text-[11px] font-semibold">Final</span>
+</div>
+<div class="space-y-4 mb-6">
+<div class="flex justify-between items-center bg-surface-container-low p-4 rounded-xl">
+<div class="text-center flex-1">
+<p class="font-bold text-on-surface text-sm line-clamp-1">Punjab Steelers</p>
+</div>
+<div class="px-4 text-center">
+<span class="font-headline text-2xl font-bold text-primary">84 - 79</span>
+<p class="text-[10px] font-bold text-error animate-pulse">Q4 (02:45)</p>
+</div>
+<div class="text-center flex-1">
+<p class="font-bold text-on-surface text-sm line-clamp-1">Chennai Heat</p>
+</div>
+</div>
+<div class="flex items-center gap-2 text-secondary text-sm">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+<span class="font-body-sm">Indira Gandhi Indoor, Delhi</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 mb-6">
+<div class="bg-surface p-3 rounded-lg text-center border border-outline-variant/20">
+<p class="text-[10px] text-secondary uppercase font-bold mb-1">Teams</p>
+<p class="font-bold text-on-surface">12</p>
+</div>
+<div class="bg-surface p-3 rounded-lg text-center border border-outline-variant/20">
+<p class="text-[10px] text-secondary uppercase font-bold mb-1">Watching</p>
+<p class="font-bold text-on-surface">8k</p>
+</div>
+<div class="bg-surface p-3 rounded-lg text-center border border-outline-variant/20">
+<p class="text-[10px] text-secondary uppercase font-bold mb-1">Pool</p>
+<p class="font-bold text-primary">₹3L</p>
+</div>
+</div>
+<div class="mt-auto">
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mb-6 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 85%"></div>
+</div>
+<div class="flex items-center justify-between">
+<button class="bg-primary hover:bg-primary-container text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-colors flex items-center gap-2">
+                                            Watch Live <span class="material-symbols-outlined text-sm" data-icon="play_circle">play_circle</span>
+</button>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors material-symbols-outlined text-secondary text-lg" data-icon="share">share</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors material-symbols-outlined text-secondary text-lg" data-icon="bookmark">bookmark</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 4: Volleyball -->
+<div class="min-w-[320px] md:min-w-[420px] snap-center">
+<div class="bg-surface-container-lowest rounded-tournament-card soft-shadow overflow-hidden group/card hover:-translate-y-2 transition-all duration-300 border border-outline-variant/30 h-full flex flex-col">
+<div class="relative h-56 overflow-hidden">
+<img class="w-full h-full object-cover group-hover/card:scale-110 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGK9FuTTAF_XwGPTQgjc5tW5pxOk16pzWm-uOeopuoNGXvX-mx6z3NquU6ipakpLXEsP71m4aGzyx-Yzp83TRUB6w0HnuYymGManwqnRlUUWj7MF4dUd2cIFbfiwW04wP2Jelt5p_z9tVhK08ds7VCaTE_yLFDQUoeJX_BGxy7ATvGLIZbk7Eh0noiD1TxJkU1AfYQf3SHbn6hwotlfOZdWGC0F28CblO5-Y5a7ZFSotXPqZlqS9RO6c1yUrbl7coo6tYsrPbGaxpo"/>
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-error text-white px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span> LIVE
+                                    </span>
+</div>
+</div>
+<div class="p-6 flex-grow flex flex-col">
+<div class="flex justify-between items-start mb-4">
+<div>
+<p class="text-primary font-bold text-[11px] uppercase tracking-wider mb-1">Volleyball • All India Smashers</p>
+<h3 class="font-headline text-headline-sm text-on-surface">Women's Elite</h3>
+</div>
+<span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[11px] font-semibold">League Stage</span>
+</div>
+<div class="space-y-4 mb-6">
+<div class="flex justify-between items-center bg-surface-container-low p-4 rounded-xl">
+<div class="text-center flex-1">
+<p class="font-bold text-on-surface text-sm line-clamp-1">Kerala Queens</p>
+</div>
+<div class="px-4 text-center">
+<span class="font-headline text-xl font-bold text-primary">Sets 2 - 1</span>
+<p class="text-[10px] font-bold text-error animate-pulse">Set 4: 14-12</p>
+</div>
+<div class="text-center flex-1">
+<p class="font-bold text-on-surface text-sm line-clamp-1">Mizoram Spikers</p>
+</div>
+</div>
+<div class="flex items-center gap-2 text-secondary text-sm">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+<span class="font-body-sm">Gachibowli Stadium, Hyderabad</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 mb-6">
+<div class="bg-surface p-3 rounded-lg text-center border border-outline-variant/20">
+<p class="text-[10px] text-secondary uppercase font-bold mb-1">Teams</p>
+<p class="font-bold text-on-surface">24</p>
+</div>
+<div class="bg-surface p-3 rounded-lg text-center border border-outline-variant/20">
+<p class="text-[10px] text-secondary uppercase font-bold mb-1">Watching</p>
+<p class="font-bold text-on-surface">5k</p>
+</div>
+<div class="bg-surface p-3 rounded-lg text-center border border-outline-variant/20">
+<p class="text-[10px] text-secondary uppercase font-bold mb-1">Pool</p>
+<p class="font-bold text-primary">₹1.5L</p>
+</div>
+</div>
+<div class="mt-auto">
+<div class="w-full bg-surface-container-high h-1.5 rounded-full mb-6 overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 55%"></div>
+</div>
+<div class="flex items-center justify-between">
+<button class="bg-primary hover:bg-primary-container text-white px-6 py-2.5 rounded-lg font-bold text-sm transition-colors flex items-center gap-2">
+                                            Watch Live <span class="material-symbols-outlined text-sm" data-icon="play_circle">play_circle</span>
+</button>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors material-symbols-outlined text-secondary text-lg" data-icon="share">share</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors material-symbols-outlined text-secondary text-lg" data-icon="bookmark">bookmark</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Gradient Overlays for scroll hinting -->
+<div class="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-surface to-transparent pointer-events-none opacity-0 md:group-hover:opacity-100 transition-opacity"></div>
+<div class="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-surface to-transparent pointer-events-none opacity-0 md:group-hover:opacity-100 transition-opacity"></div>
+</div>
+<!-- Footer Button -->
+<div class="mt-12 flex justify-center">
+<button class="group flex items-center gap-3 px-8 py-4 border-2 border-primary text-primary font-bold rounded-full hover:bg-primary hover:text-white transition-all duration-300">
+                    View All Live Tournaments
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface border-t border-outline-variant dark:border-outline py-section-gap-md">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="space-y-4">
+<div class="text-label-md font-headline-sm font-semibold text-on-surface">SmartSportz.in</div>
+<p class="font-body-sm text-body-sm text-secondary">The ultimate performance management system for elite Indian athletic organizations.</p>
+</div>
+<div class="space-y-4">
+<h4 class="font-label-md text-label-md font-bold text-on-surface">Company</h4>
+<ul class="space-y-2">
+<li><a class="text-secondary hover:text-primary transition-colors text-body-sm" href="#">About Us</a></li>
+<li><a class="text-secondary hover:text-primary transition-colors text-body-sm" href="#">Careers</a></li>
+<li><a class="text-secondary hover:text-primary transition-colors text-body-sm" href="#">Press</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-label-md text-label-md font-bold text-on-surface">Resources</h4>
+<ul class="space-y-2">
+<li><a class="text-secondary hover:text-primary transition-colors text-body-sm" href="#">API Documentation</a></li>
+<li><a class="text-secondary hover:text-primary transition-colors text-body-sm" href="#">Support Center</a></li>
+<li><a class="text-secondary hover:text-primary transition-colors text-body-sm" href="#">Status</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h4 class="font-label-md text-label-md font-bold text-on-surface">Legal</h4>
+<ul class="space-y-2">
+<li><a class="text-secondary hover:text-primary transition-colors text-body-sm" href="#">Privacy Policy</a></li>
+<li><a class="text-secondary hover:text-primary transition-colors text-body-sm" href="#">Terms of Service</a></li>
+<li><a class="text-secondary hover:text-primary transition-colors text-body-sm" href="#">Security</a></li>
+</ul>
+</div>
+</div>
+<div class="mt-16 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto border-t border-outline-variant/30 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-body-sm text-body-sm text-secondary">© 2024 SmartSportz.in Enterprise Performance Systems. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="material-symbols-outlined text-secondary hover:text-primary transition-colors" data-icon="brand_awareness" href="#">brand_awareness</a>
+<a class="material-symbols-outlined text-secondary hover:text-primary transition-colors" data-icon="share" href="#">share</a>
+<a class="material-symbols-outlined text-secondary hover:text-primary transition-colors" data-icon="groups" href="#">groups</a>
+</div>
+</div>
+</footer>
+<script>
+        // Optional smooth interaction logic
+        document.querySelectorAll('.snap-center').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                // Potential for localized JS micro-interactions if needed
+            });
+        });
+    </script>
+</body></html>

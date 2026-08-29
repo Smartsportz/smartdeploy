@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SmartSportz.in | Live Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&amp;family=Be+Vietnam+Pro:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#e5eeff",
+                    "primary": "#006c40",
+                    "on-tertiary-fixed-variant": "#7f272f",
+                    "primary-container": "#0b8852",
+                    "primary-fixed-dim": "#72db9d",
+                    "tertiary": "#9e3e44",
+                    "primary-fixed": "#8ef8b7",
+                    "surface-container-lowest": "#ffffff",
+                    "on-background": "#0b1c30",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#d8e3fb",
+                    "surface-tint": "#006d40",
+                    "on-surface": "#0b1c30",
+                    "inverse-primary": "#72db9d",
+                    "tertiary-fixed-dim": "#ffb3b3",
+                    "outline": "#6e7a70",
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-secondary-fixed": "#111c2d",
+                    "surface-bright": "#f8f9ff",
+                    "on-primary-fixed": "#002110",
+                    "surface-container-high": "#dce9ff",
+                    "on-error-container": "#93000a",
+                    "on-secondary-container": "#586377",
+                    "on-tertiary-fixed": "#40000a",
+                    "surface-container-low": "#eff4ff",
+                    "on-surface-variant": "#3e4a41",
+                    "surface": "#f8f9ff",
+                    "tertiary-fixed": "#ffdad9",
+                    "secondary": "#545f73",
+                    "tertiary-container": "#bd565b",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#ffffff",
+                    "secondary-container": "#d5e0f8",
+                    "surface-container-highest": "#d3e4fe",
+                    "inverse-on-surface": "#eaf1ff",
+                    "surface-variant": "#d3e4fe",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "on-tertiary-container": "#ffffff",
+                    "on-primary-fixed-variant": "#00522f",
+                    "inverse-surface": "#213145",
+                    "background": "#f8f9ff",
+                    "outline-variant": "#bdcabe",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#cbdbf5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "18px",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "40px",
+                    "section-gap-lg": "120px",
+                    "container-max": "1280px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "section-gap-md": "80px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Poppins"],
+                    "label-md": ["Be Vietnam Pro"],
+                    "body-md": ["Be Vietnam Pro"],
+                    "label-sm": ["Be Vietnam Pro"],
+                    "body-sm": ["Be Vietnam Pro"],
+                    "headline-sm": ["Poppins"],
+                    "body-lg": ["Be Vietnam Pro"],
+                    "headline-md": ["Poppins"],
+                    "display-lg-mobile": ["Poppins"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-sm": ["24px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["30px", {"lineHeight": "1.3", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "display-lg-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .live-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .3; }
+        }
+        .soft-shadow {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #E2E8F0;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md selection:bg-primary/20">
+<!-- TopNavBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm h-20">
+<div class="flex justify-between items-center max-w-container-max mx-auto px-margin-desktop h-full">
+<div class="flex items-center gap-8">
+<span class="font-display-lg text-headline-md font-bold text-primary">SmartSportz.in</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Home</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Tournaments</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md" href="#">Live Scores</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Results</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Leaderboards</a>
+<a class="text-on-surface-variant font-medium hover:text-primary-container transition-colors duration-200 font-label-md text-label-md" href="#">Sports</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 w-64 focus:ring-2 focus:ring-primary text-body-sm font-body-sm transition-all" placeholder="Search matches..." type="text"/>
+</div>
+<button class="text-primary font-bold px-4 py-2 hover:bg-primary/5 rounded-lg transition-all active:scale-95 duration-150">Login</button>
+<button class="bg-primary text-on-primary font-bold px-6 py-2 rounded-lg hover:bg-primary-container transition-all active:scale-95 duration-150 shadow-sm">Register</button>
+</div>
+</div>
+</header>
+<!-- Main Dashboard Container -->
+<main class="pt-24 pb-section-gap-md max-w-container-max mx-auto px-margin-desktop flex gap-gutter min-h-screen">
+<!-- Left Sidebar: Sports Categories -->
+<aside class="hidden lg:flex flex-col w-64 gap-6 shrink-0 h-[calc(100vh-120px)] sticky top-24">
+<div class="bg-surface-container-lowest p-6 rounded-xl soft-shadow border border-outline-variant/20">
+<h3 class="font-display-lg text-label-md text-on-surface-variant mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">category</span>
+                    SPORTS CATEGORIES
+                </h3>
+<nav class="flex flex-col gap-2">
+<button class="flex items-center gap-3 p-3 rounded-lg bg-primary/5 text-primary font-bold border-l-4 border-primary transition-all">
+<span class="material-symbols-outlined">sports_cricket</span>
+<span class="font-label-md">Cricket</span>
+<span class="ml-auto bg-primary text-on-primary text-[10px] px-1.5 py-0.5 rounded-full">12</span>
+</button>
+<button class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined">sports_soccer</span>
+<span class="font-label-md">Football</span>
+<span class="ml-auto bg-surface-container text-on-surface-variant text-[10px] px-1.5 py-0.5 rounded-full">08</span>
+</button>
+<button class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined">sports_tennis</span>
+<span class="font-label-md">Tennis</span>
+<span class="ml-auto bg-surface-container text-on-surface-variant text-[10px] px-1.5 py-0.5 rounded-full">04</span>
+</button>
+<button class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined">sports_basketball</span>
+<span class="font-label-md">Basketball</span>
+</button>
+<button class="flex items-center gap-3 p-3 rounded-lg text-on-surface-variant hover:bg-surface-container-low transition-all">
+<span class="material-symbols-outlined">sports_esports</span>
+<span class="font-label-md">eSports</span>
+</button>
+</nav>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl soft-shadow border border-outline-variant/20 mt-auto">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional studio portrait of a young athlete with a focused expression, wearing elite emerald green performance sportswear. High-end editorial lighting creates sharp definitions and a premium athletic aesthetic against a soft, light blue architectural background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCd3-SioO4_LsWbkERWAdI-xxmxpFToEWw9iBj4kGo-E6G3Ki58jB2VyULCHAF-QHxG8xdg1cgfWI2Hvm3qtLvEYa9yU1VdwUZmjmh1Q486JSBJLyOMBBaDL3fmuQPfeQZFgitLsvfB7rFXXVF5J9ZtZMbg7O1Txu7OvrtYaMwHLRrDNI37OhchrNuwua8IFe5o4R_6-R2mWkIKcAG1By3yDsvJ5iKV7bFwoRvXhB1bJ9_shMsP1y2tTBFhJvAuU6Stwc1VN9CYm0Bj"/>
+</div>
+<div>
+<p class="font-label-md text-on-surface">Athlete Profile</p>
+<p class="text-body-sm text-outline">Gold Member</p>
+</div>
+</div>
+<button class="w-full py-2 bg-surface-container text-primary font-bold rounded-lg font-label-sm hover:bg-surface-container-high transition-all">View Dashboard</button>
+</div>
+</aside>
+<!-- Center: Main Scoreboards -->
+<section class="flex-1 flex flex-col gap-6 custom-scrollbar">
+<!-- Section Header -->
+<div class="flex justify-between items-end mb-2">
+<div>
+<h2 class="font-display-lg text-headline-sm text-on-surface">Active Matches</h2>
+<p class="text-body-sm text-outline">Real-time performance metrics &amp; live updates</p>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-2 rounded-full border border-outline-variant text-label-sm font-label-sm bg-surface hover:bg-surface-container transition-all">All</button>
+<button class="px-4 py-2 rounded-full bg-primary text-on-primary text-label-sm font-label-sm shadow-sm transition-all">Live</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-label-sm font-label-sm bg-surface hover:bg-surface-container transition-all">Upcoming</button>
+</div>
+</div>
+<!-- Match Card: Cricket -->
+<article class="bg-surface-container-lowest rounded-xl soft-shadow border border-outline-variant/20 overflow-hidden group">
+<div class="bg-surface-container-low px-6 py-3 flex justify-between items-center border-b border-outline-variant/30">
+<span class="flex items-center gap-2 font-label-sm text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-error live-pulse"></span>
+                        LIVE • ICC Men's T20 World Cup
+                    </span>
+<span class="font-label-sm text-primary font-bold">Over 14.4</span>
+</div>
+<div class="p-8">
+<div class="flex items-center justify-between gap-8">
+<!-- Team A -->
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-16 h-16 rounded-full border-4 border-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Official national team logo of India for cricket, featuring circular blue patterns with a vibrant orange and green center. High-fidelity vector style on a clean white background, reflecting premium sports branding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf5OX8R5gh--NlBvDCIShgo8x6oBUUsNHfauWuy1J5usjpJv2dRoK1zjAOh3z10kM_e1xKfqkZ_MezyC73BY0l8cDDVV4quE8LkJwPbroRM4tNtc8cwAyAutSqJzHiEN-1ykcyomoOso1rG2xoriAwiEencj6ny4_kCrbpttiZNOV6zcjwR9iLQiDa7Bazo5AOeXVftlvIyg418_2jVu1lbkgLCVHe3ZfylkQQ93cNs_FKZjFJ9H4BHESYGqNtyhhX2KqSvMduv89o"/>
+</div>
+<span class="font-display-lg text-headline-sm text-on-surface">India</span>
+<span class="font-display-lg text-display-lg text-primary">156/4</span>
+</div>
+<!-- VS Divider -->
+<div class="flex flex-col items-center gap-2 px-8">
+<span class="text-outline font-display-lg text-headline-md opacity-20">VS</span>
+<span class="bg-surface-container text-on-secondary-container px-3 py-1 rounded font-label-sm">IND win %: 64</span>
+</div>
+<!-- Team B -->
+<div class="flex-1 flex flex-col items-center gap-3">
+<div class="w-16 h-16 rounded-full border-4 border-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Official national team logo of England for cricket, featuring the three lions crest in a vibrant red and navy blue execution. Professional minimalist sports emblem on a clean white field with soft shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrX2Qk39HVbPCEtnsnnZBezqYzGxzOTzb2RMxUnJYgu12wCVhoDTf3M6jPSVWB0wqJxIuPftndp_TUiTteYJBzaOxtzdLHPMIxOgOcT6bEjiiLho4sLzYYBPb5wUI9fWlsXHIEc8H020e_-FPUVIDODfn7xY7dgsVfprxxH-Li70kf-hj1addMDclBd3yeKRtFa-BHeIZJM861g131KHcZIFrYjcBTM1qlCFsOSf4Yz4YkFgv8VNx1Zu3wYx0QlHxm_wvfBY_BxoLE"/>
+</div>
+<span class="font-display-lg text-headline-sm text-on-surface">England</span>
+<span class="font-display-lg text-display-lg text-on-surface-variant">Yet to bat</span>
+</div>
+</div>
+<!-- Ball by Ball Strip -->
+<div class="mt-10 pt-6 border-t border-outline-variant/30">
+<p class="font-label-sm text-outline mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">history</span>
+                            LAST 6 BALLS
+                        </p>
+<div class="flex gap-3">
+<span class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container text-on-surface font-bold">1</span>
+<span class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container text-on-surface font-bold">0</span>
+<span class="w-10 h-10 flex items-center justify-center rounded-full bg-error text-on-error font-bold">W</span>
+<span class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-on-primary font-bold">4</span>
+<span class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container text-on-surface font-bold">2</span>
+<span class="w-10 h-10 flex items-center justify-center rounded-full border-2 border-primary text-primary font-extrabold animate-bounce">6</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Match Card: Football -->
+<article class="bg-surface-container-lowest rounded-xl soft-shadow border border-outline-variant/20 overflow-hidden">
+<div class="bg-surface-container-low px-6 py-3 flex justify-between items-center border-b border-outline-variant/30">
+<span class="flex items-center gap-2 font-label-sm text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-error live-pulse"></span>
+                        LIVE • Indian Super League
+                    </span>
+<span class="font-label-sm text-primary font-bold">78' Minutes</span>
+</div>
+<div class="p-6 grid grid-cols-[1fr_auto_1fr] items-center gap-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded bg-surface-container p-2">
+<img class="w-full h-full object-contain" data-alt="A premium soccer club crest for Mumbai City FC, featuring stylized island and sea elements in azure blue and gold. The logo is rendered with clean sharp lines in a minimalist modern sport aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeqHY9UaPPVztJ30lQFrtabGkItD6p53wMDjjw-eThzHMN_Z1FPdiN3EJO7tNXjICqFmQIRdIpEyZzq2vm3mvCC7xL5x5DGZsdDwJ7gJ4Xk4WLEI5AVb7oU3psTbQUVost84zaXiSZQvOnFopTGmA-fNlt_XS8sppNkuHvNetA8L_nDlX6KIY452TIrgkmYfV_kUx1SlqSvZnRJhT9M51dST_UXdKe91Kf9PQisz1-F6D5PZqAuyG8Xsg86ofd3lBSAi_US0VDEo1-"/>
+</div>
+<div>
+<p class="font-headline-sm text-on-surface">Mumbai City FC</p>
+<p class="text-body-sm text-outline">Chhangte 34'</p>
+</div>
+</div>
+<div class="bg-primary-container/10 px-6 py-2 rounded-xl border border-primary/20">
+<span class="font-display-lg text-headline-md text-primary tracking-widest">2 - 1</span>
+</div>
+<div class="flex items-center gap-4 justify-end text-right">
+<div>
+<p class="font-headline-sm text-on-surface">Kerala Blasters</p>
+<p class="text-body-sm text-outline">Luna 12' (P)</p>
+</div>
+<div class="w-12 h-12 rounded bg-surface-container p-2">
+<img class="w-full h-full object-contain" data-alt="A dynamic elephant crest logo for Kerala Blasters FC in vibrant yellow and blue. The design is bold and contemporary, featuring high contrast and clean professional sports branding elements." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDN9DABFnA9pT-U4xzML5KSAXL6jz9GkQgL0ids0HubFDRo6fwQ8fZBPa98ujl6dslfuWVQ3BLdPtV6668yfyCAYW1VJOHbKu89pHC1UwgyhtjRnw563Z9NFS0EtUrs2YJSf99ReGFdbMEEGUJgFOOujNdT63b6J6THkURYnsHOebxeYvEA4827SuWzP9T-N2Wg0f-gnUmzWbSTL5mOSRYSWY0T6KYQZ2wry7rT6vOiA5zUmhhFXzd63AW4RhsvLA3Z4cZsRb6KdyaD"/>
+</div>
+</div>
+</div>
+<!-- Match Stats Preview -->
+<div class="px-6 pb-6 grid grid-cols-3 gap-8">
+<div class="space-y-1">
+<div class="flex justify-between text-[10px] font-bold text-outline uppercase">Possession</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 58%"></div>
+</div>
+<div class="flex justify-between text-[11px] font-medium"><span class="text-primary">58%</span><span>42%</span></div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[10px] font-bold text-outline uppercase">Shots on Goal</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 70%"></div>
+</div>
+<div class="flex justify-between text-[11px] font-medium"><span class="text-primary">12</span><span>5</span></div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[10px] font-bold text-outline uppercase">Pass Accuracy</div>
+<div class="h-1.5 w-full bg-surface-container rounded-full overflow-hidden flex">
+<div class="h-full bg-primary" style="width: 84%"></div>
+</div>
+<div class="flex justify-between text-[11px] font-medium"><span class="text-primary">84%</span><span>76%</span></div>
+</div>
+</div>
+</article>
+<!-- Ad/Promotion Banner -->
+<div class="relative rounded-xl h-32 overflow-hidden flex items-center p-8 text-on-primary">
+
+<div class="relative z-10">
+<h3 class="font-headline-sm">Premium Stats Unlocked</h3>
+<p class="text-body-sm opacity-90">Get AI-driven match predictions and deep player heatmaps.</p>
+</div>
+<button class="relative z-10 ml-auto bg-on-primary text-primary px-6 py-2 rounded-lg font-bold shadow-lg hover:scale-105 transition-transform">Go Pro</button>
+</div>
+</section>
+<!-- Right: Trending & Polls -->
+<aside class="hidden xl:flex flex-col w-80 gap-6 shrink-0 h-[calc(100vh-120px)] sticky top-24 overflow-y-auto custom-scrollbar pr-2">
+<!-- Trending Matches -->
+<div class="bg-surface-container-lowest p-6 rounded-xl soft-shadow border border-outline-variant/20">
+<h3 class="font-display-lg text-label-md text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+                    TRENDING NOW
+                </h3>
+<div class="flex flex-col gap-4">
+<div class="p-3 rounded-lg hover:bg-surface-container-low transition-all cursor-pointer group">
+<p class="text-xs text-outline font-bold mb-1">PRO KABADDI LEAGUE</p>
+<p class="font-label-md text-on-surface group-hover:text-primary">Patna Pirates vs Jaipur Pink Panthers</p>
+<p class="text-xs text-primary mt-1">Starts in 45m</p>
+</div>
+<div class="p-3 rounded-lg hover:bg-surface-container-low transition-all cursor-pointer group">
+<p class="text-xs text-outline font-bold mb-1">WIMBLEDON FINALS</p>
+<p class="font-label-md text-on-surface group-hover:text-primary">Carlos Alcaraz vs Novak Djokovic</p>
+<p class="text-xs text-outline mt-1">Reviewing stats...</p>
+</div>
+<div class="p-3 rounded-lg hover:bg-surface-container-low transition-all cursor-pointer group border-l-2 border-primary-container">
+<p class="text-xs text-outline font-bold mb-1">NBA REGULAR SEASON</p>
+<p class="font-label-md text-on-surface group-hover:text-primary">Lakers vs Warriors</p>
+<p class="text-xs text-error font-bold mt-1">Live Updates</p>
+</div>
+</div>
+</div>
+<!-- Polls Widget -->
+<div class="bg-surface-container-lowest p-6 rounded-xl soft-shadow border border-outline-variant/20">
+<h3 class="font-display-lg text-label-md text-on-surface-variant mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">poll</span>
+                    COMMUNITY POLL
+                </h3>
+<div class="space-y-4">
+<p class="text-body-sm font-semibold text-on-surface">Who will be the Man of the Match in IND vs ENG?</p>
+<div class="space-y-2">
+<button class="w-full relative p-3 rounded-lg border border-outline-variant text-left hover:bg-surface-container transition-all overflow-hidden group">
+<div class="absolute inset-0 bg-primary/10 w-[62%] transition-all"></div>
+<div class="relative flex justify-between items-center">
+<span class="font-label-md">Virat Kohli</span>
+<span class="text-primary font-bold">62%</span>
+</div>
+</button>
+<button class="w-full relative p-3 rounded-lg border border-outline-variant text-left hover:bg-surface-container transition-all overflow-hidden">
+<div class="absolute inset-0 bg-primary/10 w-[24%] transition-all"></div>
+<div class="relative flex justify-between items-center">
+<span class="font-label-md">Jos Buttler</span>
+<span class="text-outline font-bold">24%</span>
+</div>
+</button>
+<button class="w-full relative p-3 rounded-lg border border-outline-variant text-left hover:bg-surface-container transition-all overflow-hidden">
+<div class="absolute inset-0 bg-primary/10 w-[14%] transition-all"></div>
+<div class="relative flex justify-between items-center">
+<span class="font-label-md">Others</span>
+<span class="text-outline font-bold">14%</span>
+</div>
+</button>
+</div>
+<p class="text-[10px] text-outline text-center">4,209 fans have voted</p>
+</div>
+</div>
+<!-- Performance Metric Tile -->
+<div class="bg-primary text-on-primary p-6 rounded-xl soft-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">insights</span>
+<span class="bg-on-primary/20 text-[10px] px-2 py-1 rounded font-bold">UP 12%</span>
+</div>
+<p class="font-display-lg text-headline-md leading-none">8.2k</p>
+<p class="font-label-sm opacity-80 uppercase tracking-widest mt-1">Real-time Listeners</p>
+<div class="mt-4 flex -space-x-2">
+<div class="w-8 h-8 rounded-full border-2 border-primary bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Close up of a female sports fan's face with light emerald green face paint, expressive joy, bright stadium lighting, bokeh background of a crowd. High energy sports atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBg6izh3bzMdFE-dRHK0zKiazg6N9OmUJhgpOd7_USZbej9tziMzKV5ieiaDgcCgOyEjxPDh2_pBmOfwyrhdjwwY5rNASssde_vODYbdpk8GFFV_zij2pDkfVdvl2arqh5UERb3snXYtHMPMJe1wAztm1a8KFME-mrFTb2AHGv9LBNGMCYgYQZxT-tD-bB_xPq-KB0ReivNb7f11ugKeKL-AoMhWaFWreuPHiT2wD82KZNL5PYxNtxfuvR2lai8SGR4e12O1pHfgAXq"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-primary bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A focused male fan in a professional stadium setting, wearing team colors, looking intensely at a mobile device with light reflecting on his face. Cinematic lighting, modern athletic aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsRTHIjSAbO5OB1a732kuPWwifv2_kvyQHeUASape9UQPQDi4GydQpk0IeXz9OijQYtryQA1rkxs10xxou1oS8w5UccliRrTQ7fdS7-pSw86YNweAI2rop6XdtfxxUWQMhMFG0-zWRuDuh1xmqM4M-p5xp1xtZu6DsxWERxNau22E2AYJ_KcOnf6Dv61SjVuP7yWDFRrBfQ6a0fJneMRyAWqhaBby9cb5mc5Hhcv-NkXw0Hc5g4W2VwveCwpQOYoiz9eT3rSvnu2PA"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-primary bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Group of diverse sports fans cheering in a high-tech stadium lounge, wearing premium team jerseys. Vibrant colors, clean professional photography style, shallow depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDLh6bQQYFWw3ZTZpSKLGFsHY3uRO7Pnrqzh6VEHI2uMo0YXQytDJ5LyDlOHPra2IdHHd3JE4-0ghtC9rW4MRAhPHicv3bpbtnsyR1Ili7jCGnKgvUn4-3f0FR6dAgjHwLwtYRr6I6nr3ySfkfzcsvxC7U0-8gU4zYqGqm34iH_Ff3Fr6fyykdDp6VaDmOtXfBvtKcts67v0ERIz4JX_QwfjQm-7Nr0_acCTkvMRGcnLgaLgE7gTCRrzsCSCWOe174K2QKY_tzyRhmK"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-primary bg-surface-container-high flex items-center justify-center text-[10px] font-bold">+7k</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Footer -->
+<footer class="w-full relative bg-surface-container-lowest dark:bg-surface-dim border-t border-outline-variant/30">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter max-w-container-max mx-auto px-margin-desktop py-section-gap-md">
+<div class="space-y-4">
+<span class="font-display-lg text-headline-md font-bold text-primary">SmartSportz.in</span>
+<p class="text-body-sm text-on-surface-variant max-w-xs">
+                    The ultimate destination for elite performance tracking and real-time athletic data management. Empowering teams and fans globally.
+                </p>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform">face_nod</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform">camera</span>
+<span class="material-symbols-outlined text-primary cursor-pointer hover:scale-110 transition-transform">alternate_email</span>
+</div>
+</div>
+<div>
+<h4 class="font-label-md text-on-surface mb-6 uppercase tracking-widest">Platform</h4>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors" href="#">Teams</a></li>
+<li><a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors" href="#">Players</a></li>
+<li><a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors" href="#">Gallery</a></li>
+<li><a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors" href="#">Sponsors</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-on-surface mb-6 uppercase tracking-widest">Resources</h4>
+<ul class="space-y-4">
+<li><a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors" href="#">Blogs</a></li>
+<li><a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors" href="#">FAQ</a></li>
+<li><a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors" href="#">Contact</a></li>
+<li><a class="text-on-surface-variant font-body-sm hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-on-surface mb-6 uppercase tracking-widest">Newsletter</h4>
+<p class="text-body-sm text-on-surface-variant mb-4">Stay ahead with real-time match alerts and insights.</p>
+<div class="flex">
+<input class="bg-surface-container border-none rounded-l-lg px-4 py-2 w-full focus:ring-1 focus:ring-primary" placeholder="Email address" type="email"/>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-r-lg">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop py-6 border-t border-outline-variant/10 text-center">
+<p class="text-on-surface-variant font-body-sm">© 2024 SmartSportz.in. All rights reserved.</p>
+</div>
+</footer>
+<script>
+        // Micro-interaction: Randomly update some scores or text to simulate "live" data
+        function simulateLiveData() {
+            const scores = document.querySelectorAll('.live-update-score');
+            scores.forEach(score => {
+                if(Math.random() > 0.8) {
+                    score.classList.add('scale-110', 'text-primary');
+                    setTimeout(() => score.classList.remove('scale-110', 'text-primary'), 1000);
+                }
+            });
+        }
+        setInterval(simulateLiveData, 5000);
+    </script>
+</body></html>
