@@ -1,0 +1,43 @@
+# SmartSportz mail server - docker-mailserver
+#
+# Deployed SEPARATELY from the application stack, at /opt/mailserver.
+# scripts/deploy.sh only manages the root docker-compose.yml, so it will
+# never touch, recreate, or prune anything defined here.
+#
+# Deploy with deploy/mailserver/setup.sh - it runs the preflight checks
+# (outbound :25, PTR, A record, TLS cert) before starting anything.
+
+services:
+  mailserver:
+    image: ghcr.io/docker-mailserver/docker-mailserver:15.0.2
+    container_name: mailserver
+    hostname: mail.smartsportz.in
+    restart: unless-stopped
+    env_file: ./mailserver.env
+
+    ports:
+      - "25:25"     # inbound MX. Must be open in BOTH directions or no mail flows.
+      - "587:587"   # submission, STARTTLS - what the app uses
+      - "465:465"   # submission, implicit TLS
+      - "993:993"   # IMAPS, for reading the mailbox
+
+    volumes:
+      - ./data/mail-data/:/var/mail/
+      - ./data/mail-state/:/var/mail-state/
+      - ./data/mail-logs/:/var/log/mail/
+      - ./data/config/:/tmp/docker-mailserver/
+      # Read-only: the cert is owned by certbot on the host. The renewal hook
+      # installed by setup.sh restarts this container when it is renewed.
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /etc/localtime:/etc/localtime:ro
+
+    # Required by fail2ban to manage its own iptables rules.
+    cap_add:
+      - NET_ADMIN
+
+    healthcheck:
+      test: ["CMD-SHELL", "ss --listening --tcp | grep -P 'LISTEN.+:smtp' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
