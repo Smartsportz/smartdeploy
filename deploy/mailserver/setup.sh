@@ -246,6 +246,28 @@ fi
 # START
 # ============================================================
 
+# ---- create the first mailbox BEFORE starting ----
+#
+# docker-mailserver refuses to start Dovecot until at least one account
+# exists, and shuts down after 120s of waiting. Creating the account after
+# "up -d" therefore never succeeds - the container is dead before the health
+# check can pass. The documented fix is a one-shot container that writes
+# postfix-accounts.cf into the config volume first.
+ACCOUNTS="$INSTALL_DIR/data/config/postfix-accounts.cf"
+IMAGE=$(grep -oP 'image:\s*\K\S+' "$INSTALL_DIR/compose.yaml" | head -1)
+
+if [ -f "$ACCOUNTS" ] && grep -q "^$MAILBOX|" "$ACCOUNTS"; then
+    success "$MAILBOX already provisioned."
+else
+    echo ""
+    info "Creating $MAILBOX - you will be prompted for its password."
+    docker run --rm -it \
+        -v "$INSTALL_DIR/data/config/:/tmp/docker-mailserver/" \
+        "$IMAGE" setup email add "$MAILBOX"
+    [ -f "$ACCOUNTS" ] || { error "Account creation failed - $ACCOUNTS was not written."; exit 1; }
+    success "Mailbox created."
+fi
+
 info "Starting the mail server..."
 mail_compose up -d
 
@@ -265,15 +287,6 @@ done
 # ============================================================
 # MAILBOX + DKIM
 # ============================================================
-
-if docker exec mailserver setup email list 2>/dev/null | grep -q "$MAILBOX"; then
-    success "$MAILBOX already exists."
-else
-    echo ""
-    info "Creating $MAILBOX - you will be prompted for its password."
-    docker exec -ti mailserver setup email add "$MAILBOX"
-    success "Mailbox created."
-fi
 
 if [ ! -f "$INSTALL_DIR/data/config/opendkim/keys/$DOMAIN/mail.txt" ]; then
     info "Generating the DKIM key..."
