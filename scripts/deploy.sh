@@ -153,7 +153,14 @@ compose_ps_json() {
 
 port_owner() {
     # Prints something if the TCP port is already bound on the host.
-    ss -ltn "( sport = :$1 )" 2>/dev/null | tail -n +2 | grep -q . && echo busy || true
+    #
+    # Capture the output instead of piping into `grep -q`. Under `set -o
+    # pipefail`, grep -q exits on the first matching line, the upstream
+    # command dies of SIGPIPE, and the pipeline reports 141 even though the
+    # match succeeded - a timing-dependent false negative.
+    local listeners
+    listeners=$(ss -ltn "( sport = :$1 )" 2>/dev/null | tail -n +2)
+    [ -n "$listeners" ] && echo busy || true
 }
 
 free_mb() {
@@ -504,13 +511,17 @@ success "Compose configuration is valid."
 
 info "Checking host ports..."
 
+# Resolved once, outside the loop: the answer cannot change between ports,
+# and calling it per-port made the SIGPIPE race above fire intermittently.
+RUNNING_IDS=$(compose ps -q 2>/dev/null || true)
+
 conflict=0
 while read -r host_port; do
     [ -n "$host_port" ] || continue
     if [ -n "$(port_owner "$host_port")" ]; then
         # Already bound by our own project? Then it is just the running
         # version of this stack and `up` will hand the port over.
-        if compose ps -q 2>/dev/null | grep -q .; then
+        if [ -n "$RUNNING_IDS" ]; then
             info "Port $host_port is held by the current deployment."
         else
             error "Port $host_port is already in use by another process."
