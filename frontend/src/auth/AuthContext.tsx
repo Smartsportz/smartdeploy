@@ -56,6 +56,7 @@ type AuthContextValue = {
   startSignup: (payload: SignupPayload) => Promise<OtpChallenge>;
   verifySignup: (challengeId: string, code: string) => Promise<AuthUser>;
   logout: () => void;
+  updateUser: (user: AuthUser) => void;
   canAccessRole: (roles: Role[]) => boolean;
 };
 
@@ -174,6 +175,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setUser(null);
       setToken(null);
       showToast("success", "Signed Out", "You have been signed out.");
+    },
+    updateUser(updatedUser: AuthUser) {
+      localStorage.setItem(USER_KEY, JSON.stringify(updatedUser));
+      setUser(updatedUser);
     },
     canAccessRole(roles: Role[]) {
       return Boolean(user && roles.includes(user.role));

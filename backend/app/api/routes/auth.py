@@ -16,7 +16,7 @@ from app.core.config import settings
 from app.core.responses import ok
 from app.core.security import create_token, decode_token, hash_password, verify_password
 from app.db.database import execute, row
-from app.schemas import ChangePasswordRequest, CurrentPasswordVerifyRequest, ForgotPasswordResetRequest, ForgotPasswordStartRequest, GoogleLoginRequest, LoginOtpVerifyRequest, LoginRequest, RefreshTokenRequest, SignupStartRequest, SignupVerifyRequest
+from app.schemas import ChangePasswordRequest, CurrentPasswordVerifyRequest, ForgotPasswordResetRequest, ForgotPasswordStartRequest, GoogleLoginRequest, LoginOtpVerifyRequest, LoginRequest, RefreshTokenRequest, SignupStartRequest, SignupVerifyRequest, UserProfileUpdatePayload
 from app.services.audit import log
 from app.services.notifications import generate_otp, send_email_otp, send_whatsapp_message
 from app.services.runtime_state import runtime_state
@@ -101,16 +101,16 @@ def _challenge_response(challenge_id: str, channel: str, target: str, delivery_m
 def _deliver_otp(channel: str, target: str, code: str):
     if settings.otp_delivery_mode in {"local", "email"} or channel == "email":
         delivery = send_email_otp(target, code)
-        provider = "smtp" if delivery.ok else "failed"
+        provider = delivery.provider if delivery.ok else "failed"
         return provider, delivery.message
     delivery = send_whatsapp_message(target, f"Your Smart Sportz WhatsApp verification code is {code}.")
-    provider = "whatsapp" if delivery.ok else "failed"
+    provider = delivery.provider if delivery.ok else "failed"
     return provider, delivery.message
 
 
 def _deliver_privileged_otp(target_email: str, code: str):
     delivery = send_email_otp(target_email, code)
-    provider = "smtp" if delivery.ok else "failed"
+    provider = delivery.provider if delivery.ok else "failed"
     return provider, delivery.message
 
 
@@ -148,12 +148,13 @@ def login(payload: LoginRequest):
         code = generate_otp(4)
         target = user["email"]
         provider, message = _deliver_privileged_otp(target, code)
-        if provider != "smtp":
+        if provider not in {"smtp", "brevo", "resend", "local"}:
             log(user["email"], "login_otp_failed", "auth", user["id"], message)
             raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Email OTP delivery is unavailable")
         challenge_id = _store_otp_challenge("privileged_login", {"userId": user["id"]}, "email", target, code, provider)
-        log(user["email"], "login_otp_sent", "auth", user["id"], f"Privileged OTP sent by email via {provider}")
-        return _challenge_response(challenge_id, "email", target, "A verification code has been sent to your email address.")
+        log(user["email"], "login_otp_sent", "auth", user["id"], f"Privileged OTP sent via {provider}")
+        user_message = message if provider == "local" else "A verification code has been sent to your email address."
+        return _challenge_response(challenge_id, "email", target, user_message)
     log(user["email"], "login_success", "auth", user["id"], "User logged in")
     return _issue_session(user, "Login successful")
 
@@ -221,7 +222,7 @@ def signup_start(payload: SignupStartRequest):
     code = generate_otp(4)
     target = str(payload.email)
     provider, message = _deliver_otp("email", target, code)
-    if provider != "smtp":
+    if provider not in {"smtp", "brevo", "resend", "local", "whatsapp", "twilio"}:
         raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Email OTP delivery is unavailable")
     challenge_id = _store_otp_challenge(
         "signup",
@@ -237,7 +238,8 @@ def signup_start(payload: SignupStartRequest):
         provider,
     )
     log(str(payload.email), "signup_otp_sent", "auth", challenge_id, message)
-    return _challenge_response(challenge_id, "email", target, "A verification code has been sent to your email address.")
+    user_message = message if provider == "local" else "A verification code has been sent to your email address."
+    return _challenge_response(challenge_id, "email", target, user_message)
 
 
 @router.post("/forgot-password/start")
@@ -249,11 +251,12 @@ def forgot_password_start(payload: ForgotPasswordStartRequest):
     if user:
         code = generate_otp(4)
         provider, message = _deliver_otp("email", target, code)
-        if provider != "smtp":
+        if provider not in {"smtp", "brevo", "resend", "local", "whatsapp", "twilio"}:
             raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="Email OTP delivery is unavailable")
         challenge_id = _store_otp_challenge("password_reset", {"userId": user["id"]}, "email", target, code, provider)
         log(target, "password_reset_otp_sent", "auth", user["id"], message)
-        return _challenge_response(challenge_id, "email", target, _generic_recovery_message(target))
+        user_message = message if provider == "local" else _generic_recovery_message(target)
+        return _challenge_response(challenge_id, "email", target, user_message)
     fake_challenge_id = _store_otp_challenge("password_reset_missing", {"email": str(payload.email)}, "email", target, generate_otp(4), "missing")
     log(target, "password_reset_requested_missing", "auth", target, "Password reset requested for missing account")
     return _challenge_response(fake_challenge_id, "email", target, _generic_recovery_message(target))
@@ -386,3 +389,21 @@ def logout(user: dict = Depends(current_user), authorization: str | None = Heade
             runtime_state.revoke_token(payload["jti"], ttl)
     log(user["email"], "logout", "auth", user["id"], "User logged out")
     return ok(message="Logged out")
+
+
+@router.patch("/profile")
+def update_profile(payload: UserProfileUpdatePayload, user: dict = Depends(current_user)):
+    user_id = user["id"]
+    new_email = str(payload.email).lower()
+    email_owner = row("SELECT id FROM users WHERE email = ? AND id <> ?", (new_email, user_id))
+    if email_owner:
+        raise HTTPException(status_code=409, detail="This email is already registered to another account")
+    
+    execute(
+        "UPDATE users SET name = ?, email = ?, phone = ? WHERE id = ?",
+        (payload.name, new_email, payload.phone, user_id),
+    )
+    log(user["email"], "profile_updated", "user", user_id, f"Profile updated: name='{payload.name}', email='{new_email}'")
+    updated_user = row("SELECT * FROM users WHERE id = ?", (user_id,))
+    return ok(_user_payload(updated_user), "Profile updated successfully")
+

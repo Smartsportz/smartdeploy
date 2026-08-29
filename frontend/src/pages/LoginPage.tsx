@@ -222,9 +222,7 @@ export function LoginPage({ recovery = false }: { recovery?: boolean }) {
           <h1>{recovery ? "Forgot Password?" : mode === "signup" ? "Create Account" : "Welcome Back"}</h1>
           <p>
             {challenge
-              ? challenge.channel === "email"
-                ? `Enter the verification code sent to ${challenge.target}.`
-                : `Enter the verification code sent to ${challenge.target}.`
+              ? challenge.deliveryMessage || `Enter the verification code sent to ${challenge.target}.`
               : recovery
                 ? "Enter your email and verify the account by verification code."
                 : mode === "signup"
