@@ -1,0 +1,27 @@
+# Secrets - never commit these. Real values live in /opt/smartdeploy/.env
+# on the server. Only .env.example belongs in git.
+.env
+.env.*
+!.env.example
+backend/.env
+frontend/.env.local
+
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Build output
+frontend/dist/
+frontend/.vite/
+
+# Runtime data
+backend/storage/
+*.db
+*.sqlite3
+
+# Logs
+*.log
+logs/
