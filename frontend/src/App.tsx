@@ -57,7 +57,9 @@ const UserDashboardPage = lazyNamed(() => import("./pages/UserDashboardPage"), "
 const UserSectionPage = lazyNamed(() => import("./pages/PortalSectionPage"), "UserSectionPage");
 const UtilityDetailPage = lazyNamed(() => import("./pages/UtilityDetailPage"), "UtilityDetailPage");
 const RoleProgramsPage = lazyNamed(() => import("./pages/RoleProgramsPage"), "RoleProgramsPage");
+const SendInfoPage = lazyNamed(() => import("./pages/SendInfoPage"), "SendInfoPage");
 const BracketWorkspacePage = lazyNamed(() => import("./pages/BracketPages"), "BracketWorkspacePage");
+
 
 function RouteSkeleton() {
   return null;
@@ -216,6 +218,7 @@ export default function App() {
           <Route path="/management/matches" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="matches" /></ProtectedRoute>} />
           <Route path="/management/players" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="players" /></ProtectedRoute>} />
           <Route path="/management/announcements" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="announcements" /></ProtectedRoute>} />
+          <Route path="/management/send-info" element={<ProtectedRoute roles={["management", "super_admin"]}><SendInfoPage role="management" /></ProtectedRoute>} />
           <Route path="/management/news" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="news" /></ProtectedRoute>} />
           <Route path="/management/gallery" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="gallery" /></ProtectedRoute>} />
           <Route path="/management/reports" element={<ProtectedRoute roles={["management"]}><ManagementSectionPage section="reports" /></ProtectedRoute>} />
@@ -228,7 +231,9 @@ export default function App() {
           <Route path="/super-admin/programs" element={<ProtectedRoute roles={["super_admin"]}><RoleProgramsPage role="super_admin" /></ProtectedRoute>} />
           <Route path="/super-admin/*" element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="/admin/dashboard" element={<ProtectedRoute roles={["super_admin"]}><AdminPage /></ProtectedRoute>} />
+          <Route path="/admin/send-info" element={<ProtectedRoute roles={["super_admin"]}><SendInfoPage role="admin" /></ProtectedRoute>} />
           <Route path="/admin/tournaments/new" element={<ProtectedRoute roles={["super_admin"]}><AdminTournamentEditorPage /></ProtectedRoute>} />
+
           <Route path="/admin/tournaments/:slug/edit" element={<ProtectedRoute roles={["super_admin"]}><AdminTournamentEditorPage /></ProtectedRoute>} />
           <Route path="/admin/group-bracket" element={<ProtectedRoute roles={["super_admin"]}><BracketWorkspacePage /></ProtectedRoute>} />
           <Route path="/admin/tournaments/:slug/group-bracket" element={<ProtectedRoute roles={["super_admin"]}><BracketWorkspacePage /></ProtectedRoute>} />

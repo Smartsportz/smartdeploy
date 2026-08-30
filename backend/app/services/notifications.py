@@ -87,12 +87,18 @@ def send_whatsapp_message(phone: str, message: str) -> DeliveryResult:
         return DeliveryResult(False, "twilio", str(exc))
 
 
-def send_email(to_email: str, subject: str, html: str, text: str | None = None) -> DeliveryResult:
+def send_email(
+    to_email: str,
+    subject: str,
+    html: str,
+    text: str | None = None,
+    attachments: list[dict[str, Any]] | None = None,
+) -> DeliveryResult:
     if not settings.smtp_host or not settings.smtp_username or not settings.smtp_password:
         if settings.notification_delivery_mode == "whatsapp":
             return DeliveryResult(False, "smtp", "SMTP credentials are not configured")
         if settings.email_provider == "brevo":
-            return send_brevo_email(to_email, subject, html, text)
+            return send_brevo_email(to_email, subject, html, text, attachments=attachments)
         if not settings.resend_api_key:
             return DeliveryResult(False, "resend", "RESEND_API_KEY is not configured")
         delivery_to = settings.resend_test_to_email if settings.resend_force_test_recipient else to_email
@@ -107,6 +113,14 @@ def send_email(to_email: str, subject: str, html: str, text: str | None = None) 
             }
             if text:
                 params["text"] = text
+            if attachments:
+                params["attachments"] = [
+                    {
+                        "filename": att.get("filename") or att.get("name") or "attachment.pdf",
+                        "content": base64.b64encode(att["content"]).decode("utf-8") if isinstance(att["content"], bytes) else str(att["content"]),
+                    }
+                    for att in attachments
+                ]
             try:
                 email = resend.Emails.send(params)
                 message = f"Email queued{redirect_note}"
@@ -123,6 +137,14 @@ def send_email(to_email: str, subject: str, html: str, text: str | None = None) 
         }
         if text:
             body["text"] = text
+        if attachments:
+            body["attachments"] = [
+                {
+                    "filename": att.get("filename") or att.get("name") or "attachment.pdf",
+                    "content": base64.b64encode(att["content"]).decode("utf-8") if isinstance(att["content"], bytes) else str(att["content"]),
+                }
+                for att in attachments
+            ]
         request = urllib.request.Request(
             "https://api.resend.com/emails",
             data=json.dumps(body).encode("utf-8"),
@@ -137,12 +159,37 @@ def send_email(to_email: str, subject: str, html: str, text: str | None = None) 
             return DeliveryResult(False, "resend", str(exc))
 
     delivery_to = to_email
+    sender_email = settings.smtp_sender_email or settings.smtp_username or "info@liyansvastra.com"
+    domain = sender_email.split("@")[1] if "@" in sender_email else "smartsportz.in"
+
+    from email.utils import formatdate, make_msgid
+
     message = EmailMessage()
-    message["From"] = f"{settings.smtp_sender_name} <{settings.smtp_sender_email or settings.smtp_username}>"
+    message["From"] = f"{settings.smtp_sender_name} <{sender_email}>"
     message["To"] = delivery_to
+    message["Reply-To"] = f"{settings.smtp_sender_name} <{sender_email}>"
     message["Subject"] = subject
+    message["Date"] = formatdate(localtime=True)
+    message["Message-ID"] = make_msgid(domain=domain)
+    message["X-Mailer"] = "SmartSportz Platform v1.0"
+    message["List-Unsubscribe"] = f"<mailto:{sender_email}?subject=unsubscribe>"
     message.set_content(text or "Please view this message in an HTML-capable mail client.")
     message.add_alternative(html, subtype="html")
+
+    if attachments:
+        for att in attachments:
+            content = att.get("content")
+            if isinstance(content, str):
+                try:
+                    content_bytes = base64.b64decode(content)
+                except Exception:
+                    content_bytes = content.encode("utf-8")
+            else:
+                content_bytes = bytes(content or b"")
+            filename = att.get("filename") or att.get("name") or "document.pdf"
+            content_type = att.get("content_type", "application/pdf")
+            maintype, subtype = content_type.split("/", 1) if "/" in content_type else ("application", "pdf")
+            message.add_attachment(content_bytes, maintype=maintype, subtype=subtype, filename=filename)
     try:
         if settings.smtp_use_ssl:
             with smtplib.SMTP_SSL(settings.smtp_host, settings.smtp_port, timeout=15) as client:
@@ -159,7 +206,13 @@ def send_email(to_email: str, subject: str, html: str, text: str | None = None) 
         return DeliveryResult(False, "smtp", str(exc))
 
 
-def send_brevo_email(to_email: str, subject: str, html: str, text: str | None = None) -> DeliveryResult:
+def send_brevo_email(
+    to_email: str,
+    subject: str,
+    html: str,
+    text: str | None = None,
+    attachments: list[dict[str, Any]] | None = None,
+) -> DeliveryResult:
     if not settings.brevo_api_key:
         return DeliveryResult(False, "brevo", "BREVO_API_KEY is not configured")
     delivery_to = settings.brevo_test_to_email if settings.brevo_force_test_recipient else to_email
@@ -172,6 +225,16 @@ def send_brevo_email(to_email: str, subject: str, html: str, text: str | None = 
     }
     if text:
         payload["textContent"] = text
+    if attachments:
+        payload["attachment"] = []
+        for att in attachments:
+            content = att.get("content")
+            if isinstance(content, bytes):
+                b64_content = base64.b64encode(content).decode("utf-8")
+            else:
+                b64_content = str(content)
+            filename = att.get("filename") or att.get("name") or "document.pdf"
+            payload["attachment"].append({"name": filename, "content": b64_content})
     request = urllib.request.Request(
         "https://api.brevo.com/v3/smtp/email",
         data=json.dumps(payload).encode("utf-8"),
@@ -218,70 +281,15 @@ def send_email_otp(to_email: str, code: str) -> DeliveryResult:
     if settings.otp_delivery_mode == "local":
         print(f"[OTP LOCAL] Verification code for {to_email}: {code}", flush=True)
         return DeliveryResult(True, "local", f"Local development code: {code}")
-    # SpamAssassin's HTML_IMAGE_ONLY_12 rule (-1.6) fires when a message has
-    # little text relative to its HTML weight. The previous version of this
-    # template was four short lines, which tripped it every time - and the
-    # tracking pixel the ESP injects counts as an image. Keeping a decent
-    # amount of real prose here is what keeps the spam score down, so resist
-    # trimming this back to a bare code.
     html = f"""
-    <div style="font-family:Arial,Helvetica,sans-serif;line-height:1.6;color:#0b1b33;max-width:560px">
-      <h2 style="margin:0 0 16px">Verify your Smart Sportz account</h2>
-
-      <p>Hello,</p>
-
-      <p>We received a request to verify this email address for a Smart Sportz
-      account. Enter the verification code below on the sign-in screen to
-      continue. The code is valid for a short time only, so please use it
-      straight away.</p>
-
-      <p style="font-size:28px;font-weight:800;color:#007a4d;letter-spacing:4px;margin:24px 0">{code}</p>
-
-      <p>For your security, never share this code with anyone. Smart Sportz
-      staff will never ask you for it by phone, email or message. If someone
-      asks you for this code, do not give it to them and report it to us.</p>
-
-      <p>If you did not request this code, you can safely ignore this email.
-      Your account remains secure and no changes have been made. Somebody may
-      have entered your email address by mistake.</p>
-
-      <p>Codes are single use. Once you have entered it, it cannot be used
-      again, and requesting a new code immediately invalidates any earlier one.
-      If the code has already expired by the time you reach the sign-in screen,
-      simply request another and the most recent code will be the valid one.</p>
-
-      <p>Having trouble? Make sure you are entering the code on the same device
-      and browser where you started signing in, and check that you have typed
-      all four digits with no spaces before or after them.</p>
-
-      <p style="margin-top:28px">Thanks,<br>The Smart Sportz team</p>
-
-      <hr style="border:none;border-top:1px solid #dde3ec;margin:28px 0">
-
-      <p style="font-size:12px;color:#5b6b83">
-        This message was sent to {to_email} because a verification code was
-        requested for a Smart Sportz account. This is an automated message and
-        replies to it are not monitored.
-      </p>
+    <div style="font-family:Arial,sans-serif;line-height:1.5;color:#0b1b33">
+      <h2>Verify your Smart Sportz account</h2>
+      <p>Your verification code is:</p>
+      <p style="font-size:28px;font-weight:800;color:#007a4d;letter-spacing:4px">{code}</p>
+      <p>This code expires soon. Do not share it with anyone.</p>
     </div>
     """
-    text = (
-        "Verify your Smart Sportz account\n\n"
-        "Hello,\n\n"
-        "We received a request to verify this email address for a Smart Sportz "
-        "account. Enter the verification code below on the sign-in screen to "
-        "continue. The code is valid for a short time only, so please use it "
-        "straight away.\n\n"
-        f"    {code}\n\n"
-        "For your security, never share this code with anyone. Smart Sportz "
-        "staff will never ask you for it by phone, email or message.\n\n"
-        "If you did not request this code, you can safely ignore this email. "
-        "Your account remains secure and no changes have been made.\n\n"
-        "Thanks,\nThe Smart Sportz team\n\n"
-        f"This message was sent to {to_email} because a verification code was "
-        "requested for a Smart Sportz account. Replies are not monitored.\n"
-    )
-    delivery = send_email(to_email, "Smart Sportz verification code", html, text)
+    delivery = send_email(to_email, "Smart Sportz verification code", html, f"Your Smart Sportz verification code is {code}.")
     if not delivery.ok and (settings.app_env in {"development", "docker"} or settings.otp_delivery_mode == "local"):
         print(f"[OTP LOCAL FALLBACK] Code for {to_email}: {code} (Email delivery failed: {delivery.message})", flush=True)
         return DeliveryResult(True, "local", f"Local development code: {code}")
@@ -322,12 +330,110 @@ def match_reminder_message(details: dict[str, Any]) -> str:
     )
 
 
-def send_registration_payment_success(to_email: str, phone: str, details: dict[str, Any]) -> list[DeliveryResult]:
+def send_registration_payment_success(
+    to_email: str,
+    phone: str,
+    details: dict[str, Any],
+    pdf_bytes: bytes | None = None,
+) -> list[DeliveryResult]:
+    results: list[DeliveryResult] = []
+
+    # 1. Send Email with PDF pass attachment
+    if to_email:
+        team_name = details.get("teamName", "Your Team")
+        tournament_name = details.get("tournamentName", "Tournament")
+        team_code = details.get("teamCode", "PASS")
+        receipt_number = details.get("receiptNumber", "-")
+        confirmation_code = details.get("confirmationCode", "-")
+        captain_name = details.get("captainName", "-")
+
+        subject = f"Registration Confirmed: {tournament_name} - {team_name}"
+        html = f"""
+        <div style="font-family: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #0b1c30; max-width: 620px; margin: 0 auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 16px; background: #ffffff;">
+          <div style="text-align: center; margin-bottom: 24px; border-bottom: 2px solid #08723f; padding-bottom: 16px;">
+            <h1 style="color: #08723f; margin: 0; font-size: 26px; font-weight: 900; letter-spacing: -0.5px;">SMART SPORTZ</h1>
+            <p style="color: #64748b; font-size: 14px; margin: 4px 0 0; font-weight: 600;">Official Tournament Registration & Verification Pass</p>
+          </div>
+          
+          <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 16px 20px; margin-bottom: 22px;">
+            <h3 style="color: #166534; margin: 0 0 6px; font-size: 17px; font-weight: 800;">&#10004; Payment Verified & Registration Confirmed</h3>
+            <p style="color: #15803d; margin: 0; font-size: 14px; line-height: 1.5;">
+              Congratulations! Your team registration for <strong>{tournament_name}</strong> has been verified by the tournament management team.
+            </p>
+          </div>
+
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 22px; font-size: 14px;">
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 10px 0; color: #64748b; font-weight: 600;">Tournament:</td>
+              <td style="padding: 10px 0; color: #0f172a; font-weight: 700; text-align: right;">{tournament_name}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 10px 0; color: #64748b; font-weight: 600;">Team Name:</td>
+              <td style="padding: 10px 0; color: #0f172a; font-weight: 700; text-align: right;">{team_name}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 10px 0; color: #64748b; font-weight: 600;">Captain:</td>
+              <td style="padding: 10px 0; color: #0f172a; font-weight: 700; text-align: right;">{captain_name}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 10px 0; color: #64748b; font-weight: 600;">Team Code:</td>
+              <td style="padding: 10px 0; color: #08723f; font-weight: 800; font-family: monospace; font-size: 15px; text-align: right;">{team_code}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 10px 0; color: #64748b; font-weight: 600;">Confirmation Code:</td>
+              <td style="padding: 10px 0; color: #08723f; font-weight: 800; font-family: monospace; font-size: 15px; text-align: right;">{confirmation_code}</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 10px 0; color: #64748b; font-weight: 600;">Receipt Number:</td>
+              <td style="padding: 10px 0; color: #0f172a; font-weight: 700; text-align: right;">{receipt_number}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px 0; color: #64748b; font-weight: 600;">Payment Status:</td>
+              <td style="padding: 10px 0; color: #16a34a; font-weight: 900; text-align: right;">&#10004; PAID &amp; VERIFIED</td>
+            </tr>
+          </table>
+
+          <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 16px; margin-bottom: 24px; text-align: center;">
+            <p style="margin: 0; color: #1e293b; font-size: 14px; font-weight: 700;">
+              &#128206; Official Registration Pass PDF Attached
+            </p>
+            <p style="margin: 6px 0 0; color: #64748b; font-size: 13px; line-height: 1.4;">
+              Your official registration pass with verified QR code is attached to this email. Please download and keep a copy for venue check-in on match days.
+            </p>
+          </div>
+
+          <div style="font-size: 12px; color: #94a3b8; text-align: center; border-top: 1px solid #f1f5f9; padding-top: 16px;">
+            <p style="margin: 0;">Smart Sportz Enterprise SaaS &bull; Tournament Management Platform</p>
+          </div>
+        </div>
+        """
+        text = (
+            f"Smart Sportz Registration Confirmed!\n\n"
+            f"Tournament: {tournament_name}\n"
+            f"Team: {team_name} ({team_code})\n"
+            f"Captain: {captain_name}\n"
+            f"Confirmation Code: {confirmation_code}\n"
+            f"Receipt: {receipt_number}\n"
+            f"Payment Status: PAID & VERIFIED\n\n"
+            f"Your official registration pass PDF is attached to this email. Please carry it to the venue."
+        )
+
+        attachments = None
+        if pdf_bytes:
+            filename = f"smart-sportz-pass-{team_code}.pdf"
+            attachments = [{"filename": filename, "content": pdf_bytes, "content_type": "application/pdf"}]
+
+        email_result = send_email(to_email, subject, html, text=text, attachments=attachments)
+        results.append(email_result)
+
+    # 2. WhatsApp Notification
     whatsapp_message = registration_completion_message(details)
-    result = send_whatsapp_message(phone or settings.twilio_default_to, whatsapp_message)
-    if not result.ok:
-        result.message = f"{result.message}; WhatsApp text fallback: {whatsapp_message}"
-    return [result]
+    wa_result = send_whatsapp_message(phone or settings.twilio_default_to, whatsapp_message)
+    if not wa_result.ok:
+        wa_result.message = f"{wa_result.message}; WhatsApp text fallback: {whatsapp_message}"
+    results.append(wa_result)
+
+    return results
 
 
 def send_match_selection_whatsapp(phone: str, details: dict[str, Any]) -> DeliveryResult:
