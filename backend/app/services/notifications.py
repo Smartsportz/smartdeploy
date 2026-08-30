@@ -218,15 +218,70 @@ def send_email_otp(to_email: str, code: str) -> DeliveryResult:
     if settings.otp_delivery_mode == "local":
         print(f"[OTP LOCAL] Verification code for {to_email}: {code}", flush=True)
         return DeliveryResult(True, "local", f"Local development code: {code}")
+    # SpamAssassin's HTML_IMAGE_ONLY_12 rule (-1.6) fires when a message has
+    # little text relative to its HTML weight. The previous version of this
+    # template was four short lines, which tripped it every time - and the
+    # tracking pixel the ESP injects counts as an image. Keeping a decent
+    # amount of real prose here is what keeps the spam score down, so resist
+    # trimming this back to a bare code.
     html = f"""
-    <div style="font-family:Arial,sans-serif;line-height:1.5;color:#0b1b33">
-      <h2>Verify your Smart Sportz account</h2>
-      <p>Your verification code is:</p>
-      <p style="font-size:28px;font-weight:800;color:#007a4d;letter-spacing:4px">{code}</p>
-      <p>This code expires soon. Do not share it with anyone.</p>
+    <div style="font-family:Arial,Helvetica,sans-serif;line-height:1.6;color:#0b1b33;max-width:560px">
+      <h2 style="margin:0 0 16px">Verify your Smart Sportz account</h2>
+
+      <p>Hello,</p>
+
+      <p>We received a request to verify this email address for a Smart Sportz
+      account. Enter the verification code below on the sign-in screen to
+      continue. The code is valid for a short time only, so please use it
+      straight away.</p>
+
+      <p style="font-size:28px;font-weight:800;color:#007a4d;letter-spacing:4px;margin:24px 0">{code}</p>
+
+      <p>For your security, never share this code with anyone. Smart Sportz
+      staff will never ask you for it by phone, email or message. If someone
+      asks you for this code, do not give it to them and report it to us.</p>
+
+      <p>If you did not request this code, you can safely ignore this email.
+      Your account remains secure and no changes have been made. Somebody may
+      have entered your email address by mistake.</p>
+
+      <p>Codes are single use. Once you have entered it, it cannot be used
+      again, and requesting a new code immediately invalidates any earlier one.
+      If the code has already expired by the time you reach the sign-in screen,
+      simply request another and the most recent code will be the valid one.</p>
+
+      <p>Having trouble? Make sure you are entering the code on the same device
+      and browser where you started signing in, and check that you have typed
+      all four digits with no spaces before or after them.</p>
+
+      <p style="margin-top:28px">Thanks,<br>The Smart Sportz team</p>
+
+      <hr style="border:none;border-top:1px solid #dde3ec;margin:28px 0">
+
+      <p style="font-size:12px;color:#5b6b83">
+        This message was sent to {to_email} because a verification code was
+        requested for a Smart Sportz account. This is an automated message and
+        replies to it are not monitored.
+      </p>
     </div>
     """
-    delivery = send_email(to_email, "Smart Sportz verification code", html, f"Your Smart Sportz verification code is {code}.")
+    text = (
+        "Verify your Smart Sportz account\n\n"
+        "Hello,\n\n"
+        "We received a request to verify this email address for a Smart Sportz "
+        "account. Enter the verification code below on the sign-in screen to "
+        "continue. The code is valid for a short time only, so please use it "
+        "straight away.\n\n"
+        f"    {code}\n\n"
+        "For your security, never share this code with anyone. Smart Sportz "
+        "staff will never ask you for it by phone, email or message.\n\n"
+        "If you did not request this code, you can safely ignore this email. "
+        "Your account remains secure and no changes have been made.\n\n"
+        "Thanks,\nThe Smart Sportz team\n\n"
+        f"This message was sent to {to_email} because a verification code was "
+        "requested for a Smart Sportz account. Replies are not monitored.\n"
+    )
+    delivery = send_email(to_email, "Smart Sportz verification code", html, text)
     if not delivery.ok and (settings.app_env in {"development", "docker"} or settings.otp_delivery_mode == "local"):
         print(f"[OTP LOCAL FALLBACK] Code for {to_email}: {code} (Email delivery failed: {delivery.message})", flush=True)
         return DeliveryResult(True, "local", f"Local development code: {code}")
