@@ -297,7 +297,7 @@ function encodeUpiValue(value: string) {
 
 function buildUpiIntent({ amount, registrationId, teamName, tournamentName }: { amount: number; registrationId: string; teamName: string; tournamentName: string }) {
   const params = [
-    ["pa", "6374409006@ybl"], //7871357999@axl
+    ["pa", "6374409006@ybl"],
     ["pn", "SmartSportz"],
     ["am", (amount / 100).toFixed(2)],
     ["cu", "INR"],
@@ -499,12 +499,11 @@ function downloadSampleExcel() {
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Players");
   
-  // Set column widths
   ws['!cols'] = [
-    { wch: 8 },  // sno
-    { wch: 20 }, // name
-    { wch: 10 }, // age
-    { wch: 10 }  // size
+    { wch: 8 },
+    { wch: 20 },
+    { wch: 10 },
+    { wch: 10 }
   ];
   
   const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
@@ -958,7 +957,7 @@ export function RegistrationPage() {
   function openRulesModal() {
     setRulesScrolled(false);
     setRulesModalOpen(true);
-    downloadRulesFile(tournament);
+    // Removed auto-download of rules
   }
 
   function applyRosterImport(entries: ImportedRosterEntry[]) {
@@ -1132,7 +1131,7 @@ export function RegistrationPage() {
     setError("");
     if (activeStep === 0) {
       if (!tournamentAccepted) {
-        showMissing("Please accept the tournament rules and conditions before moving on.");
+        showMissing("Please read and accept the tournament rules and conditions before moving on.");
         return;
       }
       setActiveStep(1);
@@ -1228,6 +1227,13 @@ export function RegistrationPage() {
                     </div>
                   </div>
                 </div>
+                {/* Read Rules Button - Top side of accept tick */}
+                <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "12px" }}>
+                  <p> Must be read the complete tournament rules and apply the tournament </p>
+                  <button className="btn btn-secondary" type="button" onClick={() => downloadRulesFile(tournament)}>
+                    <Download size={16} /> Download Rules PDF
+                  </button>
+                </div>
                 <label className="acceptance-box">
                   <input
                     type="checkbox"
@@ -1242,7 +1248,7 @@ export function RegistrationPage() {
                       openRulesModal();
                     }}
                   />
-                  <span>I have read and accept the tournament rules, eligibility, age restriction, and fair-play conditions.</span>
+                  <span>All must be read rules and fill the tournament to display</span>
                 </label>
               </section>
             )}
@@ -1409,6 +1415,9 @@ export function RegistrationPage() {
                 ))}
               </div>
               <div className="rules-modal-actions">
+                <button className="btn btn-secondary" type="button" onClick={() => downloadRulesFile(tournament)}>
+                  <Download size={16} /> Download Rules PDF
+                </button>
                 <button className="btn btn-primary" type="button" disabled={!rulesScrolled} onClick={() => { setTournamentAccepted(true); setRulesModalOpen(false); }}>I Agree</button>
               </div>
             </article>
@@ -1485,7 +1494,7 @@ export function RegistrationPaymentPage() {
   const [error, setError] = useState("");
   const [paymentNotice, setPaymentNotice] = useState("");
   const [transactionReference, setTransactionReference] = useState(paymentIntent?.transaction_reference ?? "");
-  const phonepeUpiId = paymentIntent?.receiver_upi_id || "6374409006@ybl"; //7871357999@axl
+  const phonepeUpiId = paymentIntent?.receiver_upi_id || "6374409006@ybl";
   const phonepePayeeName = paymentIntent?.payee_name || "SmartSportz";
   const upiIntent = sanitizeUpiIntent(paymentIntent?.qr_payload || (saved
     ? buildUpiIntent({ amount: totalPayable, registrationId: saved.registrationId, teamName: saved.teamName, tournamentName: tournament.name })
@@ -1525,7 +1534,7 @@ export function RegistrationPaymentPage() {
       setPaymentNotice(latest.status === "submitted" || latest.status === "pending"
         ? "Payment submitted. Please wait for admin verification. You can check again after approval."
         : "");
-      throw new Error("Payment not received yet. Please complete PhonePe UPI payment to 7871357999@axl and wait for verification.");
+      throw new Error("Payment not received yet. Please complete PhonePe UPI payment and wait for verification.");
     }
     const registrationPayment = await apiRequest<{ id: string; receipt_number: string; amount: number; method: "card" | "upi" }>(`/registrations/${saved.registrationId}/local-payment`, {
       method: "POST",
@@ -1619,7 +1628,6 @@ export function RegistrationPaymentPage() {
                 <div className="qr-shell"><QRCodeSVG value={upiIntent} size={150} /></div>
                 <div className="payment-receiver-note">
                   <strong>{phonepePayeeName}</strong>
-                  {/* <span>PhonePe UPI ID: {phonepeUpiId}</span> */}
                   <small>Registration completes only after SmartSportz verifies that the payment was received.</small>
                 </div>
                 <button className="btn btn-primary wide" onClick={openUpiApps} disabled={status === "checking"}>Open UPI Apps</button>
