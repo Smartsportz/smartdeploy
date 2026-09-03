@@ -2,6 +2,8 @@ import { Page } from "../components/UI";
 import { contentCards } from "../data/platform";
 import { PageHero } from "./shared";
 import { Link } from "react-router-dom";
+import { AboutPage } from "./AboutPage";
+import { ContactPage } from "./ContactPage";
 
 export type ContentPageType = "gallery" | "blog" | "about" | "contact" | "sponsors" | "faq" | "leaderboards";
 
@@ -9,12 +11,20 @@ export function ContentPage({ type }: { type: ContentPageType }) {
   const titleMap = {
     gallery: "Media Gallery",
     blog: "Insights and News",
-    about: "Our Story and Mission",
+    about: "About Smartsportz",
     contact: "Contact Center",
     sponsors: "Sponsorship Center",
     faq: "FAQ Center",
     leaderboards: "Professional Leaderboards",
   };
+
+  if (type === "about") {
+    return <AboutPage />;
+  }
+
+  if (type === "contact") {
+    return <ContactPage />;
+  }
 
   return (
     <Page>
