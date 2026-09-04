@@ -134,7 +134,7 @@ function PaymentReceiptPage() {
         <section className="receipt-card panel">
           <div className="receipt-header">
             <div>
-              <p className="eyebrow">SmartSportz.in</p>
+              <p className="eyebrow">SmartSportz<span className="in-color">.in</span></p>
               <h2>{receipt.payment.receipt_number}</h2>
               <p>{registration?.team_name ?? "Registered team"} - {registration?.tournament_name ?? registration?.tournament_slug ?? "Tournament"}</p>
             </div>

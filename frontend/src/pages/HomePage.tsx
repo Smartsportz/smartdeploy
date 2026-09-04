@@ -361,7 +361,7 @@ export function HomePage() {
         </motion.div>
       </section>
 
-      <section className="hero-below-panel" aria-label="Live tournament scores">
+      {/* <section className="hero-below-panel" aria-label="Live tournament scores">
         <div className="hero-score-strip">
           {[
             ["India", "Mumbai Mavericks", "156/4"],
@@ -375,7 +375,7 @@ export function HomePage() {
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       <section className="trusted-section">
         <SectionTitle title="Trusted by the Sports Community" />

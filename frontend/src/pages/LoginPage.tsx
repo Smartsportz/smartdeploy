@@ -214,7 +214,7 @@ export function LoginPage({ recovery = false }: { recovery?: boolean }) {
       <div className="auth-card">
         <div className="auth-visual">
           <img src={assets.cricket} alt="" />
-          <h2>SmartSportz.in</h2>
+          <h2>SmartSportz<span className="in-color">.in</span></h2>
           <p>Secure tournament operations for teams, athletes, managers, and admins.</p>
         </div>
         <form onSubmit={handleSubmit}>

@@ -6,7 +6,7 @@ import { assets, dashboardStats, liveMatches, logRows, tournaments } from "../da
 export function PageHero({ title, text }: { title: string; text: string }) {
   return (
     <section className="page-hero">
-      <p className="eyebrow">SmartSportz.in</p>
+      <p className="eyebrow">SmartSportz<span className="in-color">.in</span></p>
       <h1>{title}</h1>
       <p>{text}</p>
     </section>
