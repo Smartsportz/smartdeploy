@@ -222,6 +222,7 @@ type AdminTournamentForm = {
   prizes: Array<{ position: number; label: string; amount: number }>;
   cities: string[];
   assignedManagerIds: string[];
+  showJerseySize: boolean;  
 };
 
 const emptyAdminTournamentForm: AdminTournamentForm = {
@@ -251,6 +252,7 @@ const emptyAdminTournamentForm: AdminTournamentForm = {
   published: true,
   showOnHome: false,
   blockRepeatRegistration: false,
+  showJerseySize: true, 
   feeBreakdown: [{ label: "Entry Fee", value: 5000 }],
   prizes: [
     { position: 1, label: "1st Prize", amount: 0 },
@@ -330,6 +332,7 @@ function adminFormFromTournament(item?: Record<string, any>): AdminTournamentFor
     published: Boolean(item.published ?? true),
     showOnHome: Boolean(item.show_on_home),
     blockRepeatRegistration: Boolean(item.block_repeat_registration),
+    showJerseySize: Boolean(item.show_jersey_size ?? item.showJerseySize ?? true),
     feeBreakdown,
     prizes,
     cities,
@@ -424,6 +427,7 @@ function AdminDashboardDbPanel() {
     </>
   );
 }
+
 
 function AdminTournamentsDbPanel() {
   const { token } = useAuth();
@@ -574,6 +578,7 @@ function AdminTournamentsDbPanel() {
       show_on_home: form.showOnHome,
       assigned_manager_ids: form.assignedManagerIds,
       block_repeat_registration: form.blockRepeatRegistration,
+      show_jersey_size: form.showJerseySize
     };
     try {
       const saved = await apiRequest<Record<string, any>>(
@@ -847,6 +852,21 @@ function AdminTournamentsDbPanel() {
             <div className="admin-flow-checks">
               <label className="visibility-row"><span><b>Display on tournament page</b><small>Show this tournament on the public tournament page.</small></span><input type="checkbox" checked={form.published} onChange={(event) => patchForm({ published: event.target.checked })} /></label>
               <label className="visibility-row"><span><b>Display on home page</b><small>Show this tournament in the home upcoming tournament containers.</small></span><input type="checkbox" checked={form.showOnHome} onChange={(event) => patchForm({ showOnHome: event.target.checked })} /></label>
+              {/* Jersey Size Toggle Button */}
+              <label className="visibility-row" style={{ borderLeft: "2px solid var(--primary)", paddingLeft: "12px" }}>
+                <span>
+                  <b>Show Jersey Size in Registration</b>
+                  <small>Enable to display jersey size field in tournament registration page. Disable to hide it.</small>
+                </span>
+                <button 
+                  type="button" 
+                  className={`btn ${form.showJerseySize ? "btn-primary" : "btn-secondary"}`}
+                  onClick={() => patchForm({ showJerseySize: !form.showJerseySize })}
+                  style={{ minWidth: "80px" }}
+                >
+                  {form.showJerseySize ? "Enabled" : "Disabled"}
+                </button>
+              </label>
             </div>
             <div className="registration-actions compact-actions">
               <button className="btn btn-primary" type="button" onClick={saveTournament}>Save</button>
@@ -1985,6 +2005,7 @@ export function AdminTournamentEditorPage() {
       show_on_home: form.showOnHome,
       assigned_manager_ids: form.assignedManagerIds,
       block_repeat_registration: form.blockRepeatRegistration,
+      show_jersey_size: form.showJerseySize
     };
     try {
       const saved = await apiRequest<Record<string, any>>(
@@ -2018,7 +2039,7 @@ export function AdminTournamentEditorPage() {
               <>
                 <div className="form-grid">
                   <label>Title<input value={form.name} onChange={(event) => patchForm({ name: event.target.value })} placeholder="Upcoming tournament title" /></label>
-                <label>Image<input type="file" accept="image/*" onChange={(event) => {
+                  <label>Image<input type="file" accept="image/*" onChange={(event) => {
                     const file = event.target.files?.[0];
                     if (file) void uploadFile(file, token, { silent: true }).then((upload) => patchForm({ image: upload.url })).catch((caught) => setError(caught instanceof Error ? caught.message : "Unable to upload tournament image."));
                   }} /></label>
@@ -2038,6 +2059,21 @@ export function AdminTournamentEditorPage() {
                 <div className="admin-flow-checks">
                   <label className="visibility-row"><span><b>Display on tournament page</b><small>Show this tournament on the public tournament page.</small></span><input type="checkbox" checked={form.published} onChange={(event) => patchForm({ published: event.target.checked })} /></label>
                   <label className="visibility-row"><span><b>Display on home page</b><small>Show this tournament in the home upcoming tournament containers.</small></span><input type="checkbox" checked={form.showOnHome} onChange={(event) => patchForm({ showOnHome: event.target.checked })} /></label>
+                  {/* Jersey Size Toggle Button - Featured Quick Start */}
+                  <label className="visibility-row" style={{ borderLeft: "2px solid var(--primary)", paddingLeft: "12px" }}>
+                    <span>
+                      <b>Show Jersey Size in Registration</b>
+                      <small>Enable to display jersey size field in tournament registration page. Disable to hide it.</small>
+                    </span>
+                    <button 
+                      type="button" 
+                      className={`btn ${form.showJerseySize ? "btn-primary" : "btn-secondary"}`}
+                      onClick={() => patchForm({ showJerseySize: !form.showJerseySize })}
+                      style={{ minWidth: "80px" }}
+                    >
+                      {form.showJerseySize ? "Enabled" : "Disabled"}
+                    </button>
+                  </label>
                 </div>
                 <div className="registration-actions compact-actions">
                   <button className="btn btn-primary" type="button" onClick={saveTournament}>Save upcoming tournament</button>
@@ -2101,6 +2137,21 @@ export function AdminTournamentEditorPage() {
                   <label className="visibility-row"><span><b>Display on tournament page</b><small>Show this tournament on the public tournament page.</small></span><input type="checkbox" checked={form.published} onChange={(event) => patchForm({ published: event.target.checked })} /></label>
                   <label className="visibility-row"><span><b>Display on home page</b><small>Show this tournament in the home upcoming tournament containers.</small></span><input type="checkbox" checked={form.showOnHome} onChange={(event) => patchForm({ showOnHome: event.target.checked })} /></label>
                   <label className="visibility-row"><span><b>Block repeat registration</b><small>On means same user cannot register this tournament again.</small></span><input type="checkbox" checked={form.blockRepeatRegistration} onChange={(event) => patchForm({ blockRepeatRegistration: event.target.checked })} /></label>
+                  {/* Jersey Size Toggle Button - Full Form */}
+                  <label className="visibility-row" style={{ borderLeft: "2px solid var(--primary)", paddingLeft: "12px" }}>
+                    <span>
+                      <b>Show Jersey Size in Registration</b>
+                      <small>Enable to display jersey size field in tournament registration page. Disable to hide it.</small>
+                    </span>
+                    <button 
+                      type="button" 
+                      className={`btn ${form.showJerseySize ? "btn-primary" : "btn-secondary"}`}
+                      onClick={() => patchForm({ showJerseySize: !form.showJerseySize })}
+                      style={{ minWidth: "80px" }}
+                    >
+                      {form.showJerseySize ? "Enabled" : "Disabled"}
+                    </button>
+                  </label>
                 </div>
                 <div className="registration-actions compact-actions">
                   <button className="btn btn-primary" type="button" onClick={saveTournament}>{isNew ? "Create tournament" : "Save changes"}</button>
