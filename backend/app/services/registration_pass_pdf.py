@@ -201,6 +201,7 @@ def build_registration_pass_pdf(payload: dict) -> bytes:
         Paragraph("<b>S.No</b>", small),
         Paragraph("<b>Team player name</b>", small),
         Paragraph("<b>Age</b>", small),
+        Paragraph("<b>Jersey Size</b>", small),
         Paragraph("<b>Role</b>", small),
     ]]
     for index, member in enumerate(members, start=1):
@@ -208,13 +209,14 @@ def build_registration_pass_pdf(payload: dict) -> bytes:
             str(index),
             Paragraph(_text(member.get("name")), small),
             _text(member.get("age")),
+            _text(member.get("jersey_size")),
             Paragraph(_role_for_member(member, registration, index - 1), small),
         ])
     if len(roster_rows) == 1:
-        roster_rows.append(["1", Paragraph("Roster not submitted", small), "-", "Player"])
+        roster_rows.append(["1", Paragraph("Roster not submitted", small), "-", "-", "Player"])
 
     story.append(Paragraph("Team Players", section))
-    roster_table = Table(roster_rows, colWidths=[14 * mm, 92 * mm, 20 * mm, 42 * mm], repeatRows=1)
+    roster_table = Table(roster_rows, colWidths=[12 * mm, 74 * mm, 18 * mm, 26 * mm, 38 * mm], repeatRows=1)
     roster_table.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#0B8852")),
         ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
@@ -223,6 +225,7 @@ def build_registration_pass_pdf(payload: dict) -> bytes:
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ("ALIGN", (0, 1), (0, -1), "CENTER"),
         ("ALIGN", (2, 1), (2, -1), "CENTER"),
+        ("ALIGN", (3, 1), (3, -1), "CENTER"),
         ("LEFTPADDING", (0, 0), (-1, -1), 7),
         ("RIGHTPADDING", (0, 0), (-1, -1), 7),
         ("TOPPADDING", (0, 0), (-1, -1), 6),

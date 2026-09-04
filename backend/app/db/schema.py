@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS tournaments (
   fee_breakdown_json TEXT NOT NULL DEFAULT '[]',
   published INTEGER NOT NULL DEFAULT 1,
   show_on_home INTEGER NOT NULL DEFAULT 1,
-  block_repeat_registration INTEGER NOT NULL DEFAULT 0
+  block_repeat_registration INTEGER NOT NULL DEFAULT 0,
+  show_jersey_size INTEGER NOT NULL DEFAULT 1
 );
 
 CREATE TABLE IF NOT EXISTS tournament_prizes (
@@ -855,6 +856,7 @@ def _apply_operational_schema(path=None) -> None:
             "published": "INTEGER NOT NULL DEFAULT 1",
             "show_on_home": "INTEGER NOT NULL DEFAULT 1",
             "block_repeat_registration": "INTEGER NOT NULL DEFAULT 0",
+            "show_jersey_size": "INTEGER NOT NULL DEFAULT 1",
         }
         for column, definition in tournament_columns.items():
             _add_column(conn, "tournaments", column, definition)
@@ -1015,6 +1017,8 @@ CREATE INDEX IF NOT EXISTS idx_group_bracket_matches_tournament ON group_bracket
             conn.execute("ALTER TABLE tournaments ADD COLUMN max_age INTEGER NOT NULL DEFAULT 45")
         if "poster" not in columns:
             conn.execute("ALTER TABLE tournaments ADD COLUMN poster TEXT NOT NULL DEFAULT ''")
+        if "show_jersey_size" not in columns:
+            conn.execute("ALTER TABLE tournaments ADD COLUMN show_jersey_size INTEGER NOT NULL DEFAULT 1")
         conn.execute(
             """CREATE TABLE IF NOT EXISTS tournament_jerseys (
               id TEXT PRIMARY KEY,
