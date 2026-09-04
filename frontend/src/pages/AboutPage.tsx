@@ -112,7 +112,7 @@ export function AboutPage() {
             <motion.div variants={imageScale} className="about-cricket-media">
               <div className="about-cricket-image-frame">
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/about/cricket-community.png`}
+                  src={`${import.meta.env.BASE_URL}assets/about/team-huddle.png`}
                   alt="Cricket batsman playing a shot in an amateur community tournament"
                   className="about-cricket-img"
                   loading="lazy"
@@ -205,7 +205,7 @@ export function AboutPage() {
             <motion.div variants={imageScale} className="about-vision-media">
               <div className="about-vision-image-frame">
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/about/team-huddle.png`}
+                  src={`${import.meta.env.BASE_URL}assets/about/cricket-community.png `}
                   alt="Teammates stacking hands together in a celebratory team huddle"
                   className="about-vision-huddle-img"
                   loading="lazy"
