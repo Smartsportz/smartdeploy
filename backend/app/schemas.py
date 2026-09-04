@@ -556,3 +556,37 @@ class ContactInquiryRequest(BaseModel):
     subject: str = Field(min_length=2, max_length=200)
     message: str = Field(min_length=5, max_length=4000)
 
+
+
+class FormRegistrationRequest(BaseModel):
+    """Public sign-up submitted from form.smartsportz.in.
+
+    No password field on purpose - this endpoint is unauthenticated and must
+    not be able to mint a login credential. See form_registrations in
+    app/db/schema.py.
+    """
+
+    full_name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
+    phone: str = Field(min_length=10, max_length=10)
+    city: str = Field(default="", max_length=120)
+    sport: str = Field(default="", max_length=120)
+    team_name: str = Field(default="", max_length=120)
+    age_group: str = Field(default="", max_length=40)
+    notes: str = Field(default="", max_length=2000)
+    # Honeypot: real browsers leave it empty, most naive bots fill every input.
+    website: str = Field(default="", max_length=200)
+
+    @field_validator("phone", mode="before")
+    @classmethod
+    def validate_phone(cls, value: str | None) -> str:
+        return _required_phone(value)
+
+    @field_validator("full_name", "city", "sport", "team_name", "age_group", "notes", mode="before")
+    @classmethod
+    def strip_text(cls, value: str | None) -> str:
+        return str(value or "").strip()
+
+
+class FormRegistrationStatusUpdate(BaseModel):
+    status: str = Field(pattern="^(new|contacted|approved|rejected)$")

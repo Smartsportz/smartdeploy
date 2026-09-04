@@ -57,6 +57,7 @@ def ensure_storage() -> None:
     settings.database_path.parent.mkdir(parents=True, exist_ok=True)
     settings.mirror_database_path.parent.mkdir(parents=True, exist_ok=True)
     settings.audit_database_path.parent.mkdir(parents=True, exist_ok=True)
+    settings.form_database_path.parent.mkdir(parents=True, exist_ok=True)
     settings.backup_dir.mkdir(parents=True, exist_ok=True)
     settings.upload_dir.mkdir(parents=True, exist_ok=True)
 
@@ -70,6 +71,8 @@ def _schema_for_path(path: Path | None = None) -> str:
         return settings.postgres_mirror_schema
     if path == settings.audit_database_path:
         return settings.postgres_audit_schema
+    if path == settings.form_database_path:
+        return settings.postgres_form_schema
     return settings.postgres_primary_schema
 
 
@@ -78,6 +81,8 @@ def _url_for_path(path: Path | None = None) -> str:
         return settings.mirror_database_url or settings.database_url
     if path == settings.audit_database_path:
         return settings.audit_database_url or settings.database_url
+    if path == settings.form_database_path:
+        return settings.form_database_url or settings.database_url
     return settings.database_url
 
 
@@ -142,6 +147,12 @@ def _is_read_query(sql: str) -> bool:
 
 def connect_audit():
     return connect(settings.audit_database_path)
+
+
+def connect_form():
+    """DB-4: public form intake. Its own file so a submission from the
+    unauthenticated form.smartsportz.in endpoint can never touch app data."""
+    return connect(settings.form_database_path)
 
 
 def rows(sql: str, params: Iterable[Any] = ()) -> list[dict[str, Any]]:
@@ -242,6 +253,29 @@ def audit_execute(sql: str, params: Iterable[Any] = ()) -> int:
         cur = conn.execute(_translate_sql(sql), tuple(params))
         conn.commit()
         return int(getattr(cur, "lastrowid", 0) or 0)
+
+
+def form_rows(sql: str, params: Iterable[Any] = ()) -> list[dict[str, Any]]:
+    with connect_form() as conn:
+        return [dict(item) for item in conn.execute(_translate_sql(sql), tuple(params)).fetchall()]
+
+
+def form_row(sql: str, params: Iterable[Any] = ()) -> dict[str, Any] | None:
+    with connect_form() as conn:
+        result = conn.execute(_translate_sql(sql), tuple(params)).fetchone()
+        return dict(result) if result else None
+
+
+def form_execute(sql: str, params: Iterable[Any] = ()) -> int:
+    with connect_form() as conn:
+        cur = conn.execute(_translate_sql(sql), tuple(params))
+        conn.commit()
+        return int(getattr(cur, "lastrowid", 0) or 0)
+
+
+def form_db_path() -> Path:
+    ensure_storage()
+    return settings.form_database_path
 
 
 def db_path() -> Path:

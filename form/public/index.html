@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Register — Smart Sportz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  /* Brand tokens mirror frontend/src/styles.css so the two sites match. */
+  :root {
+    color-scheme: light;
+    --bg: rgb(234, 244, 228);
+    --surface: #ffffff;
+    --surface-soft: #eff4ff;
+    --text: #0b1c30;
+    --muted: #5c6878;
+    --line: #dbe5f5;
+    --primary: #0b8852;
+    --primary-dark: #006c40;
+    --danger: #e11d48;
+    --shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
+    --radius-lg: 18px;
+    --radius-md: 12px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Be Vietnam Pro", system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: radial-gradient(circle at top left, rgba(11, 136, 82, 0.12), transparent 28rem), var(--bg);
+    padding: 32px 16px 64px;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 28px; }
+  .badge {
+    display: inline-block; padding: 6px 14px; border-radius: 999px;
+    background: rgba(11, 136, 82, .12); color: var(--primary-dark);
+    font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  }
+  h1 { font-family: Poppins, sans-serif; font-size: clamp(26px, 5vw, 36px); margin: 14px 0 8px; }
+  header p { color: var(--muted); margin: 0; font-size: 15px; }
+  form {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: 28px;
+  }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .field { display: flex; flex-direction: column; gap: 7px; }
+  .field.span-2 { grid-column: 1 / -1; }
+  label { font-size: 13px; font-weight: 600; }
+  .req { color: var(--danger); }
+  input, select, textarea {
+    font: inherit; padding: 11px 13px; border: 1px solid var(--line);
+    border-radius: var(--radius-md); background: var(--surface-soft); color: var(--text);
+    width: 100%; transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none; border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(11, 136, 82, .18); background: var(--surface);
+  }
+  textarea { resize: vertical; min-height: 88px; }
+  .hint { font-size: 12px; color: var(--muted); }
+  .err { font-size: 12px; color: var(--danger); min-height: 15px; }
+  /* Honeypot: off-screen rather than display:none, which some bots detect. */
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  button {
+    margin-top: 24px; width: 100%; padding: 14px; font: inherit; font-weight: 700;
+    color: #fff; background: var(--primary); border: 0; border-radius: var(--radius-md);
+    cursor: pointer; transition: background .15s ease;
+  }
+  button:hover:not(:disabled) { background: var(--primary-dark); }
+  button:disabled { opacity: .6; cursor: not-allowed; }
+  .banner { padding: 13px 15px; border-radius: var(--radius-md); font-size: 14px; margin-bottom: 20px; display: none; }
+  .banner.show { display: block; }
+  .banner.bad { background: rgba(225, 29, 72, .10); color: #9f1239; border: 1px solid rgba(225, 29, 72, .25); }
+  .done { text-align: center; padding: 44px 28px; }
+  .done .tick {
+    width: 62px; height: 62px; margin: 0 auto 18px; border-radius: 50%;
+    background: rgba(11, 136, 82, .12); color: var(--primary);
+    display: grid; place-items: center; font-size: 30px;
+  }
+  .done h2 { font-family: Poppins, sans-serif; margin: 0 0 8px; }
+  .done p { color: var(--muted); margin: 0 0 6px; }
+  .done code { background: var(--surface-soft); padding: 3px 9px; border-radius: 6px; font-size: 13px; }
+  footer { text-align: center; margin-top: 22px; font-size: 13px; color: var(--muted); }
+  footer a { color: var(--primary-dark); }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } form { padding: 20px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="badge">Smart Sportz</span>
+    <h1>Player Registration</h1>
+    <p>Fill this in once and our team will get in touch about upcoming tournaments.</p>
+  </header>
+
+  <div id="banner" class="banner bad"></div>
+
+  <form id="form" novalidate>
+    <div class="grid">
+      <div class="field span-2">
+        <label for="full_name">Full name <span class="req">*</span></label>
+        <input id="full_name" name="full_name" autocomplete="name" maxlength="120" required />
+        <span class="err" data-err="full_name"></span>
+      </div>
+
+      <div class="field">
+        <label for="email">Email <span class="req">*</span></label>
+        <input id="email" name="email" type="email" autocomplete="email" maxlength="200" required />
+        <span class="err" data-err="email"></span>
+      </div>
+
+      <div class="field">
+        <label for="phone">Phone <span class="req">*</span></label>
+        <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel"
+               maxlength="10" placeholder="10 digits" required />
+        <span class="err" data-err="phone"></span>
+      </div>
+
+      <div class="field">
+        <label for="sport">Sport</label>
+        <select id="sport" name="sport"><option value="">Select a sport</option></select>
+        <span class="err" data-err="sport"></span>
+      </div>
+
+      <div class="field">
+        <label for="age_group">Age group</label>
+        <select id="age_group" name="age_group"><option value="">Select age group</option></select>
+        <span class="err" data-err="age_group"></span>
+      </div>
+
+      <div class="field">
+        <label for="city">City</label>
+        <input id="city" name="city" autocomplete="address-level2" maxlength="120" />
+        <span class="err" data-err="city"></span>
+      </div>
+
+      <div class="field">
+        <label for="team_name">Team / club <span class="hint">(optional)</span></label>
+        <input id="team_name" name="team_name" maxlength="120" />
+        <span class="err" data-err="team_name"></span>
+      </div>
+
+      <div class="field span-2">
+        <label for="notes">Anything else we should know?</label>
+        <textarea id="notes" name="notes" maxlength="2000"></textarea>
+        <span class="err" data-err="notes"></span>
+      </div>
+    </div>
+
+    <div class="hp" aria-hidden="true">
+      <label for="website">Leave this empty</label>
+      <input id="website" name="website" tabindex="-1" autocomplete="off" />
+    </div>
+
+    <button id="submit" type="submit">Submit registration</button>
+  </form>
+
+  <footer>Already registered? Head to <a href="https://smartsportz.in">smartsportz.in</a></footer>
+</div>
+
+<script>
+(function () {
+  var form = document.getElementById('form');
+  var button = document.getElementById('submit');
+  var banner = document.getElementById('banner');
+  var wrap = document.querySelector('.wrap');
+
+  function showBanner(text) {
+    banner.textContent = text;
+    banner.classList.add('show');
+    banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function clearErrors() {
+    banner.classList.remove('show');
+    document.querySelectorAll('.err').forEach(function (el) { el.textContent = ''; });
+  }
+
+  function setError(name, text) {
+    var el = document.querySelector('[data-err="' + name + '"]');
+    if (el) { el.textContent = text; } else { showBanner(text); }
+  }
+
+  // Populate the sport + age-group dropdowns from the API. If it is
+  // unreachable the form still submits - both fields are optional.
+  fetch('/api/v1/form/options')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (body) {
+      if (!body || !body.data) return;
+      var sport = document.getElementById('sport');
+      (body.data.sports || []).forEach(function (item) {
+        var option = document.createElement('option');
+        option.value = item.name;
+        option.textContent = item.name;
+        sport.appendChild(option);
+      });
+      var age = document.getElementById('age_group');
+      (body.data.ageGroups || []).forEach(function (label) {
+        var option = document.createElement('option');
+        option.value = label;
+        option.textContent = label;
+        age.appendChild(option);
+      });
+    })
+    .catch(function () { /* dropdowns stay empty; the form still works */ });
+
+  document.getElementById('phone').addEventListener('input', function (event) {
+    event.target.value = event.target.value.replace(/\D/g, '').slice(0, 10);
+  });
+
+  function validate(payload) {
+    var problems = 0;
+    if (payload.full_name.length < 2) { setError('full_name', 'Please enter your full name.'); problems++; }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(payload.email)) { setError('email', 'Please enter a valid email address.'); problems++; }
+    if (payload.phone.length !== 10) { setError('phone', 'Phone number must be exactly 10 digits.'); problems++; }
+    return problems === 0;
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    clearErrors();
+
+    var data = new FormData(form);
+    var payload = {};
+    data.forEach(function (value, key) { payload[key] = String(value).trim(); });
+
+    if (!validate(payload)) return;
+
+    button.disabled = true;
+    button.textContent = 'Submitting...';
+
+    fetch('/api/v1/form/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (response) {
+        return response.json().catch(function () { return {}; })
+          .then(function (body) { return { status: response.status, body: body }; });
+      })
+      .then(function (result) {
+        if (result.status >= 200 && result.status < 300) {
+          var reference = (result.body.data && result.body.data.id) || '';
+          wrap.innerHTML =
+            '<div class="done" style="background:var(--surface);border:1px solid var(--line);' +
+            'border-radius:var(--radius-lg);box-shadow:var(--shadow)">' +
+            '<div class="tick">&#10003;</div>' +
+            '<h2>You are registered</h2>' +
+            '<p>Thanks — our team will contact you on the details you provided.</p>' +
+            (reference ? '<p>Your reference: <code>' + reference + '</code></p>' : '') +
+            '</div>';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+
+        // FastAPI validation errors arrive as detail: [{loc, msg}, ...]
+        var detail = result.body.detail;
+        if (Array.isArray(detail)) {
+          detail.forEach(function (item) {
+            var field = (item.loc || []).slice(-1)[0];
+            setError(field, item.msg || 'Invalid value.');
+          });
+          showBanner('Please correct the highlighted fields.');
+        } else if (result.status === 409) {
+          showBanner(detail || 'This email is already registered for that sport.');
+        } else if (result.status === 429) {
+          showBanner(detail || 'Too many submissions. Please try again later.');
+        } else {
+          showBanner(detail || result.body.message || 'Something went wrong. Please try again.');
+        }
+      })
+      .catch(function () {
+        showBanner('Could not reach the server. Check your connection and try again.');
+      })
+      .finally(function () {
+        button.disabled = false;
+        button.textContent = 'Submit registration';
+      });
+  });
+})();
+</script>
+</body>
+</html>
