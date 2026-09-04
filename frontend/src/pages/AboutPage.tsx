@@ -83,7 +83,7 @@ export function AboutPage() {
 
               <div className="about-hero-image-frame">
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/about/football-hero.png`}
+                  src={`${import.meta.env.BASE_URL}assets/about/football-hero.webp`}
                   alt="Young athletes competing in a football match organized by SmartSportz"
                   className="about-hero-football-img"
                   loading="eager"
@@ -112,7 +112,7 @@ export function AboutPage() {
             <motion.div variants={imageScale} className="about-cricket-media">
               <div className="about-cricket-image-frame">
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/about/team-huddle.png`}
+                  src={`${import.meta.env.BASE_URL}assets/about/team-huddle.webp`}
                   alt="Cricket batsman playing a shot in an amateur community tournament"
                   className="about-cricket-img"
                   loading="lazy"
@@ -181,7 +181,7 @@ export function AboutPage() {
             <motion.div variants={imageScale} className="about-mission-right">
               <div className="about-mission-img-wrap">
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/about/badminton-match.png`}
+                  src={`${import.meta.env.BASE_URL}assets/about/badminton-match.webp`}
                   alt="Badminton player lunging on court in competitive match"
                   className="about-mission-badminton-img"
                   loading="lazy"
@@ -205,7 +205,7 @@ export function AboutPage() {
             <motion.div variants={imageScale} className="about-vision-media">
               <div className="about-vision-image-frame">
                 <img
-                  src={`${import.meta.env.BASE_URL}assets/about/cricket-community.png `}
+                  src={`${import.meta.env.BASE_URL}assets/about/cricket-community.webp `}
                   alt="Teammates stacking hands together in a celebratory team huddle"
                   className="about-vision-huddle-img"
                   loading="lazy"
@@ -264,7 +264,7 @@ export function AboutPage() {
             {/* Athlete silhouette graphic on the right */}
             <div className="about-quote-silhouette-wrap" aria-hidden="true">
               <img
-                src={`${import.meta.env.BASE_URL}assets/about/quote-silhouettes.png`}
+                src={`${import.meta.env.BASE_URL}assets/about/quote-silhouettes.webp`}
                 alt="Athletes in motion silhouettes"
                 className="about-quote-silhouette-img"
                 loading="lazy"
@@ -292,7 +292,7 @@ export function AboutPage() {
               
               {/* Desktop Image (with text/layout configured for PC) */}
               <img
-                src={`${import.meta.env.BASE_URL}assets/about/sports-equipment.png`}
+                src={`${import.meta.env.BASE_URL}assets/about/sports-equipment.webp`}
                 alt="Sports equipment"
                 className="about-equipment-img desktop-img"
                 loading="lazy"
@@ -300,7 +300,7 @@ export function AboutPage() {
 
               {/* Mobile Image (clean background without text overlay issues) */}
               <img
-                src={`${import.meta.env.BASE_URL}assets/about/sports-equipment-2.png`}
+                src={`${import.meta.env.BASE_URL}assets/about/sports-equipment-2.webp`}
                 alt="Sports equipment"
                 className="about-equipment-img mobile-img"
                 loading="lazy"
