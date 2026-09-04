@@ -1162,7 +1162,6 @@ def reports(_: dict = Depends(require_roles("super_admin", "management"))):
         {"name": "Venue utilization", "status": "Draft"},
         {"name": "Live score audit", "status": "Ready"},
     ])
-    ])
 
 
 @router.get("/tournaments/{tournament_slug}/recipients")
