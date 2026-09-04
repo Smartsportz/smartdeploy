@@ -670,7 +670,7 @@ def ensure_contact_messages_table() -> None:
 
 @router.get("/contact-info")
 def contact_info():
-    admin_email = settings.contact_recipient_email or "python.asmath1290@gmail.com"
+    admin_email = settings.contact_recipient_email or "smartsportz.in@gmail.com"
     return ok({
         "organization": "SmartSportz",
         "email": admin_email,
@@ -695,7 +695,7 @@ def submit_contact_inquiry(payload: ContactInquiryRequest):
         (inquiry_id, payload.name, payload.email, payload.phone or "", payload.subject, payload.message, created_at),
     )
 
-    admin_email = settings.contact_recipient_email or "python.asmath1290@gmail.com"
+    admin_email = settings.contact_recipient_email or "smartsportz.in@gmail.com"
 
     subject = f"[SmartSportz Contact] {payload.subject}"
     html = f"""
