@@ -275,3 +275,24 @@ def build_registration_pass_pdf(payload: dict) -> bytes:
 
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
     return buffer.getvalue()
+
+
+def generate_registration_pdf_by_id(registration_id: str) -> tuple[bytes, dict]:
+    from app.db.database import row, rows
+    item = row("SELECT * FROM registrations WHERE id = ?", (registration_id,))
+    if not item:
+        raise ValueError(f"Registration '{registration_id}' not found")
+    tournament = row("SELECT * FROM tournaments WHERE slug = ?", (item["tournament_slug"],))
+    payments = rows("SELECT * FROM payments WHERE registration_id = ? ORDER BY created_at DESC", (registration_id,))
+    members = rows("SELECT name, role, jersey, contact, age, jersey_size FROM registration_members WHERE registration_id = ? ORDER BY id", (registration_id,))
+    documents = rows("SELECT document_type, file_name, file_path, status, uploaded_at FROM registration_documents WHERE registration_id = ?", (registration_id,))
+    payload = {
+        "registration": item,
+        "tournament": tournament or {"slug": item["tournament_slug"], "name": item["tournament_slug"]},
+        "payments": payments,
+        "members": members,
+        "documents": documents,
+    }
+    pdf_bytes = build_registration_pass_pdf(payload)
+    return pdf_bytes, payload
+

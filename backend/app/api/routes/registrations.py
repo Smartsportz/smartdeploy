@@ -15,8 +15,9 @@ from app.schemas import LocalPaymentCreate, RegistrationCreate
 from app.services.audit import log
 from app.services.cache import cache_key
 from app.services.notifications import send_registration_payment_success
-from app.services.registration_pass_pdf import build_registration_pass_pdf
+from app.services.registration_pass_pdf import build_registration_pass_pdf, generate_registration_pdf_by_id
 from app.services.runtime_state import runtime_state
+
 from app.services.tournament_status import apply_registration_window_statuses, registration_is_open
 
 router = APIRouter(prefix="/registrations", tags=["registrations"])
@@ -344,6 +345,12 @@ def local_payment(registration_id: str, payload: LocalPaymentCreate, user: dict 
         ),
     )
     members = rows("SELECT name, role, jersey, contact, age, jersey_size FROM registration_members WHERE registration_id = ?", (registration_id,))
+    try:
+        pdf_bytes, _ = generate_registration_pdf_by_id(registration_id)
+    except Exception as exc:
+        pdf_bytes = None
+        log(item["email"], "pdf_generation_error", "registration", registration_id, str(exc))
+
     delivery_results = send_registration_payment_success(
         item["email"],
         item["phone"],
@@ -357,7 +364,9 @@ def local_payment(registration_id: str, payload: LocalPaymentCreate, user: dict 
             "qrPayload": json.dumps(qr_payload, separators=(",", ":")),
             "members": members,
         },
+        pdf_bytes=pdf_bytes,
     )
+
     for result in delivery_results:
         log(item["email"], "registration_notification", result.provider, registration_id, result.message)
     log(item["email"], "local_payment_paid", "payment", payment_id, "Local simulated payment completed")

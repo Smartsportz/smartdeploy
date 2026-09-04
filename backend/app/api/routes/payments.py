@@ -13,7 +13,10 @@ from app.core.responses import ok
 from app.db.database import ensure_column, execute, row, rows
 from app.schemas import PaymentIntentConfirm, PaymentIntentCreate, PaymentIntentSubmit
 from app.services.audit import log
+from app.services.notifications import send_registration_payment_success
+from app.services.registration_pass_pdf import generate_registration_pdf_by_id
 from app.services.runtime_state import runtime_state
+
 
 router = APIRouter(prefix="/payments", tags=["payments"])
 
@@ -143,7 +146,35 @@ def _finalize_paid_intent(intent: dict, method: str) -> dict:
     execute("UPDATE payment_intents SET registration_id = ? WHERE id = ?", (registration["id"], intent["id"]))
     _sync_tournament_registered_count(registration["tournament_slug"])
     _invalidate_registration_views(registration)
+
+    # Generate official Registration Pass PDF and send confirmation email to participant
+    try:
+        pdf_bytes, _ = generate_registration_pdf_by_id(registration["id"])
+    except Exception as exc:
+        pdf_bytes = None
+        log(registration.get("email", ""), "pdf_generation_error", "registration", registration["id"], str(exc))
+
+    members = rows("SELECT name, role, jersey, contact, age, jersey_size FROM registration_members WHERE registration_id = ?", (registration["id"],))
+    delivery_results = send_registration_payment_success(
+        registration.get("email", ""),
+        registration.get("phone", ""),
+        {
+            "tournamentName": qr_payload["tournamentName"],
+            "teamName": registration["team_name"],
+            "teamCode": team_code,
+            "captainName": registration["captain_name"],
+            "receiptNumber": intent["receipt_number"],
+            "confirmationCode": confirmation_code,
+            "qrPayload": json.dumps(qr_payload, separators=(",", ":")),
+            "members": members,
+        },
+        pdf_bytes=pdf_bytes,
+    )
+    for result in delivery_results:
+        log(registration.get("email", ""), "payment_verified_notification", result.provider, registration["id"], result.message)
+
     return existing_payment
+
 
 
 @router.get("")
