@@ -5,7 +5,7 @@ import re
 from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Query, UploadFile
 
 from app.api.deps import require_roles
 from app.core.config import settings
@@ -15,11 +15,12 @@ from app.schemas import BracketSavePayload, ChessSchoolManagePayload, GalleryAlb
 from app.services.audit import log
 from app.services.cache import cache_key, get_or_set_json
 from app.services.media import normalize_media_record, normalize_media_records
-from app.services.notifications import match_reminder_message, send_match_selection_whatsapp, send_whatsapp_message
+from app.services.notifications import match_reminder_message, send_email, send_match_selection_whatsapp, send_whatsapp_message
 from app.services.realtime import publish_realtime
 from app.services.runtime_state import runtime_state
 from app.services.sports_schema import ensure_chess_school_tables, ensure_chess_sport_content, ensure_sport_content_columns
 from app.services.tournament_status import apply_registration_window_statuses, runtime_status, accent_for_status
+
 
 router = APIRouter(prefix="/management", tags=["management"])
 _tournament_visibility_ready = False
@@ -1161,3 +1162,202 @@ def reports(_: dict = Depends(require_roles("super_admin", "management"))):
         {"name": "Venue utilization", "status": "Draft"},
         {"name": "Live score audit", "status": "Ready"},
     ])
+    ])
+
+
+@router.get("/tournaments/{tournament_slug}/recipients")
+def tournament_recipients(tournament_slug: str, user: dict = Depends(require_roles("super_admin", "management"))):
+    item = row("SELECT * FROM tournaments WHERE slug = ?", (tournament_slug,))
+    if not item:
+        raise HTTPException(status_code=404, detail="Tournament not found")
+    ensure_tournament_access(user, item)
+    recipients = rows(
+        """
+        SELECT id, email, captain_name, team_name, team_code, confirmation_code, status, payment_status, created_at
+        FROM registrations
+        WHERE tournament_slug = ?
+          AND payment_status = 'paid'
+          AND email IS NOT NULL AND trim(email) <> ''
+          AND COALESCE(status, '') NOT IN ('cancelled', 'rejected')
+        ORDER BY created_at DESC
+        """,
+        (tournament_slug,),
+    )
+    return ok({
+        "tournament": item,
+        "count": len(recipients),
+        "recipients": recipients,
+    })
+
+
+@router.post("/send-info")
+async def send_info_broadcast(
+    tournament_slug: str = Form(...),
+    subject: str = Form(...),
+    content: str = Form(...),
+    attachment: UploadFile | None = File(None),
+    user: dict = Depends(require_roles("super_admin", "management")),
+):
+    item = row("SELECT * FROM tournaments WHERE slug = ?", (tournament_slug,))
+    if not item:
+        raise HTTPException(status_code=404, detail="Tournament not found")
+    ensure_tournament_access(user, item)
+
+
+    subject_clean = subject.strip()
+    content_clean = content.strip()
+    if not subject_clean:
+        raise HTTPException(status_code=400, detail="Subject is required")
+    if not content_clean:
+        raise HTTPException(status_code=400, detail="Message content is required")
+
+    # Strictly filter for payment_status = 'paid'
+    recipients = rows(
+        """
+        SELECT DISTINCT email, captain_name, team_name, team_code, confirmation_code
+        FROM registrations
+        WHERE tournament_slug = ?
+          AND payment_status = 'paid'
+          AND email IS NOT NULL AND trim(email) <> ''
+          AND COALESCE(status, '') NOT IN ('cancelled', 'rejected')
+        ORDER BY team_name
+        """,
+        (tournament_slug,),
+    )
+
+    if not recipients:
+        raise HTTPException(status_code=400, detail=f"No payment-verified participants found for '{item['name']}'")
+
+    attachment_bytes = None
+    attachment_filename = None
+    if attachment and attachment.filename:
+        attachment_bytes = await attachment.read()
+        attachment_filename = attachment.filename
+
+    attachments_payload = None
+    if attachment_bytes and attachment_filename:
+        attachments_payload = [{
+            "filename": attachment_filename,
+            "content": attachment_bytes,
+            "content_type": "application/pdf" if attachment_filename.lower().endswith(".pdf") else "application/octet-stream",
+        }]
+
+    # Format message content with clean HTML paragraphs
+    paragraphs = [p.strip() for p in content_clean.split("\n") if p.strip()]
+    content_html = "".join(f"<p style='margin: 0 0 12px; line-height: 1.6; color: #1e293b; font-size: 15px;'>{p}</p>" for p in paragraphs)
+
+    attachment_notice_html = ""
+    if attachment_filename:
+        attachment_notice_html = f"""
+        <div style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 12px; padding: 14px 18px; margin: 20px 0; text-align: center;">
+          <p style="margin: 0; color: #1e293b; font-size: 14px; font-weight: 700;">
+            &#128206; Attached Document: <strong>{attachment_filename}</strong>
+          </p>
+          <p style="margin: 4px 0 0; color: #64748b; font-size: 12px;">
+            Please find the official document attached to this email for full details.
+          </p>
+        </div>
+        """
+
+    successful_sends = 0
+    failed_sends = 0
+    delivery_logs = []
+
+    for r in recipients:
+        recipient_email = r["email"]
+        recipient_name = r.get("captain_name") or r.get("team_name") or "Participant"
+        team_name = r.get("team_name") or "Your Team"
+        team_code = r.get("team_code") or ""
+
+        email_html = f"""
+        <div style="font-family: Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #0b1c30; max-width: 620px; margin: 0 auto; padding: 28px; border: 1px solid #e2e8f0; border-radius: 16px; background: #ffffff;">
+          <div style="text-align: center; margin-bottom: 24px; border-bottom: 2px solid #08723f; padding-bottom: 16px;">
+            <h1 style="color: #08723f; margin: 0; font-size: 26px; font-weight: 900; letter-spacing: -0.5px;">SMART SPORTZ</h1>
+            <p style="color: #64748b; font-size: 14px; margin: 4px 0 0; font-weight: 600;">Tournament Update &bull; {item['name']}</p>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <p style="margin: 0 0 16px; font-size: 15px; color: #0f172a;">
+              Hello <strong>{recipient_name}</strong> ({team_name}),
+            </p>
+            {content_html}
+          </div>
+
+          {attachment_notice_html}
+
+          <div style="background: #f1f5f9; border-radius: 8px; padding: 12px 16px; margin: 24px 0 16px; font-size: 13px; color: #475569;">
+            <strong>Tournament:</strong> {item['name']} &bull; <strong>Team:</strong> {team_name} {f'({team_code})' if team_code else ''}
+          </div>
+
+          <div style="font-size: 12px; color: #94a3b8; text-align: center; border-top: 1px solid #f1f5f9; padding-top: 16px;">
+            <p style="margin: 0;">Smart Sportz Enterprise SaaS &bull; Tournament Management Platform</p>
+            <p style="margin: 4px 0 0;">This email was broadcast to payment-verified participants of {item['name']}.</p>
+          </div>
+        </div>
+        """
+
+        plain_text = f"Smart Sportz Update - {item['name']}\n\nHello {recipient_name} ({team_name}),\n\n{content_clean}\n\nTournament: {item['name']}"
+        if attachment_filename:
+            plain_text += f"\n\nAttached document: {attachment_filename}"
+
+        res = send_email(recipient_email, subject_clean, email_html, text=plain_text, attachments=attachments_payload)
+        if res.ok:
+            successful_sends += 1
+        else:
+            failed_sends += 1
+        delivery_logs.append({"email": recipient_email, "ok": res.ok, "message": res.message})
+
+    # Record broadcast event
+    event_id = f"broadcast_{uuid4().hex[:12]}"
+    execute(
+        """
+        INSERT INTO notification_events(id, tournament_slug, audience, channels, message, status, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        """,
+        (
+            event_id,
+            tournament_slug,
+            f"{len(recipients)} verified teams ({successful_sends} sent)",
+            "email",
+            f"Subject: {subject_clean} | Attachment: {attachment_filename or 'None'} | Content: {content_clean[:200]}",
+            "sent" if successful_sends > 0 else "failed",
+            datetime.now(timezone.utc).isoformat(),
+        ),
+    )
+    log(
+        user["email"],
+        "send_info_broadcast",
+        "tournament",
+        tournament_slug,
+        f"Broadcasted '{subject_clean}' to {successful_sends}/{len(recipients)} payment-verified participants (Attachment: {attachment_filename or 'None'})",
+    )
+
+    return ok({
+        "event_id": event_id,
+        "tournament_name": item["name"],
+        "subject": subject_clean,
+        "attachment_name": attachment_filename,
+        "total_recipients": len(recipients),
+        "total_sent": successful_sends,
+        "failed": failed_sends,
+        "deliveries": delivery_logs,
+    }, f"Email broadcast sent to {successful_sends} verified participants.")
+
+
+@router.get("/broadcast-history")
+def broadcast_history(tournament_slug: str = Query(default=""), user: dict = Depends(require_roles("super_admin", "management"))):
+    if tournament_slug:
+        events = rows(
+            """SELECT * FROM notification_events
+               WHERE tournament_slug = ? AND channels = 'email'
+               ORDER BY created_at DESC LIMIT 30""",
+            (tournament_slug,),
+        )
+    else:
+        events = rows(
+            """SELECT * FROM notification_events
+               WHERE channels = 'email'
+               ORDER BY created_at DESC LIMIT 30"""
+        )
+    return ok(events)
+

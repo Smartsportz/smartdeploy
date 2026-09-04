@@ -7,6 +7,7 @@ import {
   Flame,
   GalleryHorizontal,
   LifeBuoy,
+  Mail,
   MapPin,
   Medal,
   Settings,
@@ -15,6 +16,7 @@ import {
   Users,
   Zap,
 } from "lucide-react";
+
 import basketballMatch from "../assets/basketball-match.png";
 import cricketStadium from "../assets/cricket-stadium.png";
 import dashboardSheet from "../assets/dashboard-sheet.png";
@@ -547,6 +549,7 @@ export const sidebar = [
   { label: "News", path: "/admin/news", icon: GalleryHorizontal },
   { label: "Gallery", path: "/admin/gallery", icon: GalleryHorizontal },
   { label: "Announcements", path: "/admin/announcements", icon: FileText },
+  { label: "Send Info", path: "/admin/send-info", icon: Mail },
   { label: "Reports", path: "/admin/reports", icon: BarChart3 },
   { label: "Logs", path: "/admin/logs", icon: ShieldCheck },
 ];
@@ -569,10 +572,12 @@ export const managementSidebar = [
   { label: "Group Bracket", path: "/management/group-bracket", icon: Zap },
   { label: "Players", path: "/management/players", icon: Users },
   { label: "Announcements", path: "/management/announcements", icon: FileText },
+  { label: "Send Info", path: "/management/send-info", icon: Mail },
   { label: "News", path: "/management/news", icon: GalleryHorizontal },
   { label: "Gallery", path: "/management/gallery", icon: GalleryHorizontal },
   { label: "Reports", path: "/management/reports", icon: BarChart3 },
 ];
+
 
 export const timeline = [
   { time: "18.4", type: "FOUR", text: "Rohan Sharma drives through extra cover. The chasing side tightens control.", score: "156/4" },

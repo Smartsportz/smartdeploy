@@ -34,10 +34,13 @@ from app.services.cache import cache_key
 from app.services.database_architecture import compare_primary_mirror, database_status
 from app.services.job_queue import enqueue
 from app.services.media import normalize_media_record, normalize_media_records
+from app.services.notifications import send_registration_payment_success
 from app.services.realtime import publish_realtime
+from app.services.registration_pass_pdf import generate_registration_pdf_by_id
 from app.services.runtime_state import runtime_state
 
 router = APIRouter(prefix="/admin", tags=["admin"])
+
 _payment_intent_listing_columns_ready = False
 
 
@@ -1999,10 +2002,37 @@ def approve_registration(
         registration_id,
         "Registration approved"
     )
+
+    # Generate and send official registration pass PDF to the user email
+    try:
+        pdf_bytes, _ = generate_registration_pdf_by_id(registration_id)
+        tournament = row("SELECT name, slug FROM tournaments WHERE slug = ?", (item["tournament_slug"],))
+        members = rows("SELECT name, role, jersey, contact, age, jersey_size FROM registration_members WHERE registration_id = ?", (registration_id,))
+        delivery_results = send_registration_payment_success(
+            item.get("email", ""),
+            item.get("phone", ""),
+            {
+                "tournamentName": tournament["name"] if tournament else item["tournament_slug"],
+                "teamName": item["team_name"],
+                "teamCode": item.get("team_code") or item.get("confirmation_code") or registration_id,
+                "captainName": item.get("captain_name", ""),
+                "receiptNumber": item.get("confirmation_code", ""),
+                "confirmationCode": item.get("confirmation_code", ""),
+                "qrPayload": item.get("confirmation_qr_payload", ""),
+                "members": members,
+            },
+            pdf_bytes=pdf_bytes,
+        )
+        for result in delivery_results:
+            log(item.get("email", ""), "approval_notification", result.provider, registration_id, result.message)
+    except Exception as exc:
+        log(item.get("email", ""), "approval_email_failed", "registration", registration_id, str(exc))
+
     return ok(
         row("SELECT * FROM registrations WHERE id = ?", (registration_id,)),
         "Registration approved"
     )
+
 
 
 @router.get("/payments")
