@@ -55,7 +55,7 @@ def dashboard(user: dict = Depends(current_user)):
                 tuple(registration_ids),
             )
             members = rows(
-                f"SELECT registration_id, name, role, jersey, contact FROM registration_members WHERE registration_id IN ({placeholders}) ORDER BY id",
+                f"SELECT registration_id, name, role, jersey, contact, age, jersey_size FROM registration_members WHERE registration_id IN ({placeholders}) ORDER BY id",
                 tuple(registration_ids),
             )
         paid_count = len([payment for payment in payments if payment["status"] == "paid"])
