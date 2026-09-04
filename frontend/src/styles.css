@@ -3730,3 +3730,7 @@ input[aria-invalid="true"] { border-color: rgba(225, 29, 72, .72); background: r
   .archive-score-strip span { text-align: center; }
   .recorded-video-player { min-height: 240px; }
 }
+
+.in-color{
+  color: rgb(230,180,66);
+}

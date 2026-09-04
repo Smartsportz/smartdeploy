@@ -75,6 +75,7 @@ type TournamentFormState = {
   rulesText: string;
   published: boolean;
   showOnHome: boolean;
+  showJerseySize: boolean;
   feeBreakdown: MoneyLine[];
   prizes: PrizeLine[];
   cities: string[];
@@ -103,6 +104,7 @@ const emptyTournamentForm: TournamentFormState = {
   rulesText: "",
   published: true,
   showOnHome: true,
+  showJerseySize: true,
   feeBreakdown: [{ label: "Entry Fee", value: 5000 }],
   prizes: [
     { position: 1, label: "1st Prize", amount: 0 },
@@ -145,6 +147,7 @@ function formFromTournament(item?: Record<string, any>): TournamentFormState {
     rulesText: item.rules_text ?? item.rulesText ?? "",
     published: Boolean(item.published ?? true),
     showOnHome: Boolean(item.show_on_home ?? item.showOnHome ?? true),
+    showJerseySize: Boolean(item.show_jersey_size ?? item.showJerseySize ?? true),
     feeBreakdown,
     prizes,
     cities,
@@ -212,6 +215,8 @@ export function UserSectionPage({ section }: { section: keyof typeof userContent
     members: filteredMembers.map((item) => [
       item.name,
       item.role,
+      (item as any).age || "-",
+      (item as any).jersey_size || "-",
       item.contact || "-",
     ]),
     certificates: certificateRows.map((item) => [
@@ -234,7 +239,7 @@ export function UserSectionPage({ section }: { section: keyof typeof userContent
     profile: ["Name", "Email", "Role"],
     registrations: ["Tournament", "Team", "City", "Payment", "Action"],
     payments: ["Receipt", "Amount", "Method", "Status", "Action"],
-    members: ["Member", "Role", "Contact"],
+    members: ["Member", "Role", "Age", "Jersey Size", "Contact"],
     certificates: ["Tournament", "Team", "City", "Status", "Note"],
     schedules: ["Tournament", "Sport", "Schedule", "City"],
     documents: ["Document", "File", "Status"],
@@ -475,6 +480,7 @@ export function ManagementSectionPage({ section }: { section: keyof typeof manag
       cities: selectedCities,
       published: tournamentForm.published,
       show_on_home: tournamentForm.showOnHome,
+      show_jersey_size: tournamentForm.showJerseySize,
     };
     try {
       const saved = await apiRequest<Record<string, any>>(
@@ -838,6 +844,20 @@ export function ManagementSectionPage({ section }: { section: keyof typeof manag
                   <div className="admin-flow-checks">
                     <label className="visibility-row"><span><b>Display on tournament page</b><small>Show this tournament on the public tournament page.</small></span><input type="checkbox" checked={tournamentForm.published} onChange={(event) => patchTournamentForm({ published: event.target.checked })} /></label>
                     <label className="visibility-row"><span><b>Display on home page</b><small>Show this tournament in the home upcoming tournament containers.</small></span><input type="checkbox" checked={tournamentForm.showOnHome} onChange={(event) => patchTournamentForm({ showOnHome: event.target.checked })} /></label>
+                    <label className="visibility-row" style={{ borderLeft: "2px solid var(--primary)", paddingLeft: "12px" }}>
+                      <span>
+                        <b>Show Jersey Size in Registration</b>
+                        <small>Enable to display jersey size field in tournament registration page. Disable to hide it.</small>
+                      </span>
+                      <button 
+                        type="button" 
+                        className={`btn ${tournamentForm.showJerseySize ? "btn-primary" : "btn-secondary"}`}
+                        onClick={() => patchTournamentForm({ showJerseySize: !tournamentForm.showJerseySize })}
+                        style={{ minWidth: "80px" }}
+                      >
+                        {tournamentForm.showJerseySize ? "Enabled" : "Disabled"}
+                      </button>
+                    </label>
                   </div>
                   <div className="registration-actions compact-actions">
                     <button className="btn btn-primary" type="button" onClick={saveTournamentForm}>Save</button>

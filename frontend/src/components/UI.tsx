@@ -26,7 +26,7 @@ function BrandLogo({ compact = false }: { compact?: boolean }) {
   return (
     <Link to="/" className={`brand ${compact ? "compact" : ""}`}>
       <img className="brand-mark" src={`${import.meta.env.BASE_URL}assets/logo.png`} alt="SmartSportz.in logo" loading="eager" fetchpriority="high" />
-      <span>SmartSportz.in</span>
+      <span>SmartSportz<span className='in-color'>.in</span></span>
     </Link>
   );
 }

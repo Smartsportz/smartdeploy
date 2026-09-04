@@ -486,32 +486,57 @@ async function downloadRulesFile(tournament: (typeof tournaments)[number]) {
   link.remove();
 }
 
-function downloadSampleExcel() {
-  const sampleData = [
-    { sno: 1, name: "John Doe", age: 25, size: "L" },
-    { sno: 2, name: "Jane Smith", age: 24, size: "M" },
-    { sno: 3, name: "Mike Johnson", age: 26, size: "XL" },
-    { sno: 4, name: "Sarah Williams", age: 23, size: "S" },
-    { sno: 5, name: "David Brown", age: 27, size: "M" },
-  ];
+async function downloadSampleExcel(showJerseySize = true) {
+  const filename = showJerseySize ? 'import_player_sample_enble.xlsx' : 'import_player_sample_disable.xlsx';
+  const templateUrl = `${import.meta.env.BASE_URL}templates/${filename}`;
+  try {
+    const response = await fetch(templateUrl);
+    if (response.ok) {
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 300);
+      return;
+    }
+  } catch {
+    // Fallback to client-side generated spreadsheet
+  }
+
+  const sampleData = showJerseySize
+    ? [
+        { sno: 1, name: "John Doe", age: 25, size: "L" },
+        { sno: 2, name: "Jane Smith", age: 24, size: "M" },
+        { sno: 3, name: "Mike Johnson", age: 26, size: "XL" },
+        { sno: 4, name: "Sarah Williams", age: 23, size: "S" },
+        { sno: 5, name: "David Brown", age: 27, size: "M" },
+      ]
+    : [
+        { sno: 1, name: "John Doe", age: 25 },
+        { sno: 2, name: "Jane Smith", age: 24 },
+        { sno: 3, name: "Mike Johnson", age: 26 },
+        { sno: 4, name: "Sarah Williams", age: 23 },
+        { sno: 5, name: "David Brown", age: 27 },
+      ];
   
   const ws = XLSX.utils.json_to_sheet(sampleData);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Players");
   
-  ws['!cols'] = [
-    { wch: 8 },
-    { wch: 20 },
-    { wch: 10 },
-    { wch: 10 }
-  ];
+  ws['!cols'] = showJerseySize
+    ? [{ wch: 8 }, { wch: 20 }, { wch: 10 }, { wch: 10 }]
+    : [{ wch: 8 }, { wch: 20 }, { wch: 10 }];
   
   const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
   const blob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'import_player_sample.xlsx';
+  link.download = filename;
   document.body.appendChild(link);
   link.click();
   link.remove();
@@ -736,13 +761,13 @@ function parseExcelFile(file: File): Promise<ImportedRosterEntry[]> {
         
         const entries: ImportedRosterEntry[] = [];
         jsonData.forEach((row: any) => {
-          const name = row.name || row.Name || row.NAME || row.player_name || "";
-          const age = String(row.age || row.Age || row.AGE || row.player_age || "");
-          const jerseySize = String(row.size || row.Size || row.SIZE || row.jersey_size || "");
+          const name = row.name || row.Name || row.NAME || row.player_name || row["Player Name"] || row["PLAYER NAME"] || "";
+          const age = String(row.age ?? row.Age ?? row.AGE ?? row.player_age ?? row["Player Age"] ?? row["PLAYER AGE"] ?? "");
+          const jerseySize = String(row.size ?? row.Size ?? row.SIZE ?? row.jersey_size ?? row.jerseySize ?? row["Jersey Size"] ?? row["JERSEY SIZE"] ?? "");
           
-          if (name && name.trim()) {
+          if (name && String(name).trim()) {
             entries.push({
-              name: name.trim(),
+              name: String(name).trim(),
               age: age.trim(),
               jerseySize: jerseySize.trim()
             });
@@ -779,6 +804,8 @@ function normalizeTournamentRecord(record: Record<string, any>, fallback: (typeo
     feeBreakdown,
     prizes,
     show_on_home: Boolean(record.show_on_home ?? (fallback as any).show_on_home),
+    show_jersey_size: Boolean(record.show_jersey_size ?? (fallback as any).show_jersey_size ?? true),
+    showJerseySize: Boolean(record.show_jersey_size ?? record.showJerseySize ?? (fallback as any).showJerseySize ?? true),
     cities: Array.isArray(record.cities) && record.cities.length ? record.cities : fallback.cities,
   };
 }
@@ -846,6 +873,7 @@ export function RegistrationPage() {
 
   const minAge = Number((tournament as any).minAge ?? (tournament as any).min_age ?? 0);
   const maxAge = Number((tournament as any).maxAge ?? (tournament as any).max_age ?? 0);
+  const showJerseySize = Boolean((tournament as any).show_jersey_size ?? (tournament as any).showJerseySize ?? true);
 
   useEffect(() => {
     if (!routeSlug) return;
@@ -1032,7 +1060,8 @@ export function RegistrationPage() {
         return isNaN(ageNum) || ageNum <= 0 || !isAgeInRange(ageNum, tournament);
       });
 
-    const missingSizes = memberJerseySizes.filter(s => !s.trim()).length;
+    const showJerseySize = Boolean((tournament as any).show_jersey_size ?? (tournament as any).showJerseySize ?? true);
+    const missingSizes = showJerseySize ? memberJerseySizes.filter(s => !s.trim()).length : 0;
 
     if (missingTeamFields.length) {
       showMissing(`Please complete these fields: ${missingTeamFields.join(", ")}.`);
@@ -1309,7 +1338,7 @@ export function RegistrationPage() {
                     <h3>Player Roster</h3>
                     <div className="section-actions" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                       <button className="btn btn-secondary btn-sm" type="button" onClick={() => setRosterImportOpen(true)}><Upload size={14} /> Import</button>
-                      <button className="btn btn-secondary btn-sm" type="button" onClick={downloadSampleExcel}><Download size={14} /> Sample</button>
+                      <button className="btn btn-secondary btn-sm" type="button" onClick={() => downloadSampleExcel(showJerseySize)}><Download size={14} /> Sample</button>
                     </div>
                   </div>
                   <div className="player-roster-rows" style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -1332,16 +1361,19 @@ export function RegistrationPage() {
                             placeholder="Age"
                             style={isInvalid ? { borderColor: "red", backgroundColor: "#fff0f0" } : {}}
                           />
-                          <select
-                            value={memberJerseySizes[index] || ""}
-                            onChange={(event) => updateMemberJerseySize(index, event.target.value)}
-                            className="jersey-size-select"
-                          >
-                            <option value="">Size</option>
-                            {jerseySizeOptions.map((size) => (
-                              <option key={size} value={size}>{size}</option>
-                            ))}
-                          </select>
+                          {/* In the team details step, wrap the jersey size select with a condition */}
+                            {(tournament as any).show_jersey_size !== false && (
+                              <select
+                                value={memberJerseySizes[index] || ""}
+                                onChange={(event) => updateMemberJerseySize(index, event.target.value)}
+                                className="jersey-size-select"
+                              >
+                                <option value="">Size</option>
+                                {jerseySizeOptions.map((size) => (
+                                  <option key={size} value={size}>{size}</option>
+                                ))}
+                              </select>
+                            )}
                         </div>
                       );
                     })}
@@ -1386,14 +1418,14 @@ export function RegistrationPage() {
                   onChange={handleExcelImport}
                   style={{ display: "none" }}
                 />
-                <button className="btn btn-secondary btn-sm" type="button" onClick={downloadSampleExcel}>
+                <button className="btn btn-secondary btn-sm" type="button" onClick={() => downloadSampleExcel(showJerseySize)}>
                   <Download size={14} /> Sample
                 </button>
               </div>
               <textarea
                 value={rosterImportText}
                 onChange={(event) => setRosterImportText(event.target.value)}
-                placeholder="Example:&#10;John Doe, 25, L&#10;Ravi Kumar, 24, M"
+                placeholder={showJerseySize ? "Example:\nJohn Doe, 25, L\nRavi Kumar, 24, M" : "Example:\nJohn Doe, 25\nRavi Kumar, 24"}
                 style={{ minHeight: "140px", width: "100%", border: "1px solid #d4d8e0", borderRadius: "10px", padding: "10px", resize: "vertical" }}
               />
               <div className="rules-modal-actions">
@@ -1462,7 +1494,12 @@ export function RegistrationRosterPage() {
             <h2>Roster</h2>
             <div className="roster-list">
               {saved.members.map((member, index) => (
-                <p key={index}><b>{index + 1}</b><span>{member} ({saved.memberAges[index]} yrs) - Size: {saved.memberJerseySizes[index]}</span></p>
+                <p key={index}>
+                  <b>{index + 1}</b>
+                  <span>
+                    {member} ({saved.memberAges[index]} yrs){saved.memberJerseySizes?.[index] ? ` - Size: ${saved.memberJerseySizes[index]}` : ""}
+                  </span>
+                </p>
               ))}
             </div>
           </section>
