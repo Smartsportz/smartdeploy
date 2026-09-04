@@ -11,10 +11,12 @@ from app.api.deps import optional_current_user
 from app.core.config import settings
 from app.core.responses import ok
 from app.db.database import ensure_column, execute, row, rows
+from app.schemas import ContactInquiryRequest
 from app.services.cache import cache_key, get_or_set_json
 from app.services.job_queue import enqueue
 from app.services.likes import like_states
 from app.services.media import normalize_media_record, normalize_media_records
+from app.services.notifications import send_email
 from app.services.sports_schema import ensure_chess_school_tables, ensure_chess_sport_content, ensure_sport_content_columns
 from app.services.tournament_status import apply_registration_window_statuses, with_runtime_status
 
@@ -43,6 +45,7 @@ def ensure_tournament_visibility_column() -> None:
         return
     ensure_column("tournaments", "published", "INTEGER NOT NULL DEFAULT 1")
     ensure_column("tournaments", "show_on_home", "INTEGER NOT NULL DEFAULT 1")
+    ensure_column("tournaments", "show_jersey_size", "INTEGER NOT NULL DEFAULT 1")
     _tournament_visibility_ready = True
 
 
@@ -649,3 +652,77 @@ def live_match(match_id: str):
 @router.get("/cms/{content_type}")
 def cms(content_type: str):
     return ok(get_or_set_json(cache_key("public:cms", content_type), lambda: rows("SELECT * FROM cms_content WHERE lower(type) = lower(?) AND published = 1", (content_type,))))
+
+
+def ensure_contact_messages_table() -> None:
+    execute(
+        """CREATE TABLE IF NOT EXISTS contact_messages (
+            id TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            email TEXT NOT NULL,
+            phone TEXT,
+            subject TEXT NOT NULL,
+            message TEXT NOT NULL,
+            created_at TEXT NOT NULL
+        )"""
+    )
+
+
+@router.get("/contact-info")
+def contact_info():
+    admin_email = settings.contact_recipient_email or "smartsportz.in@gmail.com"
+    return ok({
+        "organization": "SmartSportz",
+        "email": admin_email,
+        "support_email": "info@smartsportz.in",
+        "phone": "+91 78713 57999",
+        "alt_phone": "+91 63744 09006",
+        "address": "Bengaluru, Karnataka, India",
+        "hours": "Monday – Saturday: 9:00 AM – 7:00 PM IST",
+        "whatsapp": "+91 78713 57999",
+    })
+
+
+@router.post("/contact")
+def submit_contact_inquiry(payload: ContactInquiryRequest):
+    ensure_contact_messages_table()
+    inquiry_id = str(uuid4())
+    created_at = now_iso()
+
+    execute(
+        """INSERT INTO contact_messages (id, name, email, phone, subject, message, created_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?)""",
+        (inquiry_id, payload.name, payload.email, payload.phone or "", payload.subject, payload.message, created_at),
+    )
+
+    admin_email = settings.contact_recipient_email or "smartsportz.in@gmail.com"
+
+    subject = f"[SmartSportz Contact] {payload.subject}"
+    html = f"""
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 24px; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
+      <h2 style="color: #0B8852; margin-top: 0; margin-bottom: 16px;">New Contact Inquiry Received</h2>
+      <p style="color: #475569; font-size: 15px;">A new message was submitted via the SmartSportz contact form:</p>
+      <table style="width: 100%; border-collapse: collapse; margin-top: 16px; font-size: 14px;">
+        <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0; color: #64748b; width: 100px;"><b>Name:</b></td><td style="color: #0f172a;">{payload.name}</td></tr>
+        <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0; color: #64748b;"><b>Email:</b></td><td style="color: #0f172a;"><a href="mailto:{payload.email}" style="color: #0B8852; text-decoration: none;">{payload.email}</a></td></tr>
+        <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0; color: #64748b;"><b>Phone:</b></td><td style="color: #0f172a;">{payload.phone or 'Not provided'}</td></tr>
+        <tr style="border-bottom: 1px solid #f1f5f9;"><td style="padding: 10px 0; color: #64748b;"><b>Subject:</b></td><td style="color: #0f172a;">{payload.subject}</td></tr>
+      </table>
+      <div style="margin-top: 20px; padding: 16px; background-color: #f8fafc; border-radius: 8px; border-left: 4px solid #0B8852;">
+        <h4 style="margin: 0 0 8px 0; color: #334155; font-size: 14px;">Message:</h4>
+        <p style="margin: 0; color: #1e293b; white-space: pre-wrap; line-height: 1.6; font-size: 14px;">{payload.message}</p>
+      </div>
+      <p style="margin-top: 24px; font-size: 12px; color: #94a3b8;">Timestamp: {created_at} UTC | SmartSportz.in</p>
+    </div>
+    """
+    text = f"New Contact Inquiry:\nName: {payload.name}\nEmail: {payload.email}\nPhone: {payload.phone or 'Not provided'}\nSubject: {payload.subject}\n\nMessage:\n{payload.message}\n\nTimestamp: {created_at}"
+
+    try:
+        send_email(admin_email, subject, html, text)
+    except Exception:
+        pass
+
+    return ok({
+        "message": f"Your message has been sent to the SmartSportz admin team ({admin_email}). We will respond to you soon!",
+        "inquiry_id": inquiry_id,
+    })

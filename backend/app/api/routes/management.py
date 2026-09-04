@@ -31,6 +31,8 @@ def ensure_tournament_visibility_column() -> None:
     if _tournament_visibility_ready:
         return
     ensure_column("tournaments", "published", "INTEGER NOT NULL DEFAULT 1")
+    ensure_column("tournaments", "show_on_home", "INTEGER NOT NULL DEFAULT 1")
+    ensure_column("tournaments", "show_jersey_size", "INTEGER NOT NULL DEFAULT 1")
     _tournament_visibility_ready = True
 
 
@@ -197,6 +199,8 @@ def _tournament_detail(slug: str) -> dict | None:
         detail["fee_breakdown"] = []
     detail["status"] = runtime_status(detail)
     detail["accent"] = accent_for_status(detail["status"], detail.get("accent", "emerald"))
+    # Ensure show_jersey_size is included
+    detail["show_jersey_size"] = bool(detail.get("show_jersey_size", 1))
     return detail
 
 
@@ -278,8 +282,8 @@ def create_tournament(payload: TournamentUpsertPayload, user: dict = Depends(req
     execute(
         """INSERT INTO tournaments(slug, name, sport, status, location, date, registration_start, registration_end, teams, capacity, team_size,
           min_team_size, max_team_size, min_age, max_age, prize, image, poster, accent, address, sport_description, tournament_description, rules_pdf, rules_text, fee_breakdown_json, published, show_on_home,
-          block_repeat_registration)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+          block_repeat_registration, show_jersey_size)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (
             tournament_slug,
             payload.name,
@@ -309,6 +313,7 @@ def create_tournament(payload: TournamentUpsertPayload, user: dict = Depends(req
             int(payload.published),
             int(payload.show_on_home),
             int(payload.block_repeat_registration),
+            int(payload.show_jersey_size),
         ),
     )
     _save_tournament_children(tournament_slug, payload)
@@ -335,7 +340,7 @@ def update_tournament(tournament_slug: str, payload: TournamentUpsertPayload, us
     execute(
         """UPDATE tournaments SET name = ?, sport = ?, status = ?, location = ?, date = ?, registration_start = ?, registration_end = ?,
           teams = ?, capacity = ?, team_size = ?, min_team_size = ?, max_team_size = ?, min_age = ?, max_age = ?, prize = ?, image = ?, poster = ?, accent = ?, address = ?,
-          sport_description = ?, tournament_description = ?, rules_pdf = ?, rules_text = ?, fee_breakdown_json = ?, published = ?, show_on_home = ?, block_repeat_registration = ? WHERE slug = ?""",
+          sport_description = ?, tournament_description = ?, rules_pdf = ?, rules_text = ?, fee_breakdown_json = ?, published = ?, show_on_home = ?, block_repeat_registration = ?, show_jersey_size = ? WHERE slug = ?""",
         (
             payload.name,
             sport_name,
@@ -364,6 +369,7 @@ def update_tournament(tournament_slug: str, payload: TournamentUpsertPayload, us
             int(payload.published),
             int(payload.show_on_home),
             int(payload.block_repeat_registration),
+            int(payload.show_jersey_size),
             tournament_slug,
         ),
     )
@@ -837,6 +843,7 @@ def delete_gallery_album(slug: str, user: dict = Depends(require_roles("super_ad
     clear_public_cache()
     return ok({"deleted": True, "slug": slug}, "Gallery deleted")
 
+
 @router.patch("/sports/{sport_slug}/home-visibility")
 def update_sport_home_visibility(sport_slug: str, payload: SportHomeVisibilityPayload, user: dict = Depends(require_roles("super_admin", "management"))):
     sport = row("SELECT slug FROM sports WHERE slug = ?", (sport_slug,))
@@ -1154,6 +1161,7 @@ def reports(_: dict = Depends(require_roles("super_admin", "management"))):
         {"name": "Registration funnel", "status": "Ready"},
         {"name": "Venue utilization", "status": "Draft"},
         {"name": "Live score audit", "status": "Ready"},
+    ])
     ])
 
 

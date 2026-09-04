@@ -25,10 +25,9 @@ export function ContactPage() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const adminEmail = "python.asmath1290@gmail.com";
+  const adminEmail = "smartsportz.in@gmail.com";
   const supportEmail = "info@smartsportz.in";
   const primaryPhone = "+91 78713 57999";
-  const secondaryPhone = "+91 63744 09006";
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -151,10 +150,6 @@ export function ContactPage() {
                     {primaryPhone}
                   </a>
                   <span className="contact-badge-pill">Primary</span>
-                </div>
-                <div className="contact-card-sub-info">
-                  <span>Helpline: </span>
-                  <a href={`tel:${secondaryPhone.replace(/\s+/g, "")}`}>{secondaryPhone}</a>
                 </div>
                 <a
                   href={`https://wa.me/917871357999?text=${encodeURIComponent("Hello SmartSportz Admin, I would like to inquire about tournaments.")}`}

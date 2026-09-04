@@ -251,6 +251,7 @@ class TournamentUpsertPayload(BaseModel):
     published: bool = True
     show_on_home: bool = True
     block_repeat_registration: bool = False
+    show_jersey_size: Optional[bool] = True 
 
 
 class NewsBlockPayload(BaseModel):
@@ -546,4 +547,12 @@ class AdminAccountUpdatePayload(BaseModel):
     @classmethod
     def validate_phone(cls, value: str | None) -> str:
         return _optional_phone(value)
+
+
+class ContactInquiryRequest(BaseModel):
+    name: str = Field(min_length=2, max_length=120)
+    email: EmailStr
+    phone: str = Field(default="", max_length=25)
+    subject: str = Field(min_length=2, max_length=200)
+    message: str = Field(min_length=5, max_length=4000)
 
