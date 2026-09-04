@@ -551,40 +551,6 @@ CREATE TABLE IF NOT EXISTS mirror_table_checksums (
 );
 """
 
-FORM_SCHEMA = """
--- DB-4: public sign-ups from https://form.smartsportz.in
---
--- Its own database file (FORM_DATABASE_PATH), not a table in the operational
--- DB. Two reasons: the endpoint that writes here is unauthenticated, and a
--- submission must never be able to become a login credential - so it shares no
--- file, no connection and no foreign key with `users`. Promote an entry into
--- the app deliberately from the management side, never automatically.
-CREATE TABLE IF NOT EXISTS form_registrations (
-  id TEXT PRIMARY KEY,
-  full_name TEXT NOT NULL,
-  email TEXT NOT NULL,
-  phone TEXT NOT NULL,
-  city TEXT NOT NULL DEFAULT '',
-  sport TEXT NOT NULL DEFAULT '',
-  team_name TEXT NOT NULL DEFAULT '',
-  age_group TEXT NOT NULL DEFAULT '',
-  notes TEXT NOT NULL DEFAULT '',
-  status TEXT NOT NULL DEFAULT 'new',
-  source TEXT NOT NULL DEFAULT 'form_subdomain',
-  ip_address TEXT NOT NULL DEFAULT '',
-  user_agent TEXT NOT NULL DEFAULT '',
-  reviewed_by TEXT NOT NULL DEFAULT '',
-  reviewed_at TEXT NOT NULL DEFAULT '',
-  created_at TEXT NOT NULL
-);
-
-CREATE INDEX IF NOT EXISTS idx_form_registrations_created ON form_registrations(created_at);
-CREATE INDEX IF NOT EXISTS idx_form_registrations_status_created ON form_registrations(status, created_at);
-CREATE INDEX IF NOT EXISTS idx_form_registrations_email ON form_registrations(email);
--- One entry per person per sport; they may still register for another sport.
-CREATE UNIQUE INDEX IF NOT EXISTS idx_form_registrations_dedupe ON form_registrations(lower(trim(email)), lower(trim(sport)));
-"""
-
 AUDIT_SCHEMA = """
 CREATE TABLE IF NOT EXISTS audit_logs (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -1101,8 +1067,5 @@ def init_schema() -> None:
     with connect(settings.audit_database_path) as audit:
         _executescript(audit, AUDIT_SCHEMA)
         audit.commit()
-    with connect(settings.form_database_path) as form_db:
-        _executescript(form_db, FORM_SCHEMA)
-        form_db.commit()
     if settings.auto_mirror_sync:
         sync_mirror()

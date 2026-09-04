@@ -2,10 +2,10 @@ from __future__ import annotations
 
 from fastapi import APIRouter, Response
 
-from app.api.routes import admin, auth, content, form, likes, live, management, payments, public, realtime, registrations, storage, user
+from app.api.routes import admin, auth, content, likes, live, management, payments, public, realtime, registrations, storage, user
 from app.core.config import settings
 from app.core.responses import ok
-from app.db.database import audit_db_path, connect, connect_audit, connect_form, connect_mirror, db_path, form_db_path, mirror_db_path, using_postgres
+from app.db.database import audit_db_path, connect, connect_audit, connect_mirror, db_path, mirror_db_path, using_postgres
 from app.services.runtime_state import runtime_state
 from app.services.metrics import prometheus_text
 
@@ -19,7 +19,6 @@ def health():
         "primary": connect,
         "mirror": connect_mirror,
         "audit": connect_audit,
-        "form": connect_form,
     }.items():
         try:
             with connector() as conn:
@@ -33,7 +32,6 @@ def health():
             "primary": settings.postgres_primary_schema,
             "mirror": settings.postgres_mirror_schema,
             "audit": settings.postgres_audit_schema,
-            "form": settings.postgres_form_schema,
             "urlConfigured": bool(settings.database_url),
             "connections": connections,
         }
@@ -43,7 +41,6 @@ def health():
             "primary": str(db_path()),
             "mirror": str(mirror_db_path()),
             "audit": str(audit_db_path()),
-            "form": str(form_db_path()),
             "connections": connections,
         }
     status = "healthy" if all(item["connected"] for item in connections.values()) else "degraded"
@@ -63,7 +60,6 @@ api_router.include_router(auth.router)
 api_router.include_router(content.router)
 api_router.include_router(public.router)
 api_router.include_router(registrations.router)
-api_router.include_router(form.router)
 api_router.include_router(payments.router)
 api_router.include_router(admin.router)
 api_router.include_router(management.router)

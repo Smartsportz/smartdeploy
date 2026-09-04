@@ -49,9 +49,6 @@ class Settings:
     database_path: Path = BASE_DIR / os.getenv("DATABASE_PATH", "storage/smartsportz.db")
     mirror_database_path: Path = BASE_DIR / os.getenv("MIRROR_DATABASE_PATH", "storage/smartsportz_mirror.db")
     audit_database_path: Path = BASE_DIR / os.getenv("AUDIT_DATABASE_PATH", "storage/smartsportz_audit.db")
-    # Public form.smartsportz.in submissions get their own database file so an
-    # unauthenticated endpoint never shares a file handle with app data.
-    form_database_path: Path = BASE_DIR / os.getenv("FORM_DATABASE_PATH", "storage/smartsportz_form.db")
     database_backend: str = _database_backend()
     supabase_url: str = os.getenv("SUPABASE_URL", "")
     supabase_publishable_key: str = os.getenv("SUPABASE_PUBLISHABLE_KEY", "")
@@ -59,11 +56,9 @@ class Settings:
     database_url: str = _database_url("DATABASE_URL")
     mirror_database_url: str = _database_url("MIRROR_DATABASE_URL")
     audit_database_url: str = _database_url("AUDIT_DATABASE_URL")
-    form_database_url: str = _database_url("FORM_DATABASE_URL")
     postgres_primary_schema: str = os.getenv("POSTGRES_PRIMARY_SCHEMA", "primary_app")
     postgres_mirror_schema: str = os.getenv("POSTGRES_MIRROR_SCHEMA", "mirror_backup")
     postgres_audit_schema: str = os.getenv("POSTGRES_AUDIT_SCHEMA", "audit_event")
-    postgres_form_schema: str = os.getenv("POSTGRES_FORM_SCHEMA", "form_intake")
     read_from_mirror: bool = os.getenv("READ_FROM_MIRROR", "false").lower() in {"1", "true", "yes", "on"}
     auto_mirror_sync: bool = os.getenv("AUTO_MIRROR_SYNC", "false").lower() in {"1", "true", "yes", "on"}
     backup_dir: Path = BASE_DIR / os.getenv("BACKUP_DIR", "storage/backups")

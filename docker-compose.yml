@@ -39,7 +39,6 @@ services:
       DATABASE_PATH: storage/smartsportz.db
       MIRROR_DATABASE_PATH: storage/smartsportz_mirror.db
       AUDIT_DATABASE_PATH: storage/smartsportz_audit.db
-      FORM_DATABASE_PATH: storage/smartsportz_form.db
       READ_FROM_MIRROR: "false"
       REDIS_URL: redis://redis:6379/0
       INIT_DB_ON_STARTUP: "false"
@@ -64,7 +63,6 @@ services:
       DATABASE_PATH: storage/smartsportz.db
       MIRROR_DATABASE_PATH: storage/smartsportz_mirror.db
       AUDIT_DATABASE_PATH: storage/smartsportz_audit.db
-      FORM_DATABASE_PATH: storage/smartsportz_form.db
       REDIS_URL: redis://redis:6379/0
       INIT_DB_ON_STARTUP: "true"
       SEED_DB_ON_STARTUP: "false"
@@ -117,7 +115,6 @@ services:
       DATABASE_PATH: storage/smartsportz.db
       MIRROR_DATABASE_PATH: storage/smartsportz_mirror.db
       AUDIT_DATABASE_PATH: storage/smartsportz_audit.db
-      FORM_DATABASE_PATH: storage/smartsportz_form.db
       REDIS_URL: redis://redis:6379/0
       INIT_DB_ON_STARTUP: "false"
       SEED_DB_ON_STARTUP: "false"
@@ -143,7 +140,6 @@ services:
       DATABASE_PATH: storage/smartsportz.db
       MIRROR_DATABASE_PATH: storage/smartsportz_mirror.db
       AUDIT_DATABASE_PATH: storage/smartsportz_audit.db
-      FORM_DATABASE_PATH: storage/smartsportz_form.db
       REDIS_URL: redis://redis:6379/1
       INIT_DB_ON_STARTUP: "false"
       SEED_DB_ON_STARTUP: "false"
@@ -169,7 +165,6 @@ services:
       DATABASE_PATH: storage/smartsportz.db
       MIRROR_DATABASE_PATH: storage/smartsportz_mirror.db
       AUDIT_DATABASE_PATH: storage/smartsportz_audit.db
-      FORM_DATABASE_PATH: storage/smartsportz_form.db
       REDIS_URL: redis://redis:6379/1
       INIT_DB_ON_STARTUP: "false"
       SEED_DB_ON_STARTUP: "false"
@@ -201,26 +196,6 @@ services:
       retries: 6
       start_period: 10s
 
-  # Standalone registration form served at https://form.smartsportz.in.
-  # Static nginx only - it proxies just the two /api/v1/form/* endpoints to
-  # the backend over the compose network, so the page is same-origin with the
-  # API and ALLOWED_ORIGINS does not need to change.
-  form:
-    build:
-      context: ./form
-    restart: unless-stopped
-    depends_on:
-      backend:
-        condition: service_healthy
-    ports:
-      - "${BIND_ADDR:-127.0.0.1}:${FORM_PORT:-8082}:80"
-    healthcheck:
-      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1/healthz"]
-      interval: 10s
-      timeout: 5s
-      retries: 6
-      start_period: 10s
-
   prometheus:
     image: prom/prometheus:v2.55.1
     restart: unless-stopped
@@ -233,7 +208,6 @@ services:
     depends_on:
       - backend
       - frontend
-      - form
     ports:
       - "${BIND_ADDR:-127.0.0.1}:${PROMETHEUS_PORT:-9090}:9090"
 
