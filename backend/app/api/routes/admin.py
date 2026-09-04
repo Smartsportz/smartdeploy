@@ -1988,7 +1988,7 @@ def approve_registration(
             FROM registrations
             WHERE tournament_slug = ?
               AND payment_status = 'paid'
-              AND COALESCE(status, '') NOT IN ('rejected', 'cancelled')
+              AND status IN ('approved', 'accepted')
         )
         WHERE slug = ?
         """,

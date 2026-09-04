@@ -950,6 +950,20 @@ def approve_registration(registration_id: str, user: dict = Depends(require_role
     if not item:
         return ok({"approved": False, "reason": "Registration not found"}, "Registration not found")
     execute("UPDATE registrations SET status = ? WHERE id = ?", ("accepted", registration_id))
+    execute(
+        """
+        UPDATE tournaments
+        SET teams = (
+            SELECT COUNT(*)
+            FROM registrations
+            WHERE tournament_slug = ?
+              AND payment_status = 'paid'
+              AND status IN ('approved', 'accepted')
+        )
+        WHERE slug = ?
+        """,
+        (item["tournament_slug"], item["tournament_slug"]),
+    )
     log(user["email"], "registration_accepted", "registration", registration_id, f"Accepted {item['team_name']}")
     clear_public_cache(item["tournament_slug"])
     return ok(row("SELECT * FROM registrations WHERE id = ?", (registration_id,)), "Registration accepted")
@@ -961,6 +975,20 @@ def reject_registration(registration_id: str, user: dict = Depends(require_roles
     if not item:
         return ok({"rejected": False, "reason": "Registration not found"}, "Registration not found")
     execute("UPDATE registrations SET status = ? WHERE id = ?", ("rejected", registration_id))
+    execute(
+        """
+        UPDATE tournaments
+        SET teams = (
+            SELECT COUNT(*)
+            FROM registrations
+            WHERE tournament_slug = ?
+              AND payment_status = 'paid'
+              AND status IN ('approved', 'accepted')
+        )
+        WHERE slug = ?
+        """,
+        (item["tournament_slug"], item["tournament_slug"]),
+    )
     log(user["email"], "registration_rejected", "registration", registration_id, f"Rejected {item['team_name']}")
     clear_public_cache(item["tournament_slug"])
     return ok(row("SELECT * FROM registrations WHERE id = ?", (registration_id,)), "Registration rejected")
