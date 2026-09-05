@@ -237,12 +237,12 @@ const emptyAdminTournamentForm: AdminTournamentForm = {
   registrationEnd: "",
   teams: 0,
   capacity: 32,
-  minTeamSize: 2,
+  minTeamSize: 1,
   maxTeamSize: 16,
   minAge: 18,
   maxAge: 45,
-  image: "/assets/cricket-stadium.png",
-  poster: "/assets/poster.jpeg",
+  image: "",
+  poster: "",
   accent: "emerald",
   address: "",
   sportDescription: "",
@@ -317,12 +317,12 @@ function adminFormFromTournament(item?: Record<string, any>): AdminTournamentFor
     registrationEnd: formatDateInput(item.registration_end),
     teams: Number(item.teams ?? 0),
     capacity: Number(item.capacity ?? 32),
-    minTeamSize: Number(item.min_team_size ?? 2),
+    minTeamSize: Number(item.min_team_size ?? 1),
     maxTeamSize: Number(item.max_team_size ?? item.team_size ?? 16),
     minAge: Number(item.min_age ?? 18),
     maxAge: Number(item.max_age ?? 45),
-    image: item.image ?? "/assets/cricket-stadium.png",
-    poster: item.poster ?? item.image ?? "/assets/poster.jpeg",
+    image: item.image ?? "",
+    poster: item.poster ?? item.image ?? "",
     accent: item.accent ?? "emerald",
     address: item.address ?? "",
     sportDescription: item.sport_description ?? "",
@@ -2930,24 +2930,20 @@ function AdminTeamsPanel() {
       <section className="panel admin-payment-tools" style={{ marginBottom: "1.5rem" }}>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "flex-end" }}>
           {/* Tournament Name Containers */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", flex: "1", minWidth: "200px" }}>
-            <button 
-              className={`btn ${selectedTournament === "all" ? "btn-primary" : "btn-secondary"}`}
-              onClick={() => setSelectedTournament("all")}
-              style={{ fontSize: "13px", padding: "6px 14px" }}
+          <div style={{ flex: "1", minWidth: "200px" }}>
+            <select
+              value={selectedTournament}
+              onChange={(e) => setSelectedTournament(e.target.value)}
+              className="form-input"
+              style={{ padding: "8px 12px", border: "1px solid var(--border)", borderRadius: "4px", backgroundColor: "var(--bg)" }}
             >
-              All Tournaments
-            </button>
-            {tournamentOptions.map((name) => (
-              <button 
-                key={name}
-                className={`btn ${selectedTournament === name ? "btn-primary" : "btn-secondary"}`}
-                onClick={() => setSelectedTournament(name)}
-                style={{ fontSize: "13px", padding: "6px 14px" }}
-              >
-                {name}
-              </button>
-            ))}
+              <option value="all">All Tournaments</option>
+              {tournamentOptions.map((name) => (
+                <option key={name} value={name}>
+                  {name}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Search Bar */}

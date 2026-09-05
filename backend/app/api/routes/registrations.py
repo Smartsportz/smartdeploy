@@ -115,7 +115,7 @@ def create_registration(payload: RegistrationCreate, user: dict = Depends(curren
         """
         SELECT COUNT(*) AS count
         FROM registrations
-        WHERE tournament_slug = ? AND status NOT IN ('rejected', 'cancelled')
+        WHERE tournament_slug = ? AND payment_status = 'paid' AND status IN ('approved', 'accepted')
         """,
         (payload.tournament_slug,),
     )
@@ -129,15 +129,17 @@ def create_registration(payload: RegistrationCreate, user: dict = Depends(curren
         )
         if existing_user_registration:
             raise HTTPException(status_code=409, detail="You are already registered for this tournament")
-    required_members = int(tournament.get("team_size") or 16)
-    if payload.members and len(payload.members) != required_members:
-        raise HTTPException(status_code=422, detail=f"This tournament requires exactly {required_members} member names, including captain and sub-captain")
-    city_allowed = row(
-        "SELECT id FROM tournament_cities WHERE tournament_slug = ? AND lower(city) = lower(?)",
-        (payload.tournament_slug, payload.city),
-    )
-    if not city_allowed:
-        raise HTTPException(status_code=422, detail="Selected city is not configured for this tournament")
+    min_members = int(tournament.get("min_team_size") or 1)
+    max_members = int(tournament.get("team_size") or 16)
+    if payload.members and not (min_members <= len(payload.members) <= max_members):
+        raise HTTPException(status_code=422, detail=f"This tournament requires between {min_members} and {max_members} members")
+    if payload.city:
+        city_allowed = row(
+            "SELECT id FROM tournament_cities WHERE tournament_slug = ? AND lower(city) = lower(?)",
+            (payload.tournament_slug, payload.city),
+        )
+        if not city_allowed:
+            raise HTTPException(status_code=422, detail="Selected city is not configured for this tournament")
     existing_team_name = row(
         """
         SELECT id FROM registrations

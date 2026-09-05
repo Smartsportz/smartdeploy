@@ -81,7 +81,7 @@ def _sync_tournament_registered_count(tournament_slug: str) -> None:
             FROM registrations
             WHERE tournament_slug = ?
               AND payment_status = 'paid'
-              AND COALESCE(status, '') NOT IN ('rejected', 'cancelled')
+              AND status IN ('approved', 'accepted')
         )
         WHERE slug = ?
         """,

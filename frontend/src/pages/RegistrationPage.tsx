@@ -610,7 +610,7 @@ function RegistrationSummary({ tournament, amount, showTimeline = false }: { tou
 }
 
 function TournamentPosterPanel({ tournament }: { tournament: (typeof tournaments)[number] }) {
-  const poster = tournament.poster || "/assets/poster.jpeg";
+  const poster = tournament.poster || "";
   return (
     <aside className="registration-side poster-side">
       <section className="registration-poster-card">
@@ -795,8 +795,11 @@ function normalizeTournamentRecord(record: Record<string, any>, fallback: (typeo
     teams: Number(record.registered_count ?? record.teams ?? fallback.teams ?? 0),
     capacity: Number(record.capacity ?? fallback.capacity ?? 0),
     teamSize: Number(record.team_size ?? record.max_team_size ?? fallback.teamSize),
+    minTeamSize: Number(record.min_team_size ?? (fallback as any).minTeamSize ?? 1),
     minAge: Number(record.min_age ?? fallback.minAge ?? 0),
     maxAge: Number(record.max_age ?? fallback.maxAge ?? 0),
+    image: record.image || "",
+    poster: record.poster || "",
     tournamentDescription: record.tournament_description ?? fallback.tournamentDescription,
     sportDescription: record.sport_description ?? (fallback as any).sportDescription,
     rulesPdf: record.rules_pdf ?? (fallback as any).rulesPdf ?? "",
@@ -887,6 +890,32 @@ export function RegistrationPage() {
       active = false;
     };
   }, [routeSlug]);
+
+  useEffect(() => {
+    const savedPay = readSavedPayment(routeSlug);
+    const savedReg = readSavedRegistration(routeSlug);
+    if (savedPay) {
+      if (typeof localStorage !== "undefined") {
+        localStorage.removeItem(registrationDraftKey(routeSlug));
+        localStorage.removeItem(registrationDataKey(routeSlug));
+        sessionStorage.removeItem(registrationDataKey(routeSlug));
+        localStorage.removeItem(paymentDataKey(routeSlug));
+        sessionStorage.removeItem(paymentDataKey(routeSlug));
+      }
+      setActiveStep(0);
+      setTournamentAccepted(false);
+      setTeamDetails({
+        teamName: "", teamCode: "", captainName: "", subCaptainName: "", coachName: "", email: "", phone: "",
+        city: tournament.cities[0] ?? "", districtState: tournament.cities[0] ?? tournament.location,
+        teamLogo: "", teamMotto: "", selectedJersey: "", category: `${tournament.sport} League`,
+      });
+      setMembers(memberSlots.map(() => ""));
+      setMemberAges(memberSlots.map(() => ""));
+      setMemberJerseySizes(memberSlots.map(() => ""));
+    } else if (savedReg) {
+      navigate(`/tournaments/${routeSlug}/register/roster`, { replace: true });
+    }
+  }, [routeSlug, navigate, tournament.cities, tournament.location, tournament.sport]);
 
   useEffect(() => {
     setMembers((current) => memberSlots.map((_, index) => current[index] ?? ""));
@@ -983,7 +1012,7 @@ export function RegistrationPage() {
   }
 
   function openRulesModal() {
-    setRulesScrolled(false);
+    setRulesScrolled(true);
     setRulesModalOpen(true);
     // Removed auto-download of rules
   }
@@ -1044,24 +1073,26 @@ export function RegistrationPage() {
   }
 
   async function continueToRoster() {
-    const requiredFields = ["teamName", "captainName", "subCaptainName", "email", "phone", "city"] as const;
+    const requiredFields = ["teamName", "captainName", "email", "phone"] as const;
     const missingTeamFields = requiredFields.filter((key) => !teamDetails[key].trim());
-    
-    const missingMemberLabels = members
-      .map((name, index) => ({ name: name.trim(), label: memberSlots[index] }))
-      .filter((item) => item.name.length < 2)
-      .map((item) => item.label);
+    const filledMembers = members
+      .map((name, index) => ({ name: name.trim(), index, label: memberSlots[index] }))
+      .filter((item) => item.name.length >= 2);
+      
+    if (filledMembers.length < (tournament as any).minTeamSize) {
+      showMissing(`Please complete at least ${(tournament as any).minTeamSize} player names.`);
+      return;
+    }
 
-    const invalidAges = memberAges
-      .map((age, index) => ({ age: age.trim(), index, label: memberSlots[index] }))
-      .filter((item) => {
-        if (!item.age) return false;
-        const ageNum = parseInt(item.age);
-        return isNaN(ageNum) || ageNum <= 0 || !isAgeInRange(ageNum, tournament);
-      });
+    const invalidAges = filledMembers.filter((item) => {
+      const ageStr = memberAges[item.index].trim();
+      if (!ageStr) return true;
+      const ageNum = parseInt(ageStr);
+      return isNaN(ageNum) || ageNum <= 0 || !isAgeInRange(ageNum, tournament);
+    });
 
     const showJerseySize = Boolean((tournament as any).show_jersey_size ?? (tournament as any).showJerseySize ?? true);
-    const missingSizes = showJerseySize ? memberJerseySizes.filter(s => !s.trim()).length : 0;
+    const missingSizes = showJerseySize ? filledMembers.filter(item => !memberJerseySizes[item.index].trim()).length : 0;
 
     if (missingTeamFields.length) {
       showMissing(`Please complete these fields: ${missingTeamFields.join(", ")}.`);
@@ -1073,10 +1104,6 @@ export function RegistrationPage() {
     }
     if (teamDetails.phone.length !== 10) {
       showMissing("Phone number must contain exactly 10 digits.");
-      return;
-    }
-    if (missingMemberLabels.length) {
-      showMissing(`Please complete all player names.`);
       return;
     }
     if (invalidAges.length) {
@@ -1109,13 +1136,13 @@ export function RegistrationPage() {
           team_motto: teamDetails.teamMotto,
           category: `${tournament.sport} League`,
           selected_jersey_image: "",
-          members: members.map((name, index) => ({
-            name: name.trim(),
-            role: index === 0 ? "Captain" : index === 1 ? "Sub-captain" : "Player",
+          members: filledMembers.map((item) => ({
+            name: item.name,
+            role: item.index === 0 ? "Captain" : item.index === 1 ? "Sub-captain" : "Player",
             jersey: "",
-            contact: index === 0 ? teamDetails.phone : "",
-            age: memberAges[index] ? Number(memberAges[index]) : null,
-            jersey_size: memberJerseySizes[index] ?? "",
+            contact: item.index === 0 ? teamDetails.phone : "",
+            age: memberAges[item.index] ? Number(memberAges[item.index]) : null,
+            jersey_size: memberJerseySizes[item.index] ?? "",
           })),
           documents: uploadedDocuments.map((item) => ({
             document_type: item.documentType,
@@ -1249,7 +1276,8 @@ export function RegistrationPage() {
                     <h3>{tournament.name}</h3>
                     <p>{tournament.sport} - {tournament.location} - {tournament.date}</p>
                     <div className="rules-list">
-                      <span>Team size: {tournament.teamSize} members</span>
+                      <span>Min Team size: {(tournament as any).minTeamSize ?? 1} members</span>
+                      <span>Max Team size: {tournament.teamSize} members</span>
                       <span>Prize pool: {tournament.prize}</span>
                       <span>Slots: {registeredTeams}/{capacity} filled</span>
                       <span>Age restriction: {tournamentAgeRange(tournament)}</span>
@@ -1316,7 +1344,7 @@ export function RegistrationPage() {
                   <h3>Management Contact</h3>
                   <div className="form-grid">
                     <label>Captain name<input value={teamDetails.captainName} onChange={(event) => updateTeamDetails("captainName", event.target.value)} placeholder="Full Name" /></label>
-                    <label>Sub-captain name<input value={teamDetails.subCaptainName} onChange={(event) => updateTeamDetails("subCaptainName", event.target.value)} placeholder="Full Name" /></label>
+                    <label>Sub-captain name<input value={teamDetails.subCaptainName} onChange={(event) => updateTeamDetails("subCaptainName", event.target.value)} placeholder="Optional" /></label>
                     <label>Coach name<input value={teamDetails.coachName} onChange={(event) => updateTeamDetails("coachName", event.target.value)} placeholder="Optional" /></label>
                     <label>Email<input value={teamDetails.email} onChange={(event) => updateTeamDetails("email", event.target.value)} placeholder="contact@team.com" /></label>
                     <label>Phone
