@@ -97,7 +97,7 @@ export function NewsPage() {
   const { data: bootstrap, isLoading } = useQuery(bootstrapQuery);
   const [social, setSocial] = useState<NewsSocial>({});
   const categoryScrollers = useRef<Record<string, HTMLDivElement | null>>({});
-  const posts = useMemo(() => (bootstrap?.posts ?? []).map(normalizePost), [bootstrap?.posts]);
+  const posts = useMemo(() => [...(bootstrap?.posts ?? [])].reverse().map(normalizePost), [bootstrap?.posts]);
   const categories = ["Match Updates", "Tournament Updates", "Announcements"];
   const visibleCategories = categories.filter((category) => posts.some((post) => post.category === category));
   const highlightedPosts = posts.filter((post) => post.highlight);

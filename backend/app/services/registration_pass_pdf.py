@@ -49,7 +49,7 @@ def _role_for_member(member: dict, registration: dict, index: int) -> str:
     if name.lower() == _text(registration.get("captain_name"), "").lower() or index == 0:
         return "Captain"
     if name.lower() == _text(registration.get("sub_captain_name"), "").lower() or index == 1:
-        return "Sub captain"
+        return "Vice captain"
     return "Player"
 
 
@@ -179,7 +179,7 @@ def build_registration_pass_pdf(payload: dict) -> bytes:
     details = Table(
         [
             [cell("Team name", registration.get("team_name")), cell("Team code", registration.get("team_code"))],
-            [cell("Captain name", registration.get("captain_name")), cell("Sub captain name", registration.get("sub_captain_name"))],
+            [cell("Captain name", registration.get("captain_name")), cell("Vice captain name", registration.get("sub_captain_name"))],
             [cell("Coach name", registration.get("coach_name")), cell("City", registration.get("city"))],
             [cell("Email", registration.get("email")), cell("Phone", registration.get("phone"))],
         ],

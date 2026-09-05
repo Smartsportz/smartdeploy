@@ -77,7 +77,7 @@ function downloadReceiptFile(receipt: ReceiptResponse) {
     `Team Name: ${registration?.team_name ?? "Team"}`,
     `Team Code: ${registration?.team_code ?? "Generated"}`,
     `Captain: ${registration?.captain_name ?? "Captain"}`,
-    `Sub-captain: ${registration?.sub_captain_name ?? "Sub-captain"}`,
+    `Vice-captain: ${registration?.sub_captain_name ?? "Vice-captain"}`,
     `City: ${registration?.city ?? "City"}`,
     `Category: ${registration?.category ?? "Category"}`,
     `Email: ${registration?.email ?? ""}`,

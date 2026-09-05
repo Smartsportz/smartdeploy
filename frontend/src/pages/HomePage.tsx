@@ -437,7 +437,7 @@ export function HomePage() {
 
       <ProgressiveSection query={homeApi.tournaments} prefetch={[homeApi.liveHighlight]} skeletonRows={5}>
       {(publicTournaments) => {
-        const runtimeTournaments = publicTournaments.map((item) => withRuntimeTournamentStatus({
+        const runtimeTournaments = [...publicTournaments].reverse().map((item) => withRuntimeTournamentStatus({
           ...item,
           registrationStart: item.registrationStart ?? item.registration_start,
           registrationEnd: item.registrationEnd ?? item.registration_end,
@@ -546,7 +546,7 @@ export function HomePage() {
 
       <ProgressiveSection query={homeApi.news} prefetch={[homeApi.sponsors]} skeletonRows={3}>
       {(newsPosts) => {
-        const oldMatchNews = newsPosts.filter((item) => item.category === "Winner Teams").slice(0, 3);
+        const oldMatchNews = [...newsPosts].reverse().filter((item) => item.category === "Winner Teams").slice(0, 3);
         return oldMatchNews.length > 0 ? <section className="section">
         <div className="section-title row-title">
           <div>

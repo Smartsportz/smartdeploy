@@ -18,7 +18,7 @@ const userContent = {
   profile: ["Identity verification", "Captain and player details", "Emergency contact", "Document upload"],
   registrations: ["Approved tournaments", "Pending review", "Payment required", "Waitlisted entries"],
   payments: ["Receipts", "Invoices", "Refunds", "Webhook status"],
-  members: ["Registered roster", "Captain and sub-captain", "Player contacts", "Team-only details"],
+  members: ["Registered roster", "Captain and vice-captain", "Player contacts", "Team-only details"],
   certificates: ["Participation certificates", "Winner certificates", "MVP awards", "Download history"],
   schedules: ["Upcoming fixtures", "Venue reporting time", "Match reminders", "Calendar export"],
   documents: ["Identity documents", "Team roster files", "Medical forms", "Private downloads"],

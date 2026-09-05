@@ -828,7 +828,7 @@ export function RegistrationPage() {
   const savedDraft = useMemo(() => readRegistrationDraft(routeSlug), [routeSlug]);
   const memberSlots = Array.from({ length: tournament.teamSize }, (_, index) => {
     if (index === 0) return "Captain";
-    if (index === 1) return "Sub-captain";
+    if (index === 1) return "Vice-captain";
     return `Player ${index + 1}`;
   });
   const [teamDetails, setTeamDetails] = useState(() => savedDraft?.teamDetails ? {
@@ -913,7 +913,7 @@ export function RegistrationPage() {
       setMemberAges(memberSlots.map(() => ""));
       setMemberJerseySizes(memberSlots.map(() => ""));
     } else if (savedReg) {
-      navigate(`/tournaments/${routeSlug}/register/roster`, { replace: true });
+      navigate(`/tournaments/${routeSlug}/register/payment`);
     }
   }, [routeSlug, navigate, tournament.cities, tournament.location, tournament.sport]);
 
@@ -1138,7 +1138,7 @@ export function RegistrationPage() {
           selected_jersey_image: "",
           members: filledMembers.map((item) => ({
             name: item.name,
-            role: item.index === 0 ? "Captain" : item.index === 1 ? "Sub-captain" : "Player",
+            role: item.index === 0 ? "Captain" : item.index === 1 ? "Vice-captain" : "Player",
             jersey: "",
             contact: item.index === 0 ? teamDetails.phone : "",
             age: memberAges[item.index] ? Number(memberAges[item.index]) : null,
@@ -1334,8 +1334,8 @@ export function RegistrationPage() {
                       {teamNameCheck === "exists" && <small className="field-error">Already exist</small>}
                       {teamNameCheck === "available" && <small className="field-success">Accepted</small>}
                     </label>
-                    <label>City<select value={teamDetails.city} onChange={(event) => updateTeamDetails("city", event.target.value)}>{tournament.cities.map((city) => <option key={city}>{city}</option>)}</select></label>
-                    <label>Home state<select value={teamDetails.districtState} onChange={(event) => updateTeamDetails("districtState", event.target.value)}>{tournament.cities.map((city) => <option key={city}>{city}</option>)}</select></label>
+                    <label>City<input value={teamDetails.city} onChange={(event) => updateTeamDetails("city", event.target.value)} placeholder="City" /></label>
+                    <label>Home state<input value={teamDetails.districtState} onChange={(event) => updateTeamDetails("districtState", event.target.value)} placeholder="Home state" /></label>
                     <label>Team motto<input value={teamDetails.teamMotto} onChange={(event) => updateTeamDetails("teamMotto", event.target.value)} placeholder="Team spirit" /></label>
                   </div>
                 </div>
@@ -1344,7 +1344,7 @@ export function RegistrationPage() {
                   <h3>Management Contact</h3>
                   <div className="form-grid">
                     <label>Captain name<input value={teamDetails.captainName} onChange={(event) => updateTeamDetails("captainName", event.target.value)} placeholder="Full Name" /></label>
-                    <label>Sub-captain name<input value={teamDetails.subCaptainName} onChange={(event) => updateTeamDetails("subCaptainName", event.target.value)} placeholder="Optional" /></label>
+                    <label>Vice-captain name<input value={teamDetails.subCaptainName} onChange={(event) => updateTeamDetails("subCaptainName", event.target.value)} placeholder="Optional" /></label>
                     <label>Coach name<input value={teamDetails.coachName} onChange={(event) => updateTeamDetails("coachName", event.target.value)} placeholder="Optional" /></label>
                     <label>Email<input value={teamDetails.email} onChange={(event) => updateTeamDetails("email", event.target.value)} placeholder="contact@team.com" /></label>
                     <label>Phone
@@ -1699,8 +1699,11 @@ export function RegistrationPaymentPage() {
                 <label className="payment-reference-field">Transaction / UTR Reference
                   <input value={transactionReference} onChange={(event) => setTransactionReference(event.target.value)} placeholder="Enter UPI transaction ID" />
                 </label>
-                <button className="btn btn-primary wide" onClick={submitPaymentForVerification} disabled={status === "checking" || transactionReference.trim().length < 6}>Submit Payment For Verification</button>
-                <button className="btn btn-secondary wide" onClick={startUpiFlow} disabled={status === "checking"}>Check Payment Status</button>
+                {(!paymentIntent || !paymentIntent.transaction_reference) ? (
+                  <button className="btn btn-primary wide" onClick={submitPaymentForVerification} disabled={status === "checking" || transactionReference.trim().length < 6}>Submit Payment For Verification</button>
+                ) : (
+                  <button className="btn btn-secondary wide" onClick={startUpiFlow} disabled={status === "checking"}>Check Payment Status</button>
+                )}
                 {upiChooserOpen && (
                   <div className="upi-app-sheet">
                     <div className="upi-app-sheet-card">
@@ -1753,7 +1756,7 @@ export function RegistrationReviewPage() {
 
   const finalTeamCode = backendRegistration?.team_code || saved?.teamCode || "";
   const confirmationCode = backendRegistration?.confirmation_code || (finalTeamCode ? `SS-${finalTeamCode}` : "");
-  const qrPayload = JSON.stringify({ registrationId: saved?.registrationId, teamCode: finalTeamCode, tournament: tournament.name });
+  const qrPayload = backendRegistration?.confirmation_qr_payload || JSON.stringify({ registrationId: saved?.registrationId, teamCode: confirmationCode, tournament: saved?.tournament || tournament.name });
 
   useEffect(() => {
     if (saved && payment) {

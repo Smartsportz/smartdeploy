@@ -2210,7 +2210,7 @@ function AdminTournamentPickerPanel({ mode }: { mode: "teams" | "payments" }) {
         </div>
       </section>
       <div className="manager-tournament-row">
-        {records.map((item) => (
+        {[...records].reverse().map((item) => (
           <article className="manager-tournament-card" key={item.slug}>
             <div className="manager-tournament-image">
               {item.image && <img src={mediaUrl(item.image)} alt="" />}
@@ -3151,7 +3151,7 @@ export function AdminRegistrationTeamDetailPage() {
               <div className="review-list">
                 <p><b>Tournament</b><span>{registration.tournament_name}</span></p>
                 <p><b>Captain</b><span>{registration.captain_name}</span></p>
-                <p><b>Sub-captain</b><span>{registration.sub_captain_name || "-"}</span></p>
+                <p><b>Vice-captain</b><span>{registration.sub_captain_name || "-"}</span></p>
                 <p><b>Coach</b><span>{registration.coach_name || "-"}</span></p>
                 <p><b>User Login</b><span>{registration.user_email || registration.email}</span></p>
                 <p><b>City</b><span>{registration.city}</span></p>
@@ -3250,7 +3250,7 @@ export function AdminTeamEditPage() {
           <div className="form-grid">
             <label>Team name<input value={form.team_name} onChange={(event) => setForm({ ...form, team_name: event.target.value })} required /></label>
             <label>Captain name<input value={form.captain_name} onChange={(event) => setForm({ ...form, captain_name: event.target.value })} required /></label>
-            <label>Sub-captain name<input value={form.sub_captain_name} onChange={(event) => setForm({ ...form, sub_captain_name: event.target.value })} /></label>
+            <label>Vice-captain name<input value={form.sub_captain_name} onChange={(event) => setForm({ ...form, sub_captain_name: event.target.value })} /></label>
             <label>Coach name<input value={form.coach_name} onChange={(event) => setForm({ ...form, coach_name: event.target.value })} /></label>
             <label>Email<input type="email" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} required /></label>
             <label>Phone<input type="tel" inputMode="numeric" maxLength={10} pattern="[0-9]{10}" value={form.phone} onChange={(event) => setForm({ ...form, phone: phoneDigits(event.target.value) })} /></label>
