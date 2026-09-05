@@ -133,13 +133,13 @@ def create_registration(payload: RegistrationCreate, user: dict = Depends(curren
     max_members = int(tournament.get("team_size") or 16)
     if payload.members and not (min_members <= len(payload.members) <= max_members):
         raise HTTPException(status_code=422, detail=f"This tournament requires between {min_members} and {max_members} members")
-    if payload.city:
-        city_allowed = row(
-            "SELECT id FROM tournament_cities WHERE tournament_slug = ? AND lower(city) = lower(?)",
-            (payload.tournament_slug, payload.city),
-        )
-        if not city_allowed:
-            raise HTTPException(status_code=422, detail="Selected city is not configured for this tournament")
+    # if payload.city:
+    #     city_allowed = row(
+    #         "SELECT id FROM tournament_cities WHERE tournament_slug = ? AND lower(city) = lower(?)",
+    #         (payload.tournament_slug, payload.city),
+    #     )
+    #     if not city_allowed:
+    #         raise HTTPException(status_code=422, detail="Selected city is not configured for this tournament")
     existing_team_name = row(
         """
         SELECT id FROM registrations

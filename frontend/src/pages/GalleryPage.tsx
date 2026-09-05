@@ -65,7 +65,7 @@ export function GalleryPage() {
   const queryClient = useQueryClient();
   const bootstrapQuery = useMemo(() => galleryBootstrapQuery(actorKey, token), [actorKey, token]);
   const { data: bootstrap, isLoading } = useQuery(bootstrapQuery);
-  const albums = bootstrap?.albums ?? [];
+  const albums = [...(bootstrap?.albums ?? [])].reverse();
   const [social, setSocial] = useState<GallerySocialState>({});
   const galleryScroller = useRef<HTMLDivElement | null>(null);
 
@@ -151,7 +151,7 @@ export function GalleryAlbumPage() {
   const queryClient = useQueryClient();
   const bootstrapQuery = useMemo(() => galleryBootstrapQuery(actorKey, token), [actorKey, token]);
   const { data: bootstrap, isLoading } = useQuery(bootstrapQuery);
-  const albums = bootstrap?.albums ?? [];
+  const albums = [...(bootstrap?.albums ?? [])].reverse();
   const [comment, setComment] = useState("");
   const [social, setSocial] = useState<GallerySocialState>({});
   const album = useMemo(() => albums.find((item) => item.slug === slug), [albums, slug]);

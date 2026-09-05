@@ -15,7 +15,7 @@ export function TournamentsPage() {
     queryKey: ["public", "tournaments"],
     queryFn: () => apiRequest<any[]>("/public/tournaments", { silent: true }),
   });
-  const tournamentRows = tournamentsQuery.data ?? [];
+  const tournamentRows = [...(tournamentsQuery.data ?? [])].reverse();
   const [search, setSearch] = useState("");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
