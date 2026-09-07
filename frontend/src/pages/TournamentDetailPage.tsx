@@ -267,18 +267,18 @@ export function TournamentDetailPage() {
         )
       ) : (
         <div className="detail-grid tournament-info-grid">
-          <article className="panel tournament-rules-panel">
+          {/* <article className="panel tournament-rules-panel">
             <h3>Tournament Rules</h3>
             {["Roster min/max validation", "Team member details required", "Document verification required", "Payment required before approval"].map((rule) => (
               <p key={rule}><span className="rule-check">✓</span>{rule}</p>
             ))}
             <button className="btn btn-secondary wide" type="button" onClick={() => void downloadRulesPdf(item)}>
               <Download size={16} /> Download rules
-            </button>
-          </article>
-          <InfoPanel title="Prize Pool" items={[item.prize, "Winner trophy", "MVP award", "Digital certificates"]} to="/leaderboards" highlight />
+            </button> 
+          </article> */}
+          <InfoPanel title="Prize Pool" items={[item.prize, "Winner trophy", "MVP award"]} to="/leaderboards" highlight />
           <InfoPanel title="Schedule" items={[`Registration opens: ${item.registrationStart}`, `Registration ends: ${item.registrationEnd}`, "Qualifiers", "Final"]} to="/live" />
-          <InfoPanel title="Venue And Capacity" items={[item.location, `${registeredTeams}/${capacity} teams`, slotsFull ? "Slots full" : "Smart venue map", "Officials and support desk"]} to="/contact" />
+          <InfoPanel title="Venue And Capacity" items={[`Place: ${item.location}, `, `Total Team: ${registeredTeams}/${capacity}`]} to="/contact" />
         </div>
       )}
     </Page>
