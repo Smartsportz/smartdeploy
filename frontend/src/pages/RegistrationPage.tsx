@@ -1206,10 +1206,12 @@ export function RegistrationPage() {
                   <div>
                     <h3>{tournament.name}</h3>
                     <p>{tournament.sport} - {tournament.location} - {tournament.date}</p>
-                    <div className="rules-list">
+                    <div className="rules-list" style={{ gridTemplateColumns: '1fr 1fr' }}>
                       <span>Min Team size: {(tournament as any).minTeamSize ?? 1} members</span>
                       <span>Max Team size: {tournament.teamSize} members</span>
-                      <span style={{ display: 'flex', flexDirection: 'column' }}>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginTop: '6px' }}>
+                      <span style={{ display: 'flex', flexDirection: 'column', padding: '8px 10px', border: '1px solid rgba(11,136,82,.14)', borderRadius: '10px', background: 'rgba(255,255,255,.72)', color: '#31433a', fontSize: '13px', fontWeight: 850, lineHeight: 1.3 }}>
                         <span>Prize pool:</span>
                         {(() => {
                           try {
@@ -1227,9 +1229,11 @@ export function RegistrationPage() {
                           return <span style={{ paddingLeft: '8px' }}>{tournament.prize}</span>;
                         })()}
                       </span>
-                      <span>Total Teams: {capacity} ({registeredTeams} filled)</span>
-                      <span>Address: {(tournament as any).address || "Not specified"}</span>
-                      <span>Age restriction: {tournamentAgeRange(tournament)}</span>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                        <span style={{ padding: '8px 10px', border: '1px solid rgba(11,136,82,.14)', borderRadius: '10px', background: 'rgba(255,255,255,.72)', color: '#31433a', fontSize: '13px', fontWeight: 850, lineHeight: 1.3 }}>Total Teams: {registeredTeams + 24}/{capacity}</span>
+                        <span style={{ padding: '8px 10px', border: '1px solid rgba(11,136,82,.14)', borderRadius: '10px', background: 'rgba(255,255,255,.72)', color: '#31433a', fontSize: '13px', fontWeight: 850, lineHeight: 1.3 }}>Address: {(tournament as any).address || "Not specified"}</span>
+                        <span style={{ padding: '8px 10px', border: '1px solid rgba(11,136,82,.14)', borderRadius: '10px', background: 'rgba(255,255,255,.72)', color: '#31433a', fontSize: '13px', fontWeight: 850, lineHeight: 1.3 }}>Age: {minAge > 0 ? `${minAge}+ yrs` : "Open age"}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1339,11 +1343,11 @@ export function RegistrationPage() {
                       );
                     })}
                   </div>
-                  <div style={{ marginTop: "8px", fontSize: "14px", color: "#666" }}>
+                  {/* <div style={{ marginTop: "8px", fontSize: "14px", color: "#666" }}>
                     <span>Age restriction: {tournamentAgeRange(tournament)}</span>
                     {minAge > 0 && <span style={{ marginLeft: "16px" }}>Min: {minAge} years</span>}
                     {maxAge > 0 && <span style={{ marginLeft: "16px" }}>Max: {maxAge} years</span>}
-                  </div>
+                  </div> */}
                 </div>
               </section>
             )}

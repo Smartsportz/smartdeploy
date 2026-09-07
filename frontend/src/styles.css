@@ -2267,9 +2267,9 @@ input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px 
 .player-row-input { display: grid; grid-template-columns: 40px minmax(180px, 1fr) minmax(88px, 110px) minmax(112px, 140px); gap: 10px; align-items: center; }
 .player-row-number { font-weight: 900; color: #666; }
 .jersey-size-select { width: 100%; min-height: 42px; padding: 8px 34px 8px 10px; border-radius: 8px; border: 1px solid #ddd; background: #fff; color: var(--ink); appearance: auto; }
-.registration-choice-card { display: grid; grid-template-columns: 190px 1fr; gap: 22px; align-items: stretch; padding: 16px; border: 1px solid rgba(11, 136, 82, .18); border-radius: 18px; background: linear-gradient(135deg, rgba(11, 136, 82, .08), rgba(255, 255, 255, .92)); }
-.registration-choice-card.compact-card { grid-template-columns: 58px 1fr; align-items: center; }
-.registration-choice-card > img { width: 100%; height: 170px; border-radius: 14px; object-fit: cover; }
+.registration-choice-card { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 16px; border: 1px solid rgba(11, 136, 82, .18); border-radius: 18px; background: linear-gradient(135deg, rgba(11, 136, 82, .08), rgba(255, 255, 255, .92)); }
+.registration-choice-card.compact-card { display: grid; grid-template-columns: 58px 1fr; align-items: center; }
+.registration-choice-card > img { width: 100%; max-width: 400px; height: 300px; border-radius: 14px; object-fit: cover; }
 .tournament-rules-panel { display: flex; flex-direction: column; }
 .tournament-rules-panel h3 { margin-top: 0; }
 .tournament-rules-panel p { display: flex; align-items: center; gap: 9px; color: var(--muted); }
@@ -2277,8 +2277,8 @@ input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px 
 .rule-check { display: inline-grid; place-items: center; width: 16px; height: 16px; border: 1px solid rgba(15, 23, 42, .38); border-radius: 999px; color: var(--primary-dark); font-size: 11px; font-weight: 900; }
 .registration-choice-card > svg { width: 46px; height: 46px; padding: 10px; border-radius: 999px; color: var(--primary-dark); background: rgba(11, 136, 82, .10); }
 .registration-choice-card h3 { margin: 0 0 8px; color: var(--text); font-family: Poppins, sans-serif; font-size: clamp(22px, 3vw, 32px); letter-spacing: -0.035em; }
-.rules-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
-.rules-list span { padding: 12px; border: 1px solid rgba(11, 136, 82, .14); border-radius: 12px; background: rgba(255, 255, 255, .72); color: #31433a; font-size: 13px; font-weight: 850; line-height: 1.35; }
+.rules-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 14px; }
+.rules-list span { padding: 8px 10px; border: 1px solid rgba(11, 136, 82, .14); border-radius: 10px; background: rgba(255, 255, 255, .72); color: #31433a; font-size: 13px; font-weight: 850; line-height: 1.3; }
 .age-rule-card h3 { font-size: 20px; }
 .acceptance-box { display: grid; grid-template-columns: 22px 1fr; align-items: start; gap: 12px; padding: 16px; border: 1px solid rgba(11, 136, 82, .22); border-radius: 14px; background: #f8fdf7; color: var(--text); font-weight: 850; line-height: 1.5; }
 .acceptance-box input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--primary-dark); }

@@ -123,7 +123,7 @@ export function TournamentDetailPage() {
         <div>
           <span className={`status ${item.accent}`}>{item.status}</span>
           <h1>{item.name}</h1>
-          <p>{item.sport} tournament in {item.location}. Registration, payment, rules, schedule, venue, teams, live updates, and bracket rounds are connected in this frontend flow.</p>
+          {/* <p>{item.sport} tournament in {item.location}. Registration, payment, rules, schedule, venue, teams, live updates, and bracket rounds are connected in this frontend flow.</p> */}
           {action && <div className="hero-actions">{action}</div>}
         </div>
       </section>
@@ -293,11 +293,10 @@ export function TournamentDetailPage() {
               } catch (e) {}
               return [item.prize, "Winner trophy", "MVP award"];
             })()} 
-            to="/leaderboards" 
             highlight 
           />
-          <InfoPanel title="Schedule" items={[`Registration opens: ${item.registrationStart}`, `Registration ends: ${item.registrationEnd}`, "Qualifiers", "Final"]} to="/live" />
-          <InfoPanel title="Venue And Capacity" items={[`Place: ${item.location}`, `Address: ${item.address || "Not specified"}`, `Total Team: 24/${capacity}`]} to="/contact" /> {/* ${registeredTeams}/${capacity} */}
+          <InfoPanel title="Schedule" items={[`Registration opens: ${item.registrationStart}`, `Registration ends: ${item.registrationEnd}`, "Qualifiers", "Final"]} />
+          <InfoPanel title="Venue And Capacity" items={[`Place: ${item.location}`, `Address: ${item.address || "Not specified"}`, `Total Team: ${registeredTeams + 24}/${capacity}`]} /> {/* ${registeredTeams}/${capacity} */}
         </div>
       )}
     </Page>
