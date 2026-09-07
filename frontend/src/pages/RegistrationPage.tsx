@@ -618,9 +618,7 @@ function TournamentPosterPanel({ tournament }: { tournament: (typeof tournaments
           <h2>Tournament Poster</h2>
           <small>Visible on the first step only</small>
         </div>
-        <div className="registration-poster-frame">
-          <img src={mediaUrl(poster)} alt={`${tournament.name} poster`} loading="lazy" />
-        </div>
+        
         <div className="registration-poster-meta">
           <strong>{tournament.name}</strong>
           <span>{tournament.sport} - {tournament.location}</span>
@@ -1255,7 +1253,7 @@ export function RegistrationPage() {
           <p className="eyebrow">SmartSportz</p>
           <h1>Tournament Registration</h1>
           <h2>Compete. Perform. Become a Champion.</h2>
-          <p>Complete accurate team, player, and payment details to secure your tournament spot.</p>
+          {/* <p>Complete accurate team, player, and payment details to secure your tournament spot.</p> */}
         </section>
         <RegistrationStepper activeIndex={activeStep} />
         <div className={`registration-reference-layout ${activeStep === 0 ? "registration-reference-layout-intro" : "registration-reference-layout-centered"}`}>
