@@ -377,7 +377,7 @@ export function HomePage() {
         </div>
       </section> */}
 
-      <section className="trusted-section">
+      {/* <section className="trusted-section">
         <SectionTitle title="Trusted by the Sports Community" />
         <div className="trusted-grid">
           {[
@@ -399,7 +399,7 @@ export function HomePage() {
             </motion.div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       <ProgressiveSection query={homeApi.discovery} prefetch={[homeApi.tournaments]} skeletonRows={4}>
       {(discoveryQueue) => discoveryQueue.length > 0 ? <section className="section">

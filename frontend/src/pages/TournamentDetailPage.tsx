@@ -276,9 +276,28 @@ export function TournamentDetailPage() {
               <Download size={16} /> Download rules
             </button> 
           </article> */}
-          <InfoPanel title="Prize Pool" items={[item.prize, "Winner trophy", "MVP award"]} to="/leaderboards" highlight />
+          <InfoPanel 
+            title="Prize Pool" 
+            items={(() => {
+              try {
+                const p = Array.isArray(item.prizes) ? item.prizes : JSON.parse(item.prizes || "[]");
+                if (Array.isArray(p) && p.length > 0) {
+                  return p.map((line: any) => {
+                    let name = line.label || `${line.position} Prize`;
+                    if (!name.toLowerCase().includes("prize") && !name.toLowerCase().includes("trophy") && !name.toLowerCase().includes("award")) {
+                      name += " Prize";
+                    }
+                    return `${name}: INR ${Number(line.amount).toLocaleString("en-IN")}`;
+                  });
+                }
+              } catch (e) {}
+              return [item.prize, "Winner trophy", "MVP award"];
+            })()} 
+            to="/leaderboards" 
+            highlight 
+          />
           <InfoPanel title="Schedule" items={[`Registration opens: ${item.registrationStart}`, `Registration ends: ${item.registrationEnd}`, "Qualifiers", "Final"]} to="/live" />
-          <InfoPanel title="Venue And Capacity" items={[`Place: ${item.location}, `, `Total Team: ${registeredTeams}/${capacity}`]} to="/contact" />
+          <InfoPanel title="Venue And Capacity" items={[`Place: ${item.location}`, `Address: ${item.address || "Not specified"}`, `Total Team: 24/${capacity}`]} to="/contact" /> {/* ${registeredTeams}/${capacity} */}
         </div>
       )}
     </Page>
