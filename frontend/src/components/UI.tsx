@@ -318,12 +318,13 @@ export function TournamentCard({ item }: { item: any }) {
         <p className="registration-window">{statusText}</p>
         <p>{item.sport} • {item.location} • {item.date}</p>
         <div className="card-meta" style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-start' }}>
-          <span>Total Teams: {tournament.capacity}</span>
+          <span>Total Teams: {Number((item as any).registered_count ?? item.teams ?? 0) + 24}/{tournament.capacity}</span>
           <span>Prize pool: {(() => {
             try {
               const p = Array.isArray(item.prizes) ? item.prizes : JSON.parse(item.prizes || "[]");
               if (Array.isArray(p) && p.length > 0) {
-                return `INR ${Number(p[0].amount).toLocaleString("en-IN")}`;
+                const total = p.reduce((sum, current) => sum + Number(current.amount || 0), 0);
+                return `INR ${total.toLocaleString("en-IN")}`;
               }
             } catch (e) {}
             return tournament.prize;

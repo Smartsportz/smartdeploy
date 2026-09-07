@@ -377,14 +377,14 @@ export function HomePage() {
         </div>
       </section> */}
 
-      {/* <section className="trusted-section">
+      <section className="trusted-section">
         <SectionTitle title="Trusted by the Sports Community" />
         <div className="trusted-grid">
           {[
-            ["500+", "Active Tournaments"],
-            ["50,000+", "Verified Players"],
-            ["1,200+", "Sports Facilities"],
-            ["INR 10Cr+", "Prizes Distributed"],
+            ["5+", "Active Tournaments"],
+            ["1,000+", "Verified Players"],
+            ["10+", "Sports Facilities"],
+            ["INR 2Lack+", "Prizes Distributed"],
           ].map(([value, label], index) => (
             <motion.div
               className="trusted-card"
@@ -399,7 +399,7 @@ export function HomePage() {
             </motion.div>
           ))}
         </div>
-      </section> */}
+      </section> 
 
       <ProgressiveSection query={homeApi.discovery} prefetch={[homeApi.tournaments]} skeletonRows={4}>
       {(discoveryQueue) => discoveryQueue.length > 0 ? <section className="section">
@@ -479,7 +479,7 @@ export function HomePage() {
           <div>
             <p className="eyebrow">Tournament Discovery</p>
             <h2>Tournament highlights</h2>
-            <p>Upcoming tournaments, open registrations, live tournaments, and old records are separated clearly.</p>
+            {/* <p>Upcoming tournaments, open registrations, live tournaments, and old records are separated clearly.</p> */}
           </div>
         </div>
         <div className="featured-status-stack">
