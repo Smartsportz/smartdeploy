@@ -145,7 +145,7 @@ def create_registration(payload: RegistrationCreate, user: dict = Depends(curren
         SELECT id FROM registrations
         WHERE tournament_slug = ?
         AND lower(trim(team_name)) = lower(trim(?))
-        AND COALESCE(status, '') NOT IN ('rejected', 'cancelled')
+        AND COALESCE(payment_status, '') = 'approved'
         """,
         (payload.tournament_slug, payload.team_name),
     )
