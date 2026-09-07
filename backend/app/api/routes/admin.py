@@ -762,7 +762,7 @@ def admin_update_team(
         SELECT id FROM registrations
         WHERE tournament_slug = (SELECT tournament_slug FROM registrations WHERE id = ?)
         AND LOWER(team_name) = LOWER(?) AND id <> ?
-        AND COALESCE(status, '') NOT IN ('rejected', 'cancelled')
+        AND COALESCE(payment_status, '') = 'approved'
         """,
         (registration_id, payload.team_name.strip(), registration_id),
     )

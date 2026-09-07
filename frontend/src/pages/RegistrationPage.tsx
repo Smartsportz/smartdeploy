@@ -297,7 +297,7 @@ function encodeUpiValue(value: string) {
 
 function buildUpiIntent({ amount, registrationId, teamName, tournamentName }: { amount: number; registrationId: string; teamName: string; tournamentName: string }) {
   const params = [
-    ["pa", "6374409006@ybl"],
+    ["pa", "7871357999@axl"],
     ["pn", "SmartSportz"],
     ["am", (amount / 100).toFixed(2)],
     ["cu", "INR"],
@@ -1563,7 +1563,7 @@ export function RegistrationPaymentPage() {
   const [error, setError] = useState("");
   const [paymentNotice, setPaymentNotice] = useState("");
   const [transactionReference, setTransactionReference] = useState(paymentIntent?.transaction_reference ?? "");
-  const phonepeUpiId = paymentIntent?.receiver_upi_id || "6374409006@ybl";
+  const phonepeUpiId = paymentIntent?.receiver_upi_id || "7871357999@axl";
   const phonepePayeeName = paymentIntent?.payee_name || "SmartSportz";
   const upiIntent = sanitizeUpiIntent(paymentIntent?.qr_payload || (saved
     ? buildUpiIntent({ amount: totalPayable, registrationId: saved.registrationId, teamName: saved.teamName, tournamentName: tournament.name })
