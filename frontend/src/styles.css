@@ -255,7 +255,7 @@ img { max-width: 100%; display: block; }
 .carousel-row::-webkit-scrollbar { display: none; }
 .carousel-row > * { flex: 0 0 calc((100% - 40px) / 3); scroll-snap-align: start; }
 .carousel-row .tournament-card, .carousel-row .news-card { height: auto; min-width: 0; }
-.wheel-horizontal { overscroll-behavior-inline: contain; scroll-behavior: auto; scroll-snap-type: none !important; cursor: grab; touch-action: pan-x; -webkit-overflow-scrolling: touch; }
+.wheel-horizontal { overscroll-behavior-inline: contain; scroll-behavior: auto; scroll-snap-type: none !important; cursor: grab; touch-action: pan-x pan-y; -webkit-overflow-scrolling: touch; }
 .wheel-horizontal:active { cursor: grabbing; }
 .wheel-horizontal > * { scroll-snap-align: none !important; }
 .carousel-row.wheel-horizontal { scroll-padding-inline: clamp(18px, 8vw, 120px); padding-inline: clamp(8px, 2vw, 22px); }

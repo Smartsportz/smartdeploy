@@ -37,8 +37,6 @@ const featureLinks = [
   "Real-time score sync",
   "Razorpay-ready registration",
   "Tournament fixture control",
-  "CMS and sponsor content",
-  "Role-based dashboards",
 ];
 
 const sportStoryImages: Record<string, string> = {
@@ -307,7 +305,21 @@ export function HomePage() {
     const notice = notices[0];
     if (!notice) return;
     if (noticeIdentity(notice) === closedNoticeKey) return;
-    const timer = window.setTimeout(() => setActiveNotice(notice), 650);
+
+    const lastShownTimeStr = window.localStorage.getItem("smart-sportz-last-notice-time");
+    if (lastShownTimeStr) {
+      const lastShownTime = parseInt(lastShownTimeStr, 10);
+      const currentTime = Date.now();
+      const tenMinutes = 10 * 60 * 1000;
+      if (currentTime - lastShownTime < tenMinutes) {
+        return;
+      }
+    }
+
+    const timer = window.setTimeout(() => {
+      setActiveNotice(notice);
+      window.localStorage.setItem("smart-sportz-last-notice-time", Date.now().toString());
+    }, 650);
     return () => window.clearTimeout(timer);
   }, [closedNoticeKey, notices]);
 
@@ -350,14 +362,14 @@ export function HomePage() {
             <Link className="btn btn-primary" to="/tournaments">Register Tournament</Link>
             <Link className="btn btn-secondary glass-btn" to="/sports">Explore Sports</Link>
           </motion.div>
-          <motion.div className="match-chip-row hero-copy-chips" variants={heroLine}>
+          {/* <motion.div className="match-chip-row hero-copy-chips" variants={heroLine}>
             {[
               "Mumbai Live Matches",
               "Book a Facility",
               "Live Scoring",
               "News Updates",
             ].map((item) => <span key={item}>{item}</span>)}
-          </motion.div>
+          </motion.div> */}
         </motion.div>
       </section>
 
@@ -580,7 +592,7 @@ export function HomePage() {
 
       <section className="section split">
         <motion.div {...fade}>
-          <SectionTitle eyebrow="Platform Capability" title="Complete enterprise operations" text="Public website, participant portal, management portal, super admin, live score engine, CMS, reports, payments, and notifications are structured in one frontend." />
+          <SectionTitle eyebrow="Platform Capability" title="Complete enterprise operations" text="" /> 
           <div className="feature-list">
             {featureLinks.map((feature) => (
               <div className="feature-label" key={feature}><CheckCircle2 size={18} />{feature}</div>

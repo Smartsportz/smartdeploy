@@ -9,3 +9,7 @@ smartsportz-3:
 
 smartsportz-4:
 	without tournamnet details page
+
+
+V1.0.1:
+	Complete project register with tournament details page

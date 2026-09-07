@@ -77,6 +77,8 @@ def clear_public_cache(*news_slugs: str) -> None:
         "cache:public:home:news",
         "cache:public:gallery:albums",
         "cache:content:news",
+        "cache:public:tournaments",
+        "cache:public:tournament",
         "cache:management:dashboard",
         "cache:management:tournaments",
         "cache:management:news",
@@ -560,6 +562,7 @@ def _admin_tournament_detail(item: dict) -> dict:
         SELECT COUNT(*) AS count
         FROM registrations
         WHERE tournament_slug = ?
+          AND (payment_status = 'paid' OR status IN ('approved', 'accepted'))
           AND COALESCE(status, '') NOT IN ('rejected', 'cancelled')
         """,
         (slug,),
@@ -573,7 +576,7 @@ def _admin_tournament_detail(item: dict) -> dict:
 
 @router.get("/tournaments")
 def admin_tournaments(_: dict = Depends(require_roles("super_admin", "management"))):
-    records = rows("SELECT * FROM tournaments ORDER BY name")
+    records = rows("SELECT * FROM tournaments ORDER BY rowid DESC")
     return ok([_admin_tournament_detail(item) for item in records])
 
 
@@ -762,7 +765,8 @@ def admin_update_team(
         SELECT id FROM registrations
         WHERE tournament_slug = (SELECT tournament_slug FROM registrations WHERE id = ?)
         AND LOWER(team_name) = LOWER(?) AND id <> ?
-        AND COALESCE(payment_status, '') = 'approved'
+        AND status IN ('approved', 'accepted')
+        AND payment_status = 'paid'
         """,
         (registration_id, payload.team_name.strip(), registration_id),
     )
@@ -806,7 +810,7 @@ def admin_delete_team(
     registration_id: str,
     user: dict = Depends(require_roles("super_admin"))
 ):
-    existing = row("SELECT id, team_name FROM registrations WHERE id = ?", (registration_id,))
+    existing = row("SELECT id, team_name, tournament_slug FROM registrations WHERE id = ?", (registration_id,))
     if not existing:
         raise HTTPException(status_code=404, detail="Registration team not found")
     execute("DELETE FROM payments WHERE registration_id = ?", (registration_id,))

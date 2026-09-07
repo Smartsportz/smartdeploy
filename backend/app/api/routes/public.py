@@ -186,7 +186,9 @@ def attach_tournament_metadata(items: list[dict]) -> list[dict]:
             f"""
             SELECT tournament_slug, COUNT(*) AS count
             FROM registrations
-            WHERE tournament_slug IN ({placeholders}) AND COALESCE(status, '') NOT IN ('rejected', 'cancelled')
+            WHERE tournament_slug IN ({placeholders})
+              AND (payment_status = 'paid' OR status IN ('approved', 'accepted'))
+              AND COALESCE(status, '') NOT IN ('rejected', 'cancelled')
             GROUP BY tournament_slug
             """,
             tuple(slugs),
@@ -232,7 +234,7 @@ def attach_tournament_metadata(items: list[dict]) -> list[dict]:
     enriched: list[dict] = []
     for raw_item in items:
         item = with_runtime_status(raw_item)
-        item["teams"] = registration_counts.get(item["slug"], 0)
+        item["teams"] = registration_counts.get(item["slug"], int(raw_item.get("teams") or 0))
         item["registered_count"] = item["teams"]
         capacity = int(item.get("capacity") or 0)
         item["slots_full"] = capacity > 0 and item["teams"] >= capacity
@@ -253,7 +255,9 @@ def tournament_registration_count(tournament_slug: str) -> int:
         """
         SELECT COUNT(*) AS count
         FROM registrations
-        WHERE tournament_slug = ? AND status NOT IN ('rejected', 'cancelled')
+        WHERE tournament_slug = ?
+          AND (payment_status = 'paid' OR status IN ('approved', 'accepted'))
+          AND COALESCE(status, '') NOT IN ('rejected', 'cancelled')
         """,
         (tournament_slug,),
     )

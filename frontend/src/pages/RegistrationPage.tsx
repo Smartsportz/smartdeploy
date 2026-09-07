@@ -1082,6 +1082,11 @@ export function RegistrationPage() {
       showMissing(`Please complete these fields: ${missingTeamFields.join(", ")}.`);
       return;
     }
+    
+    if (teamNameCheck === "exists") {
+      showMissing("This team name already exists. Please choose another one.");
+      return;
+    }
 
     if (teamDetails.phone.length !== 10) {
       showMissing("Phone number must contain exactly 10 digits.");
@@ -1261,25 +1266,28 @@ export function RegistrationPage() {
                 <div className="form-group-box">
                   <h3>Basic Team Info</h3>
                   <div className="form-grid">
-                    <label>Team name
+                    <label>Team name *
                       <input
                         value={teamDetails.teamName}
                         onChange={(event) => updateTeamDetails("teamName", event.target.value)}
                         placeholder="e.g. Mumbai Mavericks"
+                        style={teamNameCheck === "exists" ? { borderColor: "red" } : teamNameCheck === "available" ? { borderColor: "green" } : {}}
                       />
+                      {teamNameCheck === "checking" && <span style={{ fontSize: "12px", color: "#666" }}>Checking availability...</span>}
+                      {teamNameCheck === "available" && <span style={{ fontSize: "12px", color: "green" }}>team name is accept</span>}
+                      {teamNameCheck === "exists" && <span style={{ fontSize: "12px", color: "red" }}>already exist</span>}
                     </label>
-                    <label>City<input value={teamDetails.city} onChange={(event) => updateTeamDetails("city", event.target.value)} placeholder="City" /></label>
-                    <label>Home state<input value={teamDetails.districtState} onChange={(event) => updateTeamDetails("districtState", event.target.value)} placeholder="Home state" /></label>
+                    <label>City *<input value={teamDetails.city} onChange={(event) => updateTeamDetails("city", event.target.value)} placeholder="City" /></label>
+                    <label>Home state *<input value={teamDetails.districtState} onChange={(event) => updateTeamDetails("districtState", event.target.value)} placeholder="Home state" /></label>
                   </div>
                 </div>
 
                 <div className="form-group-box" style={{ marginTop: "2rem" }}>
                   <h3>Management Contact</h3>
                   <div className="form-grid">
-                    <label>Captain name<input value={teamDetails.captainName} onChange={(event) => updateTeamDetails("captainName", event.target.value)} placeholder="Full Name" /></label>
-                    <label>Vice-captain name<input value={teamDetails.subCaptainName} onChange={(event) => updateTeamDetails("subCaptainName", event.target.value)} placeholder="Optional" /></label>
-                    <label>Email<input value={teamDetails.email} onChange={(event) => updateTeamDetails("email", event.target.value)} placeholder="contact@team.com" /></label>
-                    <label>Phone
+                    <label>Captain name *<input value={teamDetails.captainName} onChange={(event) => updateTeamDetails("captainName", event.target.value)} placeholder="Full Name" /></label>
+                    <label>Email *<input value={teamDetails.email} onChange={(event) => updateTeamDetails("email", event.target.value)} placeholder="contact@team.com" /></label>
+                    <label>Phone *
                       <input 
                         type="tel"
                         inputMode="numeric"
@@ -1295,7 +1303,7 @@ export function RegistrationPage() {
 
                 <div className="form-group-box" style={{ marginTop: "2rem" }}>
                   <div className="section-head-inline">
-                    <h3>Player Roster</h3>
+                    <h3>Player Roster *</h3>
                     <div className="section-actions" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                       <button className="btn btn-secondary btn-sm" type="button" onClick={() => setRosterImportOpen(true)}><Upload size={14} /> Import</button>
                       <button className="btn btn-secondary btn-sm" type="button" onClick={() => downloadSampleExcel(showJerseySize)}><Download size={14} /> Sample</button>

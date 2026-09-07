@@ -91,6 +91,8 @@ def clear_public_cache(*slugs: str) -> None:
         "cache:public:sports:chess",
         "cache:public:gallery:albums",
         "cache:content:news",
+        "cache:public:tournaments",
+        "cache:public:tournament",
         "cache:management:dashboard",
         "cache:management:tournaments",
         "cache:management:news",
