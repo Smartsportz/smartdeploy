@@ -899,9 +899,9 @@ export function RegistrationPage() {
   }, [routeSlug, navigate, tournament.cities, tournament.location, tournament.sport]);
 
   useEffect(() => {
-    setMembers((current) => memberSlots.map((_, index) => current[index] ?? ""));
-    setMemberAges((current) => memberSlots.map((_, index) => current[index] ?? ""));
-    setMemberJerseySizes((current) => memberSlots.map((_, index) => current[index] ?? ""));
+    setMembers((current) => memberSlots.map((_, index) => index < current.length ? current[index] : (savedDraft?.members?.[index] ?? "")));
+    setMemberAges((current) => memberSlots.map((_, index) => index < current.length ? current[index] : (savedDraft?.memberAges?.[index] ?? "")));
+    setMemberJerseySizes((current) => memberSlots.map((_, index) => index < current.length ? current[index] : (savedDraft?.memberJerseySizes?.[index] ?? "")));
   }, [memberSlots.length]);
 
   useEffect(() => {
