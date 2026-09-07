@@ -2210,7 +2210,7 @@ function AdminTournamentPickerPanel({ mode }: { mode: "teams" | "payments" }) {
         </div>
       </section>
       <div className="manager-tournament-row">
-        {[...records].reverse().map((item) => (
+        {records.map((item) => (
           <article className="manager-tournament-card" key={item.slug}>
             <div className="manager-tournament-image">
               {item.image && <img src={mediaUrl(item.image)} alt="" />}
@@ -2900,7 +2900,7 @@ function AdminTeamsPanel() {
   async function deleteTeam() {
     if (!deleteCandidate) return;
     try {
-      await apiRequest(`/admin/teams/${deleteCandidate.id}/delete`, { method: "POST" }, token);
+      await apiRequest(`/admin/teams/${deleteCandidate.id}`, { method: "DELETE" }, token);
       setAllTeams((current) => current.filter((item) => item.id !== deleteCandidate.id));
       setMessage(`${deleteCandidate.team_name} deleted.`);
       setDeleteCandidate(null);

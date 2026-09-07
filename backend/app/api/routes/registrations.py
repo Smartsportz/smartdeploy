@@ -95,7 +95,8 @@ def check_team_name(
         SELECT id FROM registrations
         WHERE tournament_slug = ?
         AND lower(trim(team_name)) = lower(trim(?))
-        AND COALESCE(status, '') NOT IN ('rejected', 'cancelled')
+        AND status IN ('approved', 'accepted', 'pending_approval')
+        AND payment_status = 'paid'
         LIMIT 1
         """,
         (tournament_slug, name),
@@ -145,7 +146,8 @@ def create_registration(payload: RegistrationCreate, user: dict = Depends(curren
         SELECT id FROM registrations
         WHERE tournament_slug = ?
         AND lower(trim(team_name)) = lower(trim(?))
-        AND COALESCE(payment_status, '') = 'approved'
+        AND status IN ('approved', 'accepted', 'pending_approval')
+        AND payment_status = 'paid'
         """,
         (payload.tournament_slug, payload.team_name),
     )
@@ -346,6 +348,10 @@ def local_payment(registration_id: str, payload: LocalPaymentCreate, user: dict 
             registration_id,
         ),
     )
+    from app.api.routes.payments import _sync_tournament_registered_count
+    from app.api.routes.admin import clear_public_cache
+    _sync_tournament_registered_count(item["tournament_slug"])
+    clear_public_cache(item["tournament_slug"])
     members = rows("SELECT name, role, jersey, contact, age, jersey_size FROM registration_members WHERE registration_id = ?", (registration_id,))
     try:
         pdf_bytes, _ = generate_registration_pdf_by_id(registration_id)
