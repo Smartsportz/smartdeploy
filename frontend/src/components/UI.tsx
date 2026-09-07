@@ -317,10 +317,18 @@ export function TournamentCard({ item }: { item: any }) {
         <h3>{tournament.name}</h3>
         <p className="registration-window">{statusText}</p>
         <p>{item.sport} • {item.location} • {item.date}</p>
-        <div className="card-meta">
-          <span>{tournament.teams}/{tournament.capacity} teams</span>
-          <span>{tournament.prize}</span>
-          <span>{publishedMatchCount > 0 ? `${publishedMatchCount} match${publishedMatchCount === 1 ? "" : "es"} / ${publishedRoundCount || 1} round${(publishedRoundCount || 1) === 1 ? "" : "s"}` : ageLabel}</span>
+        <div className="card-meta" style={{ display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-start' }}>
+          <span>Total Teams: {tournament.capacity}</span>
+          <span>Prize pool: {(() => {
+            try {
+              const p = Array.isArray(item.prizes) ? item.prizes : JSON.parse(item.prizes || "[]");
+              if (Array.isArray(p) && p.length > 0) {
+                return `INR ${Number(p[0].amount).toLocaleString("en-IN")}`;
+              }
+            } catch (e) {}
+            return tournament.prize;
+          })()}</span>
+          <span>Age: {minAge > 0 ? `${minAge}+ yrs` : "Open age"}</span>
         </div>
         <span className="inline-link">{actionLabel} <ChevronRight size={16} /></span>
       </div>

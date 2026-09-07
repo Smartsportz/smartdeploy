@@ -610,22 +610,7 @@ function RegistrationSummary({ tournament, amount, showTimeline = false }: { tou
 }
 
 function TournamentPosterPanel({ tournament }: { tournament: (typeof tournaments)[number] }) {
-  const poster = tournament.poster || "";
-  return (
-    <aside className="registration-side poster-side">
-      <section className="registration-poster-card">
-        <div className="registration-summary-head">
-          <h2>Tournament Poster</h2>
-          <small>Visible on the first step only</small>
-        </div>
-        
-        <div className="registration-poster-meta">
-          <strong>{tournament.name}</strong>
-          <span>{tournament.sport} - {tournament.location}</span>
-        </div>
-      </section>
-    </aside>
-  );
+  return null;
 }
 
 function scrollRegistrationTop() {
@@ -840,8 +825,8 @@ export function RegistrationPage() {
     coachName: "",
     email: "",
     phone: "",
-    city: tournament.cities[0] ?? "",
-    districtState: tournament.cities[0] ?? tournament.location,
+    city: "",
+    districtState: "",
     teamLogo: "",
     teamMotto: "",
     selectedJersey: "",
@@ -904,14 +889,12 @@ export function RegistrationPage() {
       setTournamentAccepted(false);
       setTeamDetails({
         teamName: "", teamCode: "", captainName: "", subCaptainName: "", coachName: "", email: "", phone: "",
-        city: tournament.cities[0] ?? "", districtState: tournament.cities[0] ?? tournament.location,
+        city: "", districtState: "",
         teamLogo: "", teamMotto: "", selectedJersey: "", category: `${tournament.sport} League`,
       });
       setMembers(memberSlots.map(() => ""));
       setMemberAges(memberSlots.map(() => ""));
       setMemberJerseySizes(memberSlots.map(() => ""));
-    } else if (savedReg) {
-      navigate(`/tournaments/${routeSlug}/register/payment`);
     }
   }, [routeSlug, navigate, tournament.cities, tournament.location, tournament.sport]);
 
@@ -922,16 +905,19 @@ export function RegistrationPage() {
   }, [memberSlots.length]);
 
   useEffect(() => {
-    const draft: RegistrationDraft = {
-      activeStep,
-      teamDetails,
-      members,
-      memberAges,
-      memberJerseySizes,
-      documents,
-      tournamentAccepted,
-    };
-    localStorage.setItem(registrationDraftKey(routeSlug), JSON.stringify(draft));
+    const timer = setTimeout(() => {
+      const draft: RegistrationDraft = {
+        activeStep,
+        teamDetails,
+        members,
+        memberAges,
+        memberJerseySizes,
+        documents,
+        tournamentAccepted,
+      };
+      localStorage.setItem(registrationDraftKey(routeSlug), JSON.stringify(draft));
+    }, 500);
+    return () => clearTimeout(timer);
   }, [activeStep, teamDetails, members, memberAges, memberJerseySizes, documents, tournamentAccepted, routeSlug]);
 
   useEffect(() => {
@@ -1096,10 +1082,7 @@ export function RegistrationPage() {
       showMissing(`Please complete these fields: ${missingTeamFields.join(", ")}.`);
       return;
     }
-    if (teamNameCheck === "exists") {
-      showMissing("This team name is already registered, so change other name.");
-      return;
-    }
+
     if (teamDetails.phone.length !== 10) {
       showMissing("Phone number must contain exactly 10 digits.");
       return;
@@ -1116,52 +1099,6 @@ export function RegistrationPage() {
     setSaving(true);
     setError("");
     try {
-      const uploadedDocuments = documents.filter((item) => item.fileName.trim());
-      const created = await apiRequest<BackendRegistration>("/registrations", {
-        method: "POST",
-        body: JSON.stringify({
-          tournament_slug: routeSlug,
-          team_name: teamDetails.teamName,
-          team_code: "",
-          captain_name: teamDetails.captainName,
-          sub_captain_name: teamDetails.subCaptainName,
-          coach_name: teamDetails.coachName,
-          email: teamDetails.email,
-          phone: teamDetails.phone,
-          city: teamDetails.city,
-          district_state: teamDetails.districtState,
-          team_logo: teamDetails.teamLogo,
-          team_motto: teamDetails.teamMotto,
-          category: `${tournament.sport} League`,
-          selected_jersey_image: "",
-          members: filledMembers.map((item) => ({
-            name: item.name,
-            role: item.index === 0 ? "Captain" : item.index === 1 ? "Vice-captain" : "Player",
-            jersey: "",
-            contact: item.index === 0 ? teamDetails.phone : "",
-            age: memberAges[item.index] ? Number(memberAges[item.index]) : null,
-            jersey_size: memberJerseySizes[item.index] ?? "",
-          })),
-          documents: uploadedDocuments.map((item) => ({
-            document_type: item.documentType,
-            file_name: item.fileName,
-            file_path: item.filePath,
-            status: item.status,
-          })),
-        }),
-      });
-      const payload: SavedRegistration = {
-        registrationId: created.id,
-        tournament: tournament.name,
-        tournamentSlug: routeSlug,
-        ...teamDetails,
-        teamCode: "",
-        members,
-        memberAges,
-        memberJerseySizes,
-        documents,
-      };
-      writeSavedRegistration(routeSlug, payload);
       localStorage.setItem(registrationDraftKey(routeSlug), JSON.stringify({
         activeStep: 1,
         teamDetails: { ...teamDetails, teamCode: "" },
@@ -1173,7 +1110,7 @@ export function RegistrationPage() {
       } satisfies RegistrationDraft));
       navigate(`/tournaments/${routeSlug}/register/roster`);
     } catch (caught) {
-      const message = caught instanceof Error ? caught.message : "Registration could not be saved.";
+      const message = caught instanceof Error ? caught.message : "Draft could not be saved.";
       setError(message);
       scrollRegistrationTop();
     } finally {
@@ -1184,10 +1121,6 @@ export function RegistrationPage() {
   function goNext() {
     setError("");
     if (activeStep === 0) {
-      if (!tournamentAccepted) {
-        showMissing("Please read and accept the tournament rules and conditions before moving on.");
-        return;
-      }
       setActiveStep(1);
       scrollRegistrationTop();
       return;
@@ -1256,12 +1189,12 @@ export function RegistrationPage() {
           {/* <p>Complete accurate team, player, and payment details to secure your tournament spot.</p> */}
         </section>
         <RegistrationStepper activeIndex={activeStep} />
-        <div className={`registration-reference-layout ${activeStep === 0 ? "registration-reference-layout-intro" : "registration-reference-layout-centered"}`}>
+        <div className="registration-reference-layout registration-reference-layout-centered">
           <main className="registration-main">
             {error && <div className="form-alert">{error}</div>}
             {activeStep === 0 && (
               <section className="registration-form-section">
-                <div className="section-head-inline">
+                <div style={{ textAlign: "center", marginBottom: "20px", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
                   <div>
                     <h2>About Tournament</h2>
                     <p>Review tournament details before entering team data.</p>
@@ -1276,35 +1209,37 @@ export function RegistrationPage() {
                     <div className="rules-list">
                       <span>Min Team size: {(tournament as any).minTeamSize ?? 1} members</span>
                       <span>Max Team size: {tournament.teamSize} members</span>
-                      <span>Prize pool: {tournament.prize}</span>
-                      <span>Slots: {registeredTeams}/{capacity} filled</span>
+                      <span style={{ display: 'flex', flexDirection: 'column' }}>
+                        <span>Prize pool:</span>
+                        {(() => {
+                          try {
+                            const p = Array.isArray((tournament as any).prizes) ? (tournament as any).prizes : JSON.parse((tournament as any).prizes || "[]");
+                            if (Array.isArray(p) && p.length > 0) {
+                              return p.map((line: any, idx: number) => {
+                                let name = line.label || `${line.position} Prize`;
+                                if (!name.toLowerCase().includes("prize") && !name.toLowerCase().includes("trophy") && !name.toLowerCase().includes("award")) {
+                                  name += " Prize";
+                                }
+                                return <span key={idx} style={{ paddingLeft: '8px' }}>{name}: INR {Number(line.amount).toLocaleString("en-IN")}</span>;
+                              });
+                            }
+                          } catch (e) {}
+                          return <span style={{ paddingLeft: '8px' }}>{tournament.prize}</span>;
+                        })()}
+                      </span>
+                      <span>Total Teams: {capacity} ({registeredTeams} filled)</span>
+                      <span>Address: {(tournament as any).address || "Not specified"}</span>
                       <span>Age restriction: {tournamentAgeRange(tournament)}</span>
                     </div>
                   </div>
                 </div>
                 {/* Read Rules Button - Top side of accept tick */}
-                <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "12px" }}>
+                {/* <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "12px" }}>
                   <p> Must be read the complete tournament rules and apply the tournament </p>
                   <button className="btn btn-secondary" type="button" onClick={() => downloadRulesFile(tournament)}>
                     <Download size={16} /> Download Rules PDF
                   </button>
-                </div>
-                <label className="acceptance-box">
-                  <input
-                    type="checkbox"
-                    checked={tournamentAccepted}
-                    readOnly
-                    onClick={(event) => {
-                      event.preventDefault();
-                      if (tournamentAccepted) {
-                        setTournamentAccepted(false);
-                        return;
-                      }
-                      openRulesModal();
-                    }}
-                  />
-                  <span>All must be read rules and fill the tournament to display</span>
-                </label>
+                </div> */} 
               </section>
             )}
 
@@ -1312,6 +1247,7 @@ export function RegistrationPage() {
               <section className="registration-form-section">
                 <div className="section-head-inline">
                   <div>
+                    <button className="btn btn-secondary btn-sm" style={{ marginBottom: '12px' }} type="button" onClick={goBack}><ArrowLeft size={14} /> Back</button>
                     <h2>Team & Player Details</h2>
                     <p>Enter your team information and roster members below.</p>
                   </div>
@@ -1326,15 +1262,10 @@ export function RegistrationPage() {
                         value={teamDetails.teamName}
                         onChange={(event) => updateTeamDetails("teamName", event.target.value)}
                         placeholder="e.g. Mumbai Mavericks"
-                        aria-invalid={teamNameCheck === "exists"}
                       />
-                      {teamNameCheck === "checking" && <small className="field-hint">Finding available team name...</small>}
-                      {teamNameCheck === "exists" && <small className="field-error">Already exist</small>}
-                      {teamNameCheck === "available" && <small className="field-success">Accepted</small>}
                     </label>
                     <label>City<input value={teamDetails.city} onChange={(event) => updateTeamDetails("city", event.target.value)} placeholder="City" /></label>
                     <label>Home state<input value={teamDetails.districtState} onChange={(event) => updateTeamDetails("districtState", event.target.value)} placeholder="Home state" /></label>
-                    <label>Team motto<input value={teamDetails.teamMotto} onChange={(event) => updateTeamDetails("teamMotto", event.target.value)} placeholder="Team spirit" /></label>
                   </div>
                 </div>
 
@@ -1343,7 +1274,6 @@ export function RegistrationPage() {
                   <div className="form-grid">
                     <label>Captain name<input value={teamDetails.captainName} onChange={(event) => updateTeamDetails("captainName", event.target.value)} placeholder="Full Name" /></label>
                     <label>Vice-captain name<input value={teamDetails.subCaptainName} onChange={(event) => updateTeamDetails("subCaptainName", event.target.value)} placeholder="Optional" /></label>
-                    <label>Coach name<input value={teamDetails.coachName} onChange={(event) => updateTeamDetails("coachName", event.target.value)} placeholder="Optional" /></label>
                     <label>Email<input value={teamDetails.email} onChange={(event) => updateTeamDetails("email", event.target.value)} placeholder="contact@team.com" /></label>
                     <label>Phone
                       <input 
@@ -1377,7 +1307,12 @@ export function RegistrationPage() {
                           <span className="player-row-number">{index + 1}</span>
                           <input 
                             value={members[index]} 
-                            onChange={(event) => setMembers((current) => current.map((name, i) => i === index ? event.target.value : name))} 
+                            onChange={(event) => {
+                              const value = event.target.value;
+                              setMembers((current) => current.map((name, i) => i === index ? value : name));
+                              if (index === 0) setTeamDetails(curr => ({ ...curr, captainName: value }));
+                              if (index === 1) setTeamDetails(curr => ({ ...curr, subCaptainName: value }));
+                            }} 
                             placeholder={`${role} Name`} 
                           />
                           <input 
@@ -1410,11 +1345,6 @@ export function RegistrationPage() {
                     {maxAge > 0 && <span style={{ marginLeft: "16px" }}>Max: {maxAge} years</span>}
                   </div>
                 </div>
-
-                <label className="acceptance-box">
-                  <input type="checkbox" checked={tournamentAccepted} readOnly onClick={(event) => { event.preventDefault(); openRulesModal(); }} />
-                  <span>I accept the tournament rules and verify that all player ages are accurate.</span>
-                </label>
               </section>
             )}
 
@@ -1490,7 +1420,75 @@ export function RegistrationRosterPage() {
   const { slug } = useParams();
   const routeSlug = slug ?? tournaments[0].slug;
   const tournament = withRuntimeTournamentStatus(tournaments.find((item) => item.slug === routeSlug) ?? { ...tournaments[0], slug: routeSlug });
-  const saved = useMemo(() => readSavedRegistration(routeSlug), [routeSlug]);
+  const draft = useMemo(() => readRegistrationDraft(routeSlug), [routeSlug]);
+  const navigate = useNavigate();
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
+
+  async function submitRegistration() {
+    if (!draft) return;
+    setSaving(true);
+    setError("");
+    try {
+      const uploadedDocuments = draft.documents.filter((item) => item.fileName.trim());
+      const filledMembers = draft.members
+        .map((name, index) => ({ name: name.trim(), index }))
+        .filter((item) => item.name.length >= 2);
+
+      const created = await apiRequest<BackendRegistration>("/registrations", {
+        method: "POST",
+        body: JSON.stringify({
+          tournament_slug: routeSlug,
+          team_name: draft.teamDetails.teamName,
+          team_code: "",
+          captain_name: draft.teamDetails.captainName,
+          sub_captain_name: draft.teamDetails.subCaptainName,
+          coach_name: draft.teamDetails.coachName,
+          email: draft.teamDetails.email,
+          phone: draft.teamDetails.phone,
+          city: draft.teamDetails.city,
+          district_state: draft.teamDetails.districtState,
+          team_logo: draft.teamDetails.teamLogo,
+          team_motto: draft.teamDetails.teamMotto,
+          category: `${tournament.sport} League`,
+          selected_jersey_image: "",
+          members: filledMembers.map((item) => ({
+            name: item.name,
+            role: item.index === 0 ? "Captain" : item.index === 1 ? "Vice-captain" : "Player",
+            jersey: "",
+            contact: item.index === 0 ? draft.teamDetails.phone : "",
+            age: draft.memberAges[item.index] ? Number(draft.memberAges[item.index]) : null,
+            jersey_size: draft.memberJerseySizes[item.index] ?? "",
+          })),
+          documents: uploadedDocuments.map((item) => ({
+            document_type: item.documentType,
+            file_name: item.fileName,
+            file_path: item.filePath,
+            status: item.status,
+          })),
+        }),
+      });
+
+      const payload: SavedRegistration = {
+        registrationId: created.id,
+        tournament: tournament.name,
+        tournamentSlug: routeSlug,
+        ...draft.teamDetails,
+        teamCode: "",
+        members: draft.members,
+        memberAges: draft.memberAges,
+        memberJerseySizes: draft.memberJerseySizes,
+        documents: draft.documents,
+      };
+      writeSavedRegistration(routeSlug, payload);
+      navigate(`/tournaments/${routeSlug}/register/payment`);
+    } catch (caught) {
+      const message = caught instanceof Error ? caught.message : "Registration could not be saved.";
+      setError(message);
+    } finally {
+      setSaving(false);
+    }
+  }
 
   return (
     <RegistrationShell>
@@ -1500,7 +1498,7 @@ export function RegistrationRosterPage() {
         <h1>{tournament.name}</h1>
       </section>
       <RegistrationStepper activeIndex={1} />
-      {!saved ? (
+      {!draft ? (
         <section className="panel">
           <Link className="btn btn-primary" to={`/tournaments/${routeSlug}/register`}>Back to registration</Link>
         </section>
@@ -1508,22 +1506,26 @@ export function RegistrationRosterPage() {
         <div className="detail-grid">
           <section className="panel review-summary">
             <span className="status emerald">Details captured</span>
-            <h2>{saved.teamName}</h2>
+            <h2>{draft.teamDetails.teamName}</h2>
+            {error && <div className="form-alert">{error}</div>}
             <div className="review-list">
-              <p><b>Captain</b><span>{saved.captainName}</span></p>
-              <p><b>Email</b><span>{saved.email}</span></p>
-              <p><b>City</b><span>{saved.city}</span></p>
+              <p><b>Captain</b><span>{draft.teamDetails.captainName}</span></p>
+              <p><b>Email</b><span>{draft.teamDetails.email}</span></p>
+              <p><b>City</b><span>{draft.teamDetails.city}</span></p>
             </div>
-            <Link className="btn btn-primary" to={`/tournaments/${routeSlug}/register/payment`}>Continue to payment</Link>
+            <div style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
+              <Link className="btn btn-secondary" to={`/tournaments/${routeSlug}/register`}><ArrowLeft size={16} /> Back to details</Link>
+              <button className="btn btn-primary" onClick={submitRegistration} disabled={saving}>{saving ? "Saving..." : "Continue to payment"}</button>
+            </div>
           </section>
           <section className="panel">
             <h2>Roster</h2>
             <div className="roster-list">
-              {saved.members.map((member, index) => (
+              {draft.members.map((member, index) => ({ member, index })).filter(item => item.member.trim().length > 0).map(({ member, index }) => (
                 <p key={index}>
                   <b>{index + 1}</b>
                   <span>
-                    {member} ({saved.memberAges[index]} yrs){saved.memberJerseySizes?.[index] ? ` - Size: ${saved.memberJerseySizes[index]}` : ""}
+                    {member} {draft.memberAges[index] ? `(${draft.memberAges[index]} yrs)` : ""}{draft.memberJerseySizes?.[index] ? ` - Size: ${draft.memberJerseySizes[index]}` : ""}
                   </span>
                 </p>
               ))}
@@ -1725,6 +1727,9 @@ export function RegistrationPaymentPage() {
                 <button className="btn btn-primary" onClick={() => completePayment("card")} disabled={status === "checking"}>Pay Now</button>
               </div>
             )}
+            <div className="registration-actions" style={{ marginTop: '20px' }}>
+              <Link className="btn btn-secondary" to={`/tournaments/${routeSlug}/register/roster`}><ArrowLeft size={16} /> Back</Link>
+            </div>
           </section>
           <RegistrationSummary tournament={tournament} amount={amount} />
         </div>
