@@ -1216,15 +1216,15 @@ export function RegistrationPage() {
                       <input
                         value={teamDetails.teamName}
                         onChange={(event) => updateTeamDetails("teamName", event.target.value)}
-                        placeholder="e.g. Mumbai Mavericks"
+                        placeholder="Team name"
                         style={teamNameCheck === "exists" ? { borderColor: "red" } : teamNameCheck === "available" ? { borderColor: "green" } : {}}
                       />
                       {teamNameCheck === "checking" && <span style={{ fontSize: "12px", color: "#666" }}>Checking availability...</span>}
                       {teamNameCheck === "available" && <span style={{ fontSize: "12px", color: "green" }}>team name is accept</span>}
                       {teamNameCheck === "exists" && <span style={{ fontSize: "12px", color: "red" }}>already exist</span>}
                     </label>
-                    <label>City *<input value={teamDetails.city} onChange={(event) => updateTeamDetails("city", event.target.value)} placeholder="City" /></label>
-                    <label>Home state *<input value={teamDetails.districtState} onChange={(event) => updateTeamDetails("districtState", event.target.value)} placeholder="Home state" /></label>
+                    <label>City *<input value={teamDetails.city} onChange={(event) => updateTeamDetails("city", event.target.value)} /></label>
+                    <label>Home state *<input value={teamDetails.districtState} onChange={(event) => updateTeamDetails("districtState", event.target.value)} /></label>
                   </div>
                 </div>
 
@@ -1249,7 +1249,7 @@ export function RegistrationPage() {
 
                 <div className="form-group-box" style={{ marginTop: "2rem" }}>
                   <div className="section-head-inline">
-                    <h3>Player Roster *</h3>
+                    <h3>Player Roster <p style={{ fontSize: "12px" }}>(5 players mandatory and 3 players substitutes)</p></h3>
                     <div className="section-actions" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                       <button className="btn btn-secondary btn-sm" type="button" onClick={() => setRosterImportOpen(true)}><Upload size={14} /> Import</button>
                       <button className="btn btn-secondary btn-sm" type="button" onClick={() => downloadSampleExcel(showJerseySize)}><Download size={14} /> Sample</button>
