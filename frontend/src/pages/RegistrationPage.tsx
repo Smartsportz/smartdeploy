@@ -544,11 +544,13 @@ async function downloadSampleExcel(showJerseySize = true) {
 }
 
 function RegistrationStepper({ activeIndex }: { activeIndex: number }) {
-  const wizard = ["Tournament", "Team Details", "Payment", "Confirmation"];
-  let displayIndex = activeIndex;
-  if (activeIndex >= 1) displayIndex = 1;
-  if (activeIndex === 4) displayIndex = 2;
-  if (activeIndex === 5) displayIndex = 3;
+  const wizard = ["Team Details", "Payment", "Confirmation"];
+  let displayIndex = activeIndex - 1; // Since activeIndex for Team Details was 1, we offset by -1. Or better, just update activeIndex usage.
+  // Actually, if we change activeStep to start at 0 for Team Details across the file, we can simplify this.
+  // Let's assume activeStep is 1 for Team Details. Then displayIndex = activeIndex - 1.
+  if (activeIndex >= 1) displayIndex = activeIndex - 1;
+  if (activeIndex === 4) displayIndex = 1;
+  if (activeIndex === 5) displayIndex = 2;
 
   return (
     <div className="registration-stepper" aria-label="Registration progress">
@@ -848,7 +850,7 @@ export function RegistrationPage() {
   const [error, setError] = useState("");
   const [teamNameCheck, setTeamNameCheck] = useState<"idle" | "checking" | "available" | "exists">("idle");
   const [saving, setSaving] = useState(false);
-  const [activeStep, setActiveStep] = useState(() => Math.min(Math.max(savedDraft?.activeStep ?? 0, 0), 1));
+  const [activeStep, setActiveStep] = useState(() => Math.max(savedDraft?.activeStep ?? 1, 1));
   const [tournamentAccepted, setTournamentAccepted] = useState(() => savedDraft?.tournamentAccepted ?? false);
   const [rulesModalOpen, setRulesModalOpen] = useState(false);
   const [rulesScrolled, setRulesScrolled] = useState(false);
@@ -1197,66 +1199,10 @@ export function RegistrationPage() {
         <div className="registration-reference-layout registration-reference-layout-centered">
           <main className="registration-main">
             {error && <div className="form-alert">{error}</div>}
-            {activeStep === 0 && (
-              <section className="registration-form-section">
-                <div style={{ textAlign: "center", marginBottom: "20px", display: "flex", flexDirection: "column", alignItems: "center", gap: "8px" }}>
-                  <div>
-                    <h2>About Tournament</h2>
-                    <p>Review tournament details before entering team data.</p>
-                  </div>
-                  <span className={`status ${tournament.accent}`}>{tournament.status}</span>
-                </div>
-                <div className="registration-choice-card">
-                  <img src={mediaUrl(tournament.image)} alt={tournament.name} loading="lazy" />
-                  <div>
-                    <h3>{tournament.name}</h3>
-                    <p>{tournament.sport} - {tournament.location} - {tournament.date}</p>
-                    <div className="rules-list" style={{ gridTemplateColumns: '1fr 1fr' }}>
-                      <span>Min Team size: {(tournament as any).minTeamSize ?? 1} members</span>
-                      <span>Max Team size: {tournament.teamSize} members</span>
-                    </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px', marginTop: '6px' }}>
-                      <span style={{ display: 'flex', flexDirection: 'column', padding: '8px 10px', border: '1px solid rgba(11,136,82,.14)', borderRadius: '10px', background: 'rgba(255,255,255,.72)', color: '#31433a', fontSize: '13px', fontWeight: 850, lineHeight: 1.3 }}>
-                        <span>Prize pool:</span>
-                        {(() => {
-                          try {
-                            const p = Array.isArray((tournament as any).prizes) ? (tournament as any).prizes : JSON.parse((tournament as any).prizes || "[]");
-                            if (Array.isArray(p) && p.length > 0) {
-                              return p.map((line: any, idx: number) => {
-                                let name = line.label || `${line.position} Prize`;
-                                if (!name.toLowerCase().includes("prize") && !name.toLowerCase().includes("trophy") && !name.toLowerCase().includes("award")) {
-                                  name += " Prize";
-                                }
-                                return <span key={idx} style={{ paddingLeft: '8px' }}>{name}: INR {Number(line.amount).toLocaleString("en-IN")}</span>;
-                              });
-                            }
-                          } catch (e) {}
-                          return <span style={{ paddingLeft: '8px' }}>{tournament.prize}</span>;
-                        })()}
-                      </span>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                        <span style={{ padding: '8px 10px', border: '1px solid rgba(11,136,82,.14)', borderRadius: '10px', background: 'rgba(255,255,255,.72)', color: '#31433a', fontSize: '13px', fontWeight: 850, lineHeight: 1.3 }}>Total Teams: {registeredTeams + 24}/{capacity}</span>
-                        <span style={{ padding: '8px 10px', border: '1px solid rgba(11,136,82,.14)', borderRadius: '10px', background: 'rgba(255,255,255,.72)', color: '#31433a', fontSize: '13px', fontWeight: 850, lineHeight: 1.3 }}>Address: {(tournament as any).address || "Not specified"}</span>
-                        <span style={{ padding: '8px 10px', border: '1px solid rgba(11,136,82,.14)', borderRadius: '10px', background: 'rgba(255,255,255,.72)', color: '#31433a', fontSize: '13px', fontWeight: 850, lineHeight: 1.3 }}>Age: {minAge > 0 ? `${minAge}+ yrs` : "Open age"}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* Read Rules Button - Top side of accept tick */}
-                {/* <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "12px" }}>
-                  <p> Must be read the complete tournament rules and apply the tournament </p>
-                  <button className="btn btn-secondary" type="button" onClick={() => downloadRulesFile(tournament)}>
-                    <Download size={16} /> Download Rules PDF
-                  </button>
-                </div> */} 
-              </section>
-            )}
-
             {activeStep === 1 && (
               <section className="registration-form-section">
                 <div className="section-head-inline">
                   <div>
-                    <button className="btn btn-secondary btn-sm" style={{ marginBottom: '12px' }} type="button" onClick={goBack}><ArrowLeft size={14} /> Back</button>
                     <h2>Team & Player Details</h2>
                     <p>Enter your team information and roster members below.</p>
                   </div>
@@ -1361,11 +1307,10 @@ export function RegistrationPage() {
             )}
 
             <div className="registration-actions">
-              <button className="btn btn-secondary" type="button" onClick={goBack}><ArrowLeft size={16} />{activeStep === 0 ? "Back" : "Back"}</button>
+              <button className="btn btn-secondary" type="button" onClick={() => navigate(`/tournaments/${routeSlug}`)}><ArrowLeft size={16} />Cancel</button>
               <button className="btn btn-primary" type="button" onClick={goNext} disabled={saving}>{saving ? "Saving..." : "Continue"}<ArrowRight size={16} /></button>
             </div>
           </main>
-          {activeStep === 0 ? <TournamentPosterPanel tournament={tournament} /> : null}
         </div>
         
         {rosterImportOpen && (
