@@ -350,26 +350,19 @@ export function HomePage() {
           <source src={`${import.meta.env.BASE_URL}media/hero-video-short.mp4`} type="video/mp4" />
         </video>
         <div className="reference-hero-overlay" />
+      </section>
+      <section className="hero-text-section" style={{ padding: '40px 20px', background: 'var(--bg)' }}>
         <motion.div className="reference-hero-copy" variants={heroCopy} initial="initial" animate="animate">
           <motion.span className="eyebrow animated-eyebrow" variants={heroLine}>SmartSportz</motion.span>
-          <motion.h1 aria-label="Where Champions Compete. Where Tournaments Come Alive.">
-            {["Where Champions", "Compete. Where", "Tournaments", "Come Alive."].map((line) => (
-              <motion.span key={line} variants={heroLine}>{line}</motion.span>
-            ))}
+          <motion.h1>
+            <motion.span variants={heroLine} style={{ display: 'block' }}>Where Champions Compete</motion.span>
+            <motion.span variants={heroLine} style={{ display: 'block' }}>Where Tournaments Come Alive.</motion.span>
           </motion.h1>
           <motion.p variants={heroLine}>India's most sophisticated ecosystem for managing elite tournaments, scoring, registration, payments, content, and leaderboards.</motion.p>
           <motion.div className="hero-actions" variants={heroLine}>
             <Link className="btn btn-primary" to="/tournaments">Register Tournament</Link>
             <Link className="btn btn-secondary glass-btn" to="/sports">Explore Sports</Link>
           </motion.div>
-          {/* <motion.div className="match-chip-row hero-copy-chips" variants={heroLine}>
-            {[
-              "Mumbai Live Matches",
-              "Book a Facility",
-              "Live Scoring",
-              "News Updates",
-            ].map((item) => <span key={item}>{item}</span>)}
-          </motion.div> */}
         </motion.div>
       </section>
 

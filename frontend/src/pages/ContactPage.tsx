@@ -27,7 +27,7 @@ export function ContactPage() {
 
   const adminEmail = "smartsportz.in@gmail.com";
   const supportEmail = "info@smartsportz.in";
-  const primaryPhone = "+91 78713 57999";
+  const primaryPhone = "+91 90719 95566";
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -117,7 +117,7 @@ export function ContactPage() {
             <motion.div variants={fadeInUp} className="contact-details-intro">
               <h2>Admin Contact Information</h2>
               <p>
-                Have questions about tournament registrations, sponsorship opportunities, fixtures, or technical support? Contact the SmartSportz administration directly.
+                Have questions about tournament registrations, sponsorship opportunities, fixtures, or technical support? Contact the SmartSportz team directly.
               </p>
             </motion.div>
 
@@ -127,15 +127,15 @@ export function ContactPage() {
                 <Mail size={22} />
               </div>
               <div className="contact-card-content">
-                <span className="contact-card-label">Admin Email Address</span>
+                <span className="contact-card-label">SmartSportz Team Email Address</span>
                 <a href={`mailto:${adminEmail}`} className="contact-card-primary-link">
                   {adminEmail}
                 </a>
-                <div className="contact-card-sub-info">
+                {/* <div className="contact-card-sub-info">
                   <span>General Support: </span>
                   <a href={`mailto:${supportEmail}`}>{supportEmail}</a>
-                </div>
-              </div>
+                </div> */}
+              </div> 
             </motion.div>
 
             {/* Phone & WhatsApp Card */}
@@ -152,7 +152,7 @@ export function ContactPage() {
                   <span className="contact-badge-pill">Primary</span>
                 </div>
                 <a
-                  href={`https://wa.me/917871357999?text=${encodeURIComponent("Hello SmartSportz Admin, I would like to inquire about tournaments.")}`}
+                  href={`https://wa.me/919071995566?text=${encodeURIComponent("Hello SmartSportz Team, I would like to inquire about tournaments.")}`}
                   target="_blank"
                   rel="noreferrer"
                   className="contact-whatsapp-link"
@@ -171,10 +171,10 @@ export function ContactPage() {
               </div>
               <div className="contact-card-content">
                 <span className="contact-card-label">Operational Headquarters</span>
-                <strong className="contact-card-heading">Bengaluru, Karnataka, India</strong>
-                <p className="contact-card-text">
+                <strong className="contact-card-heading">Sigma Tech Park, Palm Meadows, Whitefield, Bengaluru, Karnataka 560066</strong>
+                {/* <p className="contact-card-text">
                   Hosting youth, collegiate, corporate, and open community sports tournaments across India.
-                </p>
+                </p> */}
               </div>
             </motion.div>
 

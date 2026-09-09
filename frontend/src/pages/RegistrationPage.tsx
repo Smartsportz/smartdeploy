@@ -2,7 +2,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { ArrowLeft, ArrowRight, CheckCircle2, Copy, Download, ExternalLink, FileText, Printer, ShieldCheck, Smartphone, Trophy, Upload, UserPlus, Users } from "lucide-react";
 import { Page } from "../components/UI";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, Fragment } from "react";
 import type React from "react";
 import { tournaments, withRuntimeTournamentStatus } from "../data/platform";
 import { apiRequest, mediaUrl } from "../lib/api";
@@ -1216,15 +1216,15 @@ export function RegistrationPage() {
                       <input
                         value={teamDetails.teamName}
                         onChange={(event) => updateTeamDetails("teamName", event.target.value)}
-                        placeholder="e.g. Mumbai Mavericks"
+                        placeholder="Team name"
                         style={teamNameCheck === "exists" ? { borderColor: "red" } : teamNameCheck === "available" ? { borderColor: "green" } : {}}
                       />
                       {teamNameCheck === "checking" && <span style={{ fontSize: "12px", color: "#666" }}>Checking availability...</span>}
                       {teamNameCheck === "available" && <span style={{ fontSize: "12px", color: "green" }}>team name is accept</span>}
                       {teamNameCheck === "exists" && <span style={{ fontSize: "12px", color: "red" }}>already exist</span>}
                     </label>
-                    <label>City *<input value={teamDetails.city} onChange={(event) => updateTeamDetails("city", event.target.value)} placeholder="City" /></label>
-                    <label>Home state *<input value={teamDetails.districtState} onChange={(event) => updateTeamDetails("districtState", event.target.value)} placeholder="Home state" /></label>
+                    <label>City *<input value={teamDetails.city} onChange={(event) => updateTeamDetails("city", event.target.value)} /></label>
+                    <label>Home state *<input value={teamDetails.districtState} onChange={(event) => updateTeamDetails("districtState", event.target.value)} /></label>
                   </div>
                 </div>
 
@@ -1249,7 +1249,7 @@ export function RegistrationPage() {
 
                 <div className="form-group-box" style={{ marginTop: "2rem" }}>
                   <div className="section-head-inline">
-                    <h3>Player Roster *</h3>
+                    <h3>Player Roster</h3>
                     <div className="section-actions" style={{ display: "flex", gap: "8px", alignItems: "center" }}>
                       <button className="btn btn-secondary btn-sm" type="button" onClick={() => setRosterImportOpen(true)}><Upload size={14} /> Import</button>
                       <button className="btn btn-secondary btn-sm" type="button" onClick={() => downloadSampleExcel(showJerseySize)}><Download size={14} /> Sample</button>
@@ -1257,43 +1257,56 @@ export function RegistrationPage() {
                   </div>
                   <div className="player-roster-rows" style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                     {memberSlots.map((role, index) => {
+                      const minPlayers = (tournament as any).minTeamSize ?? 1;
                       const ageStr = memberAges[index] || "";
                       const ageNum = parseInt(ageStr);
                       const isInvalid = ageStr && (!isNaN(ageNum) && ageNum > 0) ? !isAgeInRange(ageNum, tournament) : false;
                       return (
-                        <div key={role} className="player-row-input">
-                          <span className="player-row-number">{index + 1}</span>
-                          <input 
-                            value={members[index]} 
-                            onChange={(event) => {
-                              const value = event.target.value;
-                              setMembers((current) => current.map((name, i) => i === index ? value : name));
-                              if (index === 0) setTeamDetails(curr => ({ ...curr, captainName: value }));
-                              if (index === 1) setTeamDetails(curr => ({ ...curr, subCaptainName: value }));
-                            }} 
-                            placeholder={`${role} Name`} 
-                          />
-                          <input 
-                            type="number"
-                            value={memberAges[index]} 
-                            onChange={(event) => setMemberAges((current) => current.map((v, i) => i === index ? event.target.value : v))} 
-                            placeholder="Age"
-                            style={isInvalid ? { borderColor: "red", backgroundColor: "#fff0f0" } : {}}
-                          />
-                          {/* In the team details step, wrap the jersey size select with a condition */}
-                            {(tournament as any).show_jersey_size !== false && (
-                              <select
-                                value={memberJerseySizes[index] || ""}
-                                onChange={(event) => updateMemberJerseySize(index, event.target.value)}
-                                className="jersey-size-select"
-                              >
-                                <option value="">Size</option>
-                                {jerseySizeOptions.map((size) => (
-                                  <option key={size} value={size}>{size}</option>
-                                ))}
-                              </select>
-                            )}
-                        </div>
+                        <Fragment key={role}>
+                          {index === 0 && (
+                            <div style={{ marginTop: index === 0 ? "0.5rem" : "1.5rem", marginBottom: "0.5rem" }}>
+                              <h4 style={{ margin: 0, fontSize: "16px" }}>Players *</h4>
+                            </div>
+                          )}
+                          {index === minPlayers && (
+                            <div style={{ marginTop: "1.5rem", marginBottom: "0.5rem" }}>
+                              <h4 style={{ margin: 0, fontSize: "16px" }}>Substitutes</h4>
+                            </div>
+                          )}
+                          <div className="player-row-input">
+                            <span className="player-row-number">{index + 1}</span>
+                            <input 
+                              value={members[index]} 
+                              onChange={(event) => {
+                                const value = event.target.value;
+                                setMembers((current) => current.map((name, i) => i === index ? value : name));
+                                if (index === 0) setTeamDetails(curr => ({ ...curr, captainName: value }));
+                                if (index === 1) setTeamDetails(curr => ({ ...curr, subCaptainName: value }));
+                              }} 
+                              placeholder={`${role} Name`} 
+                            />
+                            <input 
+                              type="number"
+                              value={memberAges[index]} 
+                              onChange={(event) => setMemberAges((current) => current.map((v, i) => i === index ? event.target.value : v))} 
+                              placeholder="Age"
+                              style={isInvalid ? { borderColor: "red", backgroundColor: "#fff0f0" } : {}}
+                            />
+                            {/* In the team details step, wrap the jersey size select with a condition */}
+                              {(tournament as any).show_jersey_size !== false && (
+                                <select
+                                  value={memberJerseySizes[index] || ""}
+                                  onChange={(event) => updateMemberJerseySize(index, event.target.value)}
+                                  className="jersey-size-select"
+                                >
+                                  <option value="">Size</option>
+                                  {jerseySizeOptions.map((size) => (
+                                    <option key={size} value={size}>{size}</option>
+                                  ))}
+                                </select>
+                              )}
+                          </div>
+                        </Fragment>
                       );
                     })}
                   </div>
