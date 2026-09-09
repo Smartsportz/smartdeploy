@@ -346,19 +346,19 @@ export function HomePage() {
       )}
 
       <section className="reference-hero">
-        <video className="reference-hero-video" autoPlay muted loop playsInline preload="auto">
-          <source src={`${import.meta.env.BASE_URL}media/hero-video-short.mp4`} type="video/mp4" />
-        </video>
-        <div className="reference-hero-overlay" />
-      </section>
-      <section className="hero-text-section" style={{ padding: '40px 20px', background: 'var(--bg)' }}>
+        <div className="reference-hero-media">
+          <video className="reference-hero-video" autoPlay muted loop playsInline preload="auto">
+            <source src={`${import.meta.env.BASE_URL}media/hero-video-short.mp4`} type="video/mp4" />
+          </video>
+          <div className="reference-hero-overlay" />
+        </div>
         <motion.div className="reference-hero-copy" variants={heroCopy} initial="initial" animate="animate">
           <motion.span className="eyebrow animated-eyebrow" variants={heroLine}>SmartSportz</motion.span>
           <motion.h1>
             <motion.span variants={heroLine} style={{ display: 'block' }}>Where Champions Compete</motion.span>
             <motion.span variants={heroLine} style={{ display: 'block' }}>Where Tournaments Come Alive.</motion.span>
           </motion.h1>
-          <motion.p variants={heroLine}>India's most sophisticated ecosystem for managing elite tournaments, scoring, registration, payments, content, and leaderboards.</motion.p>
+          <motion.p variants={heroLine}>India's most sophisticated ecosystem for managing elite tournaments, scoring, and registration</motion.p>
           <motion.div className="hero-actions" variants={heroLine}>
             <Link className="btn btn-primary" to="/tournaments">Register Tournament</Link>
             <Link className="btn btn-secondary glass-btn" to="/sports">Explore Sports</Link>
