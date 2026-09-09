@@ -2816,7 +2816,7 @@ input[aria-invalid="true"] { border-color: rgba(225, 29, 72, .72); background: r
 .footer-social-links a:hover {
   background-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-3px);
-  color: #ff6b35; /* or your brand color */
+  color: var(--primary); /* or your brand color */
 }
 
 .footer-social-links svg {

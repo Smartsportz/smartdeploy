@@ -4151,6 +4151,22 @@ export function ChessSchoolManagementPage({ role = "admin" }: { role?: "admin" |
       setError(caught instanceof Error ? caught.message : "Unable to save chess school.");
     }
   }
+  async function deleteSchool() {
+    if (!editingSlug) return;
+    if (!window.confirm("Are you sure you want to delete this chess school? This action cannot be undone.")) return;
+    setError("");
+    setMessage("");
+    try {
+      await apiRequest(`/management/sports/chess/schools/${editingSlug}`, {
+        method: "DELETE",
+        successToast: "Chess school deleted.",
+      }, token);
+      resetForm();
+      void schoolsQuery.refetch();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "Unable to delete chess school.");
+    }
+  }
 
   return (
     <PortalShell
@@ -4225,6 +4241,7 @@ export function ChessSchoolManagementPage({ role = "admin" }: { role?: "admin" |
             <div className="form-actions form-span">
               <button className="btn btn-primary" type="submit" disabled={uploadingIndex !== null}>{uploadingIndex !== null ? "Uploading..." : "Save School"}</button>
               <button className="btn btn-secondary" type="button" onClick={resetForm}>Clear</button>
+              {editingSlug && <button className="btn btn-danger" type="button" onClick={deleteSchool}><DeleteIcon /> Delete School</button>}
             </div>
           </form>
         </section>

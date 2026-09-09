@@ -145,13 +145,18 @@ export function Footer() {
                 <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
               </svg>
             </a>
+            <a href="https://t.me/smartsportzin" target="_blank" rel="noopener noreferrer" aria-label="Telegram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M21.9 3.2 2.9 10.5c-1.3.5-1.3 1.2-.2 1.5l4.9 1.5 1.9 5.8c.2.6.1.8.7.8.5 0 .7-.2 1-.5l2.4-2.3 5 3.7c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.2-.5-1.8-1.5-1.4zM8.4 13.2l10.8-6.8c.5-.3 1-.1.6.2l-8.8 7.9-.3 3.2-1.6-4.5-3.5-1.1c-.8-.2-.8-.6.2-.9l13.6-5.3c.6-.2 1.1-.1.7.3L8.4 13.2z"/>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
       <div className="footer-grid">
-        <div><b>Platform</b><Link to="/tournaments">Tournaments</Link><Link to="/live">Live</Link><Link to="/teams">Teams</Link></div>
-        <div><b>Resources</b><Link to="/news">News</Link><Link to="/gallery">Gallery</Link><Link to="/faq">FAQ</Link></div>
-        <div><b>Company</b><Link to="/about">About</Link><Link to="/contact">Contact</Link><Link to="/sponsors">Sponsors</Link></div>
+        <div><b>Platform</b><Link to="/tournaments">Tournaments</Link><Link to="/live">Live</Link> {/* <Link to="/teams">Teams</Link> */}</div>
+        <div><b>Resources</b><Link to="/news">News</Link><Link to="/gallery">Gallery</Link>{/* <Link to="/faq">FAQ</Link> */}</div>
+        <div><b>Company</b><Link to="/about">About</Link><Link to="/contact">Contact</Link> {/* <Link to="/sponsors">Sponsors</Link> */} </div>
       </div>
       <p className="footer-rights">
         <span>all rights received by smartsportz.in@2026</span>

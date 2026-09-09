@@ -99,7 +99,7 @@ export function ContactPage() {
               Contact SmartSportz
             </motion.h1>
             <motion.p variants={fadeInUp} custom={0.2} className="contact-subtitle">
-              Reach out to our tournament directors and administrative team. Send an inquiry directly to the administrator's email or contact us through our official phone lines.
+              Reach out to our tournament directors and SmartSportz team. Send an inquiry directly to the administrator's email or contact us through our official phone lines.
             </motion.p>
           </motion.div>
         </section>
@@ -115,10 +115,10 @@ export function ContactPage() {
             variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
           >
             <motion.div variants={fadeInUp} className="contact-details-intro">
-              <h2>Admin Contact Information</h2>
-              <p>
+              <h2>SmartSportz Team Contact Information</h2>
+              {/* <p>
                 Have questions about tournament registrations, sponsorship opportunities, fixtures, or technical support? Contact the SmartSportz team directly.
-              </p>
+              </p> */}
             </motion.div>
 
             {/* Email Card */}
@@ -208,9 +208,9 @@ export function ContactPage() {
                   <span>SEND EMAIL TO ADMIN</span>
                 </div>
                 <h3>Send Inquiry Directly</h3>
-                <p>
+                {/* <p>
                   Submit the form below and an email notification will be dispatched straight to the administrator's mailbox (<strong>{adminEmail}</strong>).
-                </p>
+                </p> */}
               </div>
 
               {successMessage && (
