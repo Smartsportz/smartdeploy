@@ -1,15 +1,15 @@
-##SmartSportz Developer Folder Versions
+## SmartSportz Developer Folder Versions
 
-###smartsportz-1:
+### smartsportz-1:
 	old features
 
-###smartsportz-2:
+### smartsportz-2:
 	Incompleted project
 
-###smartsportz-3:
+### smartsportz-3:
 	all updates
 
-###smartsportz-4:
+### smartsportz-4:
 	1.without tournamnet details step in Registration page
 	2.Asmath Update for Registration page in team details steps of player roster is separate two parts
 	3.Registration page in team details steps of player roster is separate two parts
@@ -19,14 +19,14 @@
 	7. Removed the Team, FAQ, and Spansor Links in Footer
 	8. Added the Telegram social media Logo on Footer side
 
-##SmartSportz Branch Versions
+## SmartSportz Branch Versions
 
-###main:
+### main:
 
-####This version is related by smartsportz-4
+#### This version is related by smartsportz-4
 
-###[V1.0.1]:
+### [V1.0.1]:
 
-####This version is related by smartsportz-3:
+#### This version is related by smartsportz-3:
 
 	1.Complete project register with tournament details page
