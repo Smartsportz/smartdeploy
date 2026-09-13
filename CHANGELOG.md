@@ -22,6 +22,9 @@
 ### smartsportz-5:
 	1. Change the hero video for top side and transparents the footer
 	2. Changed the hero label place of mobile view differ for pc view
+	3. Change the container algin in center
+	4. Remove the default data in db of seed.py and schema.py
+	5. updated the setting page nav menus
 
 
 ## SmartSportz Branch Versions
