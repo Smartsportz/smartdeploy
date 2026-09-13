@@ -290,9 +290,9 @@ export function SettingsPage() {
     }
   }
 
-  const portalSidebar = location.pathname.startsWith("/admin")
+  const portalSidebar = user?.role === "super_admin"
     ? sidebar
-    : location.pathname.startsWith("/management")
+    : user?.role === "management"
       ? managementSidebar
       : userSidebar;
   const dashboardPath = user?.role === "super_admin"

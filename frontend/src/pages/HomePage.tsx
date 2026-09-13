@@ -102,9 +102,10 @@ const sportStoryCopy: Record<string, { title: string; date: string; sponsor: str
   },
 };
 
-function useAutoScroll(el: HTMLElement | null, isHovered: boolean, speed = 1, loopItemCount = 0) {
+function useAutoScroll(el: HTMLElement | null, isHovered: boolean, speed = 1, seamlessLoop = false) {
   useEffect(() => {
     if (!el || isHovered) return;
+    const loopItemCount = seamlessLoop ? Math.floor(el.children.length / 2) : 0;
     const loopStart = loopItemCount > 0 ? (el.children.item(loopItemCount) as HTMLElement | null)?.offsetLeft ?? 0 : 0;
     if (el.scrollWidth <= el.clientWidth + 1 || (loopItemCount > 0 && loopStart <= el.clientWidth)) return;
     
@@ -132,7 +133,7 @@ function useAutoScroll(el: HTMLElement | null, isHovered: boolean, speed = 1, lo
     
     animationId = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(animationId);
-  }, [el, isHovered, speed, loopItemCount]);
+  }, [el, isHovered, speed, seamlessLoop]);
 }
 
 type ProgressiveQuery<T> = {
@@ -276,9 +277,9 @@ export function HomePage() {
     element.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" });
   };
 
-  useAutoScroll(organizerEl, isOrganizerHovered, 1);
-  useAutoScroll(discoveryEl, isDiscoveryHovered, 1.2);
-  useAutoScroll(sponsorEl, isSponsorHovered, 0.8);
+  useAutoScroll(organizerEl, isOrganizerHovered, 1, false);
+  useAutoScroll(discoveryEl, isDiscoveryHovered, 1.2, false);
+  useAutoScroll(sponsorEl, isSponsorHovered, 0.8, false);
 
   const notices = useMemo(() => {
     const seen = new Set<string>();

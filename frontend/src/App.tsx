@@ -145,7 +145,7 @@ function ScrollToTop() {
 
 export default function App() {
   const location = useLocation();
-  const isPortal = location.pathname.startsWith("/admin") || location.pathname.startsWith("/management") || location.pathname.startsWith("/user");
+  const isPortal = location.pathname.startsWith("/admin") || location.pathname.startsWith("/management") || location.pathname.startsWith("/user") || location.pathname.startsWith("/settings");
 
   useEffect(() => {
     document.documentElement.classList.remove("dark");
