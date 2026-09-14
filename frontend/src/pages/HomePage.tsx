@@ -102,9 +102,10 @@ const sportStoryCopy: Record<string, { title: string; date: string; sponsor: str
   },
 };
 
-function useAutoScroll(el: HTMLElement | null, isHovered: boolean, speed = 1, loopItemCount = 0) {
+function useAutoScroll(el: HTMLElement | null, isHovered: boolean, speed = 1, seamlessLoop = false) {
   useEffect(() => {
     if (!el || isHovered) return;
+    const loopItemCount = seamlessLoop ? Math.floor(el.children.length / 2) : 0;
     const loopStart = loopItemCount > 0 ? (el.children.item(loopItemCount) as HTMLElement | null)?.offsetLeft ?? 0 : 0;
     if (el.scrollWidth <= el.clientWidth + 1 || (loopItemCount > 0 && loopStart <= el.clientWidth)) return;
     
@@ -132,7 +133,7 @@ function useAutoScroll(el: HTMLElement | null, isHovered: boolean, speed = 1, lo
     
     animationId = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(animationId);
-  }, [el, isHovered, speed, loopItemCount]);
+  }, [el, isHovered, speed, seamlessLoop]);
 }
 
 type ProgressiveQuery<T> = {
@@ -276,9 +277,9 @@ export function HomePage() {
     element.scrollBy({ left: direction === "left" ? -amount : amount, behavior: "smooth" });
   };
 
-  useAutoScroll(organizerEl, isOrganizerHovered, 1);
-  useAutoScroll(discoveryEl, isDiscoveryHovered, 1.2);
-  useAutoScroll(sponsorEl, isSponsorHovered, 0.8);
+  useAutoScroll(organizerEl, isOrganizerHovered, 1, false);
+  useAutoScroll(discoveryEl, isDiscoveryHovered, 1.2, false);
+  useAutoScroll(sponsorEl, isSponsorHovered, 0.8, false);
 
   const notices = useMemo(() => {
     const seen = new Set<string>();
@@ -346,19 +347,19 @@ export function HomePage() {
       )}
 
       <section className="reference-hero">
-        <video className="reference-hero-video" autoPlay muted loop playsInline preload="auto">
-          <source src={`${import.meta.env.BASE_URL}media/hero-video-short.mp4`} type="video/mp4" />
-        </video>
-        <div className="reference-hero-overlay" />
-      </section>
-      <section className="hero-text-section" style={{ padding: '40px 20px', background: 'var(--bg)' }}>
+        <div className="reference-hero-media">
+          <video className="reference-hero-video" autoPlay muted loop playsInline preload="auto">
+            <source src={`${import.meta.env.BASE_URL}media/hero-video-short.mp4`} type="video/mp4" />
+          </video>
+          <div className="reference-hero-overlay" />
+        </div>
         <motion.div className="reference-hero-copy" variants={heroCopy} initial="initial" animate="animate">
           <motion.span className="eyebrow animated-eyebrow" variants={heroLine}>SmartSportz</motion.span>
           <motion.h1>
             <motion.span variants={heroLine} style={{ display: 'block' }}>Where Champions Compete</motion.span>
             <motion.span variants={heroLine} style={{ display: 'block' }}>Where Tournaments Come Alive.</motion.span>
           </motion.h1>
-          <motion.p variants={heroLine}>India's most sophisticated ecosystem for managing elite tournaments, scoring, registration, payments, content, and leaderboards.</motion.p>
+          <motion.p variants={heroLine}>India's most sophisticated ecosystem for managing elite tournaments, scoring, and registration</motion.p>
           <motion.div className="hero-actions" variants={heroLine}>
             <Link className="btn btn-primary" to="/tournaments">Register Tournament</Link>
             <Link className="btn btn-secondary glass-btn" to="/sports">Explore Sports</Link>

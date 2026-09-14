@@ -608,6 +608,21 @@ def update_manager_chess_school(school_slug: str, payload: ChessSchoolManagePayl
     return ok(_chess_school_payload(school_slug), "Chess school updated")
 
 
+@router.delete("/sports/chess/schools/{school_slug}")
+def delete_manager_chess_school(school_slug: str, user: dict = Depends(require_roles("super_admin", "management"))):
+    ensure_chess_school_tables()
+    school = row("SELECT name FROM chess_schools WHERE slug = ?", (school_slug,))
+    if not school:
+        raise HTTPException(status_code=404, detail="Chess school not found")
+    
+    execute("DELETE FROM chess_school_students WHERE school_slug = ?", (school_slug,))
+    execute("DELETE FROM chess_schools WHERE slug = ?", (school_slug,))
+    
+    log(user["email"], "chess_school_deleted", "chess_school", school_slug, f"Chess school deleted: {school['name']}")
+    clear_public_cache("chess")
+    return ok({"slug": school_slug}, "Chess school deleted")
+
+
 @router.get("/sports/{sport_slug}")
 def manager_sport_detail(sport_slug: str, user: dict = Depends(require_roles("super_admin", "management"))):
     _ = user
