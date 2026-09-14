@@ -25,6 +25,13 @@
 	3. Change the container algin in center
 	4. Remove the default data in db of seed.py and schema.py
 	5. updated the setting page nav menus
+	6. Update the Discovery page, sport page for explore and tournament buttons
+	7. add the bg color for menu bar in mobile view
+	8. Removed the Sponsor container in discovery page
+
+### smartsportz-6:
+
+	1. Removed the mirror db
 
 
 ## SmartSportz Branch Versions
@@ -41,3 +48,6 @@
 
 ### [V1.0.4]:
 #### This version is related by smartsportz-4
+
+### [V1.0.5]:
+#### This version is related by smartsportz-5
