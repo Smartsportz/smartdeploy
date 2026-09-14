@@ -106,16 +106,17 @@ const sportOrder = ["chess", "cricket", "football", "basketball", "volleyball", 
 type PublicSportRecord = {
   slug: string;
   name: string;
-  active?: number;
-  color?: string;
+  active: number;
+  color: string;
   title?: string;
   image?: string;
   description?: string;
   operations?: string;
-  attribute_json?: string;
   attributes?: SportAttributePair[];
+  attribute_json?: string;
   explore_label?: string;
   explore_url?: string;
+  show_view_tournament?: boolean | number;
 };
 
 type SportAttributePair = {
@@ -170,8 +171,8 @@ export function SportsPage() {
     const description = sport.description || fallback?.description || `${sport.name} programs can publish tournaments, sponsor details, registration information, media, and public records from Smart Sportz.`;
     const operations = sport.operations || fallback?.operations || "Admins and managers can keep the public sport page updated with images, descriptions, tournaments, and optional Explore links.";
     const image = sport.image || fallback?.image || assets.cricket;
-    const exploreUrl = sport.explore_url || fallback?.exploreUrl || "";
-    const exploreLabel = sport.explore_label || fallback?.exploreLabel || "Explore";
+    const exploreUrl = sport.explore_url ?? fallback?.exploreUrl ?? "";
+    const exploreLabel = sport.explore_label ?? fallback?.exploreLabel ?? "Explore";
     const attributes = parseSportAttributes(sport, fallback);
     return {
       sport,
@@ -209,10 +210,12 @@ export function SportsPage() {
                   <div key={`${sport.slug}-${item.label}-${item.value}`}><dt>{item.label}</dt><dd>{item.value}</dd></div>
                 ))}
               </dl>
-              <div className="sports-editorial-actions">
-                <Link className="inline-link" to={`/sports/${sport.slug}`}>Open {sport.name} tournaments</Link>
-                {detail.exploreUrl && <Link className="btn btn-secondary" to={detail.exploreUrl}>{detail.exploreLabel}</Link>}
-              </div>
+                <div className="sports-editorial-actions">
+                  {(sport.show_view_tournament !== false && sport.show_view_tournament !== 0) && (
+                    <Link className="inline-link" to={`/sports/${sport.slug}`}>Open {sport.name} tournaments</Link>
+                  )}
+                  {detail.exploreUrl && <Link className="btn btn-secondary" to={detail.exploreUrl}>{detail.exploreLabel}</Link>}
+                </div>
             </div>
             <div className="sports-editorial-image">
               <img src={mediaUrl(detail.image)} alt="" />

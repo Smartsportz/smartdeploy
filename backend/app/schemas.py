@@ -302,6 +302,7 @@ class SportManagePayload(BaseModel):
     published: bool = True
     sort_order: int = Field(default=99, ge=1, le=999)
     show_explore: bool = False
+    show_view_tournament: bool = True
     explore_label: str = Field(default="Explore", max_length=40)
     explore_url: str = Field(default="", max_length=500)
 
@@ -452,6 +453,10 @@ class HomeDiscoveryCardUpdate(BaseModel):
     register_path: str = Field(default="", max_length=220)
     sort_order: int = Field(default=1, ge=1, le=999)
     published: bool = True
+    show_explore: bool = True
+    show_view_tournament: bool = True
+    location: str = Field(default="", max_length=120)
+    status: str = Field(default="", max_length=120)
 
 
 class LiveHighlightUpdate(BaseModel):

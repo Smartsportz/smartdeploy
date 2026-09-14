@@ -452,6 +452,7 @@ def _sport_payload_values(payload: SportManagePayload, user_id: str, now: str) -
         "sort_order": payload.sort_order,
         "explore_label": (payload.explore_label.strip() or "Explore") if show_explore else "",
         "explore_url": payload.explore_url.strip() if show_explore else "",
+        "show_view_tournament": int(payload.show_view_tournament),
         "created_by": user_id,
         "updated_at": now,
     }
@@ -646,8 +647,8 @@ def create_manager_sport(payload: SportManagePayload, user: dict = Depends(requi
     execute(
         """INSERT INTO sports(
              slug, name, active, color, title, image, description, operations,
-             attribute_json, explore_label, explore_url, sort_order, published, created_by, created_at, updated_at
-           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+             attribute_json, explore_label, explore_url, show_view_tournament, sort_order, published, created_by, created_at, updated_at
+           ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
         (
             slug,
             values["name"],
@@ -660,6 +661,7 @@ def create_manager_sport(payload: SportManagePayload, user: dict = Depends(requi
             values["attribute_json"],
             values["explore_label"],
             values["explore_url"],
+            values["show_view_tournament"],
             values["sort_order"],
             values["published"],
             values["created_by"],
@@ -682,7 +684,7 @@ def update_manager_sport(sport_slug: str, payload: SportManagePayload, user: dic
     execute(
         """UPDATE sports
            SET name = ?, active = ?, color = ?, title = ?, image = ?, description = ?, operations = ?,
-               attribute_json = ?, explore_label = ?, explore_url = ?, sort_order = ?, published = ?, updated_at = ?
+               attribute_json = ?, explore_label = ?, explore_url = ?, show_view_tournament = ?, sort_order = ?, published = ?, updated_at = ?
            WHERE slug = ?""",
         (
             values["name"],
@@ -695,6 +697,7 @@ def update_manager_sport(sport_slug: str, payload: SportManagePayload, user: dic
             values["attribute_json"],
             values["explore_label"],
             values["explore_url"],
+            values["show_view_tournament"],
             values["sort_order"],
             values["published"],
             values["updated_at"],
