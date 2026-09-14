@@ -43,7 +43,9 @@ export function SportDetailPage() {
           <span className={`status ${sport.color ?? "emerald"}`}>{activeCount} active tournaments</span>
           <h1>{sport.name}</h1>
           <p>Manage sport-specific categories, eligibility rules, scoring templates, registration fields, fixture formats, and public discovery pages.</p>
-          <a className="btn btn-primary" href="#sport-tournaments">View tournaments</a>
+          {((sport as any).show_view_tournament !== false && (sport as any).show_view_tournament !== 0) && (
+            <a className="btn btn-primary" href="#sport-tournaments">View tournaments</a>
+          )}
         </div>
       </section>
       <section id="sport-tournaments" className="sport-tournament-sections">

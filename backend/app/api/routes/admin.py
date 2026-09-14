@@ -2085,9 +2085,9 @@ def create_home_discovery(payload: HomeDiscoveryCardUpdate, user: dict = Depends
     execute(
         """INSERT INTO home_discovery_cards(
             slug, label, title, sport, tournament_slug, sponsor_name, sponsor_image,
-            image, event_date, description, sponsor_details, register_path, sort_order, published
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-        (slug, payload.label, payload.title, payload.sport, payload.tournament_slug, payload.sponsor_name, payload.sponsor_image, payload.image, payload.event_date, payload.description, payload.sponsor_details, payload.register_path, payload.sort_order, int(payload.published)),
+            image, event_date, description, sponsor_details, register_path, sort_order, published, show_explore, show_view_tournament, location, status
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (slug, payload.label, payload.title, payload.sport, payload.tournament_slug, payload.sponsor_name, payload.sponsor_image, payload.image, payload.event_date, payload.description, payload.sponsor_details, payload.register_path, payload.sort_order, int(payload.published), int(payload.show_explore), int(payload.show_view_tournament), payload.location, payload.status),
     )
     log(user["email"], "home_discovery_created", "home_discovery", slug, "Home discovery card created")
     clear_public_cache()
@@ -2116,7 +2116,9 @@ def update_home_discovery(
         SET label = ?, title = ?, sport = ?, tournament_slug = ?,
             sponsor_name = ?, sponsor_image = ?, image = ?,
             event_date = ?, description = ?, sponsor_details = ?,
-            register_path = ?, sort_order = ?, published = ?
+            register_path = ?, sort_order = ?, published = ?,
+            show_explore = ?, show_view_tournament = ?,
+            location = ?, status = ?
         WHERE slug = ?
         """,
         (
@@ -2133,6 +2135,10 @@ def update_home_discovery(
             payload.register_path,
             payload.sort_order,
             int(payload.published),
+            int(payload.show_explore),
+            int(payload.show_view_tournament),
+            payload.location,
+            payload.status,
             slug,
         ),
     )

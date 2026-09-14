@@ -34,31 +34,29 @@ export function DiscoveryDetailPage() {
               <h1>{detail.title}</h1>
               <p>{detail.description}</p>
               <div className="hero-actions">
-                {canRegister ? <Link className="btn btn-primary" to={detail.register_path}>Tournament Register</Link> : <Link className="btn btn-secondary" to={tournament ? `/tournaments/${tournament.slug}` : "/tournaments"}>View Tournament</Link>}
-                <Link className="btn btn-secondary" to="/sports">Explore Sports</Link>
+                {canRegister ? (
+                  <Link className="btn btn-primary" to={detail.register_path}>Tournament Register</Link>
+                ) : detail.show_view_tournament !== false && detail.show_view_tournament !== 0 ? (
+                  <Link className="btn btn-secondary" to={tournament ? `/tournaments/${tournament.slug}` : "/tournaments"}>View Tournament</Link>
+                ) : null}
+                {detail.show_explore !== false && detail.show_explore !== 0 && (
+                  <Link className="btn btn-secondary" to="/sports">Explore Sports</Link>
+                )}
               </div>
             </div>
           </section>
           <ProgressiveSection query={{ queryKey: ["discovery-detail-panels", slug] as const, queryFn: async () => detail }} skeletonRows={2}>
             {() => (
-              <section className="discovery-detail-grid">
-                <article className="panel">
+              <section className="discovery-detail-grid" style={{ display: 'flex', justifyContent: 'center' }}>
+                <article className="panel" style={{ maxWidth: '800px', width: '100%' }}>
                   <h2>Game And Tournament</h2>
                   <p>{detail.sport} is connected to {tournament?.name || detail.title}. The event page includes tournament schedule, registration state, sponsor presentation, venue context, team flow, and public records for participants and organizers.</p>
                   <dl className="detail-dl">
                     <div><dt>Sport</dt><dd>{detail.sport}</dd></div>
                     <div><dt>Tournament Date</dt><dd>{detail.event_date}</dd></div>
-                    <div><dt>Location</dt><dd>{tournament?.location || "Configured by admin"}</dd></div>
-                    <div><dt>Status</dt><dd>{tournament?.status || "Published"}</dd></div>
+                    <div><dt>Location</dt><dd>{detail.location || tournament?.location || "Configured by admin"}</dd></div>
+                    <div><dt>Status</dt><dd>{detail.status || tournament?.status || "Published"}</dd></div>
                   </dl>
-                </article>
-                <article className="panel">
-                  <h2>Sponsor Details</h2>
-                  <div className="sponsor-detail-logo">
-                    <img src={mediaUrl(detail.sponsor_image || detail.image)} alt="" loading="lazy" />
-                    <strong>{detail.sponsor_name}</strong>
-                  </div>
-                  <p>{detail.sponsor_details}</p>
                 </article>
               </section>
             )}

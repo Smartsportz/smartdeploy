@@ -765,6 +765,7 @@ def _apply_operational_schema(path=None) -> None:
             "created_by": "TEXT NOT NULL DEFAULT ''",
             "created_at": "TEXT NOT NULL DEFAULT ''",
             "updated_at": "TEXT NOT NULL DEFAULT ''",
+            "show_view_tournament": "INTEGER NOT NULL DEFAULT 1",
         }
         for column, definition in sport_columns.items():
             _add_column(conn, "sports", column, definition)
@@ -822,6 +823,10 @@ def _apply_operational_schema(path=None) -> None:
         for column, definition in user_columns.items():
             _add_column(conn, "users", column, definition)
         _add_column(conn, "news_posts", "is_highlight", "INTEGER NOT NULL DEFAULT 0")
+        _add_column(conn, "home_discovery_cards", "show_explore", "INTEGER NOT NULL DEFAULT 1")
+        _add_column(conn, "home_discovery_cards", "show_view_tournament", "INTEGER NOT NULL DEFAULT 1")
+        _add_column(conn, "home_discovery_cards", "location", "TEXT NOT NULL DEFAULT ''")
+        _add_column(conn, "home_discovery_cards", "status", "TEXT NOT NULL DEFAULT ''")
         _executescript(conn, """
 CREATE TABLE IF NOT EXISTS home_discovery_cards (
   slug TEXT PRIMARY KEY,

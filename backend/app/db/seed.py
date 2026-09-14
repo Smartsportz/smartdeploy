@@ -77,7 +77,7 @@ def seed_public_page_base_data() -> None:
 def seed_data() -> None:
     if row("SELECT id FROM users LIMIT 1"):
         return
-
+    #prathap455169111@gmail.com
     users = [
         (str(uuid4()), "prathap455169111@gmail.com", "Smart Sportz Admin", "super_admin", hash_password("admin123"), "", 1, 1, now()), #mathanatmachinelearning@gmail.com
         (str(uuid4()), "manager@smartsportz.in", "Tournament Manager", "management", hash_password("manager123"), "", 1, 1, now()),

@@ -1266,6 +1266,8 @@ export function AdminCMSEditPage() {
                   if (file) void uploadFile(file, token, { silent: true }).then((upload) => setFormData((current) => ({ ...current, sponsor_image: upload.url }))).catch((caught) => setError(caught instanceof Error ? caught.message : "Unable to upload sponsor image."));
                 }} /></label>
                 <label>Event Date<input value={formData.event_date || ""} onChange={(e) => setFormData({...formData, event_date: e.target.value})} /></label>
+                <label>Location<input value={formData.location || ""} onChange={(e) => setFormData({...formData, location: e.target.value})} /></label>
+                <label>Status<input value={formData.status || ""} onChange={(e) => setFormData({...formData, status: e.target.value})} /></label>
                 <label>Register Path<input value={formData.register_path || ""} onChange={(e) => setFormData({...formData, register_path: e.target.value})} /></label>
                 <label>Sort Order<input type="number" value={formData.sort_order || 1} onChange={(e) => setFormData({...formData, sort_order: Number(e.target.value)})} /></label>
               </div>
@@ -1273,6 +1275,12 @@ export function AdminCMSEditPage() {
               <label>Sponsor Details<textarea rows={3} value={formData.sponsor_details || ""} onChange={(e) => setFormData({...formData, sponsor_details: e.target.value})} /></label>
               <label className="checkbox-line">
                 <input type="checkbox" checked={Boolean(formData.published)} onChange={(e) => setFormData({...formData, published: e.target.checked})} /> Published
+              </label>
+              <label className="checkbox-line">
+                <input type="checkbox" checked={formData.show_explore !== false && formData.show_explore !== 0} onChange={(e) => setFormData({...formData, show_explore: e.target.checked})} /> Show Explore Button
+              </label>
+              <label className="checkbox-line">
+                <input type="checkbox" checked={formData.show_view_tournament !== false && formData.show_view_tournament !== 0} onChange={(e) => setFormData({...formData, show_view_tournament: e.target.checked})} /> Show View Tournament Button
               </label>
             </>
           )}
@@ -3785,6 +3793,7 @@ type SportManageRecord = {
   active?: number;
   published?: boolean | number;
   sort_order?: number;
+  show_view_tournament?: boolean | number;
   explore_label?: string;
   explore_url?: string;
 };
@@ -3839,6 +3848,7 @@ type SportManageForm = {
   published: boolean;
   sort_order: number;
   show_explore: boolean;
+  show_view_tournament: boolean;
   explore_label: string;
   explore_url: string;
 };
@@ -3874,6 +3884,7 @@ const emptySportManageForm: SportManageForm = {
   published: true,
   sort_order: 99,
   show_explore: false,
+  show_view_tournament: true,
   explore_label: "Explore",
   explore_url: "",
 };
@@ -3908,6 +3919,7 @@ function sportFormFromRecord(record?: SportManageRecord): SportManageForm {
     published: record.published !== false && record.published !== 0,
     sort_order: Number(record.sort_order || 99),
     show_explore: Boolean(record.explore_url),
+    show_view_tournament: record.show_view_tournament !== false && record.show_view_tournament !== 0,
     explore_label: record.explore_label || "Explore",
     explore_url: record.explore_url || "",
   };
@@ -4388,6 +4400,7 @@ export function SportEditorPage({ role = "admin" }: { role?: "admin" | "manager"
           </div>
           <label className="checkbox-row"><input type="checkbox" checked={form.published} onChange={(event) => patchForm({ published: event.target.checked })} />Display on public Sports page</label>
           <label className="checkbox-row"><input type="checkbox" checked={form.show_explore} onChange={(event) => patchForm({ show_explore: event.target.checked })} />Need Explore button</label>
+          <label className="checkbox-row"><input type="checkbox" checked={form.show_view_tournament} onChange={(event) => patchForm({ show_view_tournament: event.target.checked })} />Show View Tournament button</label>
           {form.show_explore && (
             <>
               <label>Explore button text<input value={form.explore_label} onChange={(event) => patchForm({ explore_label: event.target.value })} placeholder="Explore" /></label>
