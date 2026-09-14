@@ -28,6 +28,7 @@
 	6. Update the Discovery page, sport page for explore and tournament buttons
 	7. add the bg color for menu bar in mobile view
 	8. Removed the Sponsor container in discovery page
+	9. Changed the algin style of login page.
 
 ### smartsportz-6:
 
